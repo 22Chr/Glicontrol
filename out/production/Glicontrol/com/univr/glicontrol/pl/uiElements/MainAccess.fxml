@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.uiElements.ControllerAccess">
+   <children>
+      <Button fx:id="medicoButton" layoutX="182.0" layoutY="260.0" mnemonicParsing="false" onAction="#apriLoginMedico" text="medico" />
+      <ImageView fitHeight="286.0" fitWidth="294.0" layoutX="144.0" layoutY="-33.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../OneDrive/Documenti/de3ea3d7-94cf-4463-b990-0657b82cfa56.png" />
+         </image>
+      </ImageView>
+      <Text fill="#1a85be" layoutX="186.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il tuo alleato smart per una vita in equilibrio" textAlignment="CENTER">
+         <font>
+            <Font name="Candara Light" size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="113.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrati come">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Button fx:id="pazienteButton" layoutX="285.0" layoutY="260.0" mnemonicParsing="false" onAction="#apriLoginPaziente" text="paziente" />
+      <Button fx:id="adminButton" layoutX="405.0" layoutY="260.0" mnemonicParsing="false" onAction="#apriLoginAdmin" text="admin" />
+   </children>
+</AnchorPane>
