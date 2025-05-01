@@ -13,8 +13,8 @@
       <Button fx:id="medicoButton" layoutX="182.0" layoutY="260.0" mnemonicParsing="false" onAction="#apriLoginMedico" text="medico" />
       <ImageView fitHeight="286.0" fitWidth="294.0" layoutX="144.0" layoutY="-33.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../OneDrive/Documenti/de3ea3d7-94cf-4463-b990-0657b82cfa56.png" />
-         </image>
+            <Image url="@logo.png" />
+            </image>
       </ImageView>
       <Text fill="#1a85be" layoutX="186.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il tuo alleato smart per una vita in equilibrio" textAlignment="CENTER">
          <font>
