@@ -7,26 +7,36 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.MainAccessController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #e6faff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.MainAccessController">
    <children>
-      <Button fx:id="medicoButton" layoutX="182.0" layoutY="260.0" mnemonicParsing="false" onAction="#apriLoginMedico" text="medico" />
+      <Button fx:id="medicoButton" layoutX="137.0" layoutY="261.0" mnemonicParsing="false" onAction="#apriLoginMedico" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #22577a;" text="MEDICO" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
       <ImageView fitHeight="286.0" fitWidth="294.0" layoutX="144.0" layoutY="-33.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@logo.png" />
             </image>
       </ImageView>
-      <Text fill="#1a85be" layoutX="186.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il tuo alleato smart per una vita in equilibrio" textAlignment="CENTER">
+      <Text fill="#ff0404" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="il tuo alleato smart per una vita in equilibrio" textAlignment="CENTER" wrappingWidth="600.0">
          <font>
             <Font name="Candara Light" size="14.0" />
          </font>
       </Text>
-      <Text layoutX="113.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrati come">
+      <Text layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accedi come" textAlignment="CENTER" wrappingWidth="600.0">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <Button fx:id="pazienteButton" layoutX="285.0" layoutY="260.0" mnemonicParsing="false" onAction="#apriLoginPaziente" text="paziente" />
-      <Button fx:id="adminButton" layoutX="405.0" layoutY="260.0" mnemonicParsing="false" onAction="#apriLoginAdmin" text="admin" />
+      <Button fx:id="medicoButton1" layoutX="269.0" layoutY="261.0" mnemonicParsing="false" onAction="#apriLoginMedico" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #22577a;" text="PAZIENTE" textFill="#fbfbfb">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="medicoButton2" layoutX="401.0" layoutY="261.0" mnemonicParsing="false" onAction="#apriLoginMedico" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #22577a;" text="ADMIN" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
