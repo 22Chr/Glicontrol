@@ -1,4 +1,4 @@
-package com.univr.glicontrol.pl;
+package com.univr.glicontrol.pl.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Controller {
+public class MainAccessController {
     public void apriLoginMedico(ActionEvent event) throws IOException {
         cambiaScena(event, "/login-medico.fxml");
     }
