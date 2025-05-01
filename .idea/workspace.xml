@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Chiarificata la classe Controller">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/ControllerAccess.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" afterDir="false" />
+    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Aggiunto package Controllers per offrire supporto al pattern architetturale MVC">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +97,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1746076777138</updated>
-      <workItem from="1746076778106" duration="7292000" />
+      <workItem from="1746076778106" duration="9936000" />
     </task>
     <task id="LOCAL-00001" summary="packages added">
       <option name="closed" value="true" />
@@ -144,7 +139,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746083773738</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Aggiunto package Controllers per offrire supporto al pattern architetturale MVC">
+      <option name="closed" value="true" />
+      <created>1746084210529</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746084210529</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +180,7 @@
     <MESSAGE value="DB added" />
     <MESSAGE value="removed unused MainAccess class, reviewed VM options" />
     <MESSAGE value="Chiarificata la classe Controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chiarificata la classe Controller" />
+    <MESSAGE value="Aggiunto package Controllers per offrire supporto al pattern architetturale MVC" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aggiunto package Controllers per offrire supporto al pattern architetturale MVC" />
   </component>
 </project>
