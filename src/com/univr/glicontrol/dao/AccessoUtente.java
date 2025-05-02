@@ -8,9 +8,9 @@ public class AccessoUtente {
     private final TextField codiceFiscale;
     private final String url = "jdbc:mysql://localhost:3306/glicontrol";
     private final PasswordField pwd;
-    private final Enum ruolo;
+    private final String ruolo;
 
-    public AccessoUtente(TextField codiceFiscale, PasswordField password, Enum ruolo) {
+    public AccessoUtente(TextField codiceFiscale, PasswordField password, String ruolo) {
         this.codiceFiscale = codiceFiscale;
         this.pwd = password;
         this.ruolo = ruolo;
@@ -24,7 +24,7 @@ public class AccessoUtente {
 
             stmt.setString(1, codiceFiscale.getText());
             stmt.setString(2, pwd.getText());
-            stmt.setString(3, ruolo.name());
+            stmt.setString(3, ruolo);
 
             ResultSet rs = stmt.executeQuery();
             return rs.next(); // Se esiste almeno una riga, credenziali corrette

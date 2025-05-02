@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="ridefinizione Login.fxml, LoginController">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Sistemato il passaggio del parametro Enum &quot;ruolo&quot; tra MainAccessController e LoginController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoUtente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoUtente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AcessoUtente.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/freccia.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746187744502</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Sistemato il passaggio del parametro Enum &quot;ruolo&quot; tra MainAccessController e LoginController">
+      <option name="closed" value="true" />
+      <created>1746200223781</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1746200223781</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,6 +240,7 @@
     <MESSAGE value="Login.fxml, aggiunta enum utenti" />
     <MESSAGE value="Aggiunte classi DAO per la comunicazione e la gestione dei dati del database" />
     <MESSAGE value="ridefinizione Login.fxml, LoginController" />
-    <option name="LAST_COMMIT_MESSAGE" value="ridefinizione Login.fxml, LoginController" />
+    <MESSAGE value="Sistemato il passaggio del parametro Enum &quot;ruolo&quot; tra MainAccessController e LoginController" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sistemato il passaggio del parametro Enum &quot;ruolo&quot; tra MainAccessController e LoginController" />
   </component>
 </project>
