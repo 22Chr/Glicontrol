@@ -15,17 +15,17 @@ public class MainAccessController {
     private Enum ruolo;
     public void apriLoginMedico(ActionEvent event) throws IOException {
         ruolo = RuoloUtente.MEDICO;
-        cambiaScena(event, "/Login.fxml");
+        cambiaScena(event, "../uiElements/Login.fxml");
     }
 
     public void apriLoginPaziente(ActionEvent event) throws IOException {
         ruolo = RuoloUtente.PAZIENTE;
-        cambiaScena(event, "/Login.fxml");
+        cambiaScena(event, "../uiElements/Login.fxml");
     }
 
     public void apriLoginAdmin(ActionEvent event) throws IOException {
         ruolo = RuoloUtente.ADMIN;
-        cambiaScena(event, "/Login.fxml");
+        cambiaScena(event, "../uiElements/Login.fxml");
     }
 
     private void cambiaScena(ActionEvent event, String fxmlPath) throws IOException {

@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Merge remote-tracking branch 'origin/main'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;out/production/Glicontrol/com/univr/glicontrol/Main.class&#10;#&#9;out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml&#10;#&#9;src/com/univr/glicontrol/pl/uiElements/MainAccess.fxml">
-      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/RuoloUtente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/Login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Login.fxml, aggiunta enum utenti">
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/freccia.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/Login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +19,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -83,6 +83,11 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\annap\IdeaProjects\Glicontrol\src\com\univr\glicontrol\pl\uiElements" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Glicontrol" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.univr.glicontrol.Main" />
@@ -182,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746092360452</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Login.fxml, aggiunta enum utenti">
+      <option name="closed" value="true" />
+      <created>1746187744502</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746187744502</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,6 +232,7 @@
     <MESSAGE value="Parent root in main usa Objects.requireNotNull" />
     <MESSAGE value="Aggiornato il DB" />
     <MESSAGE value="Modifiche grafiche interfaccia di benvenuto" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifiche grafiche interfaccia di benvenuto" />
+    <MESSAGE value="Login.fxml, aggiunta enum utenti" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login.fxml, aggiunta enum utenti" />
   </component>
 </project>
