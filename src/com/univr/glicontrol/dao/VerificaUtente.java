@@ -1,15 +1,14 @@
 package com.univr.glicontrol.dao;
 import java.sql.*;
 
-public class Accesso {
+public class VerificaUtente {
     private final String codiceFiscale;
     private final String url = "jdbc:mysql://localhost:3306/glicontrol";
     private final String pwd;
 
-    public Accesso(String codiceFiscale, String password) {
+    public VerificaUtente(String codiceFiscale, String password) {
         this.codiceFiscale = codiceFiscale;
         this.pwd = password;
-        System.out.println(codiceFiscale + " " + pwd);
     }
 
     public boolean verificaCredenziali() {
@@ -29,4 +28,6 @@ public class Accesso {
             return false;
         }
     }
+
+
 }
