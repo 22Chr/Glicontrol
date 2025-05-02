@@ -4,12 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Login.fxml, aggiunta enum utenti">
-      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/freccia.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/Login.fxml" afterDir="false" />
+    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Aggiunte classi DAO per la comunicazione e la gestione dei dati del database">
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoAssunzioneFarmaci.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoControlloAssunzione.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoFarmaci.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoLivelloGlicemia.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoPatologiaConcomitante.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoSintomi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoTerapie.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AcessoUtente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/VerificaUtente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoUtente.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,6 +239,7 @@
     <MESSAGE value="Aggiornato il DB" />
     <MESSAGE value="Modifiche grafiche interfaccia di benvenuto" />
     <MESSAGE value="Login.fxml, aggiunta enum utenti" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login.fxml, aggiunta enum utenti" />
+    <MESSAGE value="Aggiunte classi DAO per la comunicazione e la gestione dei dati del database" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aggiunte classi DAO per la comunicazione e la gestione dei dati del database" />
   </component>
 </project>
