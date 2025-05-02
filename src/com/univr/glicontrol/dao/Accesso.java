@@ -9,7 +9,6 @@ public class Accesso {
     public Accesso(String codiceFiscale, String password) {
         this.codiceFiscale = codiceFiscale;
         this.pwd = password;
-        System.out.println(codiceFiscale + " " + pwd);
     }
 
     public boolean verificaCredenziali() {

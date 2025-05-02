@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Modifiche grafiche interfaccia di benvenuto">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/bll/Accesso.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/bll/TestAccesso.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Aggiunta connessione al database nello strato dao">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Glicontrol.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Glicontrol.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/Accesso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/Accesso.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,6 +60,7 @@
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
@@ -112,7 +107,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1746076777138</updated>
-      <workItem from="1746076778106" duration="18767000" />
+      <workItem from="1746076778106" duration="22994000" />
+      <workItem from="1746140055991" duration="1055000" />
     </task>
     <task id="LOCAL-00001" summary="packages added">
       <option name="closed" value="true" />
@@ -186,7 +182,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746092360452</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Aggiunta connessione al database nello strato dao">
+      <option name="closed" value="true" />
+      <created>1746098924708</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746098924708</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,6 +227,7 @@
     <MESSAGE value="Parent root in main usa Objects.requireNotNull" />
     <MESSAGE value="Aggiornato il DB" />
     <MESSAGE value="Modifiche grafiche interfaccia di benvenuto" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifiche grafiche interfaccia di benvenuto" />
+    <MESSAGE value="Aggiunta connessione al database nello strato dao" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aggiunta connessione al database nello strato dao" />
   </component>
 </project>
