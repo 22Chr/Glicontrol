@@ -15,10 +15,9 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("./pl/uiElements/MainAccess.fxml")));
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 800, 520);
             stage.setScene(scene);
             stage.setTitle("Glicontrol");
-            stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
             System.out.println(e.getMessage());
