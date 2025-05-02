@@ -24,12 +24,19 @@ public class LoginController {
     @FXML
     private Label portalLabel;
 
+    private String ruolo;
 
+    // Usato da MainAccessController per impostare il ruolo e caricare la label di benvenuto corretta
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
+        portalLabel.setText("ACCESSO AL PORTALE " + ruolo);
+    }
 
     @FXML
     public void initialize() {
         Platform.runLater(() -> loginButton.requestFocus());
     }
+
     public void login(ActionEvent event) throws IOException {
         String codiceFiscale = codiceFiscaleTF.getText();
         String password = passwordPF.getText();

@@ -7,9 +7,12 @@
     <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="ridefinizione Login.fxml, LoginController">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoUtente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AccessoUtente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/AcessoUtente.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/Controllers/MainAccessController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/Login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/freccia.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +95,7 @@
     <configuration name="Glicontrol" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.univr.glicontrol.Main" />
       <module name="Glicontrol" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\annap\OneDrive\Documenti\Java\javafx-sdk-23.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.media --enable-native-access=javafx.graphics" />
+      <option name="VM_PARAMETERS" value="--module-path $USER_HOME$/Library/Java/JavaVirtualMachines/javafx-sdk-24/lib --add-modules javafx.controls,javafx.fxml,javafx.media" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

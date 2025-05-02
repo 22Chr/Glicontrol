@@ -16,23 +16,28 @@ public class MainAccessController {
 
     public void apriLoginMedico(ActionEvent event) throws IOException {
         ruolo = RuoloUtente.MEDICO;
-        cambiaScena(event, "../uiElements/Login.fxml");
+        cambiaScena(event, "../uiElements/Login.fxml", ruolo.name());
     }
 
     public void apriLoginPaziente(ActionEvent event) throws IOException {
         ruolo = RuoloUtente.PAZIENTE;
-        cambiaScena(event, "../uiElements/Login.fxml");
+        cambiaScena(event, "../uiElements/Login.fxml", ruolo.name());
     }
 
     public void apriLoginAdmin(ActionEvent event) throws IOException {
         ruolo = RuoloUtente.ADMIN;
-        cambiaScena(event, "../uiElements/Login.fxml");
+        cambiaScena(event, "../uiElements/Login.fxml", ruolo.name());
     }
 
-    private void cambiaScena(ActionEvent event, String fxmlPath) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+    private void cambiaScena(ActionEvent event, String fxmlPath, String ruolo) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+        Parent root = loader.load();
+
+        LoginController controller = loader.getController();
+        controller.setRuolo(ruolo);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root, 800, 520));
         stage.show();
     }
 }

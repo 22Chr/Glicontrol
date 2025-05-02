@@ -24,7 +24,7 @@ public class AccessoUtente {
 
             stmt.setString(1, codiceFiscale.getText());
             stmt.setString(2, pwd.getText());
-            stmt.setString(3, ruolo.toString());
+            stmt.setString(3, ruolo.name());
 
             ResultSet rs = stmt.executeQuery();
             return rs.next(); // Se esiste almeno una riga, credenziali corrette
