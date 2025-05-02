@@ -1,5 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.univr.glicontrol.RuoloUtente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,16 +12,20 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class MainAccessController {
+    private Enum ruolo;
     public void apriLoginMedico(ActionEvent event) throws IOException {
-        cambiaScena(event, "/login-medico.fxml");
+        ruolo = RuoloUtente.MEDICO;
+        cambiaScena(event, "/Login.fxml");
     }
 
     public void apriLoginPaziente(ActionEvent event) throws IOException {
-        cambiaScena(event, "/login-paziente.fxml");
+        ruolo = RuoloUtente.PAZIENTE;
+        cambiaScena(event, "/Login.fxml");
     }
 
     public void apriLoginAdmin(ActionEvent event) throws IOException {
-        cambiaScena(event, "/login-admin.fxml");
+        ruolo = RuoloUtente.ADMIN;
+        cambiaScena(event, "/Login.fxml");
     }
 
     private void cambiaScena(ActionEvent event, String fxmlPath) throws IOException {
