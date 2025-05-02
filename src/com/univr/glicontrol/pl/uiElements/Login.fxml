@@ -25,6 +25,14 @@
                   <Insets bottom="20.0" top="-30.0" />
                </VBox.margin>
             </ImageView>
+            <Label fx:id="portalLabel" text="ACCEDI AL PORTALE" textAlignment="CENTER" textFill="#22577a">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="30.0" top="10.0" />
+               </VBox.margin>
+            </Label>
             <Label fx:id="insertLabel" text="Inserisci le tue credenziali">
                <font>
                   <Font size="14.0" />

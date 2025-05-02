@@ -13,6 +13,7 @@ import java.util.Objects;
 
 public class MainAccessController {
     private Enum ruolo;
+
     public void apriLoginMedico(ActionEvent event) throws IOException {
         ruolo = RuoloUtente.MEDICO;
         cambiaScena(event, "../uiElements/Login.fxml");
