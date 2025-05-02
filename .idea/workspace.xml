@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Aggiunta connessione al database nello strato dao">
+    <list default="true" id="059341b3-3e14-4d2f-b7ef-88a1e6d5d121" name="Changes" comment="Modificato effetto glow">
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Glicontrol/com/univr/glicontrol/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/Accesso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/Accesso.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/pl/uiElements/MainAccess.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/Accesso.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/univr/glicontrol/dao/VerificaUtente.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,38 +48,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Glicontrol.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "/Users/christianchecchetti/Documents/Programmazione/Ingegneria del software/Progetto/Gestione pazienti diabetici/Glicontrol/src/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "advanced.settings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Glicontrol.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/christianchecchetti/Documents/Programmazione/Ingegneria del software/Progetto/Gestione pazienti diabetici/Glicontrol/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Glicontrol" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.univr.glicontrol.Main" />
@@ -108,7 +106,8 @@
       <option name="presentableId" value="Default" />
       <updated>1746076777138</updated>
       <workItem from="1746076778106" duration="22994000" />
-      <workItem from="1746140055991" duration="1055000" />
+      <workItem from="1746140055991" duration="1503000" />
+      <workItem from="1746175123362" duration="2599000" />
     </task>
     <task id="LOCAL-00001" summary="packages added">
       <option name="closed" value="true" />
@@ -190,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746098924708</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Modificato effetto glow">
+      <option name="closed" value="true" />
+      <created>1746174874675</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1746174874675</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,6 +235,7 @@
     <MESSAGE value="Aggiornato il DB" />
     <MESSAGE value="Modifiche grafiche interfaccia di benvenuto" />
     <MESSAGE value="Aggiunta connessione al database nello strato dao" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunta connessione al database nello strato dao" />
+    <MESSAGE value="Modificato effetto glow" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modificato effetto glow" />
   </component>
 </project>
