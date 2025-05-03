@@ -1,37 +1,35 @@
 package com.univr.glicontrol.dao;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 
 import java.sql.*;
 
 public class AccessoUtente {
-    private final TextField codiceFiscale;
-    private final String url = "jdbc:mysql://localhost:3306/glicontrol";
-    private final PasswordField pwd;
-    private final String ruolo;
 
-    public AccessoUtente(TextField codiceFiscale, PasswordField password, String ruolo) {
-        this.codiceFiscale = codiceFiscale;
-        this.pwd = password;
-        this.ruolo = ruolo;
-    }
+    public ResultSet recuperaUtente(String codiceFiscale, String pwd, String ruolo) {
+        String sql = """
+            select 
+                u.id AS id_utente, u.nome, u.cognome, u.codice_fiscale, u.ruolo,
+                p.data_nascita, p.sesso, p.email AS email_paziente, p.allergie, p.medico_riferimento,
+                m.email AS email_medico
+            from Utente u
+            left join Paziente p on u.id = p.id_paziente
+            left join Medico m on u.id = m.id_medico
+            where u.codice_fiscale = ? and u.password = ? and u.ruolo = ?
+        """;
 
-    public boolean verificaCredenziali() {
-        String sql = "use glicontrol; select * from Utente where codice_fiscale = ? and password = ? and ruolo = ?";
+        String url = "jdbc:mysql://localhost:3306/glicontrol";
 
-        try (Connection conn = DriverManager.getConnection(url, "root", "Sitecom12");
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, codiceFiscale.getText());
-            stmt.setString(2, pwd.getText());
+        try {
+            Connection conn = DriverManager.getConnection(url, "root", "Sitecom12");
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, codiceFiscale);
+            stmt.setString(2, pwd);
             stmt.setString(3, ruolo);
 
-            ResultSet rs = stmt.executeQuery();
-            return rs.next(); // Se esiste almeno una riga, credenziali corrette
+            return stmt.executeQuery();
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return false;
+            System.out.println("[ERRORE ACCESSO DB]: " + e.getMessage());
+            return null;
         }
     }
 }

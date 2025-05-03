@@ -1,5 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.univr.glicontrol.pl.Models.Login;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,8 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
@@ -45,9 +44,13 @@ public class LoginController {
             insertLabel.setText("Inserisci le tue credenziali per accedere al portale");
         }
 
-        //chiamare un metodo dentro a Model, contenente i segnaposti dei metodi della
-        //BLL
-        //poi dice se va bene o no
+        Login accedi = new Login(codiceFiscale, password, ruolo);
 
+        if (accedi.getLogin()) {
+            // muovi verso il portale relativo al ruolo selezionato
+            insertLabel.setText("Sei connesso al portale " + ruolo.toLowerCase());
+        } else {
+            insertLabel.setText("Credenziali non valide, riprova");
+        }
     }
 }

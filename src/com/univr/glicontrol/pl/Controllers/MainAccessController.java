@@ -1,6 +1,5 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.RuoloUtente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,25 +11,25 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class MainAccessController {
-    private Enum ruolo;
+    private String ruolo;
 
     public void apriLoginMedico(ActionEvent event) throws IOException {
-        ruolo = RuoloUtente.MEDICO;
-        cambiaScena(event, "../uiElements/Login.fxml", ruolo.name());
+        ruolo = "MEDICO";
+        cambiaScena(event, ruolo);
     }
 
     public void apriLoginPaziente(ActionEvent event) throws IOException {
-        ruolo = RuoloUtente.PAZIENTE;
-        cambiaScena(event, "../uiElements/Login.fxml", ruolo.name());
+        ruolo = "PAZIENTE";
+        cambiaScena(event, ruolo);
     }
 
     public void apriLoginAdmin(ActionEvent event) throws IOException {
-        ruolo = RuoloUtente.ADMIN;
-        cambiaScena(event, "../uiElements/Login.fxml", ruolo.name());
+        ruolo = "ADMIN";
+        cambiaScena(event, ruolo);
     }
 
-    private void cambiaScena(ActionEvent event, String fxmlPath, String ruolo) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+    private void cambiaScena(ActionEvent event, String ruolo) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../uiElements/Login.fxml")));
         Parent root = loader.load();
 
         LoginController controller = loader.getController();
