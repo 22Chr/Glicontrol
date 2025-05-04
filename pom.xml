@@ -15,20 +15,11 @@
     </properties>
 
     <dependencies>
-        <!-- Dipendenza per JUnit 5 API -->
+        <!-- Dipendenza per JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Dipendenza per il motore di esecuzione di JUnit 5 -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.0</version>
-            <scope>test</scope>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.13.0-M3</version>
         </dependency>
 
         <!-- Dipendenze per JavaFX SDK -->
@@ -40,7 +31,7 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>24</version> <!-- Versione del tuo SDK JavaFX -->
+            <version>24.0.1</version> <!-- Versione del tuo SDK JavaFX -->
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -57,16 +48,6 @@
 
     <build>
         <plugins>
-            <!-- Plugin per eseguire i test con JUnit 5 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <configuration>
-                    <useJUnitPlatform>true</useJUnitPlatform>
-                </configuration>
-            </plugin>
-
             <!-- Plugin per eseguire JavaFX (corretto) -->
             <plugin>
                 <groupId>org.openjfx</groupId>
