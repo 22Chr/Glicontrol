@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="656.0" style="-fx-background-color: #f4f3ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="656.0" style="-fx-background-color: #f4f3ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortaleAdminController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -69,8 +69,8 @@
             </VBox>
             <MenuButton alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: #22577a;" text="Inserisci" textFill="WHITE">
               <items>
-                <MenuItem mnemonicParsing="false" text="Medico" />
-                <MenuItem mnemonicParsing="false" text="Paziente" />
+                <MenuItem fx:id="medicoMI" mnemonicParsing="false" onAction="#inserisciNuovoMedico" text="Medico" />
+                <MenuItem fx:id="pazienteMI" mnemonicParsing="false" onAction="#inserisciNuovoPaziente" text="Paziente" />
               </items>
                <HBox.margin>
                   <Insets left="30.0" />
