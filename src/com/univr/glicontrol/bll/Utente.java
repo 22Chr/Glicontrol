@@ -2,10 +2,10 @@ package com.univr.glicontrol.bll;
 
 public abstract class Utente {
     private final int idUtente;
-    private final String codiceFiscale;
-    private final String nome;
-    private final String cognome;
-    private final String ruolo;
+    private String codiceFiscale;
+    private String nome;
+    private String cognome;
+    private String ruolo;
 
 
     protected Utente(int idUtente, String codiceFiscale, String nome, String cognome, String ruolo) {
@@ -23,16 +23,28 @@ public abstract class Utente {
     public String getCodiceFiscale() {
         return codiceFiscale;
     }
+    public String setCodiceFiscale(String newCF) {
+        return codiceFiscale = newCF;
+    }
 
     public String getNome() {
         return nome;
+    }
+    public String setNome(String newNome) {
+        return nome = newNome;
     }
 
     public String getCognome() {
         return cognome;
     }
+    public String setCognome(String newCognome) {
+        return cognome = newCognome;
+    }
 
     public String getRuolo() {
         return ruolo;
+    }
+    public String setRuolo(String newRuolo) {
+        return ruolo = newRuolo;
     }
 }

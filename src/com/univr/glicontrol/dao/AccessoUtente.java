@@ -2,9 +2,16 @@ package com.univr.glicontrol.dao;
 
 import java.sql.*;
 
-public class AccessoUtente {
+public class AccessoUtente implements GetUtente {
 
-    public ResultSet recuperaUtente(String codiceFiscale, String pwd, String ruolo) {
+    private final String pwd;
+
+    public AccessoUtente(String pwd) {
+        this.pwd = pwd;
+    }
+
+    @Override
+    public ResultSet recuperaUtente(String codiceFiscale, String ruolo) {
         String sql = """
             select 
                 u.id AS id_utente, u.nome, u.cognome, u.codice_fiscale, u.ruolo,

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PazienteTest {
 
-    Paziente paziente = new Paziente(2, "MRTNNA04A62H612X", "Anna", "Martini", "PAZIENTE", 3, Date.valueOf("2004-01-22"), "F", "anna.martini04@gmail.com", "null");
+    Paziente paziente = new Paziente(2, "MRTNNA04A62H612X", "Anna", "Martini", "PAZIENTE", 3, Date.valueOf("2004-01-22"), "F", "anna.martini04@gmail.com", "null", 60);
 
     @Test
     void getMedicoRiferimento() {
@@ -58,5 +58,10 @@ class PazienteTest {
     @Test
     void getIdUtente() {
         assertEquals(2, paziente.getIdUtente());
+    }
+
+    @Test
+    void getPeso() {
+        assertEquals(60, paziente.getPeso());
     }
 }

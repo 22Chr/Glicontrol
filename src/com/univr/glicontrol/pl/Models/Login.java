@@ -1,6 +1,7 @@
 package com.univr.glicontrol.pl.Models;
 
-import com.univr.glicontrol.bll.GestioneLogin;
+import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.bll.UtenteSessione;
 
 // Si interfaccia alla UI mediante Controller e invoca GestioneLogin dalla BLL per creare l'utente e accedere all'app
 public class Login {
@@ -14,9 +15,9 @@ public class Login {
         this.ruolo = ruolo;
     }
 
-    private final GestioneLogin gestioneLogin = new GestioneLogin();
+    private final UtenteSessione utenteSessione = UtenteSessione.getInstance();
 
     public boolean getLogin() {
-        return gestioneLogin.verificaUtente(codiceFiscale, password, ruolo) != null;
+        return utenteSessione.verificaUtente(codiceFiscale, password, ruolo);
     }
 }
