@@ -4,12 +4,18 @@ import com.univr.glicontrol.pl.Models.Login;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginController {
     @FXML
@@ -22,6 +28,8 @@ public class LoginController {
     private Button loginButton;
     @FXML
     private Label portalLabel;
+    @FXML
+    private Button backHomeB;
 
     private String ruolo;
 
@@ -52,5 +60,13 @@ public class LoginController {
         } else {
             insertLabel.setText("Credenziali non valide, riprova");
         }
+    }
+
+    public void tornaAllaHome(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../uiElements/MainAccess.fxml")));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root, 800, 520));
+        stage.show();
     }
 }
