@@ -28,6 +28,7 @@ public class PortaleAdminController {
     }
 
     //LOGOUT
+    @FXML
     private void logout(ActionEvent event) {
         //mostra finestra di conferma
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -57,11 +58,13 @@ public class PortaleAdminController {
     }
 
     //MEDICO MENUITEM
+    @FXML
     private void inserisciNuovoMedico(ActionEvent event) {
         apriFinestra("/InserisciNuovoMedico.fxml", "Inserisci medico");
     }
 
     //PAZIENTE MENUITEM
+    @FXML
     private void inserisciNuovoPaziente(ActionEvent event) {
         apriFinestra("/view/InserisciNuovoPaziente.fxml", "Inserisci paziente");
     }
