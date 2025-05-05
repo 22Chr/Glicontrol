@@ -5,6 +5,7 @@ out/
 .idea/workspace.xml
 .idea/libraries/
 .idea/runConfigurations/
+target/
 
 ### Eclipse ###
 .apt_generated
