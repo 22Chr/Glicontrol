@@ -56,7 +56,6 @@ public class LoginController {
 
         if (accedi.getLogin()) {
             // muovi verso il portale relativo al ruolo selezionato
-            insertLabel.setText("Sei connesso al portale " + ruolo.toLowerCase());
             // Carica la scena del portale in base al ruolo
             String fxmlFile = getFXMLForRole(ruolo);
             if (fxmlFile != null) {
@@ -68,7 +67,7 @@ public class LoginController {
     }
 
     private void caricaPortale(ActionEvent event, String fxmlFile) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../uiElements/PortaleAdmin.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlFile)));
         Parent root = loader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root, 800, 520));

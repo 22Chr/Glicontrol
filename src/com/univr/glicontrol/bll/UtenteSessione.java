@@ -87,6 +87,7 @@ public class UtenteSessione {
 
             if (paziente != null && paziente.next()) {
                 int id = paziente.getInt("id_utente");
+                System.out.println(id);
                 String nome = paziente.getString("nome");
                 String cognome = paziente.getString("cognome");
                 String cf = paziente.getString("codice_fiscale");
