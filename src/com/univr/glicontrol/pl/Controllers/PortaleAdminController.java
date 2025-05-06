@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.util.List;
 
 public class PortaleAdminController {
 
@@ -33,16 +34,25 @@ public class PortaleAdminController {
     @FXML
     private void initialize() {
         // Popola le liste
-        ListaMedici lm = new ListaMedici();
-        ObservableList<Medico> medici = FXCollections.observableArrayList(
-                lm.getListaMedici()
-        );
+        // Medico
+        GetListaPortaleAdmin glpaMedico = new GetListaPortaleAdmin();
+        List<Medico> mediciList = glpaMedico.getListaMediciPortaleAdmin();
+        for (int i = 0; i < mediciList.size(); i++) {
+            if (mediciList.get(i) == null) {
+                System.out.println("Found null at index " + i + " in list of Medici");
+            }
+        }
+
+        ObservableList<Medico> medici = FXCollections.observableArrayList();
+        medici.addAll(mediciList);
         listaMedici.setItems(medici);
 
-        ListaPazienti lp = new ListaPazienti();
-        ObservableList<Paziente> pazienti = FXCollections.observableArrayList(
-                lp.getListaPazienti()
-        );
+        // Paziente
+        GetListaPortaleAdmin glpaPaziente = new GetListaPortaleAdmin();
+        List<Paziente> pazientiList = glpaPaziente.getListaPazientiPortaleAdmin();
+
+        ObservableList<Paziente> pazienti = FXCollections.observableArrayList();
+        pazienti.addAll(pazientiList);
         listaPazienti.setItems(pazienti);
     }
 

@@ -18,4 +18,6 @@ public class GetListaPortaleAdmin {
         ListaPazienti listaPazienti = new ListaPazienti();
         return listaPazienti.getListaPazienti();
     }
+
+    //modificare in modo da ritornare solo nome e cognome di ogni medico e paziente
 }

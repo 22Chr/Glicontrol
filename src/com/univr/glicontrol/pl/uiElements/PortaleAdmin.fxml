@@ -36,7 +36,7 @@
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <ListView prefHeight="200.0" prefWidth="180.0">
+                  <ListView fx:id="listaMedici" prefHeight="200.0" prefWidth="180.0">
                      <VBox.margin>
                         <Insets left="25.0" top="20.0" />
                      </VBox.margin>
@@ -56,7 +56,7 @@
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <ListView prefHeight="200.0" prefWidth="180.0">
+                  <ListView fx:id="listaPazienti" prefHeight="200.0" prefWidth="180.0">
                      <VBox.margin>
                         <Insets left="25.0" top="20.0" />
                      </VBox.margin>
