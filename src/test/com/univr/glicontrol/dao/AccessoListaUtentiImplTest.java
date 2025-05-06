@@ -59,4 +59,18 @@ class AccessoListaUtentiImplTest {
         boolean success = accessoListaUtenti.insertNuovoPaziente("TestPaziente", "TestPaziente", "TestPaziente", "TestPazien", 4, Date.valueOf("1972-03-20"), "M", "TestPaziente", "TestPaziente", 30);
         assertTrue(success);
     }
+
+    @Test
+    void failInsertNuovoMedico() {
+        AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
+        boolean success = accessoListaUtenti.insertNuovoMedico("TestMedico", "TestMedico", "TestMedico", "TestMedico", "TestMedico15");
+        assertFalse(success);
+    }
+
+    @Test
+    void failInsertNuovoPaziente() {
+        AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
+        boolean success = accessoListaUtenti.insertNuovoPaziente("TestPaziente", "TestPaziente", "TestPaziente", "TestPaziente", 1, Date.valueOf("1972-03-20"), "M", "TestPaziente", "TestPaziente", 300);
+        assertFalse(success);
+    }
 }
