@@ -1,9 +1,5 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.ListaMedici;
-import com.univr.glicontrol.bll.ListaPazienti;
-import com.univr.glicontrol.bll.Medico;
-import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.GetListaPortaleAdmin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
