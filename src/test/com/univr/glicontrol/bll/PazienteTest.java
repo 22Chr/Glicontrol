@@ -61,7 +61,7 @@ class PazienteTest {
     }
 
     @Test
-    void getPeso() {
+    void getPesoUtente() {
         assertEquals(60, paziente.getPeso());
     }
 }

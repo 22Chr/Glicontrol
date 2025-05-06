@@ -87,7 +87,6 @@ public class UtenteSessione {
 
             if (paziente != null && paziente.next()) {
                 int id = paziente.getInt("id_utente");
-                System.out.println(id);
                 String nome = paziente.getString("nome");
                 String cognome = paziente.getString("cognome");
                 String cf = paziente.getString("codice_fiscale");
@@ -97,7 +96,7 @@ public class UtenteSessione {
                 String sesso = paziente.getString("sesso");
                 String emailPaziente = paziente.getString("email_paziente");
                 String allergie = paziente.getString("allergie");
-                int peso = paziente.getInt("peso");
+                int p = paziente.getInt("peso");
 
                 return new Paziente(
                         id,
@@ -110,7 +109,7 @@ public class UtenteSessione {
                         sesso,
                         emailPaziente,
                         allergie,
-                        peso
+                        p
                 );
             }
 
