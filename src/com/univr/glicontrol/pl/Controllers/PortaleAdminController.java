@@ -66,23 +66,10 @@ public class PortaleAdminController {
         alert.setHeaderText("Sei sicuro di voler uscire?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
-            //Chiudi finestra corrente
+            //Chiudi finestra corrente e con essa l'app
             Window currentWindow = logoutB.getScene().getWindow();
             if (currentWindow instanceof Stage) {
                 ((Stage) currentWindow).close();
-            }
-
-            //Apri schermata di login
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
-                Parent root = loader.load();
-
-                Stage loginStage = new Stage();
-                loginStage.setTitle("Login");
-                loginStage.setScene(new Scene(root));
-                loginStage.show();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
             }
         }
     }
