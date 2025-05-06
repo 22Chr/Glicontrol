@@ -47,6 +47,7 @@ class UtenteSessioneTest {
         assertNotNull(paziente);
         assertInstanceOf(Paziente.class, paziente);
         assertEquals("Anna", paziente.getNome());
+        assertEquals(60, paziente.getPeso());
         //indagare colonna peso della tabella paziente
     }
 }

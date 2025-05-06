@@ -15,7 +15,7 @@ public class AccessoUtente implements GetUtente {
         String sql = """
             select 
                 u.id AS id_utente, u.nome, u.cognome, u.codice_fiscale, u.ruolo,
-                p.data_nascita, p.sesso, p.email AS email_paziente, p.allergie, p.medico_riferimento,
+                p.data_nascita, p.sesso, p.email AS email_paziente, p.allergie, p.medico_riferimento, p.peso,
                 m.email AS email_medico
             from Utente u
             left join Paziente p on u.id = p.id_paziente

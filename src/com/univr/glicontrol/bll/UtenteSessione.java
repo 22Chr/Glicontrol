@@ -96,7 +96,7 @@ public class UtenteSessione {
                 String sesso = paziente.getString("sesso");
                 String emailPaziente = paziente.getString("email_paziente");
                 String allergie = paziente.getString("allergie");
-                int p = paziente.getInt("peso");
+                double p = paziente.getDouble("peso");
 
                 return new Paziente(
                         id,

@@ -8,10 +8,10 @@ public class Paziente extends Utente {
     private String sesso;
     private String email;
     private String allergie;
-    private int peso;
+    private double peso;
 
 
-    public Paziente(int idPaziente, String codiceFiscale, String nome, String cognome, String ruolo, int medicoRiferimento, Date dataNascita, String sesso, String email, String allergie, int peso) {
+    public Paziente(int idPaziente, String codiceFiscale, String nome, String cognome, String ruolo, int medicoRiferimento, Date dataNascita, String sesso, String email, String allergie, double peso) {
         super(idPaziente, codiceFiscale, nome, cognome, ruolo);
         this.medicoRiferimento = medicoRiferimento;
         this.dataNascita = dataNascita;
@@ -56,10 +56,10 @@ public class Paziente extends Utente {
         this.allergie = allergie;
     }
 
-    public int getPeso() {
+    public double getPeso() {
         return peso;
     }
-    public void setPeso(int peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 }
