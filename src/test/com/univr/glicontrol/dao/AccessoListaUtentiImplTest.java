@@ -4,7 +4,7 @@ import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.bll.Paziente;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,5 +44,19 @@ class AccessoListaUtentiImplTest {
             assertNotNull(p.getEmail());
             assertNotEquals(0, p.getPeso());
         }
+    }
+
+    @Test
+    void insertNuovoMedico() {
+        AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
+        boolean success = accessoListaUtenti.insertNuovoMedico("TestMedico", "TestMedico", "TestMedico", "TestMedico", "TestMedico");
+        assertTrue(success);
+    }
+
+    @Test
+    void insertNuovoPaziente() {
+        AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
+        boolean success = accessoListaUtenti.insertNuovoPaziente("TestPaziente", "TestPaziente", "TestPaziente", "TestPazien", 4, Date.valueOf("1972-03-20"), "M", "TestPaziente", "TestPaziente", 30);
+        assertTrue(success);
     }
 }

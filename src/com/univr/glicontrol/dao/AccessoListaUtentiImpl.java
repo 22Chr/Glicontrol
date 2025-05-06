@@ -1,6 +1,5 @@
 package com.univr.glicontrol.dao;
 
-import com.univr.glicontrol.Main;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.bll.Paziente;
 
@@ -36,7 +35,8 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                 }
             }
 
-
+            stmt.close();
+            conn.close();
         } catch (SQLException e) {
             System.out.println("[ERRORE RECUPERO MEDICI]: " + e.getMessage());
         }
@@ -70,6 +70,9 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                     Pazienti.add(paz);
                 }
             }
+
+            stmt.close();
+            conn.close();
         } catch (SQLException e) {
             System.out.println("[ERRORE RECUPERO PAZIENTI]: " + e.getMessage());
         }
@@ -88,13 +91,104 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean insertNuovoMedico() {
-        return false;
+    public boolean insertNuovoMedico(String codiceFiscale, String nome, String cognome, String email, String password) {
+        boolean success = false;
+        String inserimentoMedicoInUtenteSql = "insert into Utente (codice_fiscale, nome, cognome, ruolo, password) values (?, ?, ?, ?, ?)";
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            conn.setAutoCommit(false);
+            PreparedStatement stmt = conn.prepareStatement(inserimentoMedicoInUtenteSql, Statement.RETURN_GENERATED_KEYS );
+            stmt.setString(1, codiceFiscale);
+            stmt.setString(2, nome);
+            stmt.setString(3, cognome);
+            stmt.setString(4, "MEDICO");
+            stmt.setString(5, password);
+
+            if (stmt.executeUpdate() != 0) {
+                try (ResultSet id = stmt.getGeneratedKeys()) {
+                    if (!id.next()) {
+                        throw new SQLException("[ERRORE INSERIMENTO NUOVO MEDICO]: Impossibile recuperare l'ID generato");
+                    } else {
+                        int idMedico = id.getInt(1);
+                        String inserimentoMedicoInMedicoSql = "insert into Medico (id_medico, email) values (?, ?)";
+                        PreparedStatement stmt2 = conn.prepareStatement(inserimentoMedicoInMedicoSql);
+                        stmt2.setInt(1, idMedico);
+                        stmt2.setString(2, email);
+
+                        success = stmt2.executeUpdate() != 0;
+                        stmt2.close();
+                    }
+                }
+            }
+
+            if (success) {
+                conn.commit();
+            } else {
+                conn.rollback();
+                System.out.println("[ERRORE INSERIMENTO NUOVO MEDICO]: Impossibile inserire il nuovo medico nel database");
+            }
+
+            stmt.close();
+            conn.setAutoCommit(true);
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("[ERRORE INSERIMENTO NUOVO MEDICO]: " + e.getMessage());
+        }
+
+        return success;
     }
 
     @Override
-    public boolean insertNuovoPaziente() {
-        return false;
+    public boolean insertNuovoPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso) {
+        boolean success = false;
+        String inserimentoPazienteInUtenteSql = "insert into Utente (codice_fiscale, nome, cognome, ruolo, password) values (?, ?, ?, ?, ?)";
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            conn.setAutoCommit(false);
+            PreparedStatement stmt = conn.prepareStatement(inserimentoPazienteInUtenteSql, Statement.RETURN_GENERATED_KEYS );
+            stmt.setString(1, codiceFiscale);
+            stmt.setString(2, nome);
+            stmt.setString(3, cognome);
+            stmt.setString(4, "PAZIENTE");
+            stmt.setString(5, password);
+
+            if (stmt.executeUpdate() != 0) {
+                try (ResultSet id = stmt.getGeneratedKeys()) {
+                    if (!id.next()) {
+                        throw new SQLException("[ERRORE INSERIMENTO NUOVO MEDICO]: Impossibile recuperare l'ID generato");
+                    } else {
+                        int idPaziente = id.getInt(1);
+                        String inserimentoPazienteInPazienteSql = "insert into Paziente (id_paziente, medico_riferimento, data_nascita, sesso, email, allergie, peso) values (?, ?, ?, ?, ?, ?, ?)";
+                        PreparedStatement stmt2 = conn.prepareStatement(inserimentoPazienteInPazienteSql);
+                        stmt2.setInt(1, idPaziente);
+                        stmt2.setInt(2, medico);
+                        stmt2.setDate(3, nascita);
+                        stmt2.setString(4, sesso);
+                        stmt2.setString(5, email);
+                        stmt2.setString(6, allergie);
+                        stmt2.setDouble(7, peso);
+
+                        success = stmt2.executeUpdate() != 0;
+                        stmt2.close();
+                    }
+                }
+            }
+
+            if (success) {
+                conn.commit();
+            } else {
+                conn.rollback();
+                System.out.println("[ERRORE INSERIMENTO NUOVO PAZIENTE]: Impossibile inserire il nuovo paziente nel database");
+            }
+
+            stmt.close();
+            conn.setAutoCommit(true);
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("[ERRORE INSERIMENTO NUOVO PAZIENTE]: " + e.getMessage());
+        }
+
+        return success;
     }
 
     @Override
