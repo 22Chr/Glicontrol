@@ -5,19 +5,34 @@ import com.univr.glicontrol.bll.ListaPazienti;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.bll.Paziente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetListaPortaleAdmin {
 
-    public List<Medico> getListaMediciPortaleAdmin() {
+    public List<String> getListaMediciPortaleAdmin() {
         ListaMedici listaMedici = new ListaMedici();
-        return listaMedici.getListaMedici();
+        String nomeMedico;
+
+        List<String> referenzeMedici = new ArrayList<>();
+        for (Medico m : listaMedici.getListaMedici()) {
+            nomeMedico = m.getCognome() + " " + m.getNome();
+            referenzeMedici.add(nomeMedico);
+        }
+
+        return referenzeMedici;
     }
 
-    public List<Paziente> getListaPazientiPortaleAdmin() {
+    public List<String> getListaPazientiPortaleAdmin() {
         ListaPazienti listaPazienti = new ListaPazienti();
-        return listaPazienti.getListaPazienti();
-    }
+        String nomePaziente;
 
-    //modificare in modo da ritornare solo nome e cognome di ogni medico e paziente
+        List<String> referenzePazienti = new ArrayList<>();
+        for (Paziente p : listaPazienti.getListaPazienti()) {
+            nomePaziente = p.getCognome() + " " + p.getNome();
+            referenzePazienti.add(nomePaziente);
+        }
+
+        return referenzePazienti;
+    }
 }

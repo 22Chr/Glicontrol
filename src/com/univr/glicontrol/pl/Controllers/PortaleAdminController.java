@@ -27,31 +27,31 @@ public class PortaleAdminController {
     @FXML
     private MenuItem medicoMI, pazienteMI;
     @FXML
-    private ListView<Paziente> listaPazienti;
+    private ListView<String> listaPazienti;
     @FXML
-    private ListView<Medico> listaMedici;
+    private ListView<String> listaMedici;
 
     @FXML
     private void initialize() {
         // Popola le liste
         // Medico
         GetListaPortaleAdmin glpaMedico = new GetListaPortaleAdmin();
-        List<Medico> mediciList = glpaMedico.getListaMediciPortaleAdmin();
+        List<String> mediciList = glpaMedico.getListaMediciPortaleAdmin();
         for (int i = 0; i < mediciList.size(); i++) {
             if (mediciList.get(i) == null) {
                 System.out.println("Found null at index " + i + " in list of Medici");
             }
         }
 
-        ObservableList<Medico> medici = FXCollections.observableArrayList();
+        ObservableList<String> medici = FXCollections.observableArrayList();
         medici.addAll(mediciList);
         listaMedici.setItems(medici);
 
         // Paziente
         GetListaPortaleAdmin glpaPaziente = new GetListaPortaleAdmin();
-        List<Paziente> pazientiList = glpaPaziente.getListaPazientiPortaleAdmin();
+        List<String> pazientiList = glpaPaziente.getListaPazientiPortaleAdmin();
 
-        ObservableList<Paziente> pazienti = FXCollections.observableArrayList();
+        ObservableList<String> pazienti = FXCollections.observableArrayList();
         pazienti.addAll(pazientiList);
         listaPazienti.setItems(pazienti);
     }
@@ -82,7 +82,7 @@ public class PortaleAdminController {
                 loginStage.setScene(new Scene(root));
                 loginStage.show();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -111,7 +111,7 @@ public class PortaleAdminController {
             stage.showAndWait(); // Attende la chiusura della finestra
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
