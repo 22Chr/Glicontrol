@@ -2,14 +2,20 @@ package com.univr.glicontrol.pl.Models;
 
 import com.univr.glicontrol.bll.ListaMedici;
 import com.univr.glicontrol.bll.ListaPazienti;
+import com.univr.glicontrol.bll.Medico;
+import com.univr.glicontrol.bll.Paziente;
+
+import java.util.List;
 
 public class GetListaPortaleAdmin {
 
-    public ListaMedici getListaMedici() {
-        return new ListaMedici();
+    public List<Medico> getListaMediciPortaleAdmin() {
+        ListaMedici listaMedici = new ListaMedici();
+        return listaMedici.getListaMedici();
     }
 
-    public ListaPazienti getListaPazienti() {
-        return new ListaPazienti();
+    public List<Paziente> getListaPazientiPortaleAdmin() {
+        ListaPazienti listaPazienti = new ListaPazienti();
+        return listaPazienti.getListaPazienti();
     }
 }

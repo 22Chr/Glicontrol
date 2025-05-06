@@ -7,10 +7,11 @@ import java.util.List;
 
 public class ListaPazienti {
     private List<Paziente> listaPazienti;
+    private final AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
+    private final List<Paziente> listaPazientiRecuperati = accessoListaUtenti.recuperaTuttiIPazienti();
 
     public ListaPazienti() {
-        AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
-        listaPazienti = accessoListaUtenti.recuperaTuttiIPazienti();
+        listaPazienti = listaPazientiRecuperati;
     }
 
     Paziente ottieniPazientePerId(int id) {
@@ -20,6 +21,10 @@ public class ListaPazienti {
             }
         }
         return null;
+    }
+
+    public List<Paziente> getListaPazienti() {
+        return listaPazienti;
     }
 
     //aggiungere poi altri metodi utili

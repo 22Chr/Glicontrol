@@ -7,19 +7,24 @@ import java.util.List;
 
 public class ListaMedici {
     private List<Medico> listaMedici;
+    private final AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
+    private final List<Medico> listaMediciRecuperati = accessoListaUtenti.recuperaTuttiIMedici();
 
     public ListaMedici() {
-        AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
-        List<Medico> listaMedici = accessoListaUtenti.recuperaTuttiIMedici();
+        listaMedici = listaMediciRecuperati;
     }
 
-    Medico ottieniMedicoPerId(int id) {
+    public Medico ottieniMedicoPerId(int id) {
         for (Medico m : listaMedici) {
             if (m.getIdUtente() == id) {
                 return m;
             }
         }
         return null;
+    }
+
+    public List<Medico> getListaMedici() {
+        return listaMedici;
     }
 
     //aggiungere metodi a seconda delle necessità
