@@ -1,6 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoUtente;
+import com.univr.glicontrol.dao.AccessoUtenteSessione;
+import com.univr.glicontrol.dao.AccessoUtenteSessioneImpl;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -8,10 +9,10 @@ import java.sql.SQLException;
 
 public class UtenteSessione {
 
-    // === Costruttore privato per impedire istanziazione esterna ===
+    // Costruttore privato per impedire istanziazione esterna
     private UtenteSessione() {}
 
-    // === Classe statica interna che contiene l'istanza Singleton ===
+    // Classe statica interna che contiene l'istanza Singleton
     private static class Holder {
         private static final UtenteSessione INSTANCE = new UtenteSessione();
     }
@@ -23,7 +24,7 @@ public class UtenteSessione {
 
     // Metodo di autenticazione utente
     public boolean verificaUtente(String codiceFiscale, String pwd, String ruolo) {
-        AccessoUtente access = new AccessoUtente(pwd);
+        AccessoUtenteSessione access = new AccessoUtenteSessioneImpl(pwd);
 
         try (ResultSet utente = access.recuperaUtente(codiceFiscale, ruolo)) {
             return utente != null && utente.next();
@@ -36,7 +37,7 @@ public class UtenteSessione {
     }
 
     public Admin creaAdminConnesso(String codiceFiscale, String pwd, String ruolo) {
-        AccessoUtente adminAccess = new AccessoUtente(pwd);
+        AccessoUtenteSessioneImpl adminAccess = new AccessoUtenteSessioneImpl(pwd);
 
         try (ResultSet admin = adminAccess.recuperaUtente(codiceFiscale, ruolo)) {
 
@@ -58,7 +59,7 @@ public class UtenteSessione {
     }
 
     public Medico creaMedicoConnesso(String codiceFiscale, String pwd, String ruolo) {
-        AccessoUtente medicoAccess = new AccessoUtente(pwd);
+        AccessoUtenteSessioneImpl medicoAccess = new AccessoUtenteSessioneImpl(pwd);
 
         try (ResultSet medico = medicoAccess.recuperaUtente(codiceFiscale, ruolo)) {
 
@@ -81,7 +82,7 @@ public class UtenteSessione {
     }
 
     public Paziente creaPazienteConnesso(String codiceFiscale, String pwd, String ruolo) {
-        AccessoUtente pazienteAccess = new AccessoUtente(pwd);
+        AccessoUtenteSessioneImpl pazienteAccess = new AccessoUtenteSessioneImpl(pwd);
 
         try (ResultSet paziente = pazienteAccess.recuperaUtente(codiceFiscale, ruolo)) {
 

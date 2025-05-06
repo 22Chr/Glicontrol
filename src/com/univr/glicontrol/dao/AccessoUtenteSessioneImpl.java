@@ -2,11 +2,11 @@ package com.univr.glicontrol.dao;
 
 import java.sql.*;
 
-public class AccessoUtente implements GetUtente {
+public class AccessoUtenteSessioneImpl implements AccessoUtenteSessione {
 
     private final String pwd;
 
-    public AccessoUtente(String pwd) {
+    public AccessoUtenteSessioneImpl(String pwd) {
         this.pwd = pwd;
     }
 
