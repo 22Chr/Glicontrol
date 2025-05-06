@@ -57,6 +57,11 @@ public class PortaleAdminController {
     @FXML
     public void logout(ActionEvent event) {
         //mostra finestra di conferma
+        Stage currentStage = (Stage) logoutB.getScene().getWindow();
+        boolean isFullScreen = currentStage.isFullScreen();
+        if (isFullScreen) {
+            currentStage.setFullScreen(false);
+        }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Conferma Logout");
         alert.setHeaderText("Sei sicuro di voler uscire?");
