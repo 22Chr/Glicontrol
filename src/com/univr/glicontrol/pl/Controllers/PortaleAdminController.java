@@ -29,7 +29,7 @@ public class PortaleAdminController {
 
     @FXML
     private void initialize() {
-        // Popola le liste
+        //POPOLAZIONE DELLE LISTE
         // Medico
         GetListaPortaleAdmin glpaMedico = new GetListaPortaleAdmin();
         List<String> mediciList = glpaMedico.getListaMediciPortaleAdmin();
@@ -38,6 +38,16 @@ public class PortaleAdminController {
         medici.addAll(mediciList);
         listaMedici.setItems(medici);
 
+        listaMedici.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // doppio clic
+                String selectedItem = listaMedici.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    int idMedico = glpaMedico.getIdMedico(selectedItem);
+                    apriFinestraModifica(selectedItem, "/ModificaMedico.fxml");
+                }
+            }
+        });
+
         // Paziente
         GetListaPortaleAdmin glpaPaziente = new GetListaPortaleAdmin();
         List<String> pazientiList = glpaPaziente.getListaPazientiPortaleAdmin();
@@ -45,6 +55,33 @@ public class PortaleAdminController {
         ObservableList<String> pazienti = FXCollections.observableArrayList();
         pazienti.addAll(pazientiList);
         listaPazienti.setItems(pazienti);
+
+        listaPazienti.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // doppio clic
+                String selectedItem = listaPazienti.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    int idPaziente = glpaPaziente.getIdPaziente(selectedItem);
+                    apriFinestraModifica(selectedItem, "/ModificaPaziente.fxml");
+                }
+            }
+        });
+    }
+
+    private void apriFinestraModifica(String selectedItem, String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+
+
+
+            Stage stage = new Stage();
+            stage.setTitle("Dettagli");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -73,16 +110,17 @@ public class PortaleAdminController {
     //MEDICO MENUITEM
     @FXML
     public void inserisciNuovoMedico(ActionEvent event) {
-        apriFinestra("/InserisciNuovoMedico.fxml", "Inserisci medico");
+        apriFinestraInserisci("/InserisciNuovoMedico.fxml", "Inserisci medico");
     }
 
     //PAZIENTE MENUITEM
     @FXML
     public void inserisciNuovoPaziente(ActionEvent event) {
-        apriFinestra("/view/InserisciNuovoPaziente.fxml", "Inserisci paziente");
+        apriFinestraInserisci("/view/InserisciNuovoPaziente.fxml", "Inserisci paziente");
     }
     //! NECESSARIO CREARE GLI FXML
-    private void apriFinestra(String fxmlPath, String titoloFinestra) {
+    
+    private void apriFinestraInserisci(String fxmlPath, String titoloFinestra) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
