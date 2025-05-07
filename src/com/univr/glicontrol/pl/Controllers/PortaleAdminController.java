@@ -45,7 +45,7 @@ public class PortaleAdminController {
                 String selectedItem = listaMedici.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     int idMedico = glpaMedico.getIdMedico(selectedItem);
-                    apriFinestraModifica(selectedItem, "../uiElements/ModificaMedico.fxml", "MEDICO");
+                    apriFinestraModifica(selectedItem, "../uiElements/ModificaMedico.fxml", "MEDICO", idMedico);
                 }
             }
         });
@@ -63,13 +63,13 @@ public class PortaleAdminController {
                 String selectedItem = listaPazienti.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     int idPaziente = glpaPaziente.getIdPaziente(selectedItem);
-                    apriFinestraModifica(selectedItem, "../uiElements/ModificaPaziente.fxml", "PAZIENTE");
+                    apriFinestraModifica(selectedItem, "../uiElements/ModificaPaziente.fxml", "PAZIENTE", idPaziente);
                 }
             }
         });
     }
 
-    private void apriFinestraModifica(String selectedItem, String fxmlPath, String ruolo) {
+    private void apriFinestraModifica(String selectedItem, String fxmlPath, String ruolo, int id) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
@@ -77,14 +77,12 @@ public class PortaleAdminController {
             if (ruolo != null) {
                 if (ruolo.equals("MEDICO")) {
                     ModificaMedicoController modificaMedicoController = loader.getController();
-                    GetListaPortaleAdmin glpaMedico = new GetListaPortaleAdmin();
                     ListaMedici getMedico = new ListaMedici();
-                    modificaMedicoController.setMedico(getMedico.ottieniMedicoPerId(glpaMedico.getIdMedico(selectedItem)));
+                    modificaMedicoController.setMedico(getMedico.ottieniMedicoPerId(id));
                 } else {
                     ModificaPazienteController modificaPazienteController = loader.getController();
-                    GetListaPortaleAdmin glpaPaziente = new GetListaPortaleAdmin();
                     ListaPazienti getPaziente = new ListaPazienti();
-                    modificaPazienteController.setPaziente(getPaziente.ottieniPazientePerId(glpaPaziente.getIdPaziente(selectedItem)));
+                    modificaPazienteController.setPaziente(getPaziente.ottieniPazientePerId(id));
                 }
             } else {
                 throw new IOException("Impossibile caricare la finestra");
