@@ -1,5 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.univr.glicontrol.bll.ListaMedici;
+import com.univr.glicontrol.bll.ListaPazienti;
 import com.univr.glicontrol.pl.Models.GetListaPortaleAdmin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,7 +45,7 @@ public class PortaleAdminController {
                 String selectedItem = listaMedici.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     int idMedico = glpaMedico.getIdMedico(selectedItem);
-                    apriFinestraModifica(selectedItem, "/ModificaMedico.fxml");
+                    apriFinestraModifica(selectedItem, "/ModificaMedico.fxml", "MEDICO");
                 }
             }
         });
@@ -61,25 +63,39 @@ public class PortaleAdminController {
                 String selectedItem = listaPazienti.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     int idPaziente = glpaPaziente.getIdPaziente(selectedItem);
-                    apriFinestraModifica(selectedItem, "/ModificaPaziente.fxml");
+                    apriFinestraModifica(selectedItem, "/ModificaPaziente.fxml", "PAZIENTE");
                 }
             }
         });
     }
 
-    private void apriFinestraModifica(String selectedItem, String fxmlPath) {
+    private void apriFinestraModifica(String selectedItem, String fxmlPath, String ruolo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-
+            if (ruolo != null) {
+                if (ruolo.equals("MEDICO")) {
+                    ModificaMedicoController modificaMedicoController = loader.getController();
+                    GetListaPortaleAdmin glpaMedico = new GetListaPortaleAdmin();
+                    ListaMedici getMedico = new ListaMedici();
+                    modificaMedicoController.setMedico(getMedico.ottieniMedicoPerId(glpaMedico.getIdMedico(selectedItem)));
+                } else {
+                    ModificaPazienteController modificaPazienteController = loader.getController();
+                    GetListaPortaleAdmin glpaPaziente = new GetListaPortaleAdmin();
+                    ListaPazienti getPaziente = new ListaPazienti();
+                    modificaPazienteController.setPaziente(getPaziente.ottieniPazientePerId(glpaPaziente.getIdPaziente(selectedItem)));
+                }
+            } else {
+                throw new IOException("Impossibile caricare la finestra");
+            }
 
             Stage stage = new Stage();
             stage.setTitle("Dettagli");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }
