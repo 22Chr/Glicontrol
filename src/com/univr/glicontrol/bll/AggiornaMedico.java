@@ -4,7 +4,7 @@ import com.univr.glicontrol.dao.AccessoListaUtenti;
 import com.univr.glicontrol.dao.AccessoListaUtentiImpl;
 
 public class AggiornaMedico {
-    private Medico medico;
+    private final Medico medico;
 
     public AggiornaMedico(Medico medico) {
         this.medico = medico;
