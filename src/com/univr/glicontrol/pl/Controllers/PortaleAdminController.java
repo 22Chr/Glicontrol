@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -89,7 +90,7 @@ public class PortaleAdminController {
             }
 
             Stage stage = new Stage();
-            stage.setTitle("Dettagli");
+            stage.setTitle("Modifica");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
