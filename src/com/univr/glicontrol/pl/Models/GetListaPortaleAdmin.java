@@ -46,4 +46,24 @@ public class GetListaPortaleAdmin {
     }
 
     //aggiungere i metodi per ottenere l'id del medico e del paziente mediante associazione delle mappe
+    //ritorna -1 in caso di fallimento, id in caso di successo
+    public int getIdMedico(String referenceMedico) {
+        int id = -1;
+        Medico m = mappaMedici.get(referenceMedico);
+        if (m != null) {
+            id = m.getIdUtente();
+        }
+
+        return id;
+    }
+
+    public int getIdPaziente(String referencePaziente) {
+        int id = -1;
+        Paziente p = mappaPazienti.get(referencePaziente);
+        if (p != null) {
+            id = p.getIdUtente();
+        }
+
+        return id;
+    }
 }

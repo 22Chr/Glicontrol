@@ -14,12 +14,13 @@ public class ListaMedici {
         listaMedici = listaMediciRecuperati;
     }
 
-    public int ottieniIdPerMedico(Medico m) {
-        if (listaMedici.contains(m)) {
-            return m.getIdUtente();
+    public Medico ottieniMedicoPerId(int idMedico) {
+        for (Medico m : listaMedici) {
+            if (m.getIdUtente() == idMedico) {
+                return m;
+            }
         }
-
-        return -1;
+        return null;
     }
 
     public List<Medico> getListaMedici() {

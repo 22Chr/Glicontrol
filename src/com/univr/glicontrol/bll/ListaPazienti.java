@@ -15,12 +15,13 @@ public class ListaPazienti {
         listaPazienti = listaPazientiRecuperati;
     }
 
-    public int ottieniIdPerPaziente(Paziente p) {
-        if (listaPazienti.contains(p)) {
-            return p.getIdUtente();
+    public Paziente ottieniPazientePerId(int idPaziente) {
+        for (Paziente p : listaPazienti) {
+            if (p.getIdUtente() == idPaziente) {
+                return p;
+            }
         }
-
-        return -1;
+        return null;
     }
 
     public List<Paziente> getListaPazientiCompleta() {
