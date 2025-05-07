@@ -69,6 +69,10 @@ public class LoginController {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlFile)));
         Parent root = loader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Object controller = loader.getController();
+        if (controller instanceof PortaleAdminController pac) {
+            pac.setStageAndSetupListeners(stage); // 💡 Attiva listener sulla chiusura con X rossa
+        }
         stage.setScene(new Scene(root, 800, 520));
         stage.show();
     }

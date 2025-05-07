@@ -149,4 +149,17 @@ public class PortaleAdminController {
             System.out.println(e.getMessage());
         }
     }
+
+    public void setStageAndSetupListeners(Stage stage) {
+        stage.setOnCloseRequest(event -> {
+            event.consume(); // Blocca la chiusura automatica
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Sei sicuro di voler uscire?");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                stage.close(); // chiude davvero la finestra
+            }
+        });
+    }
 }
