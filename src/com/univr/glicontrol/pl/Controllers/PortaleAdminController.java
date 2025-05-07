@@ -33,11 +33,6 @@ public class PortaleAdminController {
         // Medico
         GetListaPortaleAdmin glpaMedico = new GetListaPortaleAdmin();
         List<String> mediciList = glpaMedico.getListaMediciPortaleAdmin();
-        for (int i = 0; i < mediciList.size(); i++) {
-            if (mediciList.get(i) == null) {
-                System.out.println("Found null at index " + i + " in list of Medici");
-            }
-        }
 
         ObservableList<String> medici = FXCollections.observableArrayList();
         medici.addAll(mediciList);
