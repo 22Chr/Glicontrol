@@ -10,10 +10,10 @@ import java.util.List;
 public interface AccessoListaUtenti {
     List<Medico> recuperaTuttiIMedici();
     List<Paziente> recuperaTuttiIPazienti();
-    boolean updateListaMedici();
-    boolean updateListaPazienti();
+    boolean updateListaMedici(int idMedico, String codiceFiscale, String nome, String cognome, String password, String email);
+    boolean updateListaPazienti(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso);
     boolean insertNuovoMedico(String codiceFiscale, String nome, String cognome, String email, String password);
     boolean insertNuovoPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso);
-    boolean deleteMedico();
-    boolean deletePaziente();
+    boolean deleteMedico(int idMedico);
+    boolean deletePaziente(int idPaziente);
 }

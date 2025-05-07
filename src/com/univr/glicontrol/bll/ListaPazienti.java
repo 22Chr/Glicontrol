@@ -3,6 +3,7 @@ package com.univr.glicontrol.bll;
 import com.univr.glicontrol.dao.AccessoListaUtenti;
 import com.univr.glicontrol.dao.AccessoListaUtentiImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListaPazienti {
@@ -14,18 +15,27 @@ public class ListaPazienti {
         listaPazienti = listaPazientiRecuperati;
     }
 
-    Paziente ottieniPazientePerId(int id) {
-        for (Paziente p : listaPazienti) {
-            if (p.getIdUtente() == id) {
-                return p;
-            }
+    public int ottieniIdPerPaziente(Paziente p) {
+        if (listaPazienti.contains(p)) {
+            return p.getIdUtente();
         }
-        return null;
+
+        return -1;
     }
 
-    public List<Paziente> getListaPazienti() {
+    public List<Paziente> getListaPazientiCompleta() {
         return listaPazienti;
     }
 
+    // Restituisce la lista di tutti i pazienti associati ad un dato medico
+    public List<Paziente> getListaPazientiPerMedico(int idMedico) {
+        List<Paziente> listaPazientiPerMedico = new ArrayList<>();
+        for (Paziente p : listaPazienti) {
+            if (p.getMedicoRiferimento() == idMedico) {
+                listaPazientiPerMedico.add(p);
+            }
+        }
+        return listaPazientiPerMedico;
+    }
     //aggiungere poi altri metodi utili
 }

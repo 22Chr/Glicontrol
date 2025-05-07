@@ -81,13 +81,90 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean updateListaMedici() {
-        return false;
+    public boolean updateListaMedici(int idMedico, String codiceFiscale, String nome, String cognome, String password, String email) {
+        boolean success = false;
+        String updateMedicoInUtenteSql = "update Utente set nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            conn.setAutoCommit(false);
+            PreparedStatement stmt = conn.prepareStatement(updateMedicoInUtenteSql);
+            stmt.setString(1, nome);
+            stmt.setString(2, cognome);
+            stmt.setString(3, "MEDICO");
+            stmt.setString(4, password);
+            stmt.setInt(5, idMedico);
+
+            if (stmt.executeUpdate() != 0) {
+                String updateMedicoInMedicoSql = "update Medico set email = ? where id_medico = ?";
+                PreparedStatement stmt2 = conn.prepareStatement(updateMedicoInMedicoSql);
+                stmt2.setString(1, email);
+                stmt2.setInt(2, idMedico);
+
+                success = stmt2.executeUpdate() != 0;
+                stmt2.close();
+            }
+
+            if (success) {
+                conn.commit();
+            } else {
+                conn.rollback();
+                System.out.println("[ERRORE UPDATE LISTA MEDICI]: Impossibile aggiornare il medico selezionato nel database");
+            }
+
+            stmt.close();
+            conn.setAutoCommit(true);
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("[ERRORE UPDATE LISTA MEDICI]: " + e.getMessage());
+        }
+
+        return success;
     }
 
     @Override
-    public boolean updateListaPazienti() {
-        return false;
+    public boolean updateListaPazienti(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso) {
+        boolean success = false;
+        String updatePazienteInUtenteSql = "update Utente set nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            conn.setAutoCommit(false);
+            PreparedStatement stmt = conn.prepareStatement(updatePazienteInUtenteSql);
+            stmt.setString(1, nome);
+            stmt.setString(2, cognome);
+            stmt.setString(3, "PAZIENTE");
+            stmt.setString(4, password);
+            stmt.setInt(5, idPaziente);
+
+            if (stmt.executeUpdate() != 0) {
+                String updatePazienteInPazienteSql = "update Paziente set medico_riferimento = ?, data_nascita = ?, sesso = ?, email = ?, allergie = ?, peso = ? where id_paziente = ?";
+                PreparedStatement stmt2 = conn.prepareStatement(updatePazienteInPazienteSql);
+                stmt2.setInt(1, medico);
+                stmt2.setDate(2, nascita);
+                stmt2.setString(3, sesso);
+                stmt2.setString(4, email);
+                stmt2.setString(5, allergie);
+                stmt2.setDouble(6, peso);
+                stmt2.setInt(7, idPaziente);
+
+                success = stmt2.executeUpdate() != 0;
+                stmt2.close();
+            }
+
+            if (success) {
+                conn.commit();
+            } else {
+                conn.rollback();
+                System.out.println("[ERRORE UPDATE LISTA PAZIENTI]: Impossibile aggiornare il paziente selezionato nel database");
+            }
+
+            stmt.close();
+            conn.setAutoCommit(true);
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("[ERRORE UPDATE LISTA PAZIENTI]: " + e.getMessage());
+        }
+
+        return success;
     }
 
     @Override
@@ -192,12 +269,73 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean deleteMedico() {
-        return false;
+    public boolean deleteMedico(int idMedico) {
+        boolean success = false;
+        String deleteMedicoInMedicoSql = "delete from Medico where id_medico = ?";
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            conn.setAutoCommit(false);
+            PreparedStatement stmt = conn.prepareStatement(deleteMedicoInMedicoSql);
+            stmt.setInt(1, idMedico);
+
+            if (stmt.executeUpdate() != 0) {
+                String deleteMedicoInUtenteSql = "delete from Utente where id = ?";
+                PreparedStatement stmt2 = conn.prepareStatement(deleteMedicoInUtenteSql);
+                stmt2.setInt(1, idMedico);
+
+                success = stmt2.executeUpdate() != 0;
+                stmt2.close();
+            }
+
+            if (success) {
+                conn.commit();
+            } else {
+                conn.rollback();
+                System.out.println("[ERRORE DELETE MEDICO]: Impossibile eliminare il medico selezionato nel database");
+            }
+
+            stmt.close();
+            conn.setAutoCommit(true);
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("[ERRORE DELETE MEDICO]: " + e.getMessage());
+        }
+
+        return success;
     }
 
     @Override
-    public boolean deletePaziente() {
-        return false;
+    public boolean deletePaziente(int idPaziente) {
+        boolean success = false;
+        String deletePazienteInPazienteSql = "delete from Paziente where id_paziente = ?";
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            conn.setAutoCommit(false);
+            PreparedStatement stmt = conn.prepareStatement(deletePazienteInPazienteSql);
+            stmt.setInt(1, idPaziente);
+
+            if (stmt.executeUpdate() != 0) {
+                String deletePazienteInUtenteSql = "delete from Utente where id = ?";
+                PreparedStatement stmt2 = conn.prepareStatement(deletePazienteInUtenteSql);
+                stmt2.setInt(1, idPaziente);
+
+                success = stmt2.executeUpdate() != 0;
+                stmt2.close();
+            }
+
+            if (success) {
+                conn.commit();
+            } else {
+                conn.rollback();
+            }
+
+            stmt.close();
+            conn.setAutoCommit(true);
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("[ERRORE DELETE PAZIENTE]: " + e.getMessage());
+        }
+
+        return success;
     }
 }
