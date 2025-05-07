@@ -45,7 +45,7 @@ public class PortaleAdminController {
                 String selectedItem = listaMedici.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     int idMedico = glpaMedico.getIdMedico(selectedItem);
-                    apriFinestraModifica(selectedItem, "/ModificaMedico.fxml", "MEDICO");
+                    apriFinestraModifica(selectedItem, "../uiElements/ModificaMedico.fxml", "MEDICO");
                 }
             }
         });
@@ -63,7 +63,7 @@ public class PortaleAdminController {
                 String selectedItem = listaPazienti.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     int idPaziente = glpaPaziente.getIdPaziente(selectedItem);
-                    apriFinestraModifica(selectedItem, "/ModificaPaziente.fxml", "PAZIENTE");
+                    apriFinestraModifica(selectedItem, "../uiElements/ModificaPaziente.fxml", "PAZIENTE");
                 }
             }
         });
