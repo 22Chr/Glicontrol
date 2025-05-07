@@ -77,14 +77,14 @@ class AccessoListaUtentiImplTest {
     @Test
     void failUpdateListaMedici() {
         AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
-        boolean success = accessoListaUtenti.updateListaMedici(1, "TestMedico", "TestMedico", "TestMedico", "TestMedico153", "TestMedico");
+        boolean success = accessoListaUtenti.updateMedico(1, "TestMedico", "TestMedico", "TestMedico", "TestMedico153", "TestMedico");
         assertFalse(success);
     }
 
     @Test
     void failUpdateListaPazienti() {
         AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
-        boolean success = accessoListaUtenti.updateListaPazienti(1, "TestPaziente", "TestPaziente", "TestPaziente", "TestPaziente153", 1, Date.valueOf("1972-03-20"), "M", "TestPaziente", "TestPaziente", 300);
+        boolean success = accessoListaUtenti.updatePaziente(1, "TestPaziente", "TestPaziente", "TestPaziente", "TestPaziente153", 1, Date.valueOf("1972-03-20"), "M", "TestPaziente", "TestPaziente", 300);
         assertFalse(success);
     }
 

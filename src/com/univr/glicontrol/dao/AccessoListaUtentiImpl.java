@@ -81,7 +81,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean updateListaMedici(int idMedico, String codiceFiscale, String nome, String cognome, String password, String email) {
+    public boolean updateMedico(int idMedico, String codiceFiscale, String nome, String cognome, String password, String email) {
         boolean success = false;
         String updateMedicoInUtenteSql = "update Utente set nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
         try {
@@ -122,7 +122,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean updateListaPazienti(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso) {
+    public boolean updatePaziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso) {
         boolean success = false;
         String updatePazienteInUtenteSql = "update Utente set nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
         try {
