@@ -12,11 +12,11 @@ import java.util.Map;
 
 public class GetListaPortaleAdmin {
 
+    Map<String, Medico> mappaMedici = new HashMap<>();
     public List<String> getListaMediciPortaleAdmin() {
         ListaMedici listaMedici = new ListaMedici();
         // Mappa usata per mantenere l'associazione tra referenza del medico ottenuta facendo click sul nome del medico a livello UI
         // e l'oggetto Medico corrispondente, in modo da poter successivamente recuperare l'id
-        Map<String, Medico> mappaMedici = new HashMap<>();
         String nomeMedico;
 
         List<String> referenzeMedici = new ArrayList<>();
@@ -29,10 +29,10 @@ public class GetListaPortaleAdmin {
         return referenzeMedici;
     }
 
+    Map<String, Paziente> mappaPazienti = new HashMap<>();
     public List<String> getListaPazientiPortaleAdmin() {
         ListaPazienti listaPazienti = new ListaPazienti();
         // Mappa usata analogamente per ottenere l'id del paziente
-        Map<String, Paziente> mappaPazienti = new HashMap<>();
         String nomePaziente;
 
         List<String> referenzePazienti = new ArrayList<>();
@@ -44,4 +44,6 @@ public class GetListaPortaleAdmin {
 
         return referenzePazienti;
     }
+
+    //aggiungere i metodi per ottenere l'id del medico e del paziente mediante associazione delle mappe
 }
