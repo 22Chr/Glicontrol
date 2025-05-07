@@ -6,6 +6,6 @@ public class ModificaMedicoController {
 
 
     public void setMedico(Medico medico) {
-        //utilizza in initialize per settare i campi
+        System.out.println(medico.getCodiceFiscale());
     }
 }

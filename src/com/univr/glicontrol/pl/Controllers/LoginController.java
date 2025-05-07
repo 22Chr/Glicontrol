@@ -28,8 +28,6 @@ public class LoginController {
     private Button loginButton;
     @FXML
     private Label portalLabel;
-    @FXML
-    private Button backHomeB;
 
     private String ruolo;
 
@@ -42,6 +40,7 @@ public class LoginController {
     @FXML
     public void initialize() {
         Platform.runLater(() -> loginButton.requestFocus());
+        loginButton.setDefaultButton(true);
     }
 
     public void login(ActionEvent event) throws IOException {
