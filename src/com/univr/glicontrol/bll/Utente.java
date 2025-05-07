@@ -47,4 +47,5 @@ public abstract class Utente {
     public String setRuolo(String newRuolo) {
         return ruolo = newRuolo;
     }
+
 }

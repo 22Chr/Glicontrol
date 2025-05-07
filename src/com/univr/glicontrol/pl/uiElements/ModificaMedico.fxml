@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane maxHeight="800.0" maxWidth="600.0" prefHeight="443.0" prefWidth="398.0" style="-fx-background-color: #f4f3ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.ModificaMedicoController">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="322.0" prefWidth="274.0">
@@ -68,7 +67,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1">
+            <TextField fx:id="nomeMedicoTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -76,7 +75,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="cognomeMedicoTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -84,7 +83,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="CFMedicoTF" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -92,7 +91,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="emailMedicoTF" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -100,7 +99,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="passwordMedicoTF" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>
@@ -115,7 +114,7 @@
       </GridPane>
       <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" style="-fx-background-color: #c1121f;" text="Elimina " textFill="WHITE">
+            <Button fx:id="deleteButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" style="-fx-background-color: #c1121f;" text="Elimina " textFill="WHITE">
                <HBox.margin>
                   <Insets bottom="40.0" />
                </HBox.margin>
@@ -124,7 +123,7 @@
                </font>
             </Button>
             <Region prefHeight="443.0" prefWidth="79.0" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #22577a;" text="Salva modifiche" textFill="WHITE">
+            <Button fx:id="saveButton" mnemonicParsing="false" style="-fx-background-color: #22577a;" text="Salva modifiche" textFill="WHITE">
                <HBox.margin>
                   <Insets bottom="40.0" />
                </HBox.margin>
