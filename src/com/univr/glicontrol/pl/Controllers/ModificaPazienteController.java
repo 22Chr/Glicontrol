@@ -1,16 +1,20 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.pl.Models.GetListaPortaleAdmin;
 import com.univr.glicontrol.pl.Models.SalvaModifichePaziente;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.sql.Date;
+import java.util.List;
 
 public class ModificaPazienteController {
     private Paziente p;
@@ -42,7 +46,18 @@ public class ModificaPazienteController {
     @FXML
     private Button saveButton;
 
+    @FXML
+    private ComboBox<String> medicoRifCB;
+
     private PortaleAdminController pac;
+
+    GetListaPortaleAdmin glpa = new GetListaPortaleAdmin();
+    @FXML
+    private void initialize(){
+        List<String> medici = glpa.getListaMediciPortaleAdmin(); // ad es. "Mario Rossi - CF1234"
+
+        medicoRifCB.setItems(FXCollections.observableArrayList(medici));
+    }
 
     public void setPaziente(Paziente paziente) {
         this.p = paziente;
@@ -52,7 +67,6 @@ public class ModificaPazienteController {
         emailPazienteTF.setText(p.getEmail());
         dataNascitaPazienteTF.setText(p.getDataNascita().toString());
         sessoPazienteTF.setText(p.getSesso());
-        //medicoRifPazienteTF.setText(p.getMedicoRiferimento());
     }
 
     public void setInstance(PortaleAdminController pac) {
@@ -67,7 +81,6 @@ public class ModificaPazienteController {
         p.setCodiceFiscale(CFPazienteTF.getText());
         p.setDataNascita(Date.valueOf(dataNascitaPazienteTF.getText()));
         p.setSesso(sessoPazienteTF.getText());
-        //p.setMedicoRiferimento(medicoRifPazienteTF.getText());
 
         SalvaModifichePaziente smv = new SalvaModifichePaziente(p);
         if (smv.pazienteAggiornato(passwordPazienteTF.getText())) {
@@ -90,5 +103,11 @@ public class ModificaPazienteController {
             alert.setContentText("Errore durante il salvataggio del paziente.");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void selezionaMedicoRiferimento() {
+        String selezionato = medicoRifCB.getValue();
+        p.setMedicoRiferimento(glpa.getIdMedico(selezionato));
     }
 }

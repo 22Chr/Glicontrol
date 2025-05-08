@@ -23,7 +23,7 @@ public class ListaMedici {
         return null;
     }
 
-    public int ottienIdPerMedico(Medico med) {
+    public int ottieniIdPerMedico(Medico med) {
         for (Medico m : listaMedici) {
             if (m.getIdUtente() == med.getIdUtente()) {
                 return m.getIdUtente();

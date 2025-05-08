@@ -40,14 +40,26 @@ public class PortaleAdminController {
         medici.addAll(mediciList);
         listaMedici.setItems(medici);
 
-        listaMedici.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) { // doppio clic
-                String selectedItem = listaMedici.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
+        listaMedici.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !cell.isEmpty()) {
+                    String selectedItem = cell.getItem();
                     int idMedico = glpaMedico.getIdMedico(selectedItem);
+                    System.out.println("Selected medico: " + selectedItem);
+                    System.out.println("ID medico: " + idMedico);
                     apriFinestraModifica("../uiElements/ModificaMedico.fxml", "MEDICO", idMedico);
                 }
-            }
+            });
+
+            return cell;
         });
 
         // Paziente
@@ -58,14 +70,24 @@ public class PortaleAdminController {
         pazienti.addAll(pazientiList);
         listaPazienti.setItems(pazienti);
 
-        listaPazienti.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) { // doppio clic
-                String selectedItem = listaPazienti.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
+        listaPazienti.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !cell.isEmpty()) {
+                    String selectedItem = cell.getItem();
                     int idPaziente = glpaPaziente.getIdPaziente(selectedItem);
                     apriFinestraModifica("../uiElements/ModificaPaziente.fxml", "PAZIENTE", idPaziente);
                 }
-            }
+            });
+
+            return cell;
         });
     }
 
@@ -82,7 +104,7 @@ public class PortaleAdminController {
         List<String> newPazientiList = newGlpaPaziente.getListaPazientiPortaleAdmin();
         ObservableList<String> newPazienti = FXCollections.observableArrayList();
         newPazienti.addAll(newPazientiList);
-        listaMedici.setItems(newPazienti);
+        listaPazienti.setItems(newPazienti);
     }
 
     private void apriFinestraModifica(String fxmlPath, String ruolo, int id) {
