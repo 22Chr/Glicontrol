@@ -4,7 +4,6 @@ import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.GetListaPortaleAdmin;
 import com.univr.glicontrol.pl.Models.SalvaModifichePaziente;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -55,7 +54,6 @@ public class ModificaPazienteController {
     @FXML
     private void initialize(){
         List<String> medici = glpa.getListaMediciPortaleAdmin(); // ad es. "Mario Rossi - CF1234"
-
         medicoRifCB.setItems(FXCollections.observableArrayList(medici));
     }
 
@@ -73,7 +71,7 @@ public class ModificaPazienteController {
         this.pac = pac;
     }
 
-    public void salvaPaziente(ActionEvent actionEvent) {
+    public void salvaPaziente() {
 
         p.setNome(nomePazienteTF.getText());
         p.setCognome(cognomePazienteTF.getText());

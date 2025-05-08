@@ -52,9 +52,8 @@ public class PortaleAdminController {
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !cell.isEmpty()) {
                     String selectedItem = cell.getItem();
+                    glpaMedico.updateListaMediciPortaleAdmin();
                     int idMedico = glpaMedico.getIdMedico(selectedItem);
-                    System.out.println("Selected medico: " + selectedItem);
-                    System.out.println("ID medico: " + idMedico);
                     apriFinestraModifica("../uiElements/ModificaMedico.fxml", "MEDICO", idMedico);
                 }
             });
@@ -82,6 +81,7 @@ public class PortaleAdminController {
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !cell.isEmpty()) {
                     String selectedItem = cell.getItem();
+                    glpaPaziente.updateListaPazientiPortaleAdmin();
                     int idPaziente = glpaPaziente.getIdPaziente(selectedItem);
                     apriFinestraModifica("../uiElements/ModificaPaziente.fxml", "PAZIENTE", idPaziente);
                 }
@@ -172,7 +172,6 @@ public class PortaleAdminController {
     public void inserisciNuovoPaziente(ActionEvent event) {
         apriFinestraInserisci("/view/InserisciNuovoPaziente.fxml", "Inserisci paziente");
     }
-    //! NECESSARIO CREARE GLI FXML
     
     private void apriFinestraInserisci(String fxmlPath, String titoloFinestra) {
         try {

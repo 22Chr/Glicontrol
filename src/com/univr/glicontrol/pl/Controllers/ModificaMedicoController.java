@@ -2,7 +2,6 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.pl.Models.SalvaModificheMedico;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -45,7 +44,7 @@ public class ModificaMedicoController {
         this.pac = pac;
     }
 
-    public void salvaMedico(ActionEvent actionEvent) {
+    public void salvaMedico() {
         m.setNome(nomeMedicoTF.getText());
         m.setCognome(cognomeMedicoTF.getText());
         m.setEmail(emailMedicoTF.getText());
