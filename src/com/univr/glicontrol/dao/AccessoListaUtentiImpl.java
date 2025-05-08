@@ -123,7 +123,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean updatePaziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso) {
+    public boolean updatePaziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso) {
         boolean success = false;
         String updatePazienteInUtenteSql = "update Utente set utente.codice_fiscale = ?, nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
         try {

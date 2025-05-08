@@ -12,7 +12,7 @@ public class AggiornaPaziente {
         this.paziente = paziente;
     }
 
-    public Paziente updatePaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso) {
+    public Paziente updatePaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso) {
         AccessoListaUtenti modificaPaziente = new AccessoListaUtentiImpl();
         return modificaPaziente.updatePaziente(paziente.getIdUtente(), codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, peso) ?
                 new Paziente(paziente.getIdUtente(), codiceFiscale, nome, cognome, "PAZIENTE", medico, nascita, sesso, email, allergie, peso) :

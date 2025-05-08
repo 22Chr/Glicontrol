@@ -69,12 +69,20 @@ public class PortaleAdminController {
         });
     }
 
-    public void resetListView() {
+    public void resetListViewMedici() {
         GetListaPortaleAdmin newGlpaMedico = new GetListaPortaleAdmin();
         List<String> newMediciList = newGlpaMedico.getListaMediciPortaleAdmin();
         ObservableList<String> newMedici = FXCollections.observableArrayList();
         newMedici.addAll(newMediciList);
         listaMedici.setItems(newMedici);
+    }
+
+    public void resetListViewPazienti() {
+        GetListaPortaleAdmin newGlpaPaziente = new GetListaPortaleAdmin();
+        List<String> newPazientiList = newGlpaPaziente.getListaPazientiPortaleAdmin();
+        ObservableList<String> newPazienti = FXCollections.observableArrayList();
+        newPazienti.addAll(newPazientiList);
+        listaMedici.setItems(newPazienti);
     }
 
     private void apriFinestraModifica(String fxmlPath, String ruolo, int id) {

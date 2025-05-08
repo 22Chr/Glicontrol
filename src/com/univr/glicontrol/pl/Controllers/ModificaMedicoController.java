@@ -54,10 +54,11 @@ public class ModificaMedicoController {
         if (smv.medicoAggiornato(passwordMedicoTF.getText())) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successo");
+            alert.setHeaderText(null);
             alert.setContentText("Modifica effettuata con successo!");
             alert.showAndWait();
 
-            pac.resetListView();
+            pac.resetListViewMedici();
 
             Window currentWindow = saveButton.getScene().getWindow();
             if (currentWindow instanceof Stage) {
@@ -66,6 +67,7 @@ public class ModificaMedicoController {
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");
+            alert.setHeaderText(null);
             alert.setContentText("Errore durante il salvataggio del medico.");
             alert.showAndWait();
         }

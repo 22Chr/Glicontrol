@@ -94,7 +94,7 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1">
+            <TextField fx:id="nomePazienteTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1">
                 <GridPane.margin>
                     <Insets right="5.0" />
                 </GridPane.margin>
@@ -102,7 +102,7 @@
                     <Font size="14.0" />
                 </font>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="cognomePazienteTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <GridPane.margin>
                     <Insets right="5.0" />
                 </GridPane.margin>
@@ -110,7 +110,7 @@
                     <Font size="14.0" />
                 </font>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="CFPazienteTF" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <GridPane.margin>
                     <Insets right="5.0" />
                 </GridPane.margin>
@@ -118,7 +118,7 @@
                     <Font size="14.0" />
                 </font>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="dataNascitaPazienteTF" GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <GridPane.margin>
                     <Insets right="5.0" />
                 </GridPane.margin>
@@ -126,7 +126,7 @@
                     <Font size="14.0" />
                 </font>
             </TextField>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="sessoPazienteTF" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <GridPane.margin>
                     <Insets right="5.0" />
                 </GridPane.margin>
@@ -134,17 +134,17 @@
                     <Font size="14.0" />
                 </font>
             </TextField>
-            <TextField prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <TextField fx:id="medicoRifPazienteTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <TextField fx:id="emailPazienteTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <TextField fx:id="passwordPazienteTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <font>
                   <Font size="14.0" />
                </font>
@@ -165,7 +165,7 @@
                 </font>
             </Button>
             <Region prefHeight="443.0" prefWidth="79.0" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #22577a;" text="Salva modifiche" textFill="WHITE">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#salvaPaziente" style="-fx-background-color: #22577a;" text="Salva modifiche" textFill="WHITE">
                 <HBox.margin>
                     <Insets bottom="40.0" />
                 </HBox.margin>
