@@ -218,7 +218,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean insertNuovoPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso) {
+    public boolean insertNuovoPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso) {
         boolean success = false;
         String inserimentoPazienteInUtenteSql = "insert into Utente (codice_fiscale, nome, cognome, ruolo, password) values (?, ?, ?, ?, ?)";
         try {

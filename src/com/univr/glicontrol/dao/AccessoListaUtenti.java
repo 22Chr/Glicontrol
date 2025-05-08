@@ -13,7 +13,7 @@ public interface AccessoListaUtenti {
     boolean updateMedico(int idMedico, String codiceFiscale, String nome, String cognome, String password, String email);
     boolean updatePaziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso);
     boolean insertNuovoMedico(String codiceFiscale, String nome, String cognome, String email, String password);
-    boolean insertNuovoPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso);
+    boolean insertNuovoPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso);
     boolean deleteMedico(int idMedico);
     boolean deletePaziente(int idPaziente);
 }
