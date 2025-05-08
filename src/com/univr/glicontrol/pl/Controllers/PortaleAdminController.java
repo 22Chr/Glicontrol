@@ -44,6 +44,7 @@ public class PortaleAdminController {
             if (event.getClickCount() == 2) { // doppio clic
                 String selectedItem = listaMedici.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
+                    glpaMedico.updateListaMediciPortaleAdmin();
                     int idMedico = glpaMedico.getIdMedico(selectedItem);
                     apriFinestraModifica("../uiElements/ModificaMedico.fxml", "MEDICO", idMedico);
                 }
@@ -62,6 +63,7 @@ public class PortaleAdminController {
             if (event.getClickCount() == 2) { // doppio clic
                 String selectedItem = listaPazienti.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
+                    glpaPaziente.updateListaPazientiPortaleAdmin();
                     int idPaziente = glpaPaziente.getIdPaziente(selectedItem);
                     apriFinestraModifica("../uiElements/ModificaPaziente.fxml", "PAZIENTE", idPaziente);
                 }
@@ -82,7 +84,7 @@ public class PortaleAdminController {
         List<String> newPazientiList = newGlpaPaziente.getListaPazientiPortaleAdmin();
         ObservableList<String> newPazienti = FXCollections.observableArrayList();
         newPazienti.addAll(newPazientiList);
-        listaMedici.setItems(newPazienti);
+        listaPazienti.setItems(newPazienti);
     }
 
     private void apriFinestraModifica(String fxmlPath, String ruolo, int id) {
