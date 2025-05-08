@@ -75,7 +75,7 @@ public class InserisciPazienteController {
 
         InserisciPaziente inserisciPaziente = new InserisciPaziente();
 
-        boolean success = inserisciPaziente.insertPaziente(CF, nome, cognome,password, id, dataNascita, sesso, email, "", 0.0);
+        boolean success = inserisciPaziente.insertPaziente(CF, nome, cognome, password, id, dataNascita, sesso, email, "", 0.0);
 
         if (success) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -86,6 +86,18 @@ public class InserisciPazienteController {
 
             // Ricarica la lista dei medici nel controller principale
             pac.resetListViewPazienti();
+
+            if (inserisciPaziente.inviaCredenzialiPaziente(email, password)) {
+                // Invia le credenziali al server
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Successo");
+                alert2.setHeaderText(null);
+                alert2.setContentText("Invio delle credenziali al server avvenuto con successo!");
+                alert2.showAndWait();
+            } else {
+                // Invia le credenziali al server
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            }
 
             // Chiudi la finestra di inserimento
             Window currentWindow = saveNuovoPazienteB.getScene().getWindow();

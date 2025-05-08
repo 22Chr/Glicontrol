@@ -1,6 +1,5 @@
 package com.univr.glicontrol;
 
-import com.univr.glicontrol.bll.MailService;
 import jakarta.mail.MessagingException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
