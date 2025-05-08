@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class ModificaMedicoController {
     private Medico m;
@@ -29,12 +31,18 @@ public class ModificaMedicoController {
     @FXML
     private Button saveButton;
 
+    private PortaleAdminController pac;
+
     public void setMedico(Medico medico) {
        this.m = medico;
        CFMedicoTF.setText(m.getCodiceFiscale());
        nomeMedicoTF.setText(m.getNome());
        cognomeMedicoTF.setText(m.getCognome());
        emailMedicoTF.setText(m.getEmail());
+    }
+
+    public void setInstance(PortaleAdminController pac) {
+        this.pac = pac;
     }
 
     public void salvaMedico(ActionEvent actionEvent) {
@@ -48,6 +56,13 @@ public class ModificaMedicoController {
             alert.setTitle("Successo");
             alert.setContentText("Modifica effettuata con successo!");
             alert.showAndWait();
+
+            pac.resetListView();
+
+            Window currentWindow = saveButton.getScene().getWindow();
+            if (currentWindow instanceof Stage) {
+                ((Stage) currentWindow).close();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Errore");

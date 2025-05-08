@@ -11,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -46,7 +45,7 @@ public class PortaleAdminController {
                 String selectedItem = listaMedici.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     int idMedico = glpaMedico.getIdMedico(selectedItem);
-                    apriFinestraModifica(selectedItem, "../uiElements/ModificaMedico.fxml", "MEDICO", idMedico);
+                    apriFinestraModifica("../uiElements/ModificaMedico.fxml", "MEDICO", idMedico);
                 }
             }
         });
@@ -64,13 +63,21 @@ public class PortaleAdminController {
                 String selectedItem = listaPazienti.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     int idPaziente = glpaPaziente.getIdPaziente(selectedItem);
-                    apriFinestraModifica(selectedItem, "../uiElements/ModificaPaziente.fxml", "PAZIENTE", idPaziente);
+                    apriFinestraModifica("../uiElements/ModificaPaziente.fxml", "PAZIENTE", idPaziente);
                 }
             }
         });
     }
 
-    private void apriFinestraModifica(String selectedItem, String fxmlPath, String ruolo, int id) {
+    public void resetListView() {
+        GetListaPortaleAdmin newGlpaMedico = new GetListaPortaleAdmin();
+        List<String> newMediciList = newGlpaMedico.getListaMediciPortaleAdmin();
+        ObservableList<String> newMedici = FXCollections.observableArrayList();
+        newMedici.addAll(newMediciList);
+        listaMedici.setItems(newMedici);
+    }
+
+    private void apriFinestraModifica(String fxmlPath, String ruolo, int id) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
@@ -78,6 +85,7 @@ public class PortaleAdminController {
             if (ruolo != null) {
                 if (ruolo.equals("MEDICO")) {
                     ModificaMedicoController modificaMedicoController = loader.getController();
+                    modificaMedicoController.setInstance(this);
                     ListaMedici getMedico = new ListaMedici();
                     modificaMedicoController.setMedico(getMedico.ottieniMedicoPerId(id));
                 } else {
