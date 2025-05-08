@@ -19,7 +19,6 @@ public class ModificaMedicoController {
     @FXML
     private TextField emailMedicoTF;
 
-
     public void setMedico(Medico medico) {
        this.m = medico;
        CFMedicoTF.setText(m.getCodiceFiscale());
