@@ -10,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.sql.Date;
+
 public class ModificaPazienteController {
     private Paziente p;
 
@@ -58,11 +60,12 @@ public class ModificaPazienteController {
     }
 
     public void salvaPaziente(ActionEvent actionEvent) {
+
         p.setNome(nomePazienteTF.getText());
         p.setCognome(cognomePazienteTF.getText());
         p.setEmail(emailPazienteTF.getText());
         p.setCodiceFiscale(CFPazienteTF.getText());
-        //p.getDataNascita(dataNascitaPazienteTF.toString().getText());
+        p.setDataNascita(Date.valueOf(dataNascitaPazienteTF.getText()));
         p.setSesso(sessoPazienteTF.getText());
         //p.setMedicoRiferimento(medicoRifPazienteTF.getText());
 

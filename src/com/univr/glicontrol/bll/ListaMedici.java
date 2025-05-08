@@ -23,6 +23,15 @@ public class ListaMedici {
         return null;
     }
 
+    public int ottienIdPerMedico(Medico med) {
+        for (Medico m : listaMedici) {
+            if (m.getIdUtente() == med.getIdUtente()) {
+                return m.getIdUtente();
+            }
+        }
+        return -1;
+    }
+
     public List<Medico> getListaMedici() {
         return listaMedici;
     }

@@ -98,6 +98,7 @@ public class PortaleAdminController {
                     modificaMedicoController.setMedico(getMedico.ottieniMedicoPerId(id));
                 } else {
                     ModificaPazienteController modificaPazienteController = loader.getController();
+                    modificaPazienteController.setInstance(this);
                     ListaPazienti getPaziente = new ListaPazienti();
                     modificaPazienteController.setPaziente(getPaziente.ottieniPazientePerId(id));
                 }
