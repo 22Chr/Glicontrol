@@ -40,9 +40,6 @@ public class ModificaPazienteController {
     private TextField sessoPazienteTF;
 
     @FXML
-    private TextField medicoRifPazienteTF;
-
-    @FXML
     private Button saveButton;
 
     @FXML

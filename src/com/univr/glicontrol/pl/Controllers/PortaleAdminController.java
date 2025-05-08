@@ -164,13 +164,13 @@ public class PortaleAdminController {
     //MEDICO MENUITEM
     @FXML
     public void inserisciNuovoMedico(ActionEvent event) {
-        apriFinestraInserisci("/InserisciNuovoMedico.fxml", "Inserisci medico");
+        apriFinestraInserisci("../uiElements/InserisciNuovoMedico.fxml", "Inserisci medico");
     }
 
     //PAZIENTE MENUITEM
     @FXML
     public void inserisciNuovoPaziente(ActionEvent event) {
-        apriFinestraInserisci("/view/InserisciNuovoPaziente.fxml", "Inserisci paziente");
+        apriFinestraInserisci("../uiElements/InserisciNuovoPaziente.fxml", "Inserisci paziente");
     }
     
     private void apriFinestraInserisci(String fxmlPath, String titoloFinestra) {
