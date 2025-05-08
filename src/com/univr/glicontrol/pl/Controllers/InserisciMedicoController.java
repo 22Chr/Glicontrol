@@ -3,6 +3,7 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.InserisciMedico;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.pl.Models.SalvaModificheMedico;
+import jakarta.mail.MessagingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -36,7 +37,7 @@ public class InserisciMedicoController {
         this.pac = pac;
     }
 
-    public void salvaNuovoMedico() {
+    public void salvaNuovoMedico() throws MessagingException {
 
         String nome = nomeNuovoMedicoTF.getText();
         String cognome = cognomeNuovoMedicoTF.getText();
@@ -58,6 +59,17 @@ public class InserisciMedicoController {
             // Ricarica la lista dei medici nel controller principale
             pac.resetListViewMedici();
 
+            if (inserisciMedico.inviaCredenzialiMedico(email, password)) {
+                // Invia le credenziali al server
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Successo");
+                alert2.setHeaderText(null);
+                alert2.setContentText("Invio delle credenziali al medico avvenuto con successo!");
+                alert2.showAndWait();
+            } else {
+                // Invia le credenziali al server
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            }
             // Chiudi la finestra di inserimento
             Window currentWindow = saveNuovoMedicoB.getScene().getWindow();
             if (currentWindow instanceof Stage) {

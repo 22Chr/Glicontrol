@@ -18,4 +18,17 @@ public class AggiornaPaziente {
                 new Paziente(paziente.getIdUtente(), codiceFiscale, nome, cognome, "PAZIENTE", medico, nascita, sesso, email, allergie, peso) :
                 null;
     }
+
+    public boolean inviaCredenzialiAggiornatePaziente(String email, String pwd) {
+        MailService ms = new MailService();
+        boolean status;
+        try {
+            ms.sendEmail(email, "NUOVE CREDENZIALI DI ACCESSO AL PORTALE PAZIENTE GLICONTROL", "Puoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd);
+            status = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            status = false;
+        }
+        return status;
+    }
 }

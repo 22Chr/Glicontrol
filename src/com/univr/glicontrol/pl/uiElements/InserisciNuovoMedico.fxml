@@ -7,11 +7,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane focusTraversable="true" maxHeight="800.0" maxWidth="600.0" prefHeight="443.0" prefWidth="398.0" style="-fx-background-color: #f4f3ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.InserisciMedicoController">
+<StackPane focusTraversable="true" maxHeight="800.0" maxWidth="600.0" prefHeight="443.0" prefWidth="398.0" style="-fx-background-color: #f4f3ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.ModificaMedicoController">
     <children>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="322.0" prefWidth="274.0">
             <columnConstraints>
@@ -66,7 +67,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="nomeNuovoMedicoTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1">
+                <TextField fx:id="nomeMedicoTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1">
                     <GridPane.margin>
                         <Insets right="5.0" />
                     </GridPane.margin>
@@ -74,7 +75,7 @@
                         <Font size="14.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="cognomeNuovoMedicoTF" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <TextField fx:id="cognomeMedicoTF" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets right="5.0" />
                     </GridPane.margin>
@@ -82,7 +83,7 @@
                         <Font size="14.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="CFNuovoMedicoTF" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <TextField fx:id="CFMedicoTF" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets right="5.0" />
                     </GridPane.margin>
@@ -90,7 +91,7 @@
                         <Font size="14.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="emailNuovoMedicoTF" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <TextField fx:id="emailMedicoTF" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets right="5.0" />
                     </GridPane.margin>
@@ -98,7 +99,7 @@
                         <Font size="14.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="passwordNuovoMedicoTF" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <TextField fx:id="passwordMedicoTF" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets right="5.0" />
                     </GridPane.margin>
@@ -113,7 +114,16 @@
         </GridPane>
         <HBox alignment="BOTTOM_CENTER" maxHeight="90.0" prefHeight="150.0" prefWidth="398.0">
             <children>
-                <Button fx:id="saveNuovoMedicoB" alignment="CENTER" mnemonicParsing="false" onAction="#salvaNuovoMedico" style="-fx-background-color: #22577a;" text="Salva" textFill="WHITE">
+                <Button fx:id="deleteButton" alignment="BOTTOM_RIGHT" mnemonicParsing="false" style="-fx-background-color: #c1121f;" text="Elimina " textFill="WHITE">
+                    <HBox.margin>
+                        <Insets bottom="40.0" />
+                    </HBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Region mouseTransparent="true" prefHeight="228.0" prefWidth="79.0" />
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#salvaMedico" style="-fx-background-color: #22577a;" text="Salva modifiche" textFill="WHITE">
                     <HBox.margin>
                         <Insets bottom="40.0" />
                     </HBox.margin>

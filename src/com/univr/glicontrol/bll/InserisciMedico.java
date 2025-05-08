@@ -11,15 +11,15 @@ public class InserisciMedico {
         return accessoListaUtenti.insertNuovoMedico(codiceFiscale, nome, cognome, email, password);
     }
 
-    public int inviaCredenzialiMedico(String email, String pwd) throws MessagingException {
+    public boolean inviaCredenzialiMedico(String email, String pwd) throws MessagingException {
         MailService ms = new MailService();
-        int status;
+        boolean status;
         try {
             ms.sendEmail(email, "CREDENZIALI DI ACCESSO AL PORTALE MEDICO GLICONTROL", "Puoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd);
-            status = 1;
+            status = true;
         } catch (MessagingException e) {
             System.out.println(e.getMessage());
-            status = -1;
+            status = false;
         }
         return status;
     }

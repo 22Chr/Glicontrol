@@ -153,7 +153,7 @@
     </GridPane>
     <HBox alignment="BOTTOM_CENTER" maxHeight="75.0" prefHeight="100.0" prefWidth="200.0">
         <children>
-            <Button alignment="BOTTOM_RIGHT" mnemonicParsing="false" style="-fx-background-color: #c1121f;" text="Elimina " textFill="WHITE">
+            <Button fx:id="eliminaPazienteB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#eliminaPaziente" style="-fx-background-color: #c1121f;" text="Elimina " textFill="WHITE">
                 <HBox.margin>
                     <Insets bottom="40.0" />
                 </HBox.margin>

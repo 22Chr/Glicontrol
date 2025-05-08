@@ -50,6 +50,7 @@ public class InserisciPazienteController {
 
     private int id;
 
+    //carica la lista di medici nel controller p
     GetListaPortaleAdmin glpa = new GetListaPortaleAdmin();
     @FXML
     private void initialize(){
