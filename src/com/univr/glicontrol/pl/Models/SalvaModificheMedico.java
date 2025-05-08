@@ -13,7 +13,7 @@ public class SalvaModificheMedico {
         aggiornaMedico = new AggiornaMedico(med);
     }
 
-    public Medico medicoAggiornato(String pwd) {
-        return aggiornaMedico.updateMedico(med.getCodiceFiscale(), med.getNome(), med.getCognome(), pwd, med.getEmail());
+    public boolean medicoAggiornato(String pwd) {
+        return aggiornaMedico.updateMedico(med.getCodiceFiscale(), med.getNome(), med.getCognome(), pwd, med.getEmail()) != null;
     }
 }

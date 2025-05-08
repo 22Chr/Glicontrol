@@ -83,16 +83,17 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     @Override
     public boolean updateMedico(int idMedico, String codiceFiscale, String nome, String cognome, String password, String email) {
         boolean success = false;
-        String updateMedicoInUtenteSql = "update Utente set nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
+        String updateMedicoInUtenteSql = "update Utente set codice_fiscale = ?, nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
             conn.setAutoCommit(false);
             PreparedStatement stmt = conn.prepareStatement(updateMedicoInUtenteSql);
-            stmt.setString(1, nome);
-            stmt.setString(2, cognome);
-            stmt.setString(3, "MEDICO");
-            stmt.setString(4, password);
-            stmt.setInt(5, idMedico);
+            stmt.setString(1, codiceFiscale);
+            stmt.setString(2, nome);
+            stmt.setString(3, cognome);
+            stmt.setString(4, "MEDICO");
+            stmt.setString(5, password);
+            stmt.setInt(6, idMedico);
 
             if (stmt.executeUpdate() != 0) {
                 String updateMedicoInMedicoSql = "update Medico set email = ? where id_medico = ?";
@@ -124,16 +125,17 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     @Override
     public boolean updatePaziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int peso) {
         boolean success = false;
-        String updatePazienteInUtenteSql = "update Utente set nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
+        String updatePazienteInUtenteSql = "update Utente set utente.codice_fiscale = ?, nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
             conn.setAutoCommit(false);
             PreparedStatement stmt = conn.prepareStatement(updatePazienteInUtenteSql);
-            stmt.setString(1, nome);
-            stmt.setString(2, cognome);
-            stmt.setString(3, "PAZIENTE");
-            stmt.setString(4, password);
-            stmt.setInt(5, idPaziente);
+            stmt.setString(1, codiceFiscale);
+            stmt.setString(2, nome);
+            stmt.setString(3, cognome);
+            stmt.setString(4, "PAZIENTE");
+            stmt.setString(5, password);
+            stmt.setInt(6, idPaziente);
 
             if (stmt.executeUpdate() != 0) {
                 String updatePazienteInPazienteSql = "update Paziente set medico_riferimento = ?, data_nascita = ?, sesso = ?, email = ?, allergie = ?, peso = ? where id_paziente = ?";
