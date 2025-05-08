@@ -29,6 +29,10 @@ public class GetListaPortaleAdmin {
         return referenzeMedici;
     }
 
+    public void updateListaMediciPortaleAdmin() {
+        getListaMediciPortaleAdmin();
+    }
+
     Map<String, Paziente> mappaPazienti = new HashMap<>();
     public List<String> getListaPazientiPortaleAdmin() {
         ListaPazienti listaPazienti = new ListaPazienti();
@@ -43,6 +47,10 @@ public class GetListaPortaleAdmin {
         }
 
         return referenzePazienti;
+    }
+
+    public void updateListaPazientiPortaleAdmin() {
+        getListaPazientiPortaleAdmin();
     }
 
     //aggiungere i metodi per ottenere l'id del medico e del paziente mediante associazione delle mappe
