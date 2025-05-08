@@ -1,10 +1,8 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.InserisciMedico;
 import com.univr.glicontrol.bll.InserisciPaziente;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.GetListaPortaleAdmin;
-import com.univr.glicontrol.pl.Models.SalvaModifichePaziente;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -92,7 +90,7 @@ public class InserisciPazienteController {
                 Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
                 alert2.setTitle("Successo");
                 alert2.setHeaderText(null);
-                alert2.setContentText("Invio delle credenziali al server avvenuto con successo!");
+                alert2.setContentText("Invio delle credenziali al paziente avvenuto con successo!");
                 alert2.showAndWait();
             } else {
                 // Invia le credenziali al server
