@@ -1,5 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.univr.glicontrol.bll.InserisciMedico;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.pl.Models.SalvaModificheMedico;
 import javafx.fxml.FXML;
@@ -10,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class InserisciMedicoController {
-    private Medico me;
 
     @FXML
     private TextField CFNuovoMedicoTF;
@@ -37,21 +37,28 @@ public class InserisciMedicoController {
     }
 
     public void salvaNuovoMedico() {
+
         String nome = nomeNuovoMedicoTF.getText();
         String cognome = cognomeNuovoMedicoTF.getText();
         String email = emailNuovoMedicoTF.getText();
         String CF = CFNuovoMedicoTF.getText();
-        me = new Medico(me.getIdUtente(), CF, nome, cognome, "MEDICO", email);
-        SalvaModificheMedico smv = new SalvaModificheMedico(me);
-        if (smv.medicoAggiornato(passwordNuovoMedicoTF.getText())) {
+        String password = passwordNuovoMedicoTF.getText();
+
+        InserisciMedico inserisciMedico = new InserisciMedico();
+
+        boolean success = inserisciMedico.insertMedico(CF, nome, cognome, email, password);
+
+        if (success) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successo");
             alert.setHeaderText(null);
             alert.setContentText("Inserimento effettuato con successo!");
             alert.showAndWait();
 
+            // Ricarica la lista dei medici nel controller principale
             pac.resetListViewMedici();
 
+            // Chiudi la finestra di inserimento
             Window currentWindow = saveNuovoMedicoB.getScene().getWindow();
             if (currentWindow instanceof Stage) {
                 ((Stage) currentWindow).close();

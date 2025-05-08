@@ -1,5 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.univr.glicontrol.bll.InserisciMedico;
+import com.univr.glicontrol.bll.InserisciPaziente;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.GetListaPortaleAdmin;
 import com.univr.glicontrol.pl.Models.SalvaModifichePaziente;
@@ -48,6 +50,8 @@ public class InserisciPazienteController {
 
     private PortaleAdminController pac;
 
+    private int id;
+
     GetListaPortaleAdmin glpa = new GetListaPortaleAdmin();
     @FXML
     private void initialize(){
@@ -61,23 +65,29 @@ public class InserisciPazienteController {
 
     public void salvaNuovoPaziente() {
 
-        pa.setNome(nomeNuovoPazienteTF.getText());
-        pa.setCognome(cognomeNuovoPazienteTF.getText());
-        pa.setEmail(emailNuovoPazienteTF.getText());
-        pa.setCodiceFiscale(CFNuovoPazienteTF.getText());
-        pa.setDataNascita(Date.valueOf(dataNascitaNuovoPazienteTF.getText()));
-        pa.setSesso(sessoNuovoPazienteTF.getText());
+        String nome = nomeNuovoPazienteTF.getText();
+        String cognome = cognomeNuovoPazienteTF.getText();
+        String email = emailNuovoPazienteTF.getText();
+        String CF = CFNuovoPazienteTF.getText();
+        Date dataNascita = Date.valueOf(dataNascitaNuovoPazienteTF.getText());
+        String sesso = sessoNuovoPazienteTF.getText();
+        String password = passwordNuovoPazienteTF.getText();
 
-        SalvaModifichePaziente smv = new SalvaModifichePaziente(pa);
-        if (smv.pazienteAggiornato(passwordNuovoPazienteTF.getText())) {
+        InserisciPaziente inserisciPaziente = new InserisciPaziente();
+
+        boolean success = inserisciPaziente.insertPaziente(CF, nome, cognome,password, id, dataNascita, sesso, email, "", 0.0);
+
+        if (success) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successo");
             alert.setHeaderText(null);
             alert.setContentText("Inserimento effettuato con successo!");
             alert.showAndWait();
 
+            // Ricarica la lista dei medici nel controller principale
             pac.resetListViewPazienti();
 
+            // Chiudi la finestra di inserimento
             Window currentWindow = saveNuovoPazienteB.getScene().getWindow();
             if (currentWindow instanceof Stage) {
                 ((Stage) currentWindow).close();
@@ -94,6 +104,6 @@ public class InserisciPazienteController {
     @FXML
     private void selezionaMedicoRiferimentoNuovo() {
         String selezionato = medicoRifNuovoPazCB.getValue();
-        pa.setMedicoRiferimento(glpa.getIdMedico(selezionato));
+        id = glpa.getIdMedico(selezionato);
     }
 }

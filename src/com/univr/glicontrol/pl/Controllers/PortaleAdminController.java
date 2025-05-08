@@ -164,26 +164,36 @@ public class PortaleAdminController {
     //MEDICO MENUITEM
     @FXML
     public void inserisciNuovoMedico(ActionEvent event) {
-        apriFinestraInserisci("../uiElements/InserisciNuovoMedico.fxml", "Inserisci medico");
+        apriFinestraInserisci("../uiElements/InserisciNuovoMedico.fxml", "Inserisci medico", "MEDICO");
     }
 
     //PAZIENTE MENUITEM
     @FXML
     public void inserisciNuovoPaziente(ActionEvent event) {
-        apriFinestraInserisci("../uiElements/InserisciNuovoPaziente.fxml", "Inserisci paziente");
+        apriFinestraInserisci("../uiElements/InserisciNuovoPaziente.fxml", "Inserisci paziente", "PAZIENTE");
     }
     
-    private void apriFinestraInserisci(String fxmlPath, String titoloFinestra) {
+    private void apriFinestraInserisci(String fxmlPath, String titoloFinestra, String ruolo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            Stage stage = new Stage();
-            stage.setTitle(titoloFinestra);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL); // Blocca interazione con la finestra principale
-            stage.showAndWait(); // Attende la chiusura della finestra
+            if (ruolo != null) {
+                if (ruolo.equals("MEDICO")) {
+                    InserisciMedicoController inserisciMedicoController = loader.getController();
+                    inserisciMedicoController.setInstance(this);
+                } else {
+                    InserisciPazienteController inserisciPazienteController = loader.getController();
+                    inserisciPazienteController.setInstance(this);
+                }
+            } else {
+                throw new IOException("Impossibile caricare la finestra");
+            }
 
+            Stage stage = new Stage();
+            stage.setTitle("Modifica");
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
