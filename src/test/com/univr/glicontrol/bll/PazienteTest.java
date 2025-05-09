@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PazienteTest {
 
-    Paziente paziente = new Paziente(2, "MRTNNA04A62H612X", "Anna", "Martini", "PAZIENTE", 3, Date.valueOf("2004-01-22"), "F", "anna.martini04@gmail.com", "null", 60);
+    Paziente paziente = new Paziente(2, "MRTNNA04A62H612X", "Anna", "Martini", "CalDigit04", "PAZIENTE", 3, Date.valueOf("2004-01-22"), "F", "anna.martini04@gmail.com", "null", 60);
 
     @Test
     void getMedicoRiferimento() {

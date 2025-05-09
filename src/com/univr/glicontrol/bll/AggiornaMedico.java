@@ -14,15 +14,15 @@ public class AggiornaMedico {
     public Medico updateMedico(String codiceFiscale, String nome, String cognome, String password, String email) {
         AccessoListaUtenti modificaMedico = new AccessoListaUtentiImpl();
         return modificaMedico.updateMedico(medico.getIdUtente(), codiceFiscale, nome, cognome, password, email) ?
-                new Medico(medico.getIdUtente(), codiceFiscale, nome, cognome, "MEDICO", email) :
+                new Medico(medico.getIdUtente(), codiceFiscale, nome, cognome, password, "MEDICO", email) :
                 null;
     }
 
-    public boolean inviaCredenzialiAggiornateMedico(String email, String pwd) throws MessagingException {
+    public boolean inviaCredenzialiAggiornateMedico(String email, String pwd) {
         MailService ms = new MailService();
         boolean status;
         try {
-            ms.sendEmail(email, "NUOVE CREDENZIALI DI ACCESSO AL PORTALE MEDICO GLICONTROL", "Puoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd);
+            ms.sendEmail(email, "MODIFICA CREDENZIALI DI ACCESSO AL PORTALE MEDICO GLICONTROL", "La tua password di accesso al portale è stata modificata con la seguente: " + pwd);
             status = true;
         } catch (MessagingException e) {
             System.out.println(e.getMessage());

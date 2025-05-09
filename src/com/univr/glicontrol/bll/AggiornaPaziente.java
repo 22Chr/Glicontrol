@@ -15,7 +15,7 @@ public class AggiornaPaziente {
     public Paziente updatePaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso) {
         AccessoListaUtenti modificaPaziente = new AccessoListaUtentiImpl();
         return modificaPaziente.updatePaziente(paziente.getIdUtente(), codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, peso) ?
-                new Paziente(paziente.getIdUtente(), codiceFiscale, nome, cognome, "PAZIENTE", medico, nascita, sesso, email, allergie, peso) :
+                new Paziente(paziente.getIdUtente(), codiceFiscale, nome, cognome, password, "PAZIENTE", medico, nascita, sesso, email, allergie, peso) :
                 null;
     }
 
@@ -23,7 +23,7 @@ public class AggiornaPaziente {
         MailService ms = new MailService();
         boolean status;
         try {
-            ms.sendEmail(email, "NUOVE CREDENZIALI DI ACCESSO AL PORTALE PAZIENTE GLICONTROL", "Puoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd);
+            ms.sendEmail(email, "MODIFICA CREDENZIALI DI ACCESSO AL PORTALE PAZIENTE GLICONTROL", "La tua password di accesso al portale è stata modificata con la seguente: " + pwd);
             status = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

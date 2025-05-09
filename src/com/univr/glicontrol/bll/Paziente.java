@@ -11,8 +11,8 @@ public class Paziente extends Utente {
     private double peso;
 
 
-    public Paziente(int idPaziente, String codiceFiscale, String nome, String cognome, String ruolo, int medicoRiferimento, Date dataNascita, String sesso, String email, String allergie, double peso) {
-        super(idPaziente, codiceFiscale, nome, cognome, ruolo);
+    public Paziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, String ruolo, int medicoRiferimento, Date dataNascita, String sesso, String email, String allergie, double peso) {
+        super(idPaziente, codiceFiscale, nome, cognome, password, ruolo);
         this.medicoRiferimento = medicoRiferimento;
         this.dataNascita = dataNascita;
         this.sesso = sesso;

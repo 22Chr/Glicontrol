@@ -1,6 +1,9 @@
 package com.univr.glicontrol.bll;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class InputChecker {
 
@@ -16,16 +19,12 @@ public class InputChecker {
         return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
-    public boolean verificaAllergie(String allergie) {
-        return !allergie.isEmpty();
-    }
-
     public boolean verificaPeso(double peso) {
-        return peso >= 0;
+        return peso > 0.0 && peso <= 700.0;
     }
 
     public boolean verificaSesso(String sesso) {
-        return sesso.equals("M") || sesso.equals("F");
+        return sesso.equals("M") || sesso.equals("F") || sesso.equals("m") || sesso.equals("f") ;
     }
 
     public boolean verificaMedico(int idMedico) {
@@ -34,14 +33,33 @@ public class InputChecker {
 
     public boolean verificaNascita(Date dataNascita) {
         Date today = new Date(System.currentTimeMillis());
-        return dataNascita != null && dataNascita.before(today);
+        boolean dataValida;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try {
+            LocalDate.parse(dataNascita.toString(), formatter);
+            dataValida = true;
+        } catch (DateTimeParseException e) {
+            System.out.println(e.getMessage());
+            dataValida = false;
+        }
+
+        return dataNascita.before(today) && dataValida && dataNascita.after(Date.valueOf("1900-01-01"));
     }
 
     public boolean verificaNome(String nome) {
-        return nome.matches("[a-zA-Z]+") && nome.length() > 1;
+        return nome.matches("^[A-Z][a-z]+(?: [A-Z][a-z]+){0,2}$") && nome.length() > 1;
     }
 
     public boolean verificaCognome(String cognome) {
-        return cognome.matches("[a-zA-Z]+") && cognome.length() > 1;
+        return cognome.matches("^[A-Z][a-z]+(?: [A-Z][a-z]+){0,2}$") && cognome.length() > 1;
+    }
+
+    public boolean allCheckForMedico(String nome, String cognome, String codiceFiscale, String password, String email) {
+        return verificaNome(nome) && verificaCognome(cognome) && verificaCodiceFiscale(codiceFiscale) && verificaPassword(password) && verificaEmail(email);
+    }
+
+    public boolean allCheckForPaziente(String nome, String cognome, String codiceFiscale, String password, String email, String sesso, Date dataNascita) {
+        return verificaNome(nome) && verificaCognome(cognome) && verificaCodiceFiscale(codiceFiscale) && verificaPassword(password) && verificaEmail(email) && verificaSesso(sesso) && verificaNascita(dataNascita);
     }
 }

@@ -3,10 +3,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .idea/workspace.xml
-.idea/libraries/
-.idea/runConfigurations/
-.run/
-target/
+.idea/libraries/*
+.idea/runConfigurations/*
+.run/*
+target/*
 
 ### Eclipse ###
 .apt_generated

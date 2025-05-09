@@ -45,10 +45,11 @@ public class UtenteSessione {
                 int id = admin.getInt("id_utente");
                 String nome = admin.getString("nome");
                 String cognome = admin.getString("cognome");
+                String password = admin.getString("password");
                 String cf = admin.getString("codice_fiscale");
                 String r = admin.getString("ruolo");
 
-                return new Admin(id, cf, nome, cognome, r);
+                return new Admin(id, cf, nome, cognome, password, r);
             }
 
         } catch (SQLException e) {
@@ -67,11 +68,12 @@ public class UtenteSessione {
                 int id = medico.getInt("id_utente");
                 String nome = medico.getString("nome");
                 String cognome = medico.getString("cognome");
+                String password = medico.getString("password");
                 String cf = medico.getString("codice_fiscale");
                 String r = medico.getString("ruolo");
                 String emailMedico = medico.getString("email_medico");
 
-                return new Medico(id, cf, nome, cognome, r, emailMedico);
+                return new Medico(id, cf, nome, cognome, password, r, emailMedico);
             }
 
         } catch (SQLException e) {
@@ -90,6 +92,7 @@ public class UtenteSessione {
                 int id = paziente.getInt("id_utente");
                 String nome = paziente.getString("nome");
                 String cognome = paziente.getString("cognome");
+                String password = paziente.getString("password");
                 String cf = paziente.getString("codice_fiscale");
                 String r = paziente.getString("ruolo");
                 int medicoRiferimento = paziente.getInt("medico_riferimento");
@@ -104,6 +107,7 @@ public class UtenteSessione {
                         cf,
                         nome,
                         cognome,
+                        password,
                         r,
                         medicoRiferimento,
                         dataNascita,

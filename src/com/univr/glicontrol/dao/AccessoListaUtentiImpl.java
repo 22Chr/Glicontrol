@@ -28,6 +28,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                             rs.getString("codice_fiscale"),
                             rs.getString("nome"),
                             rs.getString("cognome"),
+                            rs.getString("password"),
                             rs.getString("ruolo"),
                             rs.getString("email")
                     );
@@ -59,6 +60,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                             rs.getString("codice_fiscale"),
                             rs.getString("nome"),
                             rs.getString("cognome"),
+                            rs.getString("password"),
                             rs.getString("ruolo"),
                             rs.getInt("medico_riferimento"),
                             rs.getDate("data_nascita"),

@@ -23,8 +23,6 @@ public class PortaleAdminController {
     @FXML
     private Button logoutB;
     @FXML
-    private MenuItem medicoMI, pazienteMI;
-    @FXML
     private ListView<String> listaPazienti;
     @FXML
     private ListView<String> listaMedici;
@@ -164,16 +162,16 @@ public class PortaleAdminController {
     //MEDICO MENUITEM
     @FXML
     public void inserisciNuovoMedico(ActionEvent event) {
-        apriFinestraInserisci("../uiElements/InserisciNuovoMedico.fxml", "Inserisci medico", "MEDICO");
+        apriFinestraInserisci("../uiElements/InserisciNuovoMedico.fxml", "MEDICO");
     }
 
     //PAZIENTE MENUITEM
     @FXML
     public void inserisciNuovoPaziente(ActionEvent event) {
-        apriFinestraInserisci("../uiElements/InserisciNuovoPaziente.fxml", "Inserisci paziente", "PAZIENTE");
+        apriFinestraInserisci("../uiElements/InserisciNuovoPaziente.fxml", "PAZIENTE");
     }
     
-    private void apriFinestraInserisci(String fxmlPath, String titoloFinestra, String ruolo) {
+    private void apriFinestraInserisci(String fxmlPath, String ruolo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
@@ -187,11 +185,12 @@ public class PortaleAdminController {
                     inserisciPazienteController.setInstance(this);
                 }
             } else {
+                new Alert(Alert.AlertType.ERROR);
                 throw new IOException("Impossibile caricare la finestra");
             }
 
             Stage stage = new Stage();
-            stage.setTitle("Modifica");
+            stage.setTitle("Inserisci utente");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

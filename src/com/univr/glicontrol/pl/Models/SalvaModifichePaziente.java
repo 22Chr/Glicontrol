@@ -12,9 +12,9 @@ public class SalvaModifichePaziente {
         aggiornaPaziente = new AggiornaPaziente(paz);
     }
 
-    public boolean pazienteAggiornato(String pwd) {
+    public boolean pazienteAggiornato() {
         return aggiornaPaziente.updatePaziente(paz.getCodiceFiscale(), paz.getNome(), paz.getCognome(),
-                pwd, paz.getMedicoRiferimento(), paz.getDataNascita(),paz.getSesso(), paz.getEmail(),
+                paz.getPassword(), paz.getMedicoRiferimento(), paz.getDataNascita(),paz.getSesso(), paz.getEmail(),
                 paz.getAllergie(), paz.getPeso()) != null;
     }
 }

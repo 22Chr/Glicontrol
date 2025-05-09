@@ -11,7 +11,7 @@ public class InserisciMedico {
         return accessoListaUtenti.insertNuovoMedico(codiceFiscale, nome, cognome, email, password);
     }
 
-    public boolean inviaCredenzialiMedico(String email, String pwd) throws MessagingException {
+    public boolean inviaCredenzialiMedico(String email, String pwd) {
         MailService ms = new MailService();
         boolean status;
         try {

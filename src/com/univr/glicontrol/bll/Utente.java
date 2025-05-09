@@ -6,14 +6,16 @@ public abstract class Utente {
     private String nome;
     private String cognome;
     private String ruolo;
+    private String password;
 
 
-    protected Utente(int idUtente, String codiceFiscale, String nome, String cognome, String ruolo) {
+    protected Utente(int idUtente, String codiceFiscale, String nome, String cognome, String password, String ruolo) {
         this.idUtente = idUtente;
         this.codiceFiscale = codiceFiscale;
         this.nome = nome;
         this.cognome = cognome;
         this.ruolo = ruolo;
+        this.password = password;
     }
 
     public int getIdUtente() {
@@ -46,6 +48,13 @@ public abstract class Utente {
     }
     public String setRuolo(String newRuolo) {
         return ruolo = newRuolo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public String setPassword(String newPassword) {
+        return password = newPassword;
     }
 
 }
