@@ -18,7 +18,7 @@ public class EliminaPaziente {
         MailService ms = new MailService();
         boolean status;
         try {
-            ms.sendEmail(email, "Revoca accesso Glicontrol", "Il tuo account di accesso al portale paziente è stato eliminato e non ti sarà più possibile accedere al sistema.");
+            ms.sendEmail(email, "Revoca accesso Glicontrol", "Il tuo account di accesso al portale paziente è stato eliminato e non ti sarà più possibile accedere al sistema.\n\nGlicontrol Medical System");
             status = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
