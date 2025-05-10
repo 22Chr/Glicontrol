@@ -169,7 +169,7 @@ public class ModificaMedicoController {
                     Alert pazientiAssociatiAlMedicoAlert = new Alert(Alert.AlertType.ERROR);
                     pazientiAssociatiAlMedicoAlert.setTitle("Protection System");
                     pazientiAssociatiAlMedicoAlert.setHeaderText(null);
-                    pazientiAssociatiAlMedicoAlert.setContentText("Non è possibile eliminare un medico che ha ancora pazienti associati.\nRimuovi tutti i pazienti associati a questo medico e riprova");
+                    pazientiAssociatiAlMedicoAlert.setContentText("Non è possibile eliminare un medico che abbia ancora pazienti associati.\nRimuovi tutti i pazienti associati a questo medico e riprova");
                     pazientiAssociatiAlMedicoAlert.showAndWait();
                 }
             }
