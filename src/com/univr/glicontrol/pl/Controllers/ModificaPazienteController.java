@@ -5,7 +5,6 @@ import com.univr.glicontrol.bll.EliminaPaziente;
 import com.univr.glicontrol.bll.InputChecker;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.GetListaPortaleAdmin;
-import com.univr.glicontrol.pl.Models.SalvaModifichePaziente;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -159,9 +158,9 @@ public class ModificaPazienteController {
             inputSbagliatiAlert.showAndWait();
         } else {
 
-            SalvaModifichePaziente smv = new SalvaModifichePaziente(p);
+            AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(p);
 
-            if (smv.pazienteAggiornato()) {
+            if (aggiornaPaziente.updatePaziente()) {
                 Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
                 aggiornaPazienteAlert.setTitle("Successo");
                 aggiornaPazienteAlert.setHeaderText(null);
@@ -173,7 +172,6 @@ public class ModificaPazienteController {
                 if (!p.getPassword().equals(defaultPassword)) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(event -> {
-                        AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(p);
                         if (aggiornaPaziente.inviaCredenzialiAggiornatePaziente(p.getEmail(), passwordPazienteTF.getText())) {
                             Alert notificaModifichePazienteAlert = new Alert(Alert.AlertType.INFORMATION);
                             notificaModifichePazienteAlert.setTitle("Notification Service - Success");

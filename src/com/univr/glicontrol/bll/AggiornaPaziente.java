@@ -12,11 +12,9 @@ public class AggiornaPaziente {
         this.paziente = paziente;
     }
 
-    public Paziente updatePaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso) {
+    public boolean updatePaziente() {
         AccessoListaUtenti modificaPaziente = new AccessoListaUtentiImpl();
-        return modificaPaziente.updatePaziente(paziente.getIdUtente(), codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, peso) ?
-                new Paziente(paziente.getIdUtente(), codiceFiscale, nome, cognome, password, "PAZIENTE", medico, nascita, sesso, email, allergie, peso) :
-                null;
+        return modificaPaziente.updatePaziente(paziente.getIdUtente(), paziente.getCodiceFiscale(), paziente.getNome(), paziente.getCognome(), paziente.getPassword(), paziente.getMedicoRiferimento(), paziente.getDataNascita(), paziente.getSesso(), paziente.getEmail(), paziente.getAllergie(), paziente.getPeso());
     }
 
     public boolean inviaCredenzialiAggiornatePaziente(String email, String pwd) {

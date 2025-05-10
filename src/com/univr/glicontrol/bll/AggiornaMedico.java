@@ -11,11 +11,9 @@ public class AggiornaMedico {
         this.medico = medico;
     }
 
-    public Medico updateMedico(String codiceFiscale, String nome, String cognome, String password, String email) {
+    public boolean updateMedico() {
         AccessoListaUtenti modificaMedico = new AccessoListaUtentiImpl();
-        return modificaMedico.updateMedico(medico.getIdUtente(), codiceFiscale, nome, cognome, password, email) ?
-                new Medico(medico.getIdUtente(), codiceFiscale, nome, cognome, password, "MEDICO", email) :
-                null;
+        return modificaMedico.updateMedico(medico.getIdUtente(), medico.getCodiceFiscale(), medico.getNome(), medico.getCognome(), medico.getPassword(), medico.getEmail());
     }
 
     public boolean inviaCredenzialiAggiornateMedico(String email, String pwd) {

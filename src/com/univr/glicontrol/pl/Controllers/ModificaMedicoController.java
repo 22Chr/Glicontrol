@@ -4,7 +4,6 @@ import com.univr.glicontrol.bll.AggiornaMedico;
 import com.univr.glicontrol.bll.EliminaMedico;
 import com.univr.glicontrol.bll.InputChecker;
 import com.univr.glicontrol.bll.Medico;
-import com.univr.glicontrol.pl.Models.SalvaModificheMedico;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -74,9 +73,9 @@ public class ModificaMedicoController {
             inputSbagliatiAlert.showAndWait();
         } else {
 
-            SalvaModificheMedico smv = new SalvaModificheMedico(m);
+            AggiornaMedico aggiornaMedico = new AggiornaMedico(m);
 
-            if (smv.medicoAggiornato()) {
+            if (aggiornaMedico.updateMedico()) {
                 Alert modificaMedicoAlert = new Alert(Alert.AlertType.INFORMATION);
                 modificaMedicoAlert.setTitle("Successo");
                 modificaMedicoAlert.setHeaderText(null);
@@ -88,7 +87,6 @@ public class ModificaMedicoController {
                 if (!m.getPassword().equals(defaultPassword)) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(event -> {
-                        AggiornaMedico aggiornaMedico = new AggiornaMedico(m);
                         if (aggiornaMedico.inviaCredenzialiAggiornateMedico(m.getEmail(), passwordMedicoTF.getText())) {
                             Alert invioNotificheModificaAlert = new Alert(Alert.AlertType.INFORMATION);
                             invioNotificheModificaAlert.setTitle("Notification Service - Success");
