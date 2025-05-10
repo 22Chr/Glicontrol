@@ -9,8 +9,13 @@ public class EliminaMedico {
         this.medico = medico;
     }
 
-    public boolean deleteMedico() {
-        return new AccessoListaUtentiImpl().deleteMedico(medico.getIdUtente());
+    public int deleteMedico() {
+        ListaPazienti listaPazienti = new ListaPazienti();
+        if (listaPazienti.getListaPazientiPerMedico(medico.getIdUtente()) != null) {
+            return -1;
+        }
+
+        return new AccessoListaUtentiImpl().deleteMedico(medico.getIdUtente()) ? 1 : 0;
     }
 
     public boolean notificaEliminazioneMedico(String email) {

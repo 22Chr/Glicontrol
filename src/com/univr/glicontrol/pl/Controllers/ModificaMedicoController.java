@@ -127,7 +127,8 @@ public class ModificaMedicoController {
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response.getText().equals("OK")) {
                 EliminaMedico em = new EliminaMedico(m);
-                if (em.deleteMedico()) {
+                int status = em.deleteMedico();
+                if (status == 1) {
                     Alert successEliminazioneAlert = new Alert(Alert.AlertType.INFORMATION);
                     successEliminazioneAlert.setTitle("Successo");
                     successEliminazioneAlert.setHeaderText(null);
@@ -158,12 +159,18 @@ public class ModificaMedicoController {
                     if (currentWindow instanceof Stage) {
                         ((Stage) currentWindow).close();
                     }
-                } else {
+                } else if (status == 0) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setTitle("Errore");
                     errorAlert.setHeaderText(null);
                     errorAlert.setContentText("Errore durante l'eliminazione del medico.");
                     errorAlert.showAndWait();
+                } else {
+                    Alert pazientiAssociatiAlMedicoAlert = new Alert(Alert.AlertType.ERROR);
+                    pazientiAssociatiAlMedicoAlert.setTitle("Protection System");
+                    pazientiAssociatiAlMedicoAlert.setHeaderText(null);
+                    pazientiAssociatiAlMedicoAlert.setContentText("Non è possibile eliminare un medico che ha ancora pazienti associati.\nRimuovi tutti i pazienti associati a questo medico e riprova");
+                    pazientiAssociatiAlMedicoAlert.showAndWait();
                 }
             }
         });
