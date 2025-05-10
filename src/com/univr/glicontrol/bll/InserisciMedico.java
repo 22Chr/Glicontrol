@@ -21,7 +21,7 @@ public class InserisciMedico {
         MailService ms = new MailService();
         boolean status;
         try {
-            ms.sendEmail(email, "Benvenuto su Glicontrol", "Benvenuto nel sistema medico Glicontrol, l'alleato numero uno per la gestione del diabete.\nPuoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd + "\n\nGlicontrol Medical System\n\nCordiali saluti,\n\nGlicontrol Medical System");
+            ms.sendEmail(email, "Benvenuto su Glicontrol", "Benvenuto nel sistema medico Glicontrol, l'alleato numero uno per la gestione del diabete.\nPuoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd + "\n\nGlicontrol Medical System");
             status = true;
         } catch (MessagingException e) {
             System.out.println(e.getMessage());
