@@ -24,7 +24,7 @@ public class ListaPazienti {
         return null;
     }
 
-    public List<Paziente> getListaPazientiCompleta() {
+    public List<Paziente> getListaCompletaPazienti() {
         return listaPazienti;
     }
 
@@ -38,5 +38,14 @@ public class ListaPazienti {
         }
         return listaPazientiPerMedico;
     }
-    //aggiungere poi altri metodi utili
+
+    // Verifica se il paziente esiste già nel sistema
+    public boolean pazienteEsiste(String codiceFiscale) {
+        for (Paziente p : listaPazienti) {
+            if (p.getCodiceFiscale().equals(codiceFiscale)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

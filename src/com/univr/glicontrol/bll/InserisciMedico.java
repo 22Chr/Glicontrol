@@ -6,9 +6,15 @@ import jakarta.mail.MessagingException;
 
 public class InserisciMedico {
     
-    public boolean insertMedico(String codiceFiscale, String nome, String cognome, String email, String password) {
+    public int insertMedico(String codiceFiscale, String nome, String cognome, String email, String password) {
+        ListaMedici listaMedici = new ListaMedici();
+
+        if (listaMedici.medicoEsiste(codiceFiscale)) {
+            return -1;
+        }
+
         AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
-        return accessoListaUtenti.insertNuovoMedico(codiceFiscale, nome, cognome, email, password);
+        return accessoListaUtenti.insertNuovoMedico(codiceFiscale, nome, cognome, email, password) ? 1 : 0;
     }
 
     public boolean inviaCredenzialiMedico(String email, String pwd) {

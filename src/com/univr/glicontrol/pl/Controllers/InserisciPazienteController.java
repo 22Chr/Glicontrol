@@ -154,9 +154,9 @@ public class InserisciPazienteController {
 
             InserisciPaziente inserisciPaziente = new InserisciPaziente();
 
-            boolean success = inserisciPaziente.insertPaziente(CF, nome, cognome, password, id, dataNascita, sesso, email, null, 1.0);
+            int success = inserisciPaziente.insertPaziente(CF, nome, cognome, password, id, dataNascita, sesso, email, null, 1.0);
 
-            if (success) {
+            if (success == 1) {
                 Alert inserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
                 inserimentoPazienteAlert.setTitle("Successo");
                 inserimentoPazienteAlert.setHeaderText(null);
@@ -194,13 +194,21 @@ public class InserisciPazienteController {
                     ((Stage) currentWindow).close();
                 }
 
-            } else {
+            } else if (success == 0) {
 
                 Alert erroreInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
                 erroreInserimentoPazienteAlert.setTitle("Errore");
                 erroreInserimentoPazienteAlert.setHeaderText(null);
                 erroreInserimentoPazienteAlert.setContentText("Errore durante l'inserimento del paziente");
                 erroreInserimentoPazienteAlert.showAndWait();
+
+            } else {
+
+                Alert pazienteEsistenteAlert = new Alert(Alert.AlertType.ERROR);
+                pazienteEsistenteAlert.setTitle("Gestore duplicati");
+                pazienteEsistenteAlert.setHeaderText(null);
+                pazienteEsistenteAlert.setContentText("Il paziente che stai cercando di inserire è già presente nel sistema");
+                pazienteEsistenteAlert.showAndWait();
 
             }
         }

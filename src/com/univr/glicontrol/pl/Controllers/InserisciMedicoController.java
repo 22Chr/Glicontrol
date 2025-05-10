@@ -60,9 +60,9 @@ public class InserisciMedicoController {
 
             InserisciMedico inserisciMedico = new InserisciMedico();
 
-            boolean success = inserisciMedico.insertMedico(CF, nome, cognome, email, password);
+            int success = inserisciMedico.insertMedico(CF, nome, cognome, email, password);
 
-            if (success) {
+            if (success == 1) {
                 Alert inserimentoMedicoAlert = new Alert(Alert.AlertType.INFORMATION);
                 inserimentoMedicoAlert.setTitle("Successo");
                 inserimentoMedicoAlert.setHeaderText(null);
@@ -96,12 +96,18 @@ public class InserisciMedicoController {
                     ((Stage) currentWindow).close();
                 }
 
-            } else {
+            } else if (success == 0) {
                 Alert erroreInserimentoMedicoAlert = new Alert(Alert.AlertType.ERROR);
                 erroreInserimentoMedicoAlert.setTitle("Errore");
                 erroreInserimentoMedicoAlert.setHeaderText(null);
                 erroreInserimentoMedicoAlert.setContentText("Errore durante l'inserimento del medico");
                 erroreInserimentoMedicoAlert.showAndWait();
+            } else {
+                Alert medicoEsistenteAlert = new Alert(Alert.AlertType.ERROR);
+                medicoEsistenteAlert.setTitle("Gestore duplicati");
+                medicoEsistenteAlert.setHeaderText(null);
+                medicoEsistenteAlert.setContentText("Il medico che stai cercando di inserire è già presente nel sistema");
+                medicoEsistenteAlert.showAndWait();
             }
         }
     }

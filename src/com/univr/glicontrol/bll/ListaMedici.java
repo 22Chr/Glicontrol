@@ -32,8 +32,18 @@ public class ListaMedici {
         return -1;
     }
 
-    public List<Medico> getListaMedici() {
+    public List<Medico> getListaCompletaMedici() {
         return listaMedici;
+    }
+
+    // Verifica se il medico esiste già nel sistema
+    public boolean medicoEsiste(String codiceFiscale) {
+        for (Medico m : listaMedici) {
+            if (m.getCodiceFiscale().equals(codiceFiscale)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //aggiungere metodi a seconda delle necessità

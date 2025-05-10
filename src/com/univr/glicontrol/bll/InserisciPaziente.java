@@ -7,9 +7,14 @@ import java.sql.Date;
 
 public class InserisciPaziente {
 
-    public boolean insertPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso) {
+    public int insertPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, double peso) {
+        ListaPazienti listaPazienti = new ListaPazienti();
+        if (listaPazienti.pazienteEsiste(codiceFiscale)) {
+            return -1;
+        }
+
         AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
-        return accessoListaUtenti.insertNuovoPaziente(codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, peso);
+        return accessoListaUtenti.insertNuovoPaziente(codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, peso) ? 1 : 0;
     }
 
     public boolean inviaCredenzialiPaziente(String email, String pwd) {

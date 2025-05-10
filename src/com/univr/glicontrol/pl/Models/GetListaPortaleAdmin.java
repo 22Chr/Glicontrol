@@ -20,7 +20,7 @@ public class GetListaPortaleAdmin {
         String nomeMedico;
 
         List<String> referenzeMedici = new ArrayList<>();
-        for (Medico m : listaMedici.getListaMedici()) {
+        for (Medico m : listaMedici.getListaCompletaMedici()) {
             nomeMedico = m.getCognome() + " " + m.getNome() + " - " + m.getCodiceFiscale();
             referenzeMedici.add(nomeMedico);
             mappaMedici.put(nomeMedico, m);
@@ -40,7 +40,7 @@ public class GetListaPortaleAdmin {
         String nomePaziente;
 
         List<String> referenzePazienti = new ArrayList<>();
-        for (Paziente p : listaPazienti.getListaPazientiCompleta()) {
+        for (Paziente p : listaPazienti.getListaCompletaPazienti()) {
             nomePaziente = p.getCognome() + " " + p.getNome() + " - " + p.getCodiceFiscale();
             referenzePazienti.add(nomePaziente);
             mappaPazienti.put(nomePaziente, p);
