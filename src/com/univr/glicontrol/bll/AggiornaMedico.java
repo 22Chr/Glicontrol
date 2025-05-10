@@ -20,7 +20,7 @@ public class AggiornaMedico {
         MailService ms = new MailService();
         boolean status;
         try {
-            ms.sendEmail(email, "MODIFICA CREDENZIALI DI ACCESSO AL PORTALE MEDICO GLICONTROL", "La tua password di accesso al portale è stata modificata con la seguente: " + pwd);
+            ms.sendEmail(email, "Modifica accesso Glicontrol", "La tua password di accesso al portale è stata modificata.\nUtilizza la nuova password: " + pwd + " per continuare ad utilizzare il tuo miglior alleato contro il diabete.\n\nCordiali saluti,\n\nGlicontrol Medical System");
             status = true;
         } catch (MessagingException e) {
             System.out.println(e.getMessage());
