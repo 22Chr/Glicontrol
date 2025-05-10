@@ -6,8 +6,8 @@ import java.util.Properties;
 public class MailService {
 
     //private final String username = "glicontrol.system@gmail.com";
-    private final String username = "chris22checchetti@gmail.com";
-    private final String password = "ivcd qofl uybj ewfd";
+    private final String username = "system.glicontrol@gmail.com";
+    private final String password = "sull rihb tdac dzpb";
 
     private final Properties props;
 
