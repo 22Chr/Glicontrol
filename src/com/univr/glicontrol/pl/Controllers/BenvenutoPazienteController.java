@@ -167,6 +167,8 @@ public class BenvenutoPazienteController {
         ObservableList<String> pasti = FXCollections.observableArrayList();
         pasti.addAll(upp.getListaPasti());
         listaPasti.setItems(pasti);
+
+        salvaB.requestFocus();
     }
 
     public void resetListViewPasti() {
@@ -184,6 +186,26 @@ public class BenvenutoPazienteController {
             notificaSalvataggioAlert.setTitle("Salvataggio riuscito");
             notificaSalvataggioAlert.setHeaderText("Le tue informazioni sono state salvate con successo");
             notificaSalvataggioAlert.showAndWait();
+
+            // Indirizza l'utente al suo portale
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../uiElements/PortalePaziente.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Portale paziente");
+                stage.setScene(new Scene(root, 1200, 700));
+                Stage currentStage = (Stage) salvaB.getScene().getWindow();
+                currentStage.close();
+                stage.show();
+
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            Alert erroreSalvataggioDatiAlert = new Alert(Alert.AlertType.ERROR);
+            erroreSalvataggioDatiAlert.setTitle("Errore salvataggio dati");
+            erroreSalvataggioDatiAlert.setHeaderText("Si è verificato un errore durante il salvataggio dei dati. Riprova");
+            erroreSalvataggioDatiAlert.showAndWait();
         }
     }
 }
