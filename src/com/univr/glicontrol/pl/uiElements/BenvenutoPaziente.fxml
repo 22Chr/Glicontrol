@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -30,7 +32,7 @@
                 <Insets left="10.0" top="10.0" />
             </StackPane.margin>
         </ImageView>
-        <VBox fx:id="page0" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+        <VBox fx:id="page0" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" visible="false">
             <children>
                 <Text fill="#22577a" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto in Glicontrol&#10;il tuo alleato smart per una vita in equilibrio!" textAlignment="CENTER" wrappingWidth="421.78125">
                     <font>
@@ -213,6 +215,53 @@
                 </HBox>
             </children>
         </VBox>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+         <children>
+            <Label text="Inserisci il tuo peso corrente">
+               <font>
+                  <Font name="Avenir Next Regular" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="pesoTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="kg:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Label text="Inserisci le tue allergie">
+               <font>
+                  <Font name="Avenir Next Regular" size="16.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="allergieTA" maxHeight="80.0" maxWidth="160.0" prefHeight="80.0" prefWidth="160.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextArea>
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="652.0" spacing="80.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <StackPane.margin>
+            <Insets top="60.0" />
+         </StackPane.margin>
+      </VBox>
         <VBox fx:id="page4" alignment="CENTER" prefHeight="468.0" prefWidth="652.0" spacing="10.0" visible="false">
             <children>
                 <Region prefHeight="132.0" prefWidth="652.0" />
