@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.Avatar?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="805.0" style="-fx-background-color: #f4f3ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortalePazienteController">
+   <top>
+      <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="70.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="56.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+               <image>
+                  <Image url="@logo.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Region prefHeight="70.0" prefWidth="400.0" HBox.hgrow="ALWAYS" />
+            <Avatar />
+            <Button fx:id="profileB" mnemonicParsing="false" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #22577a;" text="Il mio profilo" textFill="WHITE" HBox.hgrow="ALWAYS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="387.0" prefWidth="248.0" spacing="22.0" style="-fx-border-color: #22577a;" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="17.0" prefWidth="254.0" style="-fx-background-color: #22577a; -fx-text-fill: #ffffffff;" text="ULTIME RILEVAZIONI" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets left="4.0" right="4.0" top="2.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Carlito Bold" size="14.0" />
+               </font></Label>
+            <ListView fx:id="ultimeRilevazioniLW" prefHeight="153.0" prefWidth="151.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets left="4.0" right="4.0" />
+               </VBox.margin></ListView>
+            <LineChart fx:id="andamentoGlicemiaLC" prefHeight="183.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="-150.0" left="20.0" top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <bottom>
+      <VBox maxHeight="300.0" maxWidth="250.0" prefHeight="200.0" prefWidth="250.0" spacing="4.0" style="-fx-border-color: #22577a;" BorderPane.alignment="BOTTOM_RIGHT">
+         <children>
+            <Label prefHeight="17.0" prefWidth="259.0" style="-fx-background-color: #22577a; -fx-text-fill: #ffffffff;" text="MEDICO" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Carlito Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="4.0" right="4.0" top="2.0" />
+               </VBox.margin></Label>
+            <TextField fx:id="nome" opacity="0.0" prefHeight="25.0" prefWidth="199.0" VBox.vgrow="ALWAYS" />
+            <TextField opacity="0.0" VBox.vgrow="ALWAYS" />
+            <TextField fx:id="emailMedicoTF" opacity="0.0" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="orariTA" opacity="0.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" right="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </bottom>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="95.0" prefWidth="400.0" spacing="25.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="rilevazioniGlicemiaB" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Inserisci le rilevazioni &#10;glicemiche" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="sintomiB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Notifica i sintomi" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="assunzioniInsulinaB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Registra le assunzioni &#10;di insulina" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="-30.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="95.0" prefWidth="400.0" spacing="25.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="farmaciB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Registra i farmaci" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Notifica le patologie" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="terapiaB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Visulizza la terapia" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets top="35.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

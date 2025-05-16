@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="652.0" style="-fx-background-color: #f4f3ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.BenvenutoPazienteController">
+    <children>
+        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+            <image>
+                <Image url="@logo.png" />
+            </image>
+            <StackPane.margin>
+                <Insets left="10.0" top="10.0" />
+            </StackPane.margin>
+        </ImageView>
+        <VBox fx:id="page0" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+            <children>
+                <Text fill="#22577a" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto in Glicontrol&#10;il tuo alleato smart per una vita in equilibrio!" textAlignment="CENTER" wrappingWidth="421.78125">
+                    <font>
+                        <Font name="DIN Alternate Bold" size="21.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+                </Text>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prima di cominciare rispondi a qualche semplice domanda">
+                    <font>
+                        <Font name="Avenir Next Regular" size="15.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+                </Text>
+                <Button fx:id="avanti0B" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+        <VBox fx:id="page1" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+            <children>
+                <Label text="Hai casi di diabete in famiglia?">
+                    <font>
+                        <Font name="Avenir Next Regular" size="15.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+                </Label>
+                <RadioButton fx:id="famSi" mnemonicParsing="false" onAction="#gestisciFamiliarita" text="sì">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="casiFamiglia" />
+                    </toggleGroup>
+                    <font>
+                        <Font name="Avenir Next Regular" size="15.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="-10.0" top="5.0" />
+                    </VBox.margin>
+                </RadioButton>
+                <RadioButton fx:id="famNo" mnemonicParsing="false" onAction="#gestisciFamiliarita" text="no" toggleGroup="$casiFamiglia">
+                    <font>
+                        <Font name="Avenir Next Regular" size="15.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="-4.0" />
+                    </VBox.margin>
+                </RadioButton>
+                <Button fx:id="avanti1B" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+        <VBox fx:id="page2" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+            <children>
+                <Label text="Hai abitudini scorrette?">
+                    <font>
+                        <Font name="Avenir Next Regular" size="15.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+                </Label>
+                <CheckBox fx:id="fumoCB" mnemonicParsing="false" onAction="#gestisciFumoAlcool" text="Fumo">
+                    <font>
+                        <Font name="Avenir Next Regular" size="14.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets left="4.0" top="5.0" />
+               </VBox.margin>
+                </CheckBox>
+                <CheckBox fx:id="alcoolCB" mnemonicParsing="false" onAction="#gestisciFumoAlcool" text="Alcol">
+                    <font>
+                        <Font name="Avenir Next Regular" size="14.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+                </CheckBox>
+                <HBox alignment="CENTER" spacing="60.0">
+                    <children>
+                        <Button fx:id="indietro2B" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="avanti2B" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox fx:id="page3" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+            <children>
+                <Label text="Hai altre abitudini scorrette?">
+                    <font>
+                        <Font name="Avenir Next Regular" size="16.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+                </Label>
+                <CheckBox fx:id="alimentCB" mnemonicParsing="false" onAction="#gestisciAltreCattiveAbitudini" text="Ho un'alimentazione scorretta">
+                    <font>
+                        <Font name="Avenir Next Regular" size="14.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+                </CheckBox>
+                <CheckBox fx:id="sedentCB" mnemonicParsing="false" onAction="#gestisciAltreCattiveAbitudini" text="Vivo una vita sedentaria">
+                    <font>
+                        <Font name="Avenir Next Regular" size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="-37.0" />
+                    </VBox.margin>
+                </CheckBox>
+                <CheckBox fx:id="obesCB" mnemonicParsing="false" onAction="#gestisciAltreCattiveAbitudini" text="Soffro di obesità">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="-82.0" />
+                    </VBox.margin>
+                </CheckBox>
+                <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="60.0">
+                    <children>
+                        <Button fx:id="indietro3B" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="avanti3B" mnemonicParsing="false" onAction="#nextPageAndSave" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox fx:id="page4" alignment="BOTTOM_CENTER" prefHeight="468.0" prefWidth="687.0" spacing="10.0" visible="false">
+            <children>
+                <Label text="I tuoi pasti" VBox.vgrow="NEVER">
+                    <font>
+                        <Font name="Avenir Next Regular" size="14.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets top="100.0" />
+               </VBox.margin>
+                </Label>
+            <HBox alignment="CENTER" prefHeight="232.0" prefWidth="652.0" spacing="20.0" VBox.vgrow="ALWAYS">
+               <children>
+                      <ListView fx:id="listaPasti" maxHeight="218.0" maxWidth="247.0" prefHeight="218.0" prefWidth="247.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ListView>
+                      <Button fx:id="inserisciPastoB" mnemonicParsing="false" onAction="#inserisciNuovoPasto" style="-fx-background-color: #22577a;" text="Inserisci un pasto" textFill="WHITE">
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                      </Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+                <HBox alignment="CENTER" prefHeight="0.0" prefWidth="652.0" spacing="60.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Button fx:id="indietro4B" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="salvaB" mnemonicParsing="false" style="-fx-background-color: #22577a;" text="Salva" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+                </HBox>
+            </children>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+        </VBox>
+    </children>
+</StackPane>
