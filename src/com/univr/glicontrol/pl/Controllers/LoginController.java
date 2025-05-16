@@ -86,7 +86,8 @@ public class LoginController {
         if (controller instanceof PortaleAdminController pac) {
             pac.setStageAndSetupListeners(stage); // 💡 Attiva listener sulla chiusura con X rossa
         }
-        stage.setScene(new Scene(root, 800, 520));
+        stage.setScene(new Scene(root, 1200, 700));
+        stage.centerOnScreen();
         stage.show();
     }
 

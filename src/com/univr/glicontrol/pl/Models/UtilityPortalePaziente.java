@@ -4,6 +4,10 @@ import com.univr.glicontrol.bll.GestionePasti;
 import com.univr.glicontrol.bll.Pasto;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.bll.UtenteSessione;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.sql.Time;
 import java.time.LocalTime;
@@ -41,4 +45,14 @@ public class UtilityPortalePaziente {
         return paziente;
     }
 
+    public Image getAvatar() {
+        Canvas canvas = new Canvas(100, 100);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.valueOf("#ff0404"));
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setFill(Color.BLACK);
+        gc.fillText(paziente.getCognome().substring(0, 1) + ".", 25, 50);
+        gc.fillText(paziente.getNome().substring(0, 1) + ".", 50, 75);
+        return canvas.snapshot(null, null);
+    }
 }

@@ -1,5 +1,13 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.gluonhq.charm.glisten.control.Avatar;
+import com.univr.glicontrol.bll.ListaMedici;
+import com.univr.glicontrol.bll.Medico;
+import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+
 public class PortalePazienteController {
     //ultimeRilevazioniLW dovrà contenere il sunto delle ultime rilevazioni
     //andamentoGlicemia dovrà mostrare una rappresentazione grafica -> cercare come fare
@@ -7,4 +15,24 @@ public class PortalePazienteController {
     //i vari textfield e la text area contengono le info sul medico di riferimento
     //il profileB deve rimandare a una paginetta con le info del paziente e il bottone di logout
 
+    private final UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    private final Paziente paziente = upp.getPazienteSessione();
+    private final Medico medicoRiferimento = new ListaMedici().ottieniMedicoPerId(paziente.getMedicoRiferimento());
+
+    @FXML
+    private TextField nomeMedicoRiferimentoTF, cognomeMedicoRiferimentoTF, emailMedicoRiferimentoTF;
+
+    @FXML
+    private Avatar avatar;
+
+    @FXML
+    private void initialize() {
+        // Popola box con i dati di contatto del medico di riferimento
+        nomeMedicoRiferimentoTF.setText(medicoRiferimento.getNome());
+        cognomeMedicoRiferimentoTF.setText(medicoRiferimento.getCognome());
+        emailMedicoRiferimentoTF.setText(medicoRiferimento.getEmail());
+
+        // Inizializza l'avatar con le iniziali del paziente
+        avatar.setImage(upp.getAvatar());
+    }
 }
