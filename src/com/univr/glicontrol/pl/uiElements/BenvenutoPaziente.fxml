@@ -215,54 +215,54 @@
                 </HBox>
             </children>
         </VBox>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-         <children>
-            <Label text="Inserisci il tuo peso corrente">
-               <font>
-                  <Font name="Avenir Next Regular" size="16.0" />
-               </font>
-            </Label>
-            <TextField fx:id="pesoTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="kg:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <Label text="Inserisci le tue allergie">
-               <font>
-                  <Font name="Avenir Next Regular" size="16.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="allergieTA" maxHeight="80.0" maxWidth="160.0" prefHeight="80.0" prefWidth="160.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextArea>
-            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="652.0" spacing="80.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
-                     <font>
+        <VBox fx:id="page4" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <children>
+                <Label text="Inserisci il tuo peso corrente">
+                    <font>
+                        <Font name="Avenir Next Regular" size="16.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="pesoTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="kg:">
+                    <font>
                         <Font size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
-                     <font>
+                    </font>
+                </TextField>
+                <Label text="Inserisci le tue allergie">
+                    <font>
+                        <Font name="Avenir Next Regular" size="16.0" />
+                    </font>
+                </Label>
+                <TextArea fx:id="allergieTA" maxHeight="80.0" maxWidth="160.0" prefHeight="80.0" prefWidth="160.0">
+                    <font>
                         <Font size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-         <StackPane.margin>
-            <Insets top="60.0" />
-         </StackPane.margin>
-      </VBox>
-        <VBox fx:id="page4" alignment="CENTER" prefHeight="468.0" prefWidth="652.0" spacing="10.0" visible="false">
+                    </font>
+                </TextArea>
+                <HBox alignment="CENTER" prefHeight="37.0" prefWidth="652.0" spacing="80.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+            <StackPane.margin>
+                <Insets top="60.0" />
+            </StackPane.margin>
+        </VBox>
+        <VBox fx:id="page5" alignment="CENTER" prefHeight="468.0" prefWidth="652.0" spacing="10.0" visible="false">
             <children>
                 <Region prefHeight="132.0" prefWidth="652.0" />
                 <GridPane alignment="TOP_CENTER" maxHeight="250.0" maxWidth="530.0" prefHeight="205.0" prefWidth="522.0" VBox.vgrow="NEVER">

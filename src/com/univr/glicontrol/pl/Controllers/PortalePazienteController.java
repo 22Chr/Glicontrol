@@ -35,4 +35,6 @@ public class PortalePazienteController {
         // Inizializza l'avatar con le iniziali del paziente
         avatar.setImage(upp.getAvatar());
     }
+
+
 }
