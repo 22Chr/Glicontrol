@@ -22,7 +22,7 @@ public class BenvenutoPazienteController {
     //page 4: bottone per aggiungere pasto e lista che mostra i pasti, bottone salva e indietro
 
     @FXML
-    private VBox page0, page1, page2, page3, page4;
+    private VBox page0, page1, page2, page3, page4, page5;
     @FXML
     private RadioButton famSi, famNo;
     @FXML
@@ -31,6 +31,10 @@ public class BenvenutoPazienteController {
     private ListView<String> listaPasti;
     @FXML
     private Button salvaB;
+    @FXML
+    private TextField pesoTF;
+    @FXML
+    private TextArea allergieTA;
 
     private int paginaCorrente = 0; //page 0
 
@@ -65,6 +69,7 @@ public class BenvenutoPazienteController {
             case 2 -> page2.setVisible(false);
             case 3 -> page3.setVisible(false);
             case 4 -> page4.setVisible(false);
+            case 5 -> page5.setVisible(false);
         }
     }
 
@@ -75,6 +80,7 @@ public class BenvenutoPazienteController {
             case 2 -> page2.setVisible(true);
             case 3 -> page3.setVisible(true);
             case 4 -> page4.setVisible(true);
+            case 5 -> page5.setVisible(true);
         }
     }
 
@@ -140,8 +146,18 @@ public class BenvenutoPazienteController {
 
     }
 
-    // Salva i dati nel DB
+    // ==============================
+    //GESTIONE ALTRE CATTIVE ABITUDINI
+    // ==============================
+    public void gestisciPeso() {
+        float peso = Float.parseFloat(pesoTF.getText());
+        paziente.setPeso(peso);
+    }
 
+    public void gestisciAllergie() {
+        String allergie = allergieTA.getText();
+        paziente.setAllergie(allergie);
+    }
 
     // ==============================
     //GESTIONE DEI PASTI: bottone per inserirne di nuovi, lista che si aggiorna
@@ -180,6 +196,8 @@ public class BenvenutoPazienteController {
 
     public void salvaDatiPrimoAccesso() {
         paziente.setPrimoAccesso(0);
+        gestisciPeso();
+        gestisciAllergie();
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
         if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert notificaSalvataggioAlert = new Alert(Alert.AlertType.INFORMATION);

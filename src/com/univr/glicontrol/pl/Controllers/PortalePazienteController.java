@@ -33,6 +33,8 @@ public class PortalePazienteController {
         emailMedicoRiferimentoTF.setText(medicoRiferimento.getEmail());
 
         // Inizializza l'avatar con le iniziali del paziente
+        avatar.setRadius(20);
         avatar.setImage(upp.getAvatar());
+        // cercare metodo per risolvere il problema
     }
 }

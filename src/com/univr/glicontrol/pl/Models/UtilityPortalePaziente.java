@@ -46,7 +46,7 @@ public class UtilityPortalePaziente {
     }
 
     public Image getAvatar() {
-        Canvas canvas = new Canvas(100, 100);
+        Canvas canvas = new Canvas(10, 10);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.valueOf("#ff0404"));
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
