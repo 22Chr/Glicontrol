@@ -60,7 +60,7 @@ public class ModificaPazienteController {
 
     @FXML
     private void initialize(){
-        List<String> medici = glpa.getListaMediciPortaleAdmin(); // ad es. "Mario Rossi - CF1234"
+        List<String> medici = glpa.getListaMediciPortaleAdmin();
         medicoRifCB.setItems(FXCollections.observableArrayList(medici));
 
         nomePazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {

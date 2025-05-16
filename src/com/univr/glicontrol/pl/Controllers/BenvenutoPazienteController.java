@@ -33,8 +33,6 @@ public class BenvenutoPazienteController {
     private Button salvaB;
     @FXML
     private TextField pesoTF;
-    @FXML
-    private TextArea allergieTA;
 
     private int paginaCorrente = 0; //page 0
 
@@ -146,18 +144,13 @@ public class BenvenutoPazienteController {
 
     }
 
-    // ==============================
-    //GESTIONE ALTRE CATTIVE ABITUDINI
-    // ==============================
-    public void gestisciPeso() {
-        float peso = Float.parseFloat(pesoTF.getText());
-        paziente.setPeso(peso);
-    }
+    // Salva i dati nel DB
 
-    public void gestisciAllergie() {
-        String allergie = allergieTA.getText();
-        paziente.setAllergie(allergie);
-    }
+    // ==============================
+    //GESTIONE PESO E ALLERGIE
+    // ==============================
+
+
 
     // ==============================
     //GESTIONE DEI PASTI: bottone per inserirne di nuovi, lista che si aggiorna
@@ -196,8 +189,6 @@ public class BenvenutoPazienteController {
 
     public void salvaDatiPrimoAccesso() {
         paziente.setPrimoAccesso(0);
-        gestisciPeso();
-        gestisciAllergie();
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
         if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert notificaSalvataggioAlert = new Alert(Alert.AlertType.INFORMATION);

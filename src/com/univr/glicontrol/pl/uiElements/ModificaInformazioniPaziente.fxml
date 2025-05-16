@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="729.0" style="-fx-background-color: #f4f3ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.ModificaInformazioniPazienteController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="452.0" prefWidth="688.0" spacing="40.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="356.0" prefWidth="692.0" spacing="60.0">
+               <children>
+                  <GridPane prefHeight="356.0" prefWidth="282.0" style="-fx-border-color: #22577a;">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="96.33334350585938" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.66666666666669" minWidth="10.0" prefWidth="140.3333231608073" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="19.0" prefWidth="99.0" text="Anagrafica">
+                           <font>
+                              <Font name="Carlito" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="110.0" text="Nome:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="119.0" text="Cognome:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="111.0" text="Codice fiscale:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="121.0" text="Email:" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="121.0" text="Peso:" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="nomeTF" prefHeight="25.0" prefWidth="133.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="6.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="cognomeTF" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="6.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="codFisTF" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets right="6.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="emailTF" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets right="6.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="pesoTF" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets right="6.0" />
+                           </GridPane.margin>
+                        </TextField>
+                     </children>
+                  </GridPane>
+                  <GridPane prefHeight="325.0" prefWidth="335.0" style="-fx-border-color: #22577a;">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.66666666666666" minWidth="10.0" prefWidth="173.9999796549479" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.3333435058594" minWidth="10.0" prefWidth="158.66668701171875" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="19.0" prefWidth="157.0" text="Informazioni aggiuntive">
+                           <font>
+                              <Font name="Carlito" size="16.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="167.0" text="Fumatore:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="168.0" text="Problemi di alcolismo: " GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="168.0" text="Familiarità con il diabete:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="178.0" text="Vita sedentaria:" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="165.0" text="Alimentazione scorretta:" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="193.0" text="Allergie:" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <CheckBox fx:id="fumatoreCB" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="alcolismoCB" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <CheckBox fx:id="familiaritaCB" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <CheckBox fx:id="sedentarietaCB" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <CheckBox fx:id="alimentazioneCB" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextArea fx:id="allergieTA" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets bottom="5.0" right="4.0" />
+                           </GridPane.margin>
+                        </TextArea>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+            <Button fx:id="salvaModifiche" mnemonicParsing="false" onAction="#salvaModificheInformazioniPaziente" style="-fx-background-color: #22577a;" text="Salva le modifiche" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
