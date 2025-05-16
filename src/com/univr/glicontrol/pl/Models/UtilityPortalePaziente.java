@@ -51,8 +51,7 @@ public class UtilityPortalePaziente {
         gc.setFill(Color.valueOf("#ff0404"));
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
-        gc.fillText(paziente.getCognome().substring(0, 1) + ".", 25, 50);
-        gc.fillText(paziente.getNome().substring(0, 1) + ".", 50, 75);
+        gc.fillText(paziente.getNome().substring(0, 1) + paziente.getCognome().substring(0, 1), 25, 50);
         return canvas.snapshot(null, null);
     }
 }
