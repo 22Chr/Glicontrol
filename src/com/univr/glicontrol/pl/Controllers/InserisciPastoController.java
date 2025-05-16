@@ -29,15 +29,32 @@ public class InserisciPastoController {
         oraCB.getItems().addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
                 "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
         minutiCB.getItems().addAll("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55");
+
+        confermaPastoeOrarioB.requestFocus();
     }
 
     private GestionePasti gp = new GestionePasti(paziente);
 
     public void confermaPastoeOrario(){
-        String pasto = pastoCB.getValue();
-        int ora = oraCB.getValue().equals("00") ? 0 : Integer.parseInt(oraCB.getValue());
-        int minuti = minutiCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiCB.getValue());
-        Time orario = upp.convertiOraPasto(ora, minuti);
+        String pasto;
+        int ora;
+        int minuti;
+        Time orario;
+
+        if (pastoCB.getValue() == null || oraCB.getValue() == null || minutiCB.getValue() == null) {
+            Alert datiMancantiAlert = new Alert(Alert.AlertType.ERROR);
+            datiMancantiAlert.setTitle("Errore");
+            datiMancantiAlert.setHeaderText("Dati mancanti");
+            datiMancantiAlert.setContentText("Per inserire un nuovo pasto è necessario che tutti i campi siano compilati correttamente. Riprova");
+            datiMancantiAlert.showAndWait();
+            return;
+        } else {
+            pasto = pastoCB.getValue();
+            ora = oraCB.getValue().equals("00") ? 0 : Integer.parseInt(oraCB.getValue());
+            minuti = minutiCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiCB.getValue());
+            orario = upp.convertiOraPasto(ora, minuti);
+
+        }
 
         if (gp.inserisciPasto(pasto, orario)) {
             Alert successoInserimentoPastoAlert = new Alert(Alert.AlertType.INFORMATION);
