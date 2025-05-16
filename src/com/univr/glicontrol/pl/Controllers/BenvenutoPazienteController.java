@@ -1,9 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.AggiornaPaziente;
-import com.univr.glicontrol.bll.FattoriRischio;
-import com.univr.glicontrol.bll.GestioneFattoriRischio;
-import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,12 +48,6 @@ public class BenvenutoPazienteController {
         mostraPaginaCorrente();
     }
 
-    @FXML
-    private void nextPageAndSave() {
-        gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati);
-        salvaStatoPrimoAccessoPaziente();
-        nextPage();
-    }
 
     @FXML
     private void previousPage() { //metodo dei bottoni Indietro
@@ -157,8 +148,12 @@ public class BenvenutoPazienteController {
     // ==============================
 
     public void inserisciNuovoPasto() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/Pasto.fxml"));
-        Parent root = fxmlLoader.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../uiElements/InserisciNuovoPasto.fxml"));
+        Parent root = loader.load();
+
+        InserisciPastoController ipc = loader.getController();
+        ipc.setInstance(this);
+
         Stage stage = new Stage();
         stage.setTitle("Inserisci un nuovo pasto");
         stage.setScene(new Scene(root));
@@ -174,10 +169,17 @@ public class BenvenutoPazienteController {
         listaPasti.setItems(pasti);
     }
 
-    private void salvaStatoPrimoAccessoPaziente() {
+    public void resetListViewPasti() {
+        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        ObservableList<String> newPasti = FXCollections.observableArrayList();
+        newPasti.addAll(newUpp.getListaPasti());
+        listaPasti.setItems(newPasti);
+    }
+
+    public void salvaDatiPrimoAccesso() {
         paziente.setPrimoAccesso(0);
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
-        if (aggiornaPaziente.aggiornaPaziente()) {
+        if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert notificaSalvataggioAlert = new Alert(Alert.AlertType.INFORMATION);
             notificaSalvataggioAlert.setTitle("Salvataggio riuscito");
             notificaSalvataggioAlert.setHeaderText("Le tue informazioni sono state salvate con successo");

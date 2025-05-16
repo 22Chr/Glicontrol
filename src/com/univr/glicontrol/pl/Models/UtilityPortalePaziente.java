@@ -29,7 +29,7 @@ public class UtilityPortalePaziente {
         List<String> listaPasti = new ArrayList<>();
         GestionePasti gp = new GestionePasti(paziente);
         for (Pasto pasto : gp.getPasti()) {
-            String pastoFormattato = pasto.getNomePasto() + " - " + pasto.getOrario().toString();
+            String pastoFormattato = pasto.getNomePasto() + " - " + pasto.getOrario().toString().substring(0, 5);
             listaPasti.add(pastoFormattato);
             mappaPasti.put(pastoFormattato, pasto);
         }

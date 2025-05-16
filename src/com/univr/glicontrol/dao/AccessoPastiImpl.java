@@ -25,7 +25,7 @@ public class AccessoPastiImpl implements AccessoPasti{
                 while (rs.next()) {
                     pasti.add(new Pasto(
                             rs.getInt("id_pasto"),
-                            rs.getInt("id_utente"),
+                            rs.getInt("id_paziente"),
                             rs.getString("nome_pasto"),
                             rs.getTime("ora")
                     ));
