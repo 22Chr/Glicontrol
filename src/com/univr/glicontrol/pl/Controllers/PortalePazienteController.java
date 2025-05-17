@@ -50,13 +50,21 @@ public class PortalePazienteController {
     }
 
     public void openProfile(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../uiElements/ModificaInformazioniPaziente.fxml")));
-        Parent root = loader.load();
+        // Carica il file FXML della nuova finestra
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/ModificaInformazioniPaziente.fxml"));
+            Parent root = fxmlLoader.load();
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root, 800, 520));
-        stage.show();
+            // Crea una nuova finestra (Stage)
+            Stage nuovaFinestra = new Stage();
+            nuovaFinestra.setTitle("Finestra Secondaria");
+            nuovaFinestra.setScene(new Scene(root));
+
+            // Mostra la nuova finestra SENZA chiudere quella attuale
+            nuovaFinestra.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
-
 
 }

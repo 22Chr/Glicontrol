@@ -194,7 +194,7 @@
                   </GridPane>
                </children>
             </HBox>
-            <Button fx:id="salvaModifiche" mnemonicParsing="false" style="-fx-background-color: #22577a;" text="Salva le modifiche" textFill="WHITE">
+            <Button fx:id="salvaModifiche" mnemonicParsing="false" onAction="#salvaModificheInformazioni" style="-fx-background-color: #22577a;" text="Salva le modifiche" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
