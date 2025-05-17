@@ -1,6 +1,5 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.gluonhq.charm.glisten.control.Avatar;
 import com.univr.glicontrol.bll.ListaMedici;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.bll.Paziente;
@@ -12,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class PortalePazienteController {
     private TextField nomeMedicoRiferimentoTF, cognomeMedicoRiferimentoTF, emailMedicoRiferimentoTF;
 
     @FXML
-    private Avatar avatar;
+    private Circle badgeCircle;
 
     @FXML
     private void initialize() {
@@ -42,8 +43,9 @@ public class PortalePazienteController {
         emailMedicoRiferimentoTF.setText(medicoRiferimento.getEmail());
 
         // Inizializza l'avatar con le iniziali del paziente
-        avatar.setRadius(20);
-        avatar.setImage(upp.getAvatar());
+        badgeCircle.setFill(new ImagePattern(upp.getBadge()));
+        badgeCircle.setSmooth(true);
+        badgeCircle.setStyle("-fx-border-color: red;");
         // cercare metodo per risolvere il problema
     }
 
