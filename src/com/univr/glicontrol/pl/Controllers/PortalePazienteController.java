@@ -4,19 +4,18 @@ import com.univr.glicontrol.bll.ListaMedici;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class PortalePazienteController {
     //ultimeRilevazioniLW dovrà contenere il sunto delle ultime rilevazioni
@@ -49,22 +48,34 @@ public class PortalePazienteController {
         // cercare metodo per risolvere il problema
     }
 
-    public void openProfile(ActionEvent event) throws IOException {
+    public void openProfile() throws IOException {
         // Carica il file FXML della nuova finestra
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/ModificaInformazioniPaziente.fxml"));
             Parent root = fxmlLoader.load();
 
             // Crea una nuova finestra (Stage)
-            Stage nuovaFinestra = new Stage();
-            nuovaFinestra.setTitle("Finestra Secondaria");
-            nuovaFinestra.setScene(new Scene(root));
+            Stage infoPaziente = new Stage();
+            infoPaziente.setTitle("Informazioni personali");
+            infoPaziente.setScene(new Scene(root));
 
             // Mostra la nuova finestra SENZA chiudere quella attuale
-            nuovaFinestra.show();
+            infoPaziente.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    public void logout(Stage stage) {
+        stage.setOnCloseRequest(event -> {
+            event.consume();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Sei sicuro di voler uscire?");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                stage.close();
+            }
+        });
+    }
 }

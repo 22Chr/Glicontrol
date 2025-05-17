@@ -1,16 +1,11 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.AggiornaPaziente;
-import com.univr.glicontrol.bll.FattoriRischio;
-import com.univr.glicontrol.bll.GestioneFattoriRischio;
-import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.Duration;
 
 public class ModificaInformazioniPazienteController {
 
@@ -28,9 +23,10 @@ public class ModificaInformazioniPazienteController {
 
     private Paziente p;
 
-    private GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
+    private final GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
     Paziente paziente = new UtilityPortalePaziente().getPazienteSessione();
-    private FattoriRischio fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
+    private final FattoriRischio fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
+    private final InputChecker valueChecker = new InputChecker();
 
     @FXML
     private void initialize() {
@@ -67,22 +63,45 @@ public class ModificaInformazioniPazienteController {
         codFisTF.setText(p.getCodiceFiscale());
         codFisTF.setEditable(false);
         emailTF.setText(p.getEmail());
-        pesoTF.setText(String.valueOf(p.getPeso()) + " kg");
+        pesoTF.setText(p.getPeso() + " kg");
         allergieTA.setText(p.getAllergie());
+
+        salvaModifiche.requestFocus();
+
+        // Verifica attiva dei campi
+        emailTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (valueChecker.verificaEmail(newValue) && emailTF != null)
+                emailTF.setStyle("-fx-border-color: #43a047;");
+            else {
+                assert emailTF != null;
+                emailTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
+
+        pesoTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (valueChecker.verificaPeso(newValue) && pesoTF != null)
+                pesoTF.setStyle("-fx-border-color: #43a047;");
+            else {
+                assert pesoTF != null;
+                pesoTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
     }
 
     public void salvaModificheInformazioni() {
-        p.setEmail(emailTF.getText());
-        try {
-            p.setPeso((float) Double.parseDouble(pesoTF.getText()));
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Valore non valido");
-            alert.setHeaderText("Errore nel campo Peso");
-            alert.setContentText("Inserisci un numero valido (es. 72.5).");
 
-            alert.showAndWait();
+        if (valueChecker.verificaPeso(pesoTF.getText()) && valueChecker.verificaEmail(emailTF.getText())) {
+            p.setEmail(emailTF.getText());
+            p.setPeso(Float.parseFloat(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
+        } else {
+            Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
+            inputSbagliatiAlert.setTitle("Errore dati utente");
+            inputSbagliatiAlert.setHeaderText(null);
+            inputSbagliatiAlert.setContentText("Per modificare le informazioni del paziente è necessario che tutti i campi siano compilati correttamente.\nVerifica peso e email e riprova");
+            inputSbagliatiAlert.showAndWait();
+            return;
         }
+
         p.setAllergie(allergieTA.getText());
         fattoriRischioAggiornati.setFumatore(fumatoreCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setProblemiAlcol(alcolismoCB.isSelected() ? 1 : 0);
@@ -96,7 +115,7 @@ public class ModificaInformazioniPazienteController {
             Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
             aggiornaPazienteAlert.setTitle("Successo");
             aggiornaPazienteAlert.setHeaderText(null);
-            aggiornaPazienteAlert.setContentText("Modifica effettuata con successo");
+            aggiornaPazienteAlert.setContentText("I tuoi dati sono stati aggiornati correttamente");
             aggiornaPazienteAlert.showAndWait();
 
             Window currentWindow = salvaModifiche.getScene().getWindow();
@@ -107,7 +126,7 @@ public class ModificaInformazioniPazienteController {
             Alert erroreModificaPazienteAlert = new Alert(Alert.AlertType.ERROR);
             erroreModificaPazienteAlert.setTitle("Errore");
             erroreModificaPazienteAlert.setHeaderText(null);
-            erroreModificaPazienteAlert.setContentText("Errore durante il salvataggio delle modifiche");
+            erroreModificaPazienteAlert.setContentText("Si è verificato un errore durante il salvataggio delle nuove informazioni.\nVerifica che tutti i dati siano corretti e riprova");
             erroreModificaPazienteAlert.showAndWait();
         }
     }

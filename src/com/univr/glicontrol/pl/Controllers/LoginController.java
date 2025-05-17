@@ -1,7 +1,5 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.FattoriRischio;
-import com.univr.glicontrol.bll.GestioneFattoriRischio;
 import com.univr.glicontrol.bll.UtenteSessione;
 import com.univr.glicontrol.pl.Models.Login;
 import javafx.application.Platform;
@@ -84,7 +82,9 @@ public class LoginController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Object controller = loader.getController();
         if (controller instanceof PortaleAdminController pac) {
-            pac.setStageAndSetupListeners(stage); // 💡 Attiva listener sulla chiusura con X rossa
+            pac.logout(stage); // 💡 Attiva listener sulla chiusura con X rossa
+        } else if (controller instanceof PortalePazienteController ppc) {
+            ppc.logout(stage);
         }
         stage.setScene(new Scene(root, 1200, 700));
         stage.centerOnScreen();

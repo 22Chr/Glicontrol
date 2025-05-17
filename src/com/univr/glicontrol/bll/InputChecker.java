@@ -19,8 +19,14 @@ public class InputChecker {
         return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     }
 
-    public boolean verificaPeso(double peso) {
-        return peso > 0.0 && peso <= 700.0;
+    public boolean verificaPeso(String peso) {
+        //return peso > 0.0 && peso <= 700.0;
+        if (!peso.endsWith(" kg")) {
+            return false;
+        }
+
+        float pesoFloat = Float.parseFloat(peso.substring(0, peso.length() - 3));
+        return pesoFloat > 0.0 && pesoFloat <= 700.0;
     }
 
     public boolean verificaSesso(String sesso) {

@@ -32,7 +32,7 @@
                 <Insets left="10.0" top="10.0" />
             </StackPane.margin>
         </ImageView>
-        <VBox fx:id="page0" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" visible="false">
+        <VBox fx:id="page0" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
             <children>
                 <Text fill="#22577a" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto in Glicontrol&#10;il tuo alleato smart per una vita in equilibrio!" textAlignment="CENTER" wrappingWidth="421.78125">
                     <font>
@@ -215,14 +215,14 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox fx:id="page4" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+        <VBox fx:id="page4" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" visible="false">
             <children>
                 <Label text="Inserisci il tuo peso corrente">
                     <font>
                         <Font name="Avenir Next Regular" size="16.0" />
                     </font>
                 </Label>
-                <TextField fx:id="pesoTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="kg:">
+                <TextField fx:id="pesoTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="kg">
                     <font>
                         <Font size="14.0" />
                     </font>

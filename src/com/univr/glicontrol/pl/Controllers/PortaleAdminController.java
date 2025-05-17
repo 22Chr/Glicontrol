@@ -197,7 +197,7 @@ public class PortaleAdminController {
         }
     }
 
-    public void setStageAndSetupListeners(Stage stage) {
+    public void logout(Stage stage) {
         stage.setOnCloseRequest(event -> {
             event.consume(); // Blocca la chiusura automatica
 
