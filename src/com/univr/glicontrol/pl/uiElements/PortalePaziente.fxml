@@ -98,7 +98,7 @@
          <children>
             <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="95.0" prefWidth="400.0" spacing="25.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="rilevazioniGlicemiaB" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Inserisci le rilevazioni &#10;glicemiche" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="rilevazioniGlicemiaB" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Rilevazioni &#10;glicemiche" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -106,7 +106,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="sintomiB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Notifica i sintomi" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="sintomiB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="I miei sintomi" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -137,7 +137,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Notifica le patologie" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Le mie patologie" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -145,7 +145,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="terapiaB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Visulizza la terapia" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="terapiaB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="La mia terapia" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
