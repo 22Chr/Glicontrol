@@ -19,6 +19,7 @@ import java.util.Map;
 public class UtilityPortalePaziente {
     private final Paziente paziente;
     private Map<String, Pasto> mappaPasti = new HashMap<>();
+    private Map<String, Sintomo> mappaSintomi = new HashMap<>();
 
     public UtilityPortalePaziente() {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
@@ -88,10 +89,28 @@ public class UtilityPortalePaziente {
 
         GestioneSintomi gs = new GestioneSintomi(paziente);
         for (Sintomo sintomo : gs.getSintomi()) {
-            listaSintomi.add(sintomo.getDescrizione() + "   (inserito il " + sintomo.getData().toString().substring(0, 10) + " alle " + sintomo.getOra().toString().substring(0, 5) + ")");
+            String sintomoFormattato = sintomo.getDescrizione() + "   (inserito il " + sintomo.getData().toString().substring(0, 10) + " alle " + sintomo.getOra().toString().substring(0, 5) + ")";
+            listaSintomi.add(sintomoFormattato);
+            mappaSintomi.put(sintomoFormattato, sintomo);
         }
 
         return listaSintomi;
+    }
+
+    public Sintomo getSintomoPerDescrizioneFormattata(String descrizione) {
+        for (Sintomo s : mappaSintomi.values()) {
+            String check = "   (inserito";
+            int limit = descrizione.indexOf(check);
+
+            if (limit == -1) {
+                return null;
+            }
+
+            if (s.getDescrizione().equals(descrizione.substring(0, limit))) {
+                return s;
+            }
+        }
+        return null;
     }
 
 }

@@ -111,7 +111,7 @@ public class ModificaInformazioniPazienteController {
 
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(p);
 
-        if (aggiornaPaziente.aggiornaPaziente()) {
+        if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
             aggiornaPazienteAlert.setTitle("System Information Service");
             aggiornaPazienteAlert.setHeaderText(null);
