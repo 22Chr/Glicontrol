@@ -30,6 +30,7 @@ public class ModificaInformazioniPazienteController {
 
     @FXML
     private void initialize() {
+        salvaModifiche.requestFocus();
 
         //inizializzazione delle checkbox al loro stato attuale
         int fumatore = fattoriRischioAggiornati.getFumatore();
@@ -66,7 +67,6 @@ public class ModificaInformazioniPazienteController {
         pesoTF.setText(p.getPeso() + " kg");
         allergieTA.setText(p.getAllergie());
 
-        salvaModifiche.requestFocus();
 
         // Verifica attiva dei campi
         emailTF.textProperty().addListener((observable, oldValue, newValue) -> {
