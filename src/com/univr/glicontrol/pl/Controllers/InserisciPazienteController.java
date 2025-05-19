@@ -144,7 +144,7 @@ public class InserisciPazienteController {
 
         if (!valueChecker.allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita)) {
             Alert inputPazienteSbagliati = new Alert(Alert.AlertType.ERROR);
-            inputPazienteSbagliati.setTitle("Errore dati Utente");
+            inputPazienteSbagliati.setTitle("System Information Service");
             inputPazienteSbagliati.setHeaderText(null);
             inputPazienteSbagliati.setContentText("Per inserire un nuovo paziente è necessario che tutti i campi siano compilati correttamente. Riprova");
             inputPazienteSbagliati.showAndWait();
@@ -157,7 +157,7 @@ public class InserisciPazienteController {
 
             if (success == 1) {
                 Alert inserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                inserimentoPazienteAlert.setTitle("Successo");
+                inserimentoPazienteAlert.setTitle("System Information Service");
                 inserimentoPazienteAlert.setHeaderText(null);
                 inserimentoPazienteAlert.setContentText("Inserimento effettuato con successo");
                 inserimentoPazienteAlert.showAndWait();
@@ -170,7 +170,7 @@ public class InserisciPazienteController {
                     if (inserisciPaziente.inviaCredenzialiPaziente(email, password)) {
 
                         Alert notificaInserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                        notificaInserimentoPazienteAlert.setTitle("Successo");
+                        notificaInserimentoPazienteAlert.setTitle("System Information Service");
                         notificaInserimentoPazienteAlert.setHeaderText(null);
                         notificaInserimentoPazienteAlert.setContentText("Invio delle credenziali al paziente avvenuto con successo");
                         notificaInserimentoPazienteAlert.show();
@@ -178,7 +178,7 @@ public class InserisciPazienteController {
                     } else {
 
                         Alert erroreNotificaInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
-                        erroreNotificaInserimentoPazienteAlert.setTitle("Errore");
+                        erroreNotificaInserimentoPazienteAlert.setTitle("System Information Service");
                         erroreNotificaInserimentoPazienteAlert.setHeaderText(null);
                         erroreNotificaInserimentoPazienteAlert.setContentText("Si è verificato un errore durante l'invio delle credenziali al paziente");
                         erroreNotificaInserimentoPazienteAlert.show();
@@ -205,7 +205,7 @@ public class InserisciPazienteController {
             } else if (success == 0) {
 
                 Alert erroreInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
-                erroreInserimentoPazienteAlert.setTitle("Errore");
+                erroreInserimentoPazienteAlert.setTitle("System Information Service");
                 erroreInserimentoPazienteAlert.setHeaderText(null);
                 erroreInserimentoPazienteAlert.setContentText("Errore durante l'inserimento del paziente");
                 erroreInserimentoPazienteAlert.showAndWait();
@@ -213,7 +213,7 @@ public class InserisciPazienteController {
             } else {
 
                 Alert pazienteEsistenteAlert = new Alert(Alert.AlertType.ERROR);
-                pazienteEsistenteAlert.setTitle("Gestore duplicati");
+                pazienteEsistenteAlert.setTitle("System Information Service");
                 pazienteEsistenteAlert.setHeaderText(null);
                 pazienteEsistenteAlert.setContentText("Il paziente che stai cercando di inserire è già presente nel sistema");
                 pazienteEsistenteAlert.showAndWait();

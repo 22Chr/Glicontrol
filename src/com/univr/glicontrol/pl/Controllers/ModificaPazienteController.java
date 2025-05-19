@@ -151,7 +151,7 @@ public class ModificaPazienteController {
 
         if (!valueChecker.allCheckForPaziente(p.getNome(), p.getCognome(), p.getCodiceFiscale(), p.getPassword(), p.getEmail(), p.getSesso(), p.getDataNascita())) {
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
-            inputSbagliatiAlert.setTitle("Errore dati utente");
+            inputSbagliatiAlert.setTitle("System Information Service");
             inputSbagliatiAlert.setHeaderText(null);
             inputSbagliatiAlert.setContentText("Per modificare i dati di un paziente è necessario che tutti i campi siano compilati correttamente. Riprova");
             inputSbagliatiAlert.showAndWait();
@@ -162,7 +162,7 @@ public class ModificaPazienteController {
 
             if (aggiornaPaziente.aggiornaPaziente()) {
                 Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                aggiornaPazienteAlert.setTitle("Successo");
+                aggiornaPazienteAlert.setTitle("System Information Service");
                 aggiornaPazienteAlert.setHeaderText(null);
                 aggiornaPazienteAlert.setContentText("Modifica effettuata con successo");
                 aggiornaPazienteAlert.showAndWait();
@@ -173,13 +173,13 @@ public class ModificaPazienteController {
                     pause.setOnFinished(event -> {
                         if (aggiornaPaziente.inviaCredenzialiAggiornatePaziente(p.getEmail(), passwordPazienteTF.getText())) {
                             Alert notificaModifichePazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                            notificaModifichePazienteAlert.setTitle("Notification Service - Success");
+                            notificaModifichePazienteAlert.setTitle("System Information Service");
                             notificaModifichePazienteAlert.setHeaderText(null);
                             notificaModifichePazienteAlert.setContentText("Le credenziali aggiornate sono state inviate con successo");
                             notificaModifichePazienteAlert.show();
                         } else {
                             Alert erroreNotificaModifichePazienteAlert = new Alert(Alert.AlertType.ERROR);
-                            erroreNotificaModifichePazienteAlert.setTitle("Notification Service - Error");
+                            erroreNotificaModifichePazienteAlert.setTitle("System Information Service");
                             erroreNotificaModifichePazienteAlert.setHeaderText(null);
                             erroreNotificaModifichePazienteAlert.setContentText("Si è verificato un errore durante l'invio delle notifiche di aggiornamento delle credenziali");
                             erroreNotificaModifichePazienteAlert.show();
@@ -206,7 +206,7 @@ public class ModificaPazienteController {
                 }
             } else {
                 Alert erroreModificaPazienteAlert = new Alert(Alert.AlertType.ERROR);
-                erroreModificaPazienteAlert.setTitle("Errore");
+                erroreModificaPazienteAlert.setTitle("System Information Service");
                 erroreModificaPazienteAlert.setHeaderText(null);
                 erroreModificaPazienteAlert.setContentText("Errore durante il salvataggio delle modifiche");
                 erroreModificaPazienteAlert.showAndWait();
@@ -222,7 +222,7 @@ public class ModificaPazienteController {
 
     public void eliminaPaziente(){
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmAlert.setTitle("Conferma eliminazione");
+        confirmAlert.setTitle("System Information Service");
         confirmAlert.setHeaderText(null);
         confirmAlert.setContentText("Sei sicuro di voler eliminare questo paziente?");
 
@@ -231,7 +231,7 @@ public class ModificaPazienteController {
                 EliminaPaziente ep = new EliminaPaziente(p);
                 if (ep.deletePaziente()) {
                     Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                    successAlert.setTitle("Successo");
+                    successAlert.setTitle("System Information Service");
                     successAlert.setHeaderText(null);
                     successAlert.setContentText("Paziente eliminato con successo");
                     successAlert.showAndWait();
@@ -242,13 +242,13 @@ public class ModificaPazienteController {
                     pause.setOnFinished(event -> {
                         if (ep.notificaEliminazionePaziente(p.getEmail())) {
                             Alert invioNotificheEliminazioneAlert = new Alert(Alert.AlertType.INFORMATION);
-                            invioNotificheEliminazioneAlert.setTitle("Notification Service - Success");
+                            invioNotificheEliminazioneAlert.setTitle("System Information Service");
                             invioNotificheEliminazioneAlert.setHeaderText(null);
                             invioNotificheEliminazioneAlert.setContentText("La notifica di eliminazione è stata inviata con successo");
                             invioNotificheEliminazioneAlert.show();
                         } else {
                             Alert erroreInvioNotificheEliminazioneAlert = new Alert(Alert.AlertType.ERROR);
-                            erroreInvioNotificheEliminazioneAlert.setTitle("Notification Service - Error");
+                            erroreInvioNotificheEliminazioneAlert.setTitle("System Information Service");
                             erroreInvioNotificheEliminazioneAlert.setHeaderText(null);
                             erroreInvioNotificheEliminazioneAlert.setContentText("Si è verificato un errore durante l'invio della notifica di eliminazione");
                             erroreInvioNotificheEliminazioneAlert.show();
@@ -262,7 +262,7 @@ public class ModificaPazienteController {
                     }
                 } else {
                     Alert erroreEliminazionePazienteAlert = new Alert(Alert.AlertType.ERROR);
-                    erroreEliminazionePazienteAlert.setTitle("Errore");
+                    erroreEliminazionePazienteAlert.setTitle("System Information Service");
                     erroreEliminazionePazienteAlert.setHeaderText(null);
                     erroreEliminazionePazienteAlert.setContentText("Errore durante l'eliminazione del paziente");
                     erroreEliminazionePazienteAlert.showAndWait();
@@ -270,5 +270,4 @@ public class ModificaPazienteController {
             }
         });
     }
-
 }

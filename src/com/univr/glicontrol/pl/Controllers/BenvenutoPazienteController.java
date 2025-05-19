@@ -192,7 +192,7 @@ public class BenvenutoPazienteController {
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
         if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert notificaSalvataggioAlert = new Alert(Alert.AlertType.INFORMATION);
-            notificaSalvataggioAlert.setTitle("Salvataggio riuscito");
+            notificaSalvataggioAlert.setTitle("System Information Service");
             notificaSalvataggioAlert.setHeaderText("Le tue informazioni sono state salvate con successo");
             notificaSalvataggioAlert.showAndWait();
 
@@ -212,7 +212,7 @@ public class BenvenutoPazienteController {
             }
         } else {
             Alert erroreSalvataggioDatiAlert = new Alert(Alert.AlertType.ERROR);
-            erroreSalvataggioDatiAlert.setTitle("Errore salvataggio dati");
+            erroreSalvataggioDatiAlert.setTitle("System Information Service");
             erroreSalvataggioDatiAlert.setHeaderText("Si è verificato un errore durante il salvataggio dei dati. Riprova");
             erroreSalvataggioDatiAlert.showAndWait();
         }

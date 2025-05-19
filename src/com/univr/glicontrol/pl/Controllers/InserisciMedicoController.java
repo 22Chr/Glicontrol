@@ -98,13 +98,13 @@ public class InserisciMedicoController {
 
             } else if (success == 0) {
                 Alert erroreInserimentoMedicoAlert = new Alert(Alert.AlertType.ERROR);
-                erroreInserimentoMedicoAlert.setTitle("Errore");
+                erroreInserimentoMedicoAlert.setTitle("System Information Service");
                 erroreInserimentoMedicoAlert.setHeaderText(null);
                 erroreInserimentoMedicoAlert.setContentText("Errore durante l'inserimento del medico");
                 erroreInserimentoMedicoAlert.showAndWait();
             } else {
                 Alert medicoEsistenteAlert = new Alert(Alert.AlertType.ERROR);
-                medicoEsistenteAlert.setTitle("Gestore duplicati");
+                medicoEsistenteAlert.setTitle("System Information Service");
                 medicoEsistenteAlert.setHeaderText(null);
                 medicoEsistenteAlert.setContentText("Il medico che stai cercando di inserire è già presente nel sistema");
                 medicoEsistenteAlert.showAndWait();

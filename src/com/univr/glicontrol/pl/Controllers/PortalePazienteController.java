@@ -48,7 +48,7 @@ public class PortalePazienteController {
         // cercare metodo per risolvere il problema
     }
 
-    public void openProfile() throws IOException {
+    public void openProfile() {
         // Carica il file FXML della nuova finestra
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/ModificaInformazioniPaziente.fxml"));
@@ -61,6 +61,21 @@ public class PortalePazienteController {
 
             // Mostra la nuova finestra SENZA chiudere quella attuale
             infoPaziente.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void openSintomi() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraSintomiPaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage sintomiPaziente = new Stage();
+            sintomiPaziente.setTitle("I miei sintomi");
+            sintomiPaziente.setScene(new Scene(root));
+
+            sintomiPaziente.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

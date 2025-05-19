@@ -146,7 +146,7 @@ public class PortaleAdminController {
             currentStage.setFullScreen(false);
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Conferma Logout");
+        alert.setTitle("System Information Service");
         alert.setHeaderText("Sei sicuro di voler uscire?");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
@@ -202,6 +202,7 @@ public class PortaleAdminController {
             event.consume(); // Blocca la chiusura automatica
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("System Information Service");
             alert.setHeaderText("Sei sicuro di voler uscire?");
 
             if (alert.showAndWait().get() == ButtonType.OK) {

@@ -212,7 +212,7 @@
                               <Insets bottom="5.0" left="3.0" right="3.0" top="5.0" />
                            </padding>
                         </Label>
-                        <TextArea fx:id="allergieTA" prefHeight="287.0" prefWidth="252.0" style="-fx-border-radius: 10;">
+                        <TextArea fx:id="allergieTA" prefHeight="287.0" prefWidth="252.0" style="-fx-border-radius: 10;" wrapText="true">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>

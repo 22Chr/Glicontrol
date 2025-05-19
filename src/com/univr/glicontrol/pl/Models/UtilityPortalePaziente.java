@@ -1,9 +1,6 @@
 package com.univr.glicontrol.pl.Models;
 
-import com.univr.glicontrol.bll.GestionePasti;
-import com.univr.glicontrol.bll.Pasto;
-import com.univr.glicontrol.bll.Paziente;
-import com.univr.glicontrol.bll.UtenteSessione;
+import com.univr.glicontrol.bll.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -85,4 +82,16 @@ public class UtilityPortalePaziente {
 
         return canvas.snapshot(null, null);
     }
+
+    public List<String> getListaSintomiPazienti() {
+        List<String> listaSintomi = new ArrayList<>();
+
+        GestioneSintomi gs = new GestioneSintomi(paziente);
+        for (Sintomo sintomo : gs.getSintomi()) {
+            listaSintomi.add(sintomo.getDescrizione() + "   (inserito il " + sintomo.getData().toString().substring(0, 10) + " alle " + sintomo.getOra().toString().substring(0, 5) + ")");
+        }
+
+        return listaSintomi;
+    }
+
 }

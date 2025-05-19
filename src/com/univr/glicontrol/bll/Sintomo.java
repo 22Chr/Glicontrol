@@ -33,4 +33,8 @@ public class Sintomo {
     public Date getData() {
         return data;
     }
+
+    public Time getOra() {
+        return ora;
+    }
 }

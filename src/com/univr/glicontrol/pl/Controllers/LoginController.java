@@ -69,7 +69,7 @@ public class LoginController {
             }
         } else {
             Alert utenteNonValidoAlert = new Alert(Alert.AlertType.ERROR);
-            utenteNonValidoAlert.setTitle("Errore di accesso");
+            utenteNonValidoAlert.setTitle("System Information Service");
             utenteNonValidoAlert.setHeaderText("Credenziali non valide");
             utenteNonValidoAlert.setContentText("Controlla il codice fiscale e la password inseriti. Riprova");
             utenteNonValidoAlert.showAndWait();

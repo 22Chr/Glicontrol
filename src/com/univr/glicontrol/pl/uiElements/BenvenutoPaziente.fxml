@@ -232,7 +232,7 @@
                         <Font name="Avenir Next Regular" size="16.0" />
                     </font>
                 </Label>
-                <TextArea fx:id="allergieTA" maxHeight="80.0" maxWidth="160.0" prefHeight="80.0" prefWidth="160.0">
+                <TextArea fx:id="allergieTA" maxHeight="80.0" maxWidth="160.0" prefHeight="80.0" prefWidth="160.0" wrapText="true">
                     <font>
                         <Font size="14.0" />
                     </font>

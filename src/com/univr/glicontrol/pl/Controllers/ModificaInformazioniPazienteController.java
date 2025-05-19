@@ -95,7 +95,7 @@ public class ModificaInformazioniPazienteController {
             p.setPeso(Float.parseFloat(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
         } else {
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
-            inputSbagliatiAlert.setTitle("Errore dati utente");
+            inputSbagliatiAlert.setTitle("System Information Service");
             inputSbagliatiAlert.setHeaderText(null);
             inputSbagliatiAlert.setContentText("Per modificare le informazioni del paziente è necessario che tutti i campi siano compilati correttamente.\nVerifica peso e email e riprova");
             inputSbagliatiAlert.showAndWait();
@@ -113,7 +113,7 @@ public class ModificaInformazioniPazienteController {
 
         if (aggiornaPaziente.aggiornaPaziente()) {
             Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-            aggiornaPazienteAlert.setTitle("Successo");
+            aggiornaPazienteAlert.setTitle("System Information Service");
             aggiornaPazienteAlert.setHeaderText(null);
             aggiornaPazienteAlert.setContentText("I tuoi dati sono stati aggiornati correttamente");
             aggiornaPazienteAlert.showAndWait();
@@ -124,7 +124,7 @@ public class ModificaInformazioniPazienteController {
             }
         } else {
             Alert erroreModificaPazienteAlert = new Alert(Alert.AlertType.ERROR);
-            erroreModificaPazienteAlert.setTitle("Errore");
+            erroreModificaPazienteAlert.setTitle("System Information Service");
             erroreModificaPazienteAlert.setHeaderText(null);
             erroreModificaPazienteAlert.setContentText("Si è verificato un errore durante il salvataggio delle nuove informazioni.\nVerifica che tutti i dati siano corretti e riprova");
             erroreModificaPazienteAlert.showAndWait();
