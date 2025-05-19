@@ -124,7 +124,7 @@ public class UtilityPortalePaziente {
 
         GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
         for (PatologiaConcomitante p : gpc.getListaPatologieConcomitanti()) {
-            String patologiaConcomitantiFormattata = p.getNomePatologia() + "   (" + p.getDataInizio().toString().substring(0, 10) + " - " + p.getDataFine() == null ? "in corso" : p.getDataFine().toString().substring(0, 10) + ")";
+            String patologiaConcomitantiFormattata = p.getNomePatologia() + "   (" + p.getDataInizio().toString().substring(0, 10) + " - " + (p.getDataFine() == null ? "in corso" : p.getDataFine().toString().substring(0, 10)) + ")";
             listaPatologieConcomitanti.add(patologiaConcomitantiFormattata);
             mappaPatologieConcomitanti.put(patologiaConcomitantiFormattata, p);
         }
