@@ -20,6 +20,7 @@ public class UtilityPortalePaziente {
     private final Paziente paziente;
     private Map<String, Pasto> mappaPasti = new HashMap<>();
     private Map<String, Sintomo> mappaSintomi = new HashMap<>();
+    private Map<String, PatologiaConcomitante> mappaPatologieConcomitanti = new HashMap<>();
 
     public UtilityPortalePaziente() {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
@@ -84,6 +85,8 @@ public class UtilityPortalePaziente {
         return canvas.snapshot(null, null);
     }
 
+
+    // Ottiene la lista dei sintomi dei pazienti
     public List<String> getListaSintomiPazienti() {
         List<String> listaSintomi = new ArrayList<>();
 
@@ -97,6 +100,7 @@ public class UtilityPortalePaziente {
         return listaSintomi;
     }
 
+    // Restituisce il sintomo a partire dalla sua voce grafica di tipo String
     public Sintomo getSintomoPerDescrizioneFormattata(String descrizione) {
         for (Sintomo s : mappaSintomi.values()) {
             String check = "   (inserito";
@@ -108,6 +112,31 @@ public class UtilityPortalePaziente {
 
             if (s.getDescrizione().equals(descrizione.substring(0, limit))) {
                 return s;
+            }
+        }
+        return null;
+    }
+
+
+    // Restituisce la lista di tipo String delle patologie concomitanti del paziente
+    public List<String> getListaPatologieConcomitantiPazienti() {
+        List<String> listaPatologieConcomitanti = new ArrayList<>();
+
+        GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
+        for (PatologiaConcomitante p : gpc.getListaPatologieConcomitanti()) {
+            String patologiaConcomitantiFormattata = p.getNomePatologia() + "   (" + p.getDataInizio().toString().substring(0, 10) + " - " + p.getDataFine() == null ? "in corso" : p.getDataFine().toString().substring(0, 10) + ")";
+            listaPatologieConcomitanti.add(patologiaConcomitantiFormattata);
+            mappaPatologieConcomitanti.put(patologiaConcomitantiFormattata, p);
+        }
+
+        return listaPatologieConcomitanti;
+    }
+
+    // Restituisce la patologia concomitante a partire dalla sua voce grafica di tipo String
+    public PatologiaConcomitante getPatologiaConcomitantePerNomeFormattata(String nomePatologiaFormattato) {
+        for (PatologiaConcomitante p : mappaPatologieConcomitanti.values()) {
+            if ((p.getNomePatologia() + "   (" + p.getDataInizio().toString().substring(0, 10) + " - " + p.getDataFine().toString().substring(0, 10) + ")").equals(nomePatologiaFormattato)) {
+                return p;
             }
         }
         return null;
