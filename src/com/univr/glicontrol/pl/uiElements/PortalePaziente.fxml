@@ -137,13 +137,19 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Le mie patologie" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie &#10;concomitanti" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <font>
                         <Font size="15.0" />
                      </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </Button>
                   <Button fx:id="terapiaB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="La mia terapia" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
