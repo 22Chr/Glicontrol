@@ -66,6 +66,6 @@ public class InputChecker {
     }
 
     public boolean allCheckForPaziente(String nome, String cognome, String codiceFiscale, String password, String email, String sesso, Date dataNascita) {
-        return verificaNome(nome) && verificaCognome(cognome) && verificaCodiceFiscale(codiceFiscale) && verificaPassword(password) && verificaEmail(email) && verificaSesso(sesso) && verificaNascita(dataNascita);
+        return verificaNome(nome) && verificaCognome(cognome) && verificaCodiceFiscale(codiceFiscale) && verificaPassword(password) && verificaEmail(email) && sesso != null && verificaNascita(dataNascita);
     }
 }

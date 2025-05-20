@@ -5,10 +5,7 @@ import com.univr.glicontrol.pl.Models.GetListaUtenti;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -35,10 +32,10 @@ public class ModificaPazienteController {
     private TextField passwordPazienteTF;
 
     @FXML
-    private TextField dataNascitaPazienteTF;
+    private DatePicker dataNascitaPazienteDP;
 
     @FXML
-    private TextField sessoPazienteTF;
+    private ComboBox sessoPazienteCB;
 
     @FXML
     private Button saveButton;
@@ -62,6 +59,8 @@ public class ModificaPazienteController {
     private void initialize(){
         List<String> medici = glpa.getListaMediciPortaleAdmin();
         medicoRifCB.setItems(FXCollections.observableArrayList(medici));
+
+        sessoPazienteCB.setItems(FXCollections.observableArrayList("M", "F"));
 
         nomePazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
            if (valueChecker.verificaNome(newValue)) {
@@ -103,35 +102,31 @@ public class ModificaPazienteController {
             }
         });
 
-        dataNascitaPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
+        dataNascitaPazienteDP.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (valueChecker.verificaNascita(Date.valueOf(newValue))) {
-                dataNascitaPazienteTF.setStyle("-fx-border-color: #43a047");
+                dataNascitaPazienteDP.setStyle("-fx-border-color: #43a047");
             } else {
-               dataNascitaPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
-            }
-        });
-
-        sessoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaSesso(newValue)) {
-               sessoPazienteTF.setStyle("-fx-border-color: #43a047");
-            } else {
-               sessoPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
+               dataNascitaPazienteDP.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
             }
         });
     }
 
     public void setPaziente(Paziente paziente) {
+        ListaMedici listaMedici = new ListaMedici();
 
         this.p = paziente;
         CFPazienteTF.setText(p.getCodiceFiscale());
         nomePazienteTF.setText(p.getNome());
         cognomePazienteTF.setText(p.getCognome());
         emailPazienteTF.setText(p.getEmail());
-        dataNascitaPazienteTF.setText(p.getDataNascita().toString());
-        sessoPazienteTF.setText(p.getSesso());
+        dataNascitaPazienteDP.setValue(p.getDataNascita().toLocalDate());
+        sessoPazienteCB.setValue(p.getSesso());
         passwordPazienteTF.setText(p.getPassword());
         defaultPassword = p.getPassword();
         defaultMed = p.getMedicoRiferimento();
+        medicoRifCB.setValue(listaMedici.ottieniMedicoPerId(p.getMedicoRiferimento()).getCognome() +
+                " " + listaMedici.ottieniMedicoPerId(p.getMedicoRiferimento()).getNome() +
+                " - " + listaMedici.ottieniMedicoPerId(p.getMedicoRiferimento()).getCodiceFiscale());
 
     }
 
@@ -145,8 +140,8 @@ public class ModificaPazienteController {
         p.setCognome(cognomePazienteTF.getText());
         p.setEmail(emailPazienteTF.getText());
         p.setCodiceFiscale(CFPazienteTF.getText());
-        p.setDataNascita(Date.valueOf(dataNascitaPazienteTF.getText()));
-        p.setSesso(sessoPazienteTF.getText());
+        p.setDataNascita(Date.valueOf(dataNascitaPazienteDP.getValue()));
+        p.setSesso(sessoPazienteCB.getValue().toString());
         p.setPassword(passwordPazienteTF.getText());
 
         if (!valueChecker.allCheckForPaziente(p.getNome(), p.getCognome(), p.getCodiceFiscale(), p.getPassword(), p.getEmail(), p.getSesso(), p.getDataNascita())) {

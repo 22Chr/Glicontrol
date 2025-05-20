@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -118,22 +119,6 @@
                         <Font size="14.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="dataNascitaNuovoPazienteTF" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <GridPane.margin>
-                        <Insets right="5.0" />
-                    </GridPane.margin>
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </TextField>
-                <TextField fx:id="sessoNuovoPazienteTF" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                    <GridPane.margin>
-                        <Insets right="5.0" />
-                    </GridPane.margin>
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </TextField>
                 <TextField fx:id="emailNuovoPazienteTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                     <font>
                         <Font size="14.0" />
@@ -144,7 +129,9 @@
                         <Font size="14.0" />
                     </font>
                 </TextField>
-                <ComboBox fx:id="medicoRifNuovoPazCB" onAction="#selezionaMedicoRiferimentoNuovo" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <ComboBox fx:id="medicoRifNuovoPazCB" onAction="#selezionaMedicoRiferimentoNuovo" prefHeight="28.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="sessoNuovoPazienteCB" prefHeight="28.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="dataNascitaNuovoPazienteDP" prefHeight="28.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             </children>
             <StackPane.margin>
                 <Insets top="-45.0" />

@@ -21,7 +21,7 @@
          <children>
             <VBox alignment="TOP_CENTER" spacing="10" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MEDICI">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="LISTA MEDICI">
                      <VBox.margin>
                         <Insets left="25.0" />
                      </VBox.margin>
@@ -41,7 +41,7 @@
             </VBox>
             <VBox alignment="TOP_CENTER" spacing="10" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PAZIENTI">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="LISTA PAZIENTI">
                      <VBox.margin>
                         <Insets left="25.0" />
                      </VBox.margin>
@@ -49,7 +49,7 @@
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <ListView fx:id="listaPazienti" maxHeight="600.0" maxWidth="300.0" prefHeight="200.0" prefWidth="180.0" VBox.vgrow="ALWAYS">
+                  <ListView fx:id="listaPazienti" maxHeight="500.0" maxWidth="300.0" prefHeight="200.0" prefWidth="180.0" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets left="25.0" top="20.0" />
                      </VBox.margin>
@@ -59,7 +59,7 @@
                   <Insets top="40.0" />
                </HBox.margin>
             </VBox>
-            <MenuButton alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: #22577a;" text="Inserisci" textFill="WHITE" HBox.hgrow="ALWAYS">
+            <MenuButton alignment="CENTER" mnemonicParsing="false" style="-fx-background-color: #22577a; -fx-border-radius: 5; fx-background-radius: 5;" text="Inserisci" textFill="WHITE" HBox.hgrow="ALWAYS">
                <items>
                   <MenuItem fx:id="medicoMI" mnemonicParsing="false" onAction="#inserisciNuovoMedico" text="Medico      " />
                   <MenuItem fx:id="pazienteMI" mnemonicParsing="false" onAction="#inserisciNuovoPaziente" text="Paziente" />
@@ -91,8 +91,19 @@
                   <Insets left="20.0" top="10.0" />
                </HBox.margin>
             </ImageView>
-            <Region prefHeight="45.0" prefWidth="400.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="logoutB" alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: #22577a;" text="Logout" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+            <Region prefHeight="64.0" prefWidth="340.0" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" style="-fx-background-color: #22577a; -fx-background-radius: 5; -fx-border-radius: 5;" text="Log terapie" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets right="20.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="logoutB" alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5;" text="Logout" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="20.0" top="10.0" />
                </HBox.margin>

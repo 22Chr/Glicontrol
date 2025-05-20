@@ -6,10 +6,7 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -36,11 +33,10 @@ public class InserisciPazienteController {
     private TextField passwordNuovoPazienteTF;
 
     @FXML
-    private TextField dataNascitaNuovoPazienteTF;
+    private DatePicker dataNascitaNuovoPazienteDP;
 
     @FXML
-    private TextField sessoNuovoPazienteTF;
-
+    private ComboBox<String> sessoNuovoPazienteCB;
 
     @FXML
     private Button saveNuovoPazienteB;
@@ -63,6 +59,8 @@ public class InserisciPazienteController {
 
         List<String> medici = glpa.getListaMediciPortaleAdmin(); // ad es. "Mario Rossi - CF1234"
         medicoRifNuovoPazCB.setItems(FXCollections.observableArrayList(medici));
+
+        sessoNuovoPazienteCB.setItems(FXCollections.observableArrayList("M", "F"));
 
         nomeNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
            if (valueChecker.verificaNome(newValue) && nomeNuovoPazienteTF != null) {
@@ -109,21 +107,12 @@ public class InserisciPazienteController {
             }
         });
 
-        dataNascitaNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaNascita(Date.valueOf(newValue)) && dataNascitaNuovoPazienteTF != null) {
-                dataNascitaNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
+        dataNascitaNuovoPazienteDP.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (valueChecker.verificaNascita(Date.valueOf(newValue)) && dataNascitaNuovoPazienteDP != null) {
+                dataNascitaNuovoPazienteDP.setStyle("-fx-border-color: #43a047");
             } else {
-                assert dataNascitaNuovoPazienteTF != null;
-                dataNascitaNuovoPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
-            }
-        });
-
-        sessoNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaSesso(newValue) && sessoNuovoPazienteTF != null) {
-               sessoNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
-            } else {
-                assert sessoNuovoPazienteTF != null;
-                sessoNuovoPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
+                assert dataNascitaNuovoPazienteDP != null;
+                dataNascitaNuovoPazienteDP.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
             }
         });
     }
@@ -138,8 +127,8 @@ public class InserisciPazienteController {
         String cognome = cognomeNuovoPazienteTF.getText();
         String email = emailNuovoPazienteTF.getText();
         String CF = CFNuovoPazienteTF.getText();
-        Date dataNascita = Date.valueOf(dataNascitaNuovoPazienteTF.getText());
-        String sesso = sessoNuovoPazienteTF.getText();
+        Date dataNascita = Date.valueOf(dataNascitaNuovoPazienteDP.getValue());
+        String sesso = sessoNuovoPazienteCB.getValue();
         String password = passwordNuovoPazienteTF.getText();
 
         if (!valueChecker.allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita)) {

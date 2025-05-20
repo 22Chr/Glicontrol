@@ -8,10 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
-import java.sql.Date;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -107,8 +104,14 @@ public class UtilityPortalePaziente {
         return listaSintomi;
     }
 
+    // Aggiorna la lista dei sintomi
+    public void aggiornaListaSintomiPazienti() {
+        getListaSintomiPazienti();
+    }
+
     // Restituisce il sintomo a partire dalla sua voce grafica di tipo String
     public Sintomo getSintomoPerDescrizioneFormattata(String descrizione) {
+        aggiornaListaSintomiPazienti();
         for (Sintomo s : mappaSintomi.values()) {
             String check = "   (inserito";
             int limit = descrizione.indexOf(check);
@@ -135,7 +138,7 @@ public class UtilityPortalePaziente {
             LocalDate dataFine = p.getDataFine() == null ? null : p.getDataFine().toLocalDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataInizioFormattata = dataInizio.format(formatter);
-            String dataFineFormattata = null;
+            String dataFineFormattata;
             if (dataFine != null) {
                 dataFineFormattata = dataFine.format(formatter);
             } else {
@@ -150,14 +153,20 @@ public class UtilityPortalePaziente {
         return listaPatologieConcomitanti;
     }
 
+    // Aggiorna la lista delle patologie concomitanti
+    public void aggiornaListaPatologieConcomitantiPazienti() {
+        getListaPatologieConcomitantiPazienti();
+    }
+
     // Restituisce la patologia concomitante a partire dalla sua voce grafica di tipo String
     public PatologiaConcomitante getPatologiaConcomitantePerNomeFormattata(String nomePatologiaFormattato) {
+        aggiornaListaPatologieConcomitantiPazienti();
         for (PatologiaConcomitante p : mappaPatologieConcomitanti.values()) {
             LocalDate dataInizio = p.getDataInizio().toLocalDate();
             LocalDate dataFine = p.getDataFine() == null ? null : p.getDataFine().toLocalDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataInizioFormattata = dataInizio.format(formatter);
-            String dataFineFormattata = null;
+            String dataFineFormattata;
             if (dataFine != null) {
                 dataFineFormattata = dataFine.format(formatter);
             } else {

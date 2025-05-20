@@ -110,6 +110,13 @@ public class FinestraPatologieConcomitantiPazienteController {
 
             resetListViewPatologie();
 
+            // Ripulisci i campit per l'inserimento di nuove patologie
+            nomePatologiaTF.clear();
+            descrizionePatologiaTA.clear();
+            dataInizioDP.setValue(null);
+            dataFineDP.setValue(null);
+
+
         } else {
             Alert erroreInserimentoSintomoAlert = new Alert(Alert.AlertType.ERROR);
             erroreInserimentoSintomoAlert.setTitle("System Information Service");
