@@ -9,8 +9,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,7 +96,10 @@ public class UtilityPortalePaziente {
 
         GestioneSintomi gs = new GestioneSintomi(paziente);
         for (Sintomo sintomo : gs.getSintomi()) {
-            String sintomoFormattato = sintomo.getDescrizione() + "   (inserito il " + sintomo.getData().toString().substring(0, 10) + " alle " + sintomo.getOra().toString().substring(0, 5) + ")";
+            LocalDate data = sintomo.getData().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormattata = data.format(formatter);
+            String sintomoFormattato = sintomo.getDescrizione() + "   (inserito il " + dataFormattata + " alle " + sintomo.getOra().toString().substring(0, 5) + ")";
             listaSintomi.add(sintomoFormattato);
             mappaSintomi.put(sintomoFormattato, sintomo);
         }
@@ -124,9 +131,20 @@ public class UtilityPortalePaziente {
 
         GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
         for (PatologiaConcomitante p : gpc.getListaPatologieConcomitanti()) {
-            String patologiaConcomitantiFormattata = p.getNomePatologia() + "   (" + p.getDataInizio().toString().substring(0, 10) + " - " + (p.getDataFine() == null ? "in corso" : p.getDataFine().toString().substring(0, 10)) + ")";
-            listaPatologieConcomitanti.add(patologiaConcomitantiFormattata);
-            mappaPatologieConcomitanti.put(patologiaConcomitantiFormattata, p);
+            LocalDate dataInizio = p.getDataInizio().toLocalDate();
+            LocalDate dataFine = p.getDataFine() == null ? null : p.getDataFine().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataInizioFormattata = dataInizio.format(formatter);
+            String dataFineFormattata = null;
+            if (dataFine != null) {
+                dataFineFormattata = dataFine.format(formatter);
+            } else {
+                dataFineFormattata = "in corso";
+            }
+
+            String patologiaConcomitanteFormattata = p.getNomePatologia() + "   (" + dataInizioFormattata + " - " + dataFineFormattata + ")";
+            listaPatologieConcomitanti.add(patologiaConcomitanteFormattata);
+            mappaPatologieConcomitanti.put(patologiaConcomitanteFormattata, p);
         }
 
         return listaPatologieConcomitanti;
@@ -135,20 +153,22 @@ public class UtilityPortalePaziente {
     // Restituisce la patologia concomitante a partire dalla sua voce grafica di tipo String
     public PatologiaConcomitante getPatologiaConcomitantePerNomeFormattata(String nomePatologiaFormattato) {
         for (PatologiaConcomitante p : mappaPatologieConcomitanti.values()) {
-            String dataFine;
-
-            if (p.getDataFine() == null) {
-                dataFine = "in corso";
+            LocalDate dataInizio = p.getDataInizio().toLocalDate();
+            LocalDate dataFine = p.getDataFine() == null ? null : p.getDataFine().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataInizioFormattata = dataInizio.format(formatter);
+            String dataFineFormattata = null;
+            if (dataFine != null) {
+                dataFineFormattata = dataFine.format(formatter);
             } else {
-                dataFine = p.getDataFine().toString().substring(0, 10);
+                dataFineFormattata = "in corso";
             }
 
-            if ((p.getNomePatologia() + "   (" + p.getDataInizio().toString().substring(0, 10) + " - " + dataFine + ")").equals(nomePatologiaFormattato)) {
+            if ((p.getNomePatologia() + "   (" + dataInizioFormattata + " - " + dataFineFormattata + ")").equals(nomePatologiaFormattato)) {
                 return p;
             }
         }
         return null;
     }
-
 
 }
