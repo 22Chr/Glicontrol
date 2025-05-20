@@ -13,6 +13,7 @@ public class GestionePatologieConcomitanti {
 
     public GestionePatologieConcomitanti(Paziente paziente) {
         this.paziente = paziente;
+        listaPatologieConcomitanti = apc.recuperaPatologiePerPaziente(paziente.getIdUtente());
     }
 
     public List<PatologiaConcomitante> getListaPatologieConcomitanti() {

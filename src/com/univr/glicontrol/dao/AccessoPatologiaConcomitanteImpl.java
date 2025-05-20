@@ -24,7 +24,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
             try (ResultSet rs = recuperaPatologieStmt.executeQuery()) {
                 while (rs.next()) {
                     listaPatologiePaziente.add(new PatologiaConcomitante(
-                            rs.getInt("id_patologia_concomitante"),
+                            rs.getInt("id_patologia"),
                             rs.getInt("id_paziente_comorbidita"),
                             rs.getString("nome_patologia"),
                             rs.getString("descrizione"),

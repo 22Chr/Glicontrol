@@ -135,7 +135,15 @@ public class UtilityPortalePaziente {
     // Restituisce la patologia concomitante a partire dalla sua voce grafica di tipo String
     public PatologiaConcomitante getPatologiaConcomitantePerNomeFormattata(String nomePatologiaFormattato) {
         for (PatologiaConcomitante p : mappaPatologieConcomitanti.values()) {
-            if ((p.getNomePatologia() + "   (" + p.getDataInizio().toString().substring(0, 10) + " - " + p.getDataFine().toString().substring(0, 10) + ")").equals(nomePatologiaFormattato)) {
+            String dataFine;
+
+            if (p.getDataFine() == null) {
+                dataFine = "in corso";
+            } else {
+                dataFine = p.getDataFine().toString().substring(0, 10);
+            }
+
+            if ((p.getNomePatologia() + "   (" + p.getDataInizio().toString().substring(0, 10) + " - " + dataFine + ")").equals(nomePatologiaFormattato)) {
                 return p;
             }
         }

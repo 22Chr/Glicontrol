@@ -34,7 +34,7 @@ public class FinestraPatologieConcomitantiPazienteController {
     @FXML
     private void initialize(){
         ObservableList<String> patologie = FXCollections.observableArrayList();
-        patologie.addAll(upp.getListaSintomiPazienti());
+        patologie.addAll(upp.getListaPatologieConcomitantiPazienti());
         patologiePazienteLV.setItems(patologie);
 
         patologiePazienteLV.setCellFactory(lv -> {
@@ -77,8 +77,23 @@ public class FinestraPatologieConcomitantiPazienteController {
     }
 
     public void inserisciNuovaPatologia(){
+        Date dataInizio;
+        Date dataFine;
 
-        if(gpc.inserisciPatologiaConcomitante(nomePatologiaTF.getText(), descrizionePatologiaTA.getText(), Date.valueOf(dataInizioDP.getValue()), Date.valueOf(dataFineDP.getValue())) == 1){
+        if (dataFineDP.getValue() == null) {
+            dataFine = null;
+        } else {
+            dataFine = Date.valueOf(dataFineDP.getValue());
+        }
+
+        if (dataInizioDP.getValue() == null) {
+            dataInizio = null;
+        } else {
+            dataInizio = Date.valueOf(dataInizioDP.getValue());
+        }
+
+
+        if(gpc.inserisciPatologiaConcomitante(nomePatologiaTF.getText(), descrizionePatologiaTA.getText(), dataInizio, dataFine) == 1){
             Alert successoInserimentoSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoInserimentoSintomoAlert.setTitle("System Information Service");
             successoInserimentoSintomoAlert.setHeaderText("Patologia concomitante inserita con successo");
@@ -86,11 +101,12 @@ public class FinestraPatologieConcomitantiPazienteController {
             successoInserimentoSintomoAlert.showAndWait();
 
             resetListViewPatologie();
+
         } else {
             Alert erroreInserimentoSintomoAlert = new Alert(Alert.AlertType.ERROR);
             erroreInserimentoSintomoAlert.setTitle("System Information Service");
             erroreInserimentoSintomoAlert.setHeaderText("Errore durante l'inserimento della nuova patologia concomitante");
-            erroreInserimentoSintomoAlert.setContentText("Non è stato possibile inserire la nuova patologia concomitante, riprova");
+            erroreInserimentoSintomoAlert.setContentText("Non è stato possibile inserire la nuova patologia concomitante.\nAssicurati di aver inserito correttamente la data di inizio e riprova");
             erroreInserimentoSintomoAlert.showAndWait();
         }
     }
