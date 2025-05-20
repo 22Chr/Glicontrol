@@ -137,7 +137,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie &#10;concomitanti" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="patologieB" mnemonicParsing="false" onAction="#openPatologie" prefHeight="50.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie &#10;concomitanti" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
