@@ -4,6 +4,7 @@ import com.univr.glicontrol.bll.ListaMedici;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -92,5 +93,20 @@ public class PortalePazienteController {
                 stage.close();
             }
         });
+    }
+
+    public void openPatologie() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraPatologieConcomitantiPaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage patologiePaziente = new Stage();
+            patologiePaziente.setTitle("Le mie patologie");
+            patologiePaziente.setScene(new Scene(root));
+
+            patologiePaziente.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

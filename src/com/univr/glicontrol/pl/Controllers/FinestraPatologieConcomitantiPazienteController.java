@@ -1,4 +1,111 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.univr.glicontrol.bll.GestionePatologieConcomitanti;
+import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+import java.sql.Date;
+
 public class FinestraPatologieConcomitantiPazienteController {
+
+    UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    Paziente paziente = upp.getPazienteSessione();
+    GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
+
+    @FXML
+    private TextField nomePatologiaTF;
+    @FXML
+    private TextArea descrizionePatologiaTA, descrizioneEstesaTA;
+    @FXML
+    private DatePicker dataInizioDP, dataFineDP;
+    @FXML
+    private ListView<String> patologiePazienteLV;
+    @FXML
+    private HBox mainPage;
+    @FXML
+    private VBox detailPage;
+
+    @FXML
+    private void initialize(){
+        ObservableList<String> patologie = FXCollections.observableArrayList();
+        patologie.addAll(upp.getListaSintomiPazienti());
+        patologiePazienteLV.setItems(patologie);
+
+        patologiePazienteLV.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !cell.isEmpty()) {
+                    descrizioneEstesaTA.setText(cell.getText());
+                    cambiaPagina();
+                }
+            });
+
+            return cell;
+        });
+    }
+
+    public void cambiaPagina() {
+        if(detailPage.isVisible()) {
+            detailPage.setVisible(false);
+            mainPage.setVisible(true);
+        } else {
+            detailPage.setVisible(true);
+            mainPage.setVisible(false);
+        }
+    }
+
+    public void resetListViewPatologie(){
+        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        ObservableList<String> newPatologie = FXCollections.observableArrayList();
+        newPatologie.addAll(newUpp.getListaPatologieConcomitantiPazienti());
+        patologiePazienteLV.setItems(newPatologie);
+        descrizionePatologiaTA.clear();
+        descrizionePatologiaTA.requestFocus();
+    }
+
+    public void inserisciNuovaPatologia(){
+
+        if(gpc.inserisciPatologiaConcomitante(nomePatologiaTF.getText(), descrizionePatologiaTA.getText(), Date.valueOf(dataInizioDP.getValue()), Date.valueOf(dataFineDP.getValue())) == 1){
+            Alert successoInserimentoSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
+            successoInserimentoSintomoAlert.setTitle("System Information Service");
+            successoInserimentoSintomoAlert.setHeaderText("Patologia concomitante inserita con successo");
+            successoInserimentoSintomoAlert.setContentText("La nuova patologia concomitante è stata inserita con successo");
+            successoInserimentoSintomoAlert.showAndWait();
+
+            resetListViewPatologie();
+        } else {
+            Alert erroreInserimentoSintomoAlert = new Alert(Alert.AlertType.ERROR);
+            erroreInserimentoSintomoAlert.setTitle("System Information Service");
+            erroreInserimentoSintomoAlert.setHeaderText("Errore durante l'inserimento della nuova patologia concomitante");
+            erroreInserimentoSintomoAlert.setContentText("Non è stato possibile inserire la nuova patologia concomitante, riprova");
+            erroreInserimentoSintomoAlert.showAndWait();
+        }
+    }
+
+    public void eliminaPatologia(){
+        String patologiaFormattata = patologiePazienteLV.getSelectionModel().getSelectedItem();
+        if (gpc.eliminaPatologiaConcomitante(upp.getPatologiaConcomitantePerNomeFormattata(patologiaFormattata).getIdPatologia())) {
+            Alert successoEliminazioneSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
+            successoEliminazioneSintomoAlert.setTitle("System Information Service");
+            successoEliminazioneSintomoAlert.setHeaderText("Patologia concomitante eliminata con successo");
+            successoEliminazioneSintomoAlert.setContentText("La patologia concomitante è stata eliminata con successo");
+            successoEliminazioneSintomoAlert.showAndWait();
+
+            cambiaPagina();
+            resetListViewPatologie();
+        }
+    }
 }

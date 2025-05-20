@@ -134,37 +134,37 @@
                 </VBox>
             </children>
         </HBox>
-        <VBox fx:id="detailPage" prefHeight="200.0" prefWidth="100.0" visible="false">
-            <children>
-                <TextArea fx:id="descrizioneEstesaTA" prefHeight="273.0" prefWidth="540.0">
-                    <VBox.margin>
-                        <Insets left="30.0" right="30.0" top="30.0" />
-                    </VBox.margin>
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </TextArea>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
-                    <children>
-                        <Button fx:id="indietroB" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Button>
-                        <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaSintomo" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Button>
-                    </children>
-                </HBox>
-            </children>
-        </VBox>
+      <VBox fx:id="detailPage" prefHeight="200.0" prefWidth="100.0" visible="false">
+         <children>
+            <TextArea fx:id="descrizioneEstesaTA" prefHeight="273.0" prefWidth="540.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" top="30.0" />
+               </VBox.margin>
+            </TextArea>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+               <children>
+                  <Button fx:id="indietroB" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaPatologia" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
     </children>
 </StackPane>
