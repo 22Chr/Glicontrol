@@ -16,13 +16,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraPatologieConcomitantiPazienteController">
+<StackPane style="-fx-background-color: #d8e0e359;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraPatologieConcomitantiPazienteController">
     <children>
         <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
             <children>
                 <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="25.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                     <children>
-                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="263.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE PATOLOGIE" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="263.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE PATOLOGIE" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font name="Carlito" size="16.0" />
                             </font>
