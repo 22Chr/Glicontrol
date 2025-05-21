@@ -106,7 +106,7 @@ public class UtilityPortalePaziente {
     }
 
     // Aggiorna la lista dei sintomi
-    public void aggiornaListaSintomiPazienti() {
+    private void aggiornaListaSintomiPazienti() {
         getListaSintomiPazienti();
     }
 
@@ -155,7 +155,7 @@ public class UtilityPortalePaziente {
     }
 
     // Aggiorna la lista delle patologie concomitanti
-    public void aggiornaListaPatologieConcomitantiPazienti() {
+    private void aggiornaListaPatologieConcomitantiPazienti() {
         getListaPatologieConcomitantiPazienti();
     }
 
@@ -190,7 +190,7 @@ public class UtilityPortalePaziente {
             LocalDate data = rg.getData().toLocalDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataFormattata = data.format(formatter);
-            String rilevazioneGlicemicaFormattata = rg.getValore() + "   (registrata " + rg.getIndicazioniTemporali() + " " + rg.getPasto() +  " il " + dataFormattata + " alle " + rg.getOra().toString().substring(0, 5) + ")";
+            String rilevazioneGlicemicaFormattata = rg.getValore() + "   (" + dataFormattata + " -  (" + rg.getIndicazioniTemporali() + ") " + rg.getPasto() + " - " + rg.getOra().toString().substring(0, 5) + ")";
             listaRilevazioniGlicemiche.add(rilevazioneGlicemicaFormattata);
             mappaRilevazioniGlicemia.put(rilevazioneGlicemicaFormattata, rg);
         }
@@ -199,7 +199,7 @@ public class UtilityPortalePaziente {
     }
 
     // Aggiorna la lista delle rilevazioni glicemiche
-    public void aggiornaListaRilevazioniGlicemiaPazienti() {
+    private void aggiornaListaRilevazioniGlicemiaPazienti() {
         getListaRilevazioniGlicemichePazienti();
     }
 
@@ -210,7 +210,7 @@ public class UtilityPortalePaziente {
             LocalDate data = rg.getData().toLocalDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataFormattata = data.format(formatter);
-            if ((rg.getValore() + "   (registrata " + rg.getIndicazioniTemporali() + " " + rg.getPasto() +  " il " + dataFormattata + " alle " + rg.getOra().toString().substring(0, 5) + ")").equals(valoreFormattato)) {
+            if ((rg.getValore() + "mg/dl   (" + dataFormattata + " -  (" + rg.getIndicazioniTemporali() + ") " + rg.getPasto() + " - " + rg.getOra().toString().substring(0, 5) + ")").equals(valoreFormattato)) {
                 return rg;
             }
         }

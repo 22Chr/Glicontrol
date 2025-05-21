@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
     <children>
         <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
             <children>
@@ -44,7 +44,7 @@
                         <Insets bottom="10.0" left="10.0" top="10.0" />
                     </HBox.margin>
                 </VBox>
-                <VBox alignment="CENTER" prefHeight="400.0" prefWidth="321.0" spacing="30.0">
+                <VBox alignment="CENTER" prefHeight="449.0" prefWidth="434.0" spacing="30.0">
                     <children>
                         <Label text="Inserisci la tua ultima rilevazione &#10;glicemica:&#10;&#10;" textAlignment="CENTER">
                             <font>
@@ -98,31 +98,34 @@
                               <Font name="Carlito" size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="25.0" prefWidth="189.0" GridPane.columnIndex="1">
+                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="28.0" prefWidth="203.0" GridPane.columnIndex="1">
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </DatePicker>
                         <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="25.0" prefWidth="53.0" />
+                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="28.0" prefWidth="73.0" promptText="ore">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin></ComboBox>
                               <Label text=" : ">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="25.0" prefWidth="53.0" />
+                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="28.0" prefWidth="73.0" promptText="min" />
                            </children>
                         </HBox>
-                        <TextField fx:id="valoreGlicemiaTF" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="valoreGlicemiaTF" prefHeight="28.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets right="20.0" />
+                              <Insets />
                            </GridPane.margin>
                         </TextField>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <ComboBox fx:id="primaODopoCB" prefHeight="25.0" prefWidth="58.0" />
-                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="25.0" prefWidth="79.0" />
+                              <ComboBox fx:id="primaODopoCB" prefHeight="28.0" prefWidth="100.0" />
+                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="28.0" prefWidth="120.0" />
                            </children>
                         </HBox>
                      </children>
@@ -162,7 +165,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaRilevazioneGlicemica" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
+                        <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaRilevazione" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

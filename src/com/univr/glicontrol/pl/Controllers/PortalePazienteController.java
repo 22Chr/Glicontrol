@@ -109,4 +109,19 @@ public class PortalePazienteController {
             System.out.println(e.getMessage());
         }
     }
+
+    public void openRilevazioniGlicemia() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraRilevazioniGlicemichePaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage rilevazioniGlicemiaPaziente = new Stage();
+            rilevazioniGlicemiaPaziente.setTitle("Le mie rilevazioni glicemiche");
+            rilevazioniGlicemiaPaziente.setScene(new Scene(root));
+
+            rilevazioniGlicemiaPaziente.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
