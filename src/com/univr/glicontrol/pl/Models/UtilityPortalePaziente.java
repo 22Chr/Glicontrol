@@ -22,6 +22,7 @@ public class UtilityPortalePaziente {
     private Map<String, Pasto> mappaPasti = new HashMap<>();
     private Map<String, Sintomo> mappaSintomi = new HashMap<>();
     private Map<String, PatologiaConcomitante> mappaPatologieConcomitanti = new HashMap<>();
+    private Map<String, RilevazioneGlicemica> mappaRilevazioniGlicemia = new HashMap<>();
 
     public UtilityPortalePaziente() {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
@@ -177,6 +178,43 @@ public class UtilityPortalePaziente {
                 return p;
             }
         }
+        return null;
+    }
+
+
+    // Restituisce la lista formattata di tipo String delle rilevazioni glicemiche del paziente
+    public List<String> getListaRilevazioniGlicemichePazienti() {
+        List<String> listaRilevazioniGlicemiche = new ArrayList<>();
+        GestioneRilevazioniGlicemia grg = new GestioneRilevazioniGlicemia(paziente);
+        for (RilevazioneGlicemica rg : grg.getRilevazioni()) {
+            LocalDate data = rg.getData().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormattata = data.format(formatter);
+            String rilevazioneGlicemicaFormattata = rg.getValore() + "   (registrata " + rg.getIndicazioniTemporali() + " " + rg.getPasto() +  " il " + dataFormattata + " alle " + rg.getOra().toString().substring(0, 5) + ")";
+            listaRilevazioniGlicemiche.add(rilevazioneGlicemicaFormattata);
+            mappaRilevazioniGlicemia.put(rilevazioneGlicemicaFormattata, rg);
+        }
+
+        return listaRilevazioniGlicemiche;
+    }
+
+    // Aggiorna la lista delle rilevazioni glicemiche
+    public void aggiornaListaRilevazioniGlicemiaPazienti() {
+        getListaRilevazioniGlicemichePazienti();
+    }
+
+    // Restituisce la rilevazione glicemica a partire dalla sua voce di tipo String a livello UI
+    public RilevazioneGlicemica getRilevazioneGlicemicaPerValoreFormattata(String valoreFormattato) {
+        aggiornaListaRilevazioniGlicemiaPazienti();
+        for (RilevazioneGlicemica rg : mappaRilevazioniGlicemia.values()) {
+            LocalDate data = rg.getData().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormattata = data.format(formatter);
+            if ((rg.getValore() + "   (registrata " + rg.getIndicazioniTemporali() + " " + rg.getPasto() +  " il " + dataFormattata + " alle " + rg.getOra().toString().substring(0, 5) + ")").equals(valoreFormattato)) {
+                return rg;
+            }
+        }
+
         return null;
     }
 

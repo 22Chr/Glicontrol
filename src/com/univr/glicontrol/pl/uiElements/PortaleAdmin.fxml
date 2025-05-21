@@ -92,7 +92,7 @@
                </HBox.margin>
             </ImageView>
             <Region prefHeight="64.0" prefWidth="340.0" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" style="-fx-background-color: #22577a; -fx-background-radius: 5; -fx-border-radius: 5;" text="Log terapie" textAlignment="CENTER" textFill="WHITE">
+            <Button mnemonicParsing="false" style="-fx-background-color: #22577a; -fx-background-radius: 5; -fx-border-radius: 5;" text="Log operazioni" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

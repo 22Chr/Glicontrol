@@ -101,7 +101,9 @@ public class FinestraPatologieConcomitantiPazienteController {
             return;
         }
 
-        if(gpc.inserisciPatologiaConcomitante(nomePatologiaTF.getText(), descrizionePatologiaTA.getText(), dataInizio, dataFine) == 1){
+        int status = gpc.inserisciPatologiaConcomitante(nomePatologiaTF.getText(), descrizionePatologiaTA.getText(), dataInizio, dataFine);
+
+        if(status == 1){
             Alert successoInserimentoSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoInserimentoSintomoAlert.setTitle("System Information Service");
             successoInserimentoSintomoAlert.setHeaderText("Patologia concomitante inserita con successo");
@@ -117,12 +119,22 @@ public class FinestraPatologieConcomitantiPazienteController {
             dataFineDP.setValue(null);
 
 
-        } else {
+        } else if (status == 0) {
             Alert erroreInserimentoSintomoAlert = new Alert(Alert.AlertType.ERROR);
             erroreInserimentoSintomoAlert.setTitle("System Information Service");
             erroreInserimentoSintomoAlert.setHeaderText("Errore durante l'inserimento della nuova patologia concomitante");
             erroreInserimentoSintomoAlert.setContentText("Non è stato possibile inserire la nuova patologia concomitante.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
             erroreInserimentoSintomoAlert.showAndWait();
+        } else {
+            Alert erroreDuplicazioneSintomoAlert = new Alert(Alert.AlertType.ERROR);
+            erroreDuplicazioneSintomoAlert.setTitle("System Information Service");
+            erroreDuplicazioneSintomoAlert.setHeaderText("Errore durante l'inserimento della nuova patologia concomitante");
+            erroreDuplicazioneSintomoAlert.setContentText("La patologia che stai cercando di inserire esiste già nel sistema");
+            erroreDuplicazioneSintomoAlert.showAndWait();
+            nomePatologiaTF.clear();
+            descrizionePatologiaTA.clear();
+            dataInizioDP.setValue(null);
+            dataFineDP.setValue(null);
         }
     }
 
