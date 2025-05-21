@@ -40,4 +40,13 @@ public class GestionePatologieConcomitanti {
         return apc.deletePatologiaConcomitante(idPatologiaConcomitante);
     }
 
+    public PatologiaConcomitante getPatologiaConcomitante(int idPatologiaConcomitante) {
+        for (PatologiaConcomitante patologia : listaPatologieConcomitanti) {
+            if (patologia.getIdPatologia() == idPatologiaConcomitante) {
+                return patologia;
+            }
+        }
+
+        return null;
+    }
 }

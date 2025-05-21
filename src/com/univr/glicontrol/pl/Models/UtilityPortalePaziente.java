@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,10 +21,10 @@ import java.util.Map;
 
 public class UtilityPortalePaziente {
     private final Paziente paziente;
-    private Map<String, Pasto> mappaPasti = new HashMap<>();
-    private Map<String, Sintomo> mappaSintomi = new HashMap<>();
-    private Map<String, PatologiaConcomitante> mappaPatologieConcomitanti = new HashMap<>();
-    private Map<String, RilevazioneGlicemica> mappaRilevazioniGlicemia = new HashMap<>();
+    private final Map<String, Pasto> mappaPasti = new HashMap<>();
+    private final Map<String, Sintomo> mappaSintomi = new HashMap<>();
+    private final Map<String, PatologiaConcomitante> mappaPatologieConcomitanti = new HashMap<>();
+    private final Map<String, RilevazioneGlicemica> mappaRilevazioniGlicemia = new HashMap<>();
 
     public UtilityPortalePaziente() {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
@@ -216,6 +218,16 @@ public class UtilityPortalePaziente {
         }
 
         return null;
+    }
+
+    // Chiama la funzione di inserimento della terapia a seconda del tipo passato in input
+    public int inserisciTerapia(String tipoTerapia, int idPatologia, int idMedicoUltimaModifica, int idFarmacoTerapia, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari) {
+        GestioneTerapie gt = new GestioneTerapie(paziente);
+        if (tipoTerapia.equals("Terapia Diabete")) {
+            return gt.inserisciTerapiaDiabete(idMedicoUltimaModifica, idFarmacoTerapia, dataInizio, dataFine, dosaggio, frequenza, orari);
+        } else {
+            return gt.inserisciTerapiaConcomitante(idPatologia, idMedicoUltimaModifica, idFarmacoTerapia, dataInizio, dataFine, dosaggio, frequenza, orari);
+        }
     }
 
 }
