@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
+    <children>
+        <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="25.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="51.0" prefWidth="261.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE RILEVAZIONI &#10;GLICEMICHE" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font name="Carlito" size="16.0" />
+                            </font>
+                            <opaqueInsets>
+                                <Insets bottom="5.0" left="3.0" right="3.0" top="5.0" />
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets left="4.0" right="4.0" top="3.0" />
+                            </VBox.margin>
+                        </Label>
+                        <ListView fx:id="glicemiaPazienteLV" maxHeight="311.0" maxWidth="257.0" prefHeight="272.0" prefWidth="257.0">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </ListView>
+                    </children>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                    </HBox.margin>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="400.0" prefWidth="321.0" spacing="30.0">
+                    <children>
+                        <Label text="Inserisci la tua ultima rilevazione &#10;glicemica:&#10;&#10;" textAlignment="CENTER">
+                            <font>
+                                <Font name="Carlito" size="14.0" />
+                            </font>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                        </Label>
+                  <GridPane prefHeight="181.0" prefWidth="299.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.33331298828125" minWidth="10.0" prefWidth="122.99995930989583" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.00000762939453" minWidth="10.0" prefWidth="175.66670735677087" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="194.0" text="Data:">
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="195.0" text="Ora:" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="207.0" text="Valore glicemico:" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="131.0" text="Indicazioni sul pasto:" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets right="4.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Carlito" size="14.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="25.0" prefWidth="189.0" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets right="20.0" />
+                           </GridPane.margin>
+                        </DatePicker>
+                        <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="25.0" prefWidth="53.0" />
+                              <Label text=" : ">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="25.0" prefWidth="53.0" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="valoreGlicemiaTF" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="20.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <ComboBox fx:id="primaODopoCB" prefHeight="25.0" prefWidth="58.0" />
+                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="25.0" prefWidth="79.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </GridPane>
+                        <Button mnemonicParsing="false" onAction="#inserisciNuovaRilevazioneGlicemica" style="-fx-background-color: #22577a;" text="Inserisci" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <VBox fx:id="detailPage" prefHeight="200.0" prefWidth="100.0" visible="false">
+            <children>
+                <TextArea fx:id="descrizioneEstesaTA" prefHeight="273.0" prefWidth="540.0">
+                    <VBox.margin>
+                        <Insets left="30.0" right="30.0" top="30.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </TextArea>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                    <children>
+                        <Button fx:id="indietroB" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaRilevazioneGlicemica" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</StackPane>
