@@ -12,7 +12,7 @@ public interface AccessoTerapie {
     List<TerapiaConcomitante> getTerapieConcomitantiPaziente(int idPaziente);
 
     boolean insertTerapiaDiabete(int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci);
-    boolean insertTerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari, int idFarmaco);
+    boolean insertTerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci);
 
     boolean updateTerapiaDiabete(TerapiaDiabete terapia);
     boolean updateTerapiaConcomitante(TerapiaConcomitante terapia);

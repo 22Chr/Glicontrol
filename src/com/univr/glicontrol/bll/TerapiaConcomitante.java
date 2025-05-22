@@ -1,6 +1,7 @@
 package com.univr.glicontrol.bll;
 
 import java.sql.Date;
+import java.util.List;
 
 public class TerapiaConcomitante implements Terapia {
     private final int idTerapiaConcomitante;
@@ -9,20 +10,22 @@ public class TerapiaConcomitante implements Terapia {
     private int idMedicoUltimaModifica;
     private final Date dataInizio;
     private Date dataFine;
-    private float dosaggio;
+    private String dosaggi;
     private String frequenza;
     private String orari;
+    private List<Farmaco> farmaci;
 
-    public TerapiaConcomitante(int idTerapiaConcomitante, int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari) {
+    public TerapiaConcomitante(int idTerapiaConcomitante, int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
         this.idTerapiaConcomitante = idTerapiaConcomitante;
         this.idPaziente = idPaziente;
         this.idPatologiaConcomitante = idPatologiaConcomitante;
         this.idMedicoUltimaModifica = idMedicoUltimaModifica;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
-        this.dosaggio = dosaggio;
+        this.dosaggi = dosaggi;
         this.frequenza = frequenza;
         this.orari = orari;
+        this.farmaci = farmaci;
     }
 
     public int getIdTerapiaConcomitante() {
@@ -58,11 +61,11 @@ public class TerapiaConcomitante implements Terapia {
         return dataInizio;
     }
 
-    public float getDosaggio() {
-        return dosaggio;
+    public String getDosaggi() {
+        return dosaggi;
     }
-    public void setDosaggio(float dosaggio) {
-        this.dosaggio = dosaggio;
+    public void setDosaggi(String dosaggi) {
+        this.dosaggi = dosaggi;
     }
 
     public String getFrequenza() {
@@ -82,6 +85,13 @@ public class TerapiaConcomitante implements Terapia {
     public String getNome() {
         GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(UtenteSessione.getInstance().getPazienteSessione());
         return "Terapia " + gpc.getPatologiaConcomitante(idPatologiaConcomitante);
+    }
+
+    public List<Farmaco> getFarmaciTerapiaConcomitante() {
+        return farmaci;
+    }
+    public void setFarmaciTerapiaConcomitante(List<Farmaco> farmaci) {
+        this.farmaci = farmaci;
     }
 
 }

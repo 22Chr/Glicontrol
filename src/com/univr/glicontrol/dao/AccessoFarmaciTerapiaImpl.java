@@ -1,6 +1,6 @@
 package com.univr.glicontrol.dao;
 
-import com.univr.glicontrol.bll.FarmaciTerapiaDiabete;
+import com.univr.glicontrol.bll.FarmaciTerapia;
 import com.univr.glicontrol.bll.Farmaco;
 import com.univr.glicontrol.bll.GestioneFarmaci;
 
@@ -8,17 +8,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccessoFarmaciTerapiaDiabeteImpl implements AccessoFarmaciTerapiaDiabete {
+public class AccessoFarmaciTerapiaImpl implements AccessoFarmaciTerapia {
     private final String url = "jdbc:mysql://localhost:3306/glicontrol";
     private final String user = "root";
     private final String pwd = "Sitecom12";
 
     @Override
-    public List<Farmaco> getListaFarmaciPerTerapiaDiabete(int idTerapiaDiabete) {
-        List<FarmaciTerapiaDiabete> listaCompletaFarmaciTerapiaDiabete = getListaCompletaFarmaciTerapiaDiabete(idTerapiaDiabete);
+    public List<Farmaco> getListaFarmaciPerTerapia(int idTerapiaDiabete) {
+        List<FarmaciTerapia> listaCompletaFarmaciTerapiaDiabete = getListaCompletaFarmaciTerapia(idTerapiaDiabete);
         List<Farmaco> listaFarmaci = new ArrayList<>();
 
-        for (FarmaciTerapiaDiabete ftd : listaCompletaFarmaciTerapiaDiabete) {
+        for (FarmaciTerapia ftd : listaCompletaFarmaciTerapiaDiabete) {
             listaFarmaci.add(GestioneFarmaci.getInstance().getFarmacoById(ftd.getIdFarmaco()));
         }
 
@@ -26,9 +26,9 @@ public class AccessoFarmaciTerapiaDiabeteImpl implements AccessoFarmaciTerapiaDi
     }
 
     @Override
-    public List<FarmaciTerapiaDiabete> getListaCompletaFarmaciTerapiaDiabete(int idTerapiaDiabete) {
-        List<FarmaciTerapiaDiabete> listaFarmaciTerapiaDiabete = new ArrayList<>();
-        String recuperaFarmaciTerapiaDiabeteSql = "select * from FarmaciTerapiaDiabete where id_terapia_diabete_riferimento = ?";
+    public List<FarmaciTerapia> getListaCompletaFarmaciTerapia(int idTerapiaDiabete) {
+        List<FarmaciTerapia> listaFarmaciTerapiaDiabete = new ArrayList<>();
+        String recuperaFarmaciTerapiaDiabeteSql = "select * from FarmaciTerapia where id_terapia_diabete_riferimento = ?";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -37,7 +37,7 @@ public class AccessoFarmaciTerapiaDiabeteImpl implements AccessoFarmaciTerapiaDi
 
             try (ResultSet rs = recuperaFarmaciTerapiaDiabeteStmt.executeQuery()) {
                 while (rs.next()) {
-                    listaFarmaciTerapiaDiabete.add(new FarmaciTerapiaDiabete(
+                    listaFarmaciTerapiaDiabete.add(new FarmaciTerapia(
                             rs.getInt("id_farmaco_terapia"),
                             rs.getInt("id_farmaco_riferimento"),
                             rs.getInt("id_terapia_diabete_riferimento")
@@ -56,19 +56,19 @@ public class AccessoFarmaciTerapiaDiabeteImpl implements AccessoFarmaciTerapiaDi
     }
 
     @Override
-    public boolean insertFarmaciTerapiaDiabete(int idTerapiaDiabete, List<Farmaco> farmaci) {
+    public boolean insertFarmaciTerapia(int idTerapiaDiabete, List<Farmaco> farmaci) {
         boolean success = false;
-        String inserisciFarmaciTerapiaDiabeteSql = "insert into FarmaciTerapiaDiabete (id_terapia_diabete_riferimento, id_farmaco_riferimento) value (?, ?)";
+        String inserisciFarmaciTerapiaSql = "insert into FarmaciTerapia (id_terapia_diabete_riferimento, id_farmaco_riferimento) value (?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url, user, pwd)) {
             conn.setAutoCommit(false);
-            try (PreparedStatement inserisciFarmaciTerapiaDiabeteStmt = conn.prepareStatement(inserisciFarmaciTerapiaDiabeteSql)) {
+            try (PreparedStatement inserisciFarmaciTerapiaStmt = conn.prepareStatement(inserisciFarmaciTerapiaSql)) {
 
                 for (Farmaco f : farmaci) {
-                    inserisciFarmaciTerapiaDiabeteStmt.setInt(1, idTerapiaDiabete);
-                    inserisciFarmaciTerapiaDiabeteStmt.setInt(2, f.getIdFarmaco());
+                    inserisciFarmaciTerapiaStmt.setInt(1, idTerapiaDiabete);
+                    inserisciFarmaciTerapiaStmt.setInt(2, f.getIdFarmaco());
 
-                    if (inserisciFarmaciTerapiaDiabeteStmt.executeUpdate() != 0) {
+                    if (inserisciFarmaciTerapiaStmt.executeUpdate() != 0) {
                         success = true;
                     } else {
                         success = false;
@@ -95,9 +95,9 @@ public class AccessoFarmaciTerapiaDiabeteImpl implements AccessoFarmaciTerapiaDi
     }
 
     @Override
-    public boolean deleteFarmaciTerapiaDiabete(int idTerapiaDiabete, int idFarmaco) {
+    public boolean deleteFarmaciTerapia(int idTerapiaDiabete, int idFarmaco) {
         boolean success = false;
-        String rimuoviFarmaciTerapiaDiabeteSql = "delete from FarmaciTerapiaDiabete where id_terapia_diabete_riferimento = ? and id_farmaco_riferimento = ?";
+        String rimuoviFarmaciTerapiaDiabeteSql = "delete from FarmaciTerapia where id_terapia_diabete_riferimento = ? and id_farmaco_riferimento = ?";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);

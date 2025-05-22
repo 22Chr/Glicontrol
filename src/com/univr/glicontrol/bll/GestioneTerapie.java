@@ -72,9 +72,9 @@ public class GestioneTerapie {
         return accessoTerapie.insertTerapiaDiabete(paziente.getIdUtente(), idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci) ? 1 : 0;
     }
 
-    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari, int idFarmaco) {
+    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
         // Come sopra
-        return accessoTerapie.insertTerapiaConcomitante(paziente.getIdUtente(), idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, idFarmaco) ? 1 : 0;
+        return accessoTerapie.insertTerapiaConcomitante(paziente.getIdUtente(), idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggi, frequenza, orari, farmaci) ? 1 : 0;
     }
 
     public TerapiaDiabete getTerapiaDiabete(int idTerapia) {

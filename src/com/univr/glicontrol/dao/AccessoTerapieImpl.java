@@ -11,14 +11,14 @@ public class AccessoTerapieImpl implements AccessoTerapie {
     private final String user = "root";
     private final String pwd = "Sitecom12";
 
-    private final AccessoFarmaciTerapiaDiabete accessoFarmaciTerapiaDiabete = new AccessoFarmaciTerapiaDiabeteImpl();
+    private final AccessoFarmaciTerapia accessoFarmaciTerapia = new AccessoFarmaciTerapiaImpl();
 
     @Override
     public List<TerapiaDiabete> getTerapieDiabetePaziente(int idPaziente) {
         List<TerapiaDiabete> terapiaDiabete = new ArrayList<>();
         String recuperaTerapiadiabeteSql = "select * from TerapiaDiabete where id_paziente_connesso = ?";
 
-        AccessoFarmaciTerapiaDiabete accessoFarmaciTerapia = new AccessoFarmaciTerapiaDiabeteImpl();
+        AccessoFarmaciTerapia accessoFarmaciTerapia = new AccessoFarmaciTerapiaImpl();
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -35,7 +35,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                             rs.getString("dosaggio"),
                             rs.getString("frequenza"),
                             rs.getString("orari"),
-                            accessoFarmaciTerapia.getListaFarmaciPerTerapiaDiabete(rs.getInt("id_terapia_diabete"))
+                            accessoFarmaciTerapia.getListaFarmaciPerTerapia(rs.getInt("id_terapia_diabete"))
                     ));
                 }
             }
@@ -70,9 +70,10 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                             rs.getInt("id_medico_ultima_modifica"),
                             rs.getDate("data_inizio"),
                             rs.getDate("data_fine"),
-                            rs.getFloat("dosaggio"),
+                            rs.getString("dosaggi"),
                             rs.getString("frequenza"),
-                            rs.getString("orari")
+                            rs.getString("orari"),
+                            accessoFarmaciTerapia.getListaFarmaciPerTerapia(rs.getInt("id_terapia_concomitante"))
                     ));
                 }
             }
@@ -110,7 +111,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
 
                 ResultSet rs = insertTerapiaDiabeteStmt.getGeneratedKeys();
                 if (rs.next()) {
-                    if (accessoFarmaciTerapiaDiabete.insertFarmaciTerapiaDiabete(rs.getInt(1), farmaci)) {
+                    if (accessoFarmaciTerapia.insertFarmaciTerapia(rs.getInt(1), farmaci)) {
                         success = true;
                     } else {
                         conn.rollback();
@@ -136,9 +137,9 @@ public class AccessoTerapieImpl implements AccessoTerapie {
     }
 
     @Override
-    public boolean insertTerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari, int idFarmaco) {
+    public boolean insertTerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
         boolean success = false;
-        String insertTerapiaConcomitanteSql = "insert into TerapiaConcomitante (id_paziente_terapia_concomitante, id_patologia_comorbidita, id_medico_ultima_modifica, id_farmaco_terapia, data_inizio, data_fine, dosaggio, frequenza, orari) value (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertTerapiaConcomitanteSql = "insert into TerapiaConcomitante (id_paziente_terapia_concomitante, id_patologia_comorbidita, id_medico_ultima_modifica, id_farmaco_terapia, data_inizio, data_fine, dosaggi, frequenza, orari) value (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -149,24 +150,22 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             insertTerapiaConcomitanteStmt.setInt(3, idMedicoUltimaModifica);
             insertTerapiaConcomitanteStmt.setDate(4, dataInizio);
             insertTerapiaConcomitanteStmt.setDate(5, dataFine);
-            insertTerapiaConcomitanteStmt.setFloat(6, dosaggio);
+            insertTerapiaConcomitanteStmt.setString(6, dosaggi);
             insertTerapiaConcomitanteStmt.setString(7, frequenza);
             insertTerapiaConcomitanteStmt.setString(8, orari);
 
             if (insertTerapiaConcomitanteStmt.executeUpdate() != 0) {
                 conn.commit();
 
-//                ResultSet rs = insertTerapiaConcomitanteStmt.getGeneratedKeys();
-//                if (rs.next()) {
-//                    if (accessoFarmaciTerapiaDiabete.insertFarmaciTerapiaConcomitante(rs.getInt(1), idFarmaco)) {
-//                        success = true;
-//                    } else {
-//                        conn.rollback();
-//                        System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTI]: Impossibile inserire i farmaci selezionati per la terapia concomitante");
-//                    }
-//                }
-
-                success = true;
+                ResultSet rs = insertTerapiaConcomitanteStmt.getGeneratedKeys();
+                if (rs.next()) {
+                    if (accessoFarmaciTerapia.insertFarmaciTerapia(rs.getInt(1), farmaci)) {
+                        success = true;
+                    } else {
+                        conn.rollback();
+                        System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTI]: Impossibile inserire i farmaci selezionati per la terapia");
+                    }
+                }
 
             } else {
                 conn.rollback();
@@ -218,7 +217,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                         farmaciDiabeteDaAggiungere.add(farmaco);
                     }
                 }
-                if (!accessoFarmaciTerapiaDiabete.insertFarmaciTerapiaDiabete(terapia.getIdTerapiaDiabete(), farmaciDiabeteDaAggiungere)) {
+                if (!accessoFarmaciTerapia.insertFarmaciTerapia(terapia.getIdTerapiaDiabete(), farmaciDiabeteDaAggiungere)) {
                     throw new SQLException("Impossibile aggiornare i nuovi farmaci inseriti per questa terapia");
                 }
 
@@ -230,7 +229,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                     }
                 }
                 for (Farmaco farmacoDaRimuovere : farmaciDiabeteDaRimuovere) {
-                    if (!accessoFarmaciTerapiaDiabete.deleteFarmaciTerapiaDiabete(terapia.getIdTerapiaDiabete(), farmacoDaRimuovere.getIdFarmaco())) {
+                    if (!accessoFarmaciTerapia.deleteFarmaciTerapia(terapia.getIdTerapiaDiabete(), farmacoDaRimuovere.getIdFarmaco())) {
                         throw new SQLException("Impossibile rimuovere uno o più farmaci non più previsti dalla terapia");
                     }
                 }
@@ -256,7 +255,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
     @Override
     public boolean updateTerapiaConcomitante(TerapiaConcomitante terapia) {
         boolean success = false;
-        String updateTerapiaConcomitanteSql = "update TerapiaConcomitante set id_patologia_comorbidita = ?,  id_medico_ultima_modifica = ?, data_fine = ?, dosaggio = ?, frequenza = ?, orari = ? where id_terapia_concomitante = ?";
+        String updateTerapiaConcomitanteSql = "update TerapiaConcomitante set id_patologia_comorbidita = ?,  id_medico_ultima_modifica = ?, data_fine = ?, dosaggi = ?, frequenza = ?, orari = ? where id_terapia_concomitante = ?";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -265,14 +264,48 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             updateTerapiaConcomitanteStmt.setInt(1, terapia.getIdTerapiaConcomitante());
             updateTerapiaConcomitanteStmt.setInt(2, terapia.getIdMedicoUltimaModifica());
             updateTerapiaConcomitanteStmt.setDate(3, terapia.getDataFine());
-            updateTerapiaConcomitanteStmt.setFloat(4, terapia.getDosaggio());
+            updateTerapiaConcomitanteStmt.setString(4, terapia.getDosaggi());
             updateTerapiaConcomitanteStmt.setString(5, terapia.getFrequenza());
             updateTerapiaConcomitanteStmt.setString(6, terapia.getOrari());
             updateTerapiaConcomitanteStmt.setInt(7, terapia.getIdTerapiaConcomitante());
 
             if (updateTerapiaConcomitanteStmt.executeUpdate() != 0) {
                 conn.commit();
+
+                List<TerapiaConcomitante> terapieConcomitantiAttive = getTerapieConcomitantiPaziente(terapia.getIdPaziente());
+                TerapiaConcomitante terapiaNonModificata = null;
+                for (TerapiaConcomitante terapiaConcomitante : terapieConcomitantiAttive) {
+                    if (terapiaConcomitante.getIdTerapiaConcomitante() == terapia.getIdTerapiaConcomitante()) {
+                        terapiaNonModificata = terapiaConcomitante;
+                    }
+                }
+
+                // Verifica la presenza di nuovi farmaci aggiornati nella terapia che ancora non si trovano nel DB
+                List<Farmaco> farmaciConcomitanteDaAggiungere = new ArrayList<>();
+                for (Farmaco farmaco : terapia.getFarmaciTerapiaConcomitante()) {
+                    if (!terapiaNonModificata.getFarmaciTerapiaConcomitante().contains(farmaco)) {
+                        farmaciConcomitanteDaAggiungere.add(farmaco);
+                    }
+                }
+                if (!accessoFarmaciTerapia.insertFarmaciTerapia(terapia.getIdTerapiaConcomitante(), farmaciConcomitanteDaAggiungere)) {
+                    throw new SQLException("Impossibile aggiornare i nuovi farmaci inseriti per questa terapia");
+                }
+
+                // Verifica la presenza di farmaci rimossi dalla terapia che si trovano ancora nel DB
+                List<Farmaco> farmaciConcomitanteDaRimuovere = new ArrayList<>();
+                for (Farmaco farmaco : terapiaNonModificata.getFarmaciTerapiaConcomitante()) {
+                    if (!terapia.getFarmaciTerapiaConcomitante().contains(farmaco)) {
+                        farmaciConcomitanteDaRimuovere.add(farmaco);
+                    }
+                }
+                for (Farmaco farmacoDaRimuovere : farmaciConcomitanteDaRimuovere) {
+                    if (!accessoFarmaciTerapia.deleteFarmaciTerapia(terapia.getIdTerapiaConcomitante(), farmacoDaRimuovere.getIdFarmaco())) {
+                        throw new SQLException("Impossibile rimuovere uno o più farmaci non più previsti dalla terapia");
+                    }
+                }
+
                 success = true;
+
             } else {
                 conn.rollback();
                 System.out.println("[ERRORE UPDATE TERAPIA CONCOMITANTI]: Impossibile aggiornare la terapia concomitante nel database");
