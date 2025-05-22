@@ -17,13 +17,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane style="-fx-background-color: #d8e0e359;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="715.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
     <children>
         <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
             <children>
-                <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="25.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+                <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                     <children>
-                        <Label alignment="CENTER" prefHeight="51.0" prefWidth="261.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE RILEVAZIONI &#10;GLICEMICHE" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" prefHeight="78.0" prefWidth="261.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE RILEVAZIONI &#10;GLICEMICHE" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font name="Carlito" size="16.0" />
                             </font>
@@ -34,9 +34,9 @@
                                 <Insets left="4.0" right="4.0" top="3.0" />
                             </VBox.margin>
                         </Label>
-                        <ListView fx:id="glicemiaPazienteLV" maxHeight="311.0" maxWidth="257.0" prefHeight="272.0" prefWidth="257.0">
+                        <ListView fx:id="glicemiaPazienteLV" maxHeight="1.7976931348623157E308" maxWidth="311.0" prefHeight="351.0" prefWidth="311.0" VBox.vgrow="ALWAYS">
                             <VBox.margin>
-                                <Insets />
+                                <Insets bottom="5.0" left="5.0" right="5.0" />
                             </VBox.margin>
                         </ListView>
                     </children>

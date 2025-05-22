@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="831.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraTerapiePazienteController">
+    <children>
+        <HBox fx:id="mainPage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <VBox fx:id="pageStorico" alignment="TOP_CENTER" prefHeight="523.0" prefWidth="329.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="39.0" prefWidth="229.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE TERAPIE&#10;" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font name="Carlito" size="16.0" />
+                            </font>
+                            <opaqueInsets>
+                                <Insets bottom="5.0" left="3.0" right="3.0" top="5.0" />
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets left="4.0" right="4.0" top="3.0" />
+                            </VBox.margin>
+                        </Label>
+                        <ListView fx:id="terapiePazienteLV" maxHeight="1.7976931348623157E308" maxWidth="248.0" prefHeight="447.0" prefWidth="248.0" VBox.vgrow="ALWAYS">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" />
+                            </VBox.margin>
+                        </ListView>
+                    </children>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                    </HBox.margin>
+                </VBox>
+            <VBox fx:id="pageButton" alignment="BOTTOM_CENTER" prefHeight="512.0" prefWidth="248.0">
+               <children>
+                  <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#aggiungiTerapiaConcomitante" style="-fx-background-color: #22577a;" text="Aggiungi una terapia &#10;concomitante" textAlignment="CENTER" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </VBox>
+                <VBox fx:id="pageTerapia" alignment="CENTER" maxWidth="507.0" prefHeight="543.0" prefWidth="507.0" spacing="50.0" visible="false">
+               <children>
+                  <TextField fx:id="nomeTerapiaTF" alignment="CENTER" maxWidth="250.0" prefWidth="250.0" style="-fx-background-color: transparent;">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Carlito" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="dateTerapiaTF" alignment="CENTER" maxWidth="200.0" style="-fx-background-color: transparent;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <HBox prefHeight="190.0" prefWidth="405.0" spacing="15.0">
+                     <children>
+                        <ListView fx:id="farmaciTerapiaLV" maxHeight="250.0" prefHeight="133.0" prefWidth="180.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ListView>
+                        <GridPane prefHeight="190.0" prefWidth="207.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.3333740234375" minWidth="10.0" prefWidth="70.66668701171875" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.33331298828125" minWidth="10.0" prefWidth="129.33331298828125" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="117.0" text="Dosaggi:">
+                                 <font>
+                                    <Font name="Carlito" size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets right="4.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="135.0" text="Frequenza:" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Carlito" size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets right="4.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="149.0" text="Orari:" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font name="Carlito" size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets right="4.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextArea fx:id="dosaggiTerapiaTA" maxHeight="45.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                              <TextArea fx:id="frequenzaTerapiaTA" maxHeight="45.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextArea fx:id="orariTerapiaTA" maxHeight="45.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="35.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="-50.0" />
+               </HBox.margin>
+                </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+            </children>
+        </HBox>
+    </children>
+</StackPane>
