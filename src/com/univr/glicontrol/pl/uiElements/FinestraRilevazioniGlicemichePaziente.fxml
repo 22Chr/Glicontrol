@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
+<StackPane style="-fx-background-color: #d8e0e359;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
     <children>
         <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
             <children>
