@@ -73,7 +73,13 @@ public class GestioneTerapie {
     }
 
     public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
-        // Come sopra
+        aggiornaListaTerapie();
+        for (TerapiaConcomitante terapia : terapiaConcomitante) {
+            if (terapia.getDataInizio().equals(dataInizio) && terapia.getFarmaciTerapiaConcomitante().equals(farmaci) && terapia.getIdPaziente() == paziente.getIdUtente()) {
+                return -1;
+            }
+        }
+
         return accessoTerapie.insertTerapiaConcomitante(paziente.getIdUtente(), idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggi, frequenza, orari, farmaci) ? 1 : 0;
     }
 
@@ -81,6 +87,16 @@ public class GestioneTerapie {
         for (Terapia terapia : terapiePaziente) {
             if (terapia instanceof TerapiaDiabete td && td.getIdTerapiaDiabete() == idTerapia) {
                 return td;
+            }
+        }
+
+        return null;
+    }
+
+    public TerapiaConcomitante getTerapieConcomitante(int idTerapia) {
+        for (Terapia terapia : terapiePaziente) {
+            if (terapia instanceof TerapiaConcomitante tc && tc.getIdTerapiaConcomitante() == idTerapia) {
+                return tc;
             }
         }
 
