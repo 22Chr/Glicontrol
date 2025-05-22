@@ -32,7 +32,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                             rs.getInt("id_medico_ultima_modifica"),
                             rs.getDate("data_inizio"),
                             rs.getDate("data_fine"),
-                            rs.getString("dosaggio"),
+                            rs.getString("dosaggi"),
                             rs.getString("frequenza"),
                             rs.getString("orari"),
                             accessoFarmaciTerapia.getListaFarmaciPerTerapia(rs.getInt("id_terapia_diabete"))
@@ -212,8 +212,8 @@ public class AccessoTerapieImpl implements AccessoTerapie {
 
                 // Verifica la presenza di nuovi farmaci aggiornati nella terapia che ancora non si trovano nel DB
                 List<Farmaco> farmaciDiabeteDaAggiungere = new ArrayList<>();
-                for (Farmaco farmaco : terapia.getFarmaciTerapiaDiabete()) {
-                    if (!terapiaNonModificata.getFarmaciTerapiaDiabete().contains(farmaco)) {
+                for (Farmaco farmaco : terapia.getListaFarmaciTerapia()) {
+                    if (!terapiaNonModificata.getListaFarmaciTerapia().contains(farmaco)) {
                         farmaciDiabeteDaAggiungere.add(farmaco);
                     }
                 }
@@ -223,8 +223,8 @@ public class AccessoTerapieImpl implements AccessoTerapie {
 
                 // Verifica la presenza di farmaci rimossi dalla terapia che si trovano ancora nel DB
                 List<Farmaco> farmaciDiabeteDaRimuovere = new ArrayList<>();
-                for (Farmaco farmaco : terapiaNonModificata.getFarmaciTerapiaDiabete()) {
-                    if (!terapia.getFarmaciTerapiaDiabete().contains(farmaco)) {
+                for (Farmaco farmaco : terapiaNonModificata.getListaFarmaciTerapia()) {
+                    if (!terapia.getListaFarmaciTerapia().contains(farmaco)) {
                         farmaciDiabeteDaRimuovere.add(farmaco);
                     }
                 }
@@ -282,8 +282,8 @@ public class AccessoTerapieImpl implements AccessoTerapie {
 
                 // Verifica la presenza di nuovi farmaci aggiornati nella terapia che ancora non si trovano nel DB
                 List<Farmaco> farmaciConcomitanteDaAggiungere = new ArrayList<>();
-                for (Farmaco farmaco : terapia.getFarmaciTerapiaConcomitante()) {
-                    if (!terapiaNonModificata.getFarmaciTerapiaConcomitante().contains(farmaco)) {
+                for (Farmaco farmaco : terapia.getListaFarmaciTerapia()) {
+                    if (!terapiaNonModificata.getListaFarmaciTerapia().contains(farmaco)) {
                         farmaciConcomitanteDaAggiungere.add(farmaco);
                     }
                 }
@@ -293,8 +293,8 @@ public class AccessoTerapieImpl implements AccessoTerapie {
 
                 // Verifica la presenza di farmaci rimossi dalla terapia che si trovano ancora nel DB
                 List<Farmaco> farmaciConcomitanteDaRimuovere = new ArrayList<>();
-                for (Farmaco farmaco : terapiaNonModificata.getFarmaciTerapiaConcomitante()) {
-                    if (!terapia.getFarmaciTerapiaConcomitante().contains(farmaco)) {
+                for (Farmaco farmaco : terapiaNonModificata.getListaFarmaciTerapia()) {
+                    if (!terapia.getListaFarmaciTerapia().contains(farmaco)) {
                         farmaciConcomitanteDaRimuovere.add(farmaco);
                     }
                 }

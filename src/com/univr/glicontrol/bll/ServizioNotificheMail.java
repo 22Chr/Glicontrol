@@ -3,15 +3,14 @@ import jakarta.mail.*;
 import jakarta.mail.internet.*;
 import java.util.Properties;
 
-public class ServizioNotifiche {
+public class ServizioNotificheMail {
 
-    //private final String username = "glicontrol.system@gmail.com";
     private final String username = "system.glicontrol@gmail.com";
     private final String password = "sull rihb tdac dzpb";
 
     final Properties props;
 
-    public ServizioNotifiche() {
+    public ServizioNotificheMail() {
         props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");

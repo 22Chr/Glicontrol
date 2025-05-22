@@ -24,7 +24,7 @@ public class EliminaPaziente {
     }
 
     public boolean notificaEliminazionePaziente(String email) {
-        ServizioNotifiche ms = new ServizioNotifiche();
+        ServizioNotificheMail ms = new ServizioNotificheMail();
         boolean status;
         try {
             ms.sendEmail(email, "Revoca accesso Glicontrol", "Il tuo account di accesso al portale paziente è stato eliminato e non ti sarà più possibile accedere al sistema.\n\nGlicontrol Medical System");

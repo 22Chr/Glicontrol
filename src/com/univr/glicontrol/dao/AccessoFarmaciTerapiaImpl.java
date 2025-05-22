@@ -39,8 +39,8 @@ public class AccessoFarmaciTerapiaImpl implements AccessoFarmaciTerapia {
                 while (rs.next()) {
                     listaFarmaciTerapiaDiabete.add(new FarmaciTerapia(
                             rs.getInt("id_farmaco_terapia"),
-                            rs.getInt("id_farmaco_riferimento"),
-                            rs.getInt("id_terapia_diabete_riferimento")
+                            rs.getInt("id_terapia_diabete_riferimento"),
+                            rs.getInt("id_farmaco_riferimento")
                     ));
                 }
             }

@@ -25,6 +25,7 @@ public class UtilityPortalePaziente {
     private final Map<String, Sintomo> mappaSintomi = new HashMap<>();
     private final Map<String, PatologiaConcomitante> mappaPatologieConcomitanti = new HashMap<>();
     private final Map<String, RilevazioneGlicemica> mappaRilevazioniGlicemia = new HashMap<>();
+    private final Map<String, Terapia> mappaTerapie = new HashMap<>();
 
     public UtilityPortalePaziente() {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
@@ -237,9 +238,60 @@ public class UtilityPortalePaziente {
         for (Terapia t : gt.getTerapiePaziente()) {
             String terapiaFormattata = t.getNome();
             listaTerapie.add(terapiaFormattata);
+            mappaTerapie.put(terapiaFormattata, t);
+        }
+
+        return listaTerapie;
+    }
+
+    // Restituisce la terapia a partire dal suo nome nella lista di tipo String
+    private void aggiornaListaTerapiePaziente() {
+        getListaTerapiePaziente();
+    }
+
+    public Terapia getTerapiaPerNomeFormattata(String nomeTerapiaFormattato) {
+        aggiornaListaTerapiePaziente();
+        for (Terapia t : mappaTerapie.values()) {
+            if (t.getNome().equals(nomeTerapiaFormattato)) {
+                return t;
+            }
         }
 
         return null;
+    }
+
+    public String getIndicazioniTemporaliTerapia(Terapia terapia) {
+        String indicazioniTemporali = "";
+
+        if (terapia instanceof TerapiaDiabete td) {
+            LocalDate dataInizio = td.getDataInizio().toLocalDate();
+            LocalDate dataFine = td.getDataFine() == null ? null : td.getDataFine().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataInizioFormattata = dataInizio.format(formatter);
+            String dataFineFormattata;
+            if (dataFine != null) {
+                dataFineFormattata = dataFine.format(formatter);
+            } else {
+                dataFineFormattata = "in corso";
+            }
+
+            indicazioniTemporali = dataInizioFormattata + " - " + dataFineFormattata;
+        } else if (terapia instanceof TerapiaConcomitante tc) {
+            LocalDate dataInizio = tc.getDataInizio().toLocalDate();
+            LocalDate dataFine = tc.getDataFine() == null ? null : tc.getDataFine().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataInizioFormattata = dataInizio.format(formatter);
+            String dataFineFormattata;
+            if (dataFine != null) {
+                dataFineFormattata = dataFine.format(formatter);
+            } else {
+                dataFineFormattata = "in corso";
+            }
+
+            indicazioniTemporali = dataInizioFormattata + " - " + dataFineFormattata;
+        }
+
+        return indicazioniTemporali;
     }
 
 }

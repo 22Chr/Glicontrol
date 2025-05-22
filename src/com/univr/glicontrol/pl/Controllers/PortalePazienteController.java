@@ -4,7 +4,6 @@ import com.univr.glicontrol.bll.ListaMedici;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -120,6 +119,21 @@ public class PortalePazienteController {
             rilevazioniGlicemiaPaziente.setScene(new Scene(root));
 
             rilevazioniGlicemiaPaziente.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void openGestoreTerapie() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraTerapiePaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage gestoreTerapiePaziente = new Stage();
+            gestoreTerapiePaziente.setTitle("Le mie terapie");
+            gestoreTerapiePaziente.setScene(new Scene(root));
+
+            gestoreTerapiePaziente.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

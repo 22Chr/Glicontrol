@@ -87,10 +87,10 @@ public class TerapiaConcomitante implements Terapia {
         return "Terapia " + gpc.getPatologiaConcomitante(idPatologiaConcomitante);
     }
 
-    public List<Farmaco> getFarmaciTerapiaConcomitante() {
+    public List<Farmaco> getListaFarmaciTerapia() {
         return farmaci;
     }
-    public void setFarmaciTerapiaConcomitante(List<Farmaco> farmaci) {
+    public void setListaFarmaciTerapia(List<Farmaco> farmaci) {
         this.farmaci = farmaci;
     }
 

@@ -77,11 +77,14 @@ public class TerapiaDiabete implements Terapia {
         return "Terapia diabete";
     }
 
-    public List<Farmaco> getFarmaciTerapiaDiabete() {
+    public List<Farmaco> getListaFarmaciTerapia() {
         return farmaci;
     }
-    public void setFarmaciTerapiaDiabete(List<Farmaco> farmaci) {
+    public void setListaFarmaciTerapia(List<Farmaco> farmaci) {
         this.farmaci = farmaci;
     }
 
+    public int getIdPatologiaConcomitante() {
+        return -5; //codice associato a TerapiaDiabete per alludere alla mancanza di patologie concomitanti
+    }
 }

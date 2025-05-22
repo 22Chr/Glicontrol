@@ -7,7 +7,7 @@ import java.sql.Date;
 
 public class InserisciPaziente {
 
-    private final ServizioNotifiche ms = new ServizioNotifiche();
+    private final ServizioNotificheMail ms = new ServizioNotificheMail();
 
     public int insertPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, float peso) {
         int status;
