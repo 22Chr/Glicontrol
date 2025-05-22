@@ -33,7 +33,7 @@ public class GestioneFarmaci {
     }
 
     // I farmaci vengono aggiunti sia nel DB che in locale
-    public int insertFarmaco(Farmaco farmaco) {
+    public int inserisciNuovoFarmaco(Farmaco farmaco) {
         if (farmaci.contains(farmaco)) {
             return -1;
         }
@@ -48,7 +48,7 @@ public class GestioneFarmaci {
     }
 
     // I farmaci vengono rimossi sia nel DB che in locale
-    public boolean deleteFarmaco(int idFarmaco) {
+    public boolean eliminaFarmaco(int idFarmaco) {
         boolean status = accessoFarmaci.deleteFarmaco(idFarmaco);
 
         if (status) {
@@ -59,7 +59,7 @@ public class GestioneFarmaci {
     }
 
     // I farmaci vengono modificati sia nel DB che in locale
-    public boolean updateFarmaco(Farmaco farmaco) {
+    public boolean aggiornaFarmaco(Farmaco farmaco) {
         boolean status = accessoFarmaci.updateFarmaco(farmaco);
 
         if (status) {
@@ -68,5 +68,16 @@ public class GestioneFarmaci {
         }
 
         return status;
+    }
+
+    // Restituisce un farmaco a partire dal suo id
+    public Farmaco getFarmacoById(int idFarmaco) {
+        for (Farmaco farmaco : farmaci) {
+            if (farmaco.getIdFarmaco() == idFarmaco) {
+                return farmaco;
+            }
+        }
+
+        return null;
     }
 }

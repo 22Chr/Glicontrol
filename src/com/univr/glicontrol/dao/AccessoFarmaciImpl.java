@@ -5,6 +5,7 @@ import com.univr.glicontrol.bll.Farmaco;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccessoFarmaciImpl implements AccessoFarmaci {
 
@@ -23,7 +24,7 @@ public class AccessoFarmaciImpl implements AccessoFarmaci {
             PreparedStatement insertFarmacoStmt = conn.prepareStatement(insertFarmacoSql);
             insertFarmacoStmt.setString(1, farmaco.getNome());
             insertFarmacoStmt.setString(2, farmaco.getPrincipioAttivo());
-            insertFarmacoStmt.setFloat(3, farmaco.getDosaggio());
+            insertFarmacoStmt.setString(3, parseDosaggiToString(farmaco.getDosaggio()));
             insertFarmacoStmt.setString(4, farmaco.getUnitaMisura());
             insertFarmacoStmt.setString(5, farmaco.getProduttore());
             insertFarmacoStmt.setString(6, farmaco.getViaSomministrazione());
@@ -64,7 +65,7 @@ public class AccessoFarmaciImpl implements AccessoFarmaci {
                             rs.getInt("id_farmaco"),
                             rs.getString("nome"),
                             rs.getString("principio_attivo"),
-                            rs.getFloat("dosaggio"),
+                            parseDosaggiToFloat(rs.getString("dosaggio")),
                             rs.getString("unita_di_misura"),
                             rs.getString("produttore"),
                             rs.getString("via_di_somministrazione"),
@@ -126,7 +127,8 @@ public class AccessoFarmaciImpl implements AccessoFarmaci {
             PreparedStatement updateFarmacoStmt = conn.prepareStatement(updateFarmacoSql);
             updateFarmacoStmt.setString(1, farmaco.getNome());
             updateFarmacoStmt.setString(2, farmaco.getPrincipioAttivo());
-            updateFarmacoStmt.setFloat(3, farmaco.getDosaggio());
+            //updateFarmacoStmt.setString(3, farmaco.getDosaggi());
+            parseDosaggiToString(farmaco.getDosaggio());
             updateFarmacoStmt.setString(4, farmaco.getUnitaMisura());
             updateFarmacoStmt.setString(5, farmaco.getProduttore());
             updateFarmacoStmt.setString(6, farmaco.getViaSomministrazione());
@@ -152,5 +154,23 @@ public class AccessoFarmaciImpl implements AccessoFarmaci {
         }
 
         return success;
+    }
+
+
+    // Parsing della stringa dei dosaggi come lista di float
+    private List<Float> parseDosaggiToFloat(String dosaggi) {
+        List<Float> listaDosaggi = new ArrayList<>();
+        String[] arrayDosaggi = dosaggi.split(",");
+        for (String s : arrayDosaggi) {
+            listaDosaggi.add(Float.parseFloat(s));
+        }
+        return listaDosaggi;
+    }
+
+    // Operazione inversa per trasformare la lista dei dosaggi in una stringa
+    private String parseDosaggiToString(List<Float> listaDosaggi) {
+        return  listaDosaggi.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(", "));
     }
 }

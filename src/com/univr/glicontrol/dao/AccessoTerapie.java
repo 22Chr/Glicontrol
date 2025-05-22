@@ -1,5 +1,6 @@
 package com.univr.glicontrol.dao;
 
+import com.univr.glicontrol.bll.Farmaco;
 import com.univr.glicontrol.bll.TerapiaConcomitante;
 import com.univr.glicontrol.bll.TerapiaDiabete;
 
@@ -10,8 +11,8 @@ public interface AccessoTerapie {
     List<TerapiaDiabete> getTerapieDiabetePaziente(int idPaziente);
     List<TerapiaConcomitante> getTerapieConcomitantiPaziente(int idPaziente);
 
-    boolean insertTerapiaDiabete(int idPaziente, int idMedicoUltimaModifica, int idFarmacoTerapia, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari);
-    boolean insertTerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, int idFarmacoTerapia, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari);
+    boolean insertTerapiaDiabete(int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci);
+    boolean insertTerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari, int idFarmaco);
 
     boolean updateTerapiaDiabete(TerapiaDiabete terapia);
     boolean updateTerapiaConcomitante(TerapiaConcomitante terapia);

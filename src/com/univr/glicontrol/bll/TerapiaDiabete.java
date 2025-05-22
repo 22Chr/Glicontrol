@@ -1,28 +1,29 @@
 package com.univr.glicontrol.bll;
 
 import java.sql.Date;
+import java.util.List;
 
 public class TerapiaDiabete implements Terapia {
     private final int idTerapiaDiabete;
     private final int idPaziente;
     private int idMedicoUltimaModifica;
-    private final int idFarmacoTerapia;
     private final Date dataInizio;
     private Date dataFine;
-    private float dosaggio;
+    private String dosaggi;
     private String frequenza;
     private String orari;
+    private List<Farmaco> farmaci;
 
-    public TerapiaDiabete(int idTerapiaDiabete, int idPaziente, int idMedicoUltimaModifica, int idFarmacoTerapia, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari) {
+    public TerapiaDiabete(int idTerapiaDiabete, int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
         this.idTerapiaDiabete = idTerapiaDiabete;
         this.idPaziente = idPaziente;
         this.idMedicoUltimaModifica = idMedicoUltimaModifica;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
-        this.idFarmacoTerapia = idFarmacoTerapia;
-        this.dosaggio = dosaggio;
+        this.dosaggi = dosaggi;
         this.frequenza = frequenza;
         this.orari = orari;
+        this.farmaci = farmaci;
     }
 
     public int getIdTerapiaDiabete() {
@@ -51,15 +52,11 @@ public class TerapiaDiabete implements Terapia {
         return dataInizio;
     }
 
-    public int getIdFarmacoTerapia() {
-        return idFarmacoTerapia;
+    public String getDosaggi() {
+        return dosaggi;
     }
-
-    public float getDosaggio() {
-        return dosaggio;
-    }
-    public void setDosaggio(float dosaggio) {
-        this.dosaggio = dosaggio;
+    public void setDosaggi(String dosaggi) {
+        this.dosaggi = dosaggi;
     }
 
     public String getFrequenza() {
@@ -78,6 +75,13 @@ public class TerapiaDiabete implements Terapia {
 
     public String getNome() {
         return "Terapia diabete";
+    }
+
+    public List<Farmaco> getFarmaciTerapiaDiabete() {
+        return farmaci;
+    }
+    public void setFarmaciTerapiaDiabete(List<Farmaco> farmaci) {
+        this.farmaci = farmaci;
     }
 
 }

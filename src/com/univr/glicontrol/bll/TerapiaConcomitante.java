@@ -7,21 +7,19 @@ public class TerapiaConcomitante implements Terapia {
     private final int idPaziente;
     private int idPatologiaConcomitante;
     private int idMedicoUltimaModifica;
-    private final int idFarmacoTerapia;
     private final Date dataInizio;
     private Date dataFine;
     private float dosaggio;
     private String frequenza;
     private String orari;
 
-    public TerapiaConcomitante(int idTerapiaConcomitante, int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, int idFarmacoTerapia, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari) {
+    public TerapiaConcomitante(int idTerapiaConcomitante, int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari) {
         this.idTerapiaConcomitante = idTerapiaConcomitante;
         this.idPaziente = idPaziente;
         this.idPatologiaConcomitante = idPatologiaConcomitante;
         this.idMedicoUltimaModifica = idMedicoUltimaModifica;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
-        this.idFarmacoTerapia = idFarmacoTerapia;
         this.dosaggio = dosaggio;
         this.frequenza = frequenza;
         this.orari = orari;
@@ -58,10 +56,6 @@ public class TerapiaConcomitante implements Terapia {
 
     public Date getDataInizio() {
         return dataInizio;
-    }
-
-    public int getIdFarmacoTerapia() {
-        return idFarmacoTerapia;
     }
 
     public float getDosaggio() {

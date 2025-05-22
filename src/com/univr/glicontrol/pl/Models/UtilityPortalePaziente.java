@@ -221,12 +221,13 @@ public class UtilityPortalePaziente {
     }
 
     // Chiama la funzione di inserimento della terapia a seconda del tipo passato in input
-    public int inserisciTerapia(String tipoTerapia, int idPatologia, int idMedicoUltimaModifica, int idFarmacoTerapia, Date dataInizio, Date dataFine, float dosaggio, String frequenza, String orari) {
+    public int inserisciTerapia(String tipoTerapia, int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggio, String frequenza, String orari, List<Farmaco> farmaci) {
         GestioneTerapie gt = new GestioneTerapie(paziente);
         if (tipoTerapia.equals("Terapia Diabete")) {
-            return gt.inserisciTerapiaDiabete(idMedicoUltimaModifica, idFarmacoTerapia, dataInizio, dataFine, dosaggio, frequenza, orari);
+            return gt.inserisciTerapiaDiabete(idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
         } else {
-            return gt.inserisciTerapiaConcomitante(idPatologia, idMedicoUltimaModifica, idFarmacoTerapia, dataInizio, dataFine, dosaggio, frequenza, orari);
+            return -3;
+            // return gt.inserisciTerapiaConcomitante(idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
         }
     }
 

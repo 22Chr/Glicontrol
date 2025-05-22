@@ -1,10 +1,12 @@
 package com.univr.glicontrol.bll;
 
+import java.util.List;
+
 public class Farmaco {
     private final int idFarmaco;
     private String nome;
     private String principioAttivo;
-    private float dosaggio;
+    private List<Float> dosaggio;
     private String unitaMisura;
     private String produttore;
     private String viaSomministrazione;
@@ -12,7 +14,7 @@ public class Farmaco {
     private String interazioniNote;
     private String tipologia;
 
-    public Farmaco(int idFarmaco, String nome, String principioAttivo, float dosaggio, String unitaMisura, String produttore, String viaSomministrazione, String effettiCollaterali, String interazioniNote, String tipologia) {
+    public Farmaco(int idFarmaco, String nome, String principioAttivo, List<Float> dosaggio, String unitaMisura, String produttore, String viaSomministrazione, String effettiCollaterali, String interazioniNote, String tipologia) {
         this.idFarmaco = idFarmaco;
         this.nome = nome;
         this.principioAttivo = principioAttivo;
@@ -43,10 +45,10 @@ public class Farmaco {
         this.principioAttivo = principioAttivo;
     }
 
-    public float getDosaggio() {
+    public List<Float> getDosaggio() {
         return dosaggio;
     }
-    public void setDosaggio(float dosaggio) {
+    public void setDosaggio(List<Float> dosaggio) {
         this.dosaggio = dosaggio;
     }
 
