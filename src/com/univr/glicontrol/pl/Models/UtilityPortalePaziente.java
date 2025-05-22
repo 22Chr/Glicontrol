@@ -226,9 +226,20 @@ public class UtilityPortalePaziente {
         if (tipoTerapia.equals("Terapia Diabete")) {
             return gt.inserisciTerapiaDiabete(idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
         } else {
-            return -3;
-            // return gt.inserisciTerapiaConcomitante(idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
+            return gt.inserisciTerapiaConcomitante(idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
         }
+    }
+
+    // Restituisce la lista di tipo String formattata per le terapie dei pazienti
+    public List<String> getListaTerapiePaziente() {
+        List<String> listaTerapie = new ArrayList<>();
+        GestioneTerapie gt = new GestioneTerapie(paziente);
+        for (Terapia t : gt.getTerapiePaziente()) {
+            String terapiaFormattata = t.getNome();
+            listaTerapie.add(terapiaFormattata);
+        }
+
+        return null;
     }
 
 }
