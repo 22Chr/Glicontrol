@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -47,7 +48,7 @@
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="356.0" prefWidth="287.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="600.0" prefHeight="400.0" prefWidth="287.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" prefHeight="39.0" prefWidth="282.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #ffffffff; -fx-padding: 2;" text="ULTIME RILEVAZIONI" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <VBox.margin>
@@ -68,6 +69,14 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </LineChart>
+            <ToggleButton fx:id="visualizzazioneT" mnemonicParsing="false" onAction="#aggiornaGrafico" style="-fx-background-color: #22577a;" text="visualizzazione" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </ToggleButton>
          </children>
          <BorderPane.margin>
             <Insets bottom="-150.0" left="20.0" top="20.0" />

@@ -6,6 +6,7 @@ import com.univr.glicontrol.dao.AccessoRilevazioniGlicemiaImpl;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+import java.util.Map;
 
 public class GestioneRilevazioniGlicemia {
     private final Paziente paziente;
@@ -37,5 +38,13 @@ public class GestioneRilevazioniGlicemia {
 
     public boolean eliminaRilevazione(int idRilevazione) {
         return accessoRilevazioniGlicemia.deleteRilevazioneGlicemica(idRilevazione);
+    }
+
+    public Map<String, Double> getMediaGiornalieraGlicemia(int anno, int settimana) {
+        return accessoRilevazioniGlicemia.recuperaMediaGiornalieraPerSettimanaGlicemia(paziente.getIdUtente(), anno, settimana);
+    }
+
+    public Map<String, Double> getMediaMensileGlicemiaPerMeseCorrente(int anno, int mese) {
+        return accessoRilevazioniGlicemia.recuperaMediaMensileGlicemiaPerMeseCorrente(paziente.getIdUtente(), anno, mese);
     }
 }
