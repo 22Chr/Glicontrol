@@ -9,20 +9,14 @@ public class TerapiaDiabete implements Terapia {
     private int idMedicoUltimaModifica;
     private final Date dataInizio;
     private Date dataFine;
-    private String dosaggi;
-    private String frequenza;
-    private String orari;
     private List<Farmaco> farmaci;
 
-    public TerapiaDiabete(int idTerapiaDiabete, int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
+    public TerapiaDiabete(int idTerapiaDiabete, int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<Farmaco> farmaci) {
         this.idTerapiaDiabete = idTerapiaDiabete;
         this.idPaziente = idPaziente;
         this.idMedicoUltimaModifica = idMedicoUltimaModifica;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
-        this.dosaggi = dosaggi;
-        this.frequenza = frequenza;
-        this.orari = orari;
         this.farmaci = farmaci;
     }
 
@@ -50,27 +44,6 @@ public class TerapiaDiabete implements Terapia {
 
     public Date getDataInizio() {
         return dataInizio;
-    }
-
-    public String getDosaggi() {
-        return dosaggi;
-    }
-    public void setDosaggi(String dosaggi) {
-        this.dosaggi = dosaggi;
-    }
-
-    public String getFrequenza() {
-        return frequenza;
-    }
-    public void setFrequenza(String frequenza) {
-        this.frequenza = frequenza;
-    }
-
-    public String getOrari() {
-        return orari;
-    }
-    public void setOrari(String orari) {
-        this.orari = orari;
     }
 
     public String getNome() {

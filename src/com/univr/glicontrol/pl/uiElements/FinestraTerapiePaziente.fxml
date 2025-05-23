@@ -57,7 +57,7 @@
                         <Insets />
                      </VBox.margin>
                      <font>
-                        <Font name="System Bold" size="30.0" />
+                        <Font name="Avenir Next Bold" size="24.0" />
                      </font>
                   </TextField>
                   <TextField fx:id="dateTerapiaTF" alignment="CENTER" editable="false" maxWidth="200.0" style="-fx-background-color: transparent;">

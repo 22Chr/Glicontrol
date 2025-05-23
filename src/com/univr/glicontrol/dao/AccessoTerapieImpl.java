@@ -32,9 +32,6 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                             rs.getInt("id_medico_ultima_modifica"),
                             rs.getDate("data_inizio"),
                             rs.getDate("data_fine"),
-                            rs.getString("dosaggi"),
-                            rs.getString("frequenza"),
-                            rs.getString("orari"),
                             accessoFarmaciTerapia.getListaFarmaciPerTerapia(rs.getInt("id_terapia_diabete"))
                     ));
                 }
@@ -70,9 +67,6 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                             rs.getInt("id_medico_ultima_modifica"),
                             rs.getDate("data_inizio"),
                             rs.getDate("data_fine"),
-                            rs.getString("dosaggi"),
-                            rs.getString("frequenza"),
-                            rs.getString("orari"),
                             accessoFarmaciTerapia.getListaFarmaciPerTerapia(rs.getInt("id_terapia_concomitante"))
                     ));
                 }
@@ -89,9 +83,9 @@ public class AccessoTerapieImpl implements AccessoTerapie {
     }
 
     @Override
-    public boolean insertTerapiaDiabete(int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
+    public boolean insertTerapiaDiabete(int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<Farmaco> farmaci) {
         boolean success = false;
-        String insertTerapiaDiabeteSql = "insert into TerapiaDiabete (id_paziente_connesso, id_medico_ultima_modifica, data_inizio, data_fine, dosaggi, frequenza, orari) value (?, ?, ?, ?, ?, ?, ?)";
+        String insertTerapiaDiabeteSql = "insert into TerapiaDiabete (id_paziente_connesso, id_medico_ultima_modifica, data_inizio, data_fine) value (?, ?, ?, ?)";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -102,9 +96,6 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             insertTerapiaDiabeteStmt.setInt(2, idMedicoUltimaModifica);
             insertTerapiaDiabeteStmt.setDate(3, dataInizio);
             insertTerapiaDiabeteStmt.setDate(4, dataFine);
-            insertTerapiaDiabeteStmt.setString(5, dosaggi);
-            insertTerapiaDiabeteStmt.setString(6, frequenza);
-            insertTerapiaDiabeteStmt.setString(7, orari);
 
             if (insertTerapiaDiabeteStmt.executeUpdate() != 0) {
                 conn.commit();
@@ -137,9 +128,9 @@ public class AccessoTerapieImpl implements AccessoTerapie {
     }
 
     @Override
-    public boolean insertTerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
+    public boolean insertTerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<Farmaco> farmaci) {
         boolean success = false;
-        String insertTerapiaConcomitanteSql = "insert into TerapiaConcomitante (id_paziente_terapia_concomitante, id_patologia_comorbidita, id_medico_ultima_modifica, id_farmaco_terapia, data_inizio, data_fine, dosaggi, frequenza, orari) value (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertTerapiaConcomitanteSql = "insert into TerapiaConcomitante (id_paziente_terapia_concomitante, id_patologia_comorbidita, id_medico_ultima_modifica, id_farmaco_terapia, data_inizio, data_fine) value (?, ?, ?, ?, ?, ?)";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -150,9 +141,6 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             insertTerapiaConcomitanteStmt.setInt(3, idMedicoUltimaModifica);
             insertTerapiaConcomitanteStmt.setDate(4, dataInizio);
             insertTerapiaConcomitanteStmt.setDate(5, dataFine);
-            insertTerapiaConcomitanteStmt.setString(6, dosaggi);
-            insertTerapiaConcomitanteStmt.setString(7, frequenza);
-            insertTerapiaConcomitanteStmt.setString(8, orari);
 
             if (insertTerapiaConcomitanteStmt.executeUpdate() != 0) {
                 conn.commit();
@@ -186,7 +174,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
     @Override
     public boolean updateTerapiaDiabete(TerapiaDiabete terapia) {
         boolean success = false;
-        String updateTerapiaDiabeteSql = "update TerapiaDiabete set id_medico_ultima_modifica = ?, data_fine = ?, dosaggi = ?, frequenza = ?, orari = ? where id_terapia_diabete = ?";
+        String updateTerapiaDiabeteSql = "update TerapiaDiabete set id_medico_ultima_modifica = ?, data_fine = ? where id_terapia_diabete = ?";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -194,10 +182,6 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             PreparedStatement updateTerapiaDiabeteStmt = conn.prepareStatement(updateTerapiaDiabeteSql);
             updateTerapiaDiabeteStmt.setInt(1, terapia.getIdMedicoUltimaModifica());
             updateTerapiaDiabeteStmt.setDate(2, terapia.getDataFine());
-            updateTerapiaDiabeteStmt.setString(3, terapia.getDosaggi());
-            updateTerapiaDiabeteStmt.setString(4, terapia.getFrequenza());
-            updateTerapiaDiabeteStmt.setString(5, terapia.getOrari());
-            updateTerapiaDiabeteStmt.setInt(6, terapia.getIdTerapiaDiabete());
 
             if (updateTerapiaDiabeteStmt.executeUpdate() != 0) {
                 conn.commit();
@@ -255,7 +239,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
     @Override
     public boolean updateTerapiaConcomitante(TerapiaConcomitante terapia) {
         boolean success = false;
-        String updateTerapiaConcomitanteSql = "update TerapiaConcomitante set id_patologia_comorbidita = ?,  id_medico_ultima_modifica = ?, data_fine = ?, dosaggi = ?, frequenza = ?, orari = ? where id_terapia_concomitante = ?";
+        String updateTerapiaConcomitanteSql = "update TerapiaConcomitante set id_patologia_comorbidita = ?,  id_medico_ultima_modifica = ?, data_fine = ? where id_terapia_concomitante = ?";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -264,10 +248,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             updateTerapiaConcomitanteStmt.setInt(1, terapia.getIdTerapiaConcomitante());
             updateTerapiaConcomitanteStmt.setInt(2, terapia.getIdMedicoUltimaModifica());
             updateTerapiaConcomitanteStmt.setDate(3, terapia.getDataFine());
-            updateTerapiaConcomitanteStmt.setString(4, terapia.getDosaggi());
-            updateTerapiaConcomitanteStmt.setString(5, terapia.getFrequenza());
-            updateTerapiaConcomitanteStmt.setString(6, terapia.getOrari());
-            updateTerapiaConcomitanteStmt.setInt(7, terapia.getIdTerapiaConcomitante());
+
 
             if (updateTerapiaConcomitanteStmt.executeUpdate() != 0) {
                 conn.commit();

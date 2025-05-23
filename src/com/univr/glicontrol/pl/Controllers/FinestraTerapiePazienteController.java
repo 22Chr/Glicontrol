@@ -82,8 +82,6 @@ public class FinestraTerapiePazienteController {
         }
         farmaciTerapiaLV.setItems(farmaci);
 
-        dosaggiTerapiaTA.setText(terapia.getDosaggi());
-        frequenzaTerapiaTA.setText(terapia.getFrequenza());
-        orariTerapiaTA.setText(terapia.getOrari());
+
     }
 }

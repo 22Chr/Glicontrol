@@ -20,13 +20,4 @@ public interface Terapia {
 
     Date getDataFine();
     void setDataFine(Date datafine);
-
-    String getDosaggi();
-    void setDosaggi(String dosaggi);
-
-    String getFrequenza();
-    void setFrequenza(String frequenza);
-
-    String getOrari();
-    void setOrari(String orari);
 }

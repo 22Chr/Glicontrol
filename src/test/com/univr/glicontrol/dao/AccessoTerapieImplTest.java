@@ -16,6 +16,6 @@ class AccessoTerapieImplTest {
     @Test
     void insertTerapia() {
         List<Farmaco> farmaci = new ArrayList<>(GestioneFarmaci.getInstance().getListaFarmaci());
-        assertTrue(at.insertTerapiaDiabete(76, 3, Date.valueOf(LocalDate.now()), null, "120g, 12g, 27g", "a", "b", farmaci));
+        assertTrue(at.insertTerapiaDiabete(76, 3, Date.valueOf(LocalDate.now()), null, farmaci));
     }
 }
