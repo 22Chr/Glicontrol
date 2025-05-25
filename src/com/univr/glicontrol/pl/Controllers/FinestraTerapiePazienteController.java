@@ -1,9 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.Farmaco;
-import com.univr.glicontrol.bll.GestioneTerapie;
-import com.univr.glicontrol.bll.Paziente;
-import com.univr.glicontrol.bll.Terapia;
+import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +9,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -33,6 +31,9 @@ public class FinestraTerapiePazienteController {
 
     @FXML
     private TextArea dosaggiTerapiaTA, frequenzaTerapiaTA, orariTerapiaTA;
+
+    @FXML
+    private GridPane indicazioniFarmacoGP;
 
 
     UtilityPortalePaziente upp = new UtilityPortalePaziente();
@@ -56,7 +57,25 @@ public class FinestraTerapiePazienteController {
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
-                    mostraTerapia();
+                    mostraFarmaciTerapia();
+                }
+            });
+
+            return cell;
+        });
+
+        farmaciTerapiaLV.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && !cell.isEmpty()) {
+                    mostraIndicazinoiFarmaciTerapia();
                 }
             });
 
@@ -68,7 +87,7 @@ public class FinestraTerapiePazienteController {
 
     }
 
-    private void mostraTerapia() {
+    private void mostraFarmaciTerapia() {
         infoTerapiaVB.setVisible(true);
         nomeTerapiaTF.setText(terapiePazienteLV.getSelectionModel().getSelectedItem());
         Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
@@ -76,12 +95,28 @@ public class FinestraTerapiePazienteController {
 
         // Popola la lista dei farmaci associati alla terapia visualizzata
         ObservableList<String> farmaci = FXCollections.observableArrayList();
-        List<Farmaco> listaFarmaci = terapia.getListaFarmaciTerapia();
-        for (Farmaco farmaco : listaFarmaci) {
-            farmaci.add(farmaco.getNome());
+        List<FarmacoTerapia> listaFarmaci = terapia.getListaFarmaciTerapia();
+
+        for (FarmacoTerapia farmaco : listaFarmaci) {
+            farmaci.add(farmaco.getFarmaco().getNome());
         }
         farmaciTerapiaLV.setItems(farmaci);
 
 
+    }
+
+    private void mostraIndicazinoiFarmaciTerapia() {
+
+
+        Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
+
+        indicazioniFarmacoGP.setVisible(true);
+
+        dosaggiTerapiaTA.setText(
+                terapia.getDosaggioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()) + " " +
+                GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem()).getUnitaMisura()
+        );
+        frequenzaTerapiaTA.setText(terapia.getFrequenzaPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()));
+        orariTerapiaTA.setText(terapia.getOrarioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()));
     }
 }

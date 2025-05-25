@@ -63,7 +63,7 @@ public class GestioneTerapie {
         }
     }
 
-    public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggio, String frequenza, String orari, List<Farmaco> farmaci) {
+    public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggio, String frequenza, String orari, List<FarmacoTerapia> farmaci) {
         // Verificare successivamente se inserire un controllo sui duplicati
         aggiornaListaTerapie();
         for (TerapiaDiabete terapia : terapiaDiabete) {
@@ -75,7 +75,7 @@ public class GestioneTerapie {
         return accessoTerapie.insertTerapiaDiabete(paziente.getIdUtente(), idMedicoUltimaModifica, dataInizio, dataFine, farmaci) ? 1 : 0;
     }
 
-    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<Farmaco> farmaci) {
+    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<FarmacoTerapia> farmaci) {
         aggiornaListaTerapie();
         for (TerapiaConcomitante terapia : terapiaConcomitante) {
             if (terapia.getDataInizio().equals(dataInizio) && terapia.getListaFarmaciTerapia().equals(farmaci) && terapia.getIdPaziente() == paziente.getIdUtente()) {
@@ -84,6 +84,14 @@ public class GestioneTerapie {
         }
 
         return accessoTerapie.insertTerapiaConcomitante(paziente.getIdUtente(), idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, farmaci) ? 1 : 0;
+    }
+
+    public boolean aggiornaTerapiaDiabete(TerapiaDiabete terapia) {
+        return accessoTerapie.updateTerapiaDiabete(terapia);
+    }
+
+    public boolean aggiornaTerapiaConcomitante(TerapiaConcomitante terapia) {
+        return accessoTerapie.updateTerapiaConcomitante(terapia);
     }
 
 

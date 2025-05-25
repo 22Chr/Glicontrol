@@ -9,9 +9,9 @@ public class TerapiaDiabete implements Terapia {
     private int idMedicoUltimaModifica;
     private final Date dataInizio;
     private Date dataFine;
-    private List<Farmaco> farmaci;
+    private List<FarmacoTerapia> farmaci;
 
-    public TerapiaDiabete(int idTerapiaDiabete, int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<Farmaco> farmaci) {
+    public TerapiaDiabete(int idTerapiaDiabete, int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
         this.idTerapiaDiabete = idTerapiaDiabete;
         this.idPaziente = idPaziente;
         this.idMedicoUltimaModifica = idMedicoUltimaModifica;
@@ -42,6 +42,37 @@ public class TerapiaDiabete implements Terapia {
         this.dataFine = dataFine;
     }
 
+    @Override
+    public float getDosaggioPerFarmaco(String nomeFarmaco) {
+        for (FarmacoTerapia farmaco : farmaci) {
+            if (farmaco.getFarmaco().getNome().equals(nomeFarmaco)) {
+                return farmaco.getIndicazioni().getDosaggio();
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public String getFrequenzaPerFarmaco(String nomeFarmaco) {
+        for (FarmacoTerapia farmaco : farmaci) {
+            if (farmaco.getFarmaco().getNome().equals(nomeFarmaco)) {
+                return farmaco.getIndicazioni().getFrequenzaAssunzione();
+            }
+        }
+        return "";
+    }
+
+    @Override
+    public String getOrarioPerFarmaco(String nomeFarmaco) {
+        for (FarmacoTerapia farmaco : farmaci) {
+            if (farmaco.getFarmaco().getNome().equals(nomeFarmaco)) {
+                return farmaco.getIndicazioni().getOrariAssunzione();
+            }
+        }
+        return "";
+    }
+
+
     public Date getDataInizio() {
         return dataInizio;
     }
@@ -50,10 +81,10 @@ public class TerapiaDiabete implements Terapia {
         return "Terapia diabete";
     }
 
-    public List<Farmaco> getListaFarmaciTerapia() {
+    public List<FarmacoTerapia> getListaFarmaciTerapia() {
         return farmaci;
     }
-    public void setListaFarmaciTerapia(List<Farmaco> farmaci) {
+    public void setListaFarmaciTerapia(List<FarmacoTerapia> farmaci) {
         this.farmaci = farmaci;
     }
 

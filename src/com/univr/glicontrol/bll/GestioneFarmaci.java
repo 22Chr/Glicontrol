@@ -80,4 +80,15 @@ public class GestioneFarmaci {
 
         return null;
     }
+
+    // Restituisce un farmaco a partire dal suo nome
+    public Farmaco getFarmacoByName(String nomeFarmaco) {
+        for (Farmaco farmaco : farmaci) {
+            if (farmaco.getNome().equals(nomeFarmaco)) {
+                return farmaco;
+            }
+        }
+
+        return null;
+    }
 }

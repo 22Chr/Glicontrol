@@ -78,4 +78,34 @@ public class FattoriRischio {
     public void setFamiliarita(int familiarita) {
         this.familiarita = familiarita;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof FattoriRischio other)) return false;
+        return this.idPaziente == other.idPaziente &&
+                this.familiarita == other.familiarita &&
+                this.eta == other.eta &&
+                this.obesita == other.obesita &&
+                this.sedentarieta == other.sedentarieta &&
+                this.alimentazioneScorretta == other.alimentazioneScorretta &&
+                this.fumatore == other.fumatore &&
+                this.problemiAlcol == other.problemiAlcol;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result *= prime + idPaziente;
+        result *= prime + familiarita;
+        result *= prime + eta;
+        result *= prime + obesita;
+        result *= prime + sedentarieta;
+        result *= prime + alimentazioneScorretta;
+        result *= prime + fumatore;
+        result *= prime + problemiAlcol;
+        return result;
+    }
 }

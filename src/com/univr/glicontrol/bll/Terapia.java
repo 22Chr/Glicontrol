@@ -6,8 +6,8 @@ import java.util.List;
 public interface Terapia {
     String getNome();
 
-    List<Farmaco> getListaFarmaciTerapia();
-    void setListaFarmaciTerapia(List<Farmaco> farmaci);
+    List<FarmacoTerapia> getListaFarmaciTerapia();
+    void setListaFarmaciTerapia(List<FarmacoTerapia> farmaci);
 
     int getIdPaziente();
 
@@ -20,4 +20,10 @@ public interface Terapia {
 
     Date getDataFine();
     void setDataFine(Date datafine);
+
+    float getDosaggioPerFarmaco(String nomeFarmaco);
+
+    String getFrequenzaPerFarmaco(String nomeFarmaco);
+
+    String getOrarioPerFarmaco(String nomeFarmaco);
 }

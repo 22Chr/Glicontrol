@@ -1,6 +1,7 @@
 package com.univr.glicontrol.bll;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Farmaco {
     private final int idFarmaco;
@@ -93,4 +94,27 @@ public class Farmaco {
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Farmaco farmaco = (Farmaco) o;
+        return idFarmaco == farmaco.idFarmaco &&
+                Objects.equals(nome, farmaco.nome) &&
+                Objects.equals(principioAttivo, farmaco.principioAttivo) &&
+                Objects.equals(dosaggio, farmaco.dosaggio) &&
+                Objects.equals(unitaMisura, farmaco.unitaMisura) &&
+                Objects.equals(produttore, farmaco.produttore) &&
+                Objects.equals(viaSomministrazione, farmaco.viaSomministrazione) &&
+                Objects.equals(effettiCollaterali, farmaco.effettiCollaterali) &&
+                Objects.equals(interazioniNote, farmaco.interazioniNote) &&
+                Objects.equals(tipologia, farmaco.tipologia);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idFarmaco, nome, principioAttivo, dosaggio, unitaMisura, produttore, viaSomministrazione, effettiCollaterali, interazioniNote, tipologia);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.univr.glicontrol.bll;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TerapiaConcomitante implements Terapia {
@@ -10,9 +11,9 @@ public class TerapiaConcomitante implements Terapia {
     private int idMedicoUltimaModifica;
     private final Date dataInizio;
     private Date dataFine;
-    private List<Farmaco> farmaci;
+    private List<FarmacoTerapia> farmaci;
 
-    public TerapiaConcomitante(int idTerapiaConcomitante, int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<Farmaco> farmaci) {
+    public TerapiaConcomitante(int idTerapiaConcomitante, int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
         this.idTerapiaConcomitante = idTerapiaConcomitante;
         this.idPaziente = idPaziente;
         this.idPatologiaConcomitante = idPatologiaConcomitante;
@@ -51,6 +52,37 @@ public class TerapiaConcomitante implements Terapia {
         this.dataFine = dataFine;
     }
 
+    @Override
+    public float getDosaggioPerFarmaco(String nomeFarmaco) {
+        for (FarmacoTerapia farmaco : farmaci) {
+            if (farmaco.getFarmaco().getNome().equals(nomeFarmaco)) {
+                return farmaco.getIndicazioni().getDosaggio();
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public String getFrequenzaPerFarmaco(String nomeFarmaco) {
+        for (FarmacoTerapia farmaco : farmaci) {
+            if (farmaco.getFarmaco().getNome().equals(nomeFarmaco)) {
+                return farmaco.getIndicazioni().getFrequenzaAssunzione();
+            }
+        }
+        return "";
+    }
+
+    @Override
+    public String getOrarioPerFarmaco(String nomeFarmaco) {
+        for (FarmacoTerapia farmaco : farmaci) {
+            if (farmaco.getFarmaco().getNome().equals(nomeFarmaco)) {
+                return farmaco.getIndicazioni().getOrariAssunzione();
+            }
+        }
+        return "";
+    }
+
+
     public Date getDataInizio() {
         return dataInizio;
     }
@@ -58,13 +90,13 @@ public class TerapiaConcomitante implements Terapia {
 
     public String getNome() {
         GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(UtenteSessione.getInstance().getPazienteSessione());
-        return "Terapia " + gpc.getPatologiaConcomitante(idPatologiaConcomitante);
+        return "Terapia " + gpc.getPatologiaConcomitante(idPatologiaConcomitante).getNomePatologia();
     }
 
-    public List<Farmaco> getListaFarmaciTerapia() {
+    public List<FarmacoTerapia> getListaFarmaciTerapia() {
         return farmaci;
     }
-    public void setListaFarmaciTerapia(List<Farmaco> farmaci) {
+    public void setListaFarmaciTerapia(List<FarmacoTerapia> farmaci) {
         this.farmaci = farmaci;
     }
 

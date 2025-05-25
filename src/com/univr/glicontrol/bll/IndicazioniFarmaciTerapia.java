@@ -1,18 +1,16 @@
 package com.univr.glicontrol.bll;
 
-public class InidicazioniFarmaci {
+public class IndicazioniFarmaciTerapia {
     private final int idIndicazioniFarmaci;
     private final int idTerapiaDiabeteAnnessa;
-    private final int idTerapiaConcomitanteAnnessa;
     private final int idFarmacoAnnesso;
     private float dosaggio;
     private String frequenzaAssunzione;
     private String orariAssunzione;
 
-    public InidicazioniFarmaci(int idIndicazioniFarmaci, int idTerapiaDiabeteAnnessa, int idTerapiaConcomitanteAnnessa, int idFarmacoAnnesso, float dosaggio, String frequenzaAssunzione, String orariAssunzione) {
+    public IndicazioniFarmaciTerapia(int idIndicazioniFarmaci, int idTerapiaDiabeteAnnessa, int idFarmacoAnnesso, float dosaggio, String frequenzaAssunzione, String orariAssunzione) {
         this.idIndicazioniFarmaci = idIndicazioniFarmaci;
         this.idTerapiaDiabeteAnnessa = idTerapiaDiabeteAnnessa;
-        this.idTerapiaConcomitanteAnnessa = idTerapiaConcomitanteAnnessa;
         this.idFarmacoAnnesso = idFarmacoAnnesso;
         this.dosaggio = dosaggio;
         this.frequenzaAssunzione = frequenzaAssunzione;
@@ -25,10 +23,6 @@ public class InidicazioniFarmaci {
 
     public int getIdTerapiaDiabeteAnnessa() {
         return idTerapiaDiabeteAnnessa;
-    }
-
-    public int getIdTerapiaConcomitanteAnnessa() {
-        return idTerapiaConcomitanteAnnessa;
     }
 
     public int getIdFarmacoAnnesso() {
@@ -54,6 +48,33 @@ public class InidicazioniFarmaci {
     }
     public void setOrariAssunzione(String orariAssunzione) {
         this.orariAssunzione = orariAssunzione;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        IndicazioniFarmaciTerapia other = (IndicazioniFarmaciTerapia) obj;
+        return idIndicazioniFarmaci == other.idIndicazioniFarmaci &&
+                idTerapiaDiabeteAnnessa == other.idTerapiaDiabeteAnnessa &&
+                idFarmacoAnnesso == other.idFarmacoAnnesso &&
+                Float.floatToIntBits(dosaggio) == Float.floatToIntBits(other.dosaggio) &&
+                frequenzaAssunzione.equals(other.frequenzaAssunzione) &&
+                orariAssunzione.equals(other.orariAssunzione);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result *= prime + idIndicazioniFarmaci;
+        result *= prime + idTerapiaDiabeteAnnessa;
+        result *= prime + idFarmacoAnnesso;
+        result *= prime + Float.floatToIntBits(dosaggio);
+        result *= prime + frequenzaAssunzione.hashCode();
+        result *= prime + orariAssunzione.hashCode();
+        return result;
     }
 
 }

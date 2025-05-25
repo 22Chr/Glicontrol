@@ -193,7 +193,7 @@ public class UtilityPortalePaziente {
             LocalDate data = rg.getData().toLocalDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataFormattata = data.format(formatter);
-            String rilevazioneGlicemicaFormattata = rg.getValore() + "   (" + dataFormattata + " -  (" + rg.getIndicazioniTemporali() + ") " + rg.getPasto() + " - " + rg.getOra().toString().substring(0, 5) + ")";
+            String rilevazioneGlicemicaFormattata = rg.getValore() + " mg/dl   (" + dataFormattata + " -  (" + rg.getIndicazioniTemporali() + ") " + rg.getPasto() + " - " + rg.getOra().toString().substring(0, 5) + ")";
             listaRilevazioniGlicemiche.add(rilevazioneGlicemicaFormattata);
             mappaRilevazioniGlicemia.put(rilevazioneGlicemicaFormattata, rg);
         }
@@ -213,7 +213,7 @@ public class UtilityPortalePaziente {
             LocalDate data = rg.getData().toLocalDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataFormattata = data.format(formatter);
-            if ((rg.getValore() + "mg/dl   (" + dataFormattata + " -  (" + rg.getIndicazioniTemporali() + ") " + rg.getPasto() + " - " + rg.getOra().toString().substring(0, 5) + ")").equals(valoreFormattato)) {
+            if ((rg.getValore() + " mg/dl   (" + dataFormattata + " -  (" + rg.getIndicazioniTemporali() + ") " + rg.getPasto() + " - " + rg.getOra().toString().substring(0, 5) + ")").equals(valoreFormattato)) {
                 return rg;
             }
         }
@@ -222,14 +222,14 @@ public class UtilityPortalePaziente {
     }
 
     // Chiama la funzione di inserimento della terapia a seconda del tipo passato in input
-    public int inserisciTerapia(String tipoTerapia, int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggio, String frequenza, String orari, List<Farmaco> farmaci) {
-        GestioneTerapie gt = new GestioneTerapie(paziente);
-        if (tipoTerapia.equals("Terapia Diabete")) {
-            return gt.inserisciTerapiaDiabete(idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
-        } else {
-            return gt.inserisciTerapiaConcomitante(idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
-        }
-    }
+//    public int inserisciTerapia(String tipoTerapia, int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggio, String frequenza, String orari, List<Farmaco> farmaci) {
+//        GestioneTerapie gt = new GestioneTerapie(paziente);
+//        if (tipoTerapia.equals("Terapia Diabete")) {
+//            return gt.inserisciTerapiaDiabete(idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
+//        } else {
+//            return gt.inserisciTerapiaConcomitante(idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
+//        }
+//    }
 
     // Restituisce la lista di tipo String formattata per le terapie dei pazienti
     public List<String> getListaTerapiePaziente() {
@@ -293,5 +293,6 @@ public class UtilityPortalePaziente {
 
         return indicazioniTemporali;
     }
+
 
 }

@@ -52,7 +52,7 @@
                 </VBox>
                 <VBox fx:id="infoTerapiaVB" alignment="CENTER" maxWidth="636.0" prefHeight="543.0" prefWidth="636.0" spacing="50.0" visible="false">
                <children>
-                  <TextField fx:id="nomeTerapiaTF" alignment="CENTER" editable="false" maxWidth="250.0" prefWidth="250.0" style="-fx-background-color: transparent;">
+                  <TextField fx:id="nomeTerapiaTF" alignment="CENTER" editable="false" maxWidth="626.0" prefHeight="51.0" prefWidth="626.0" style="-fx-background-color: transparent;">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -86,7 +86,7 @@
                               <ListView fx:id="farmaciTerapiaLV" maxHeight="348.0" prefHeight="315.0" prefWidth="206.0" />
                            </children>
                         </VBox>
-                        <GridPane prefHeight="315.0" prefWidth="356.0">
+                        <GridPane fx:id="indicazioniFarmacoGP" prefHeight="315.0" prefWidth="356.0" visible="false">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.3333740234375" minWidth="10.0" prefWidth="70.66668701171875" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.33331298828125" minWidth="10.0" prefWidth="129.33331298828125" />
