@@ -1,21 +1,25 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.ListaMedici;
-import com.univr.glicontrol.bll.Medico;
-import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+import java.util.*;
 
 public class PortalePazienteController {
     //ultimeRilevazioniLW dovrà contenere il sunto delle ultime rilevazioni
@@ -27,12 +31,21 @@ public class PortalePazienteController {
     private final UtilityPortalePaziente upp = new UtilityPortalePaziente();
     private final Paziente paziente = upp.getPazienteSessione();
     private final Medico medicoRiferimento = new ListaMedici().ottieniMedicoPerId(paziente.getMedicoRiferimento());
+    private GestioneRilevazioniGlicemia gestione;
+    private boolean visualizzazioneMensile = true;
+
 
     @FXML
     private TextField nomeMedicoRiferimentoTF, cognomeMedicoRiferimentoTF, emailMedicoRiferimentoTF;
 
     @FXML
     private Circle badgeCircle;
+
+    @FXML
+    private LineChart<String, Number> andamentoGlicemiaLC;
+
+    @FXML
+    private ToggleButton visualizzazioneT;
 
     @FXML
     private void initialize() {
@@ -46,6 +59,12 @@ public class PortalePazienteController {
         badgeCircle.setSmooth(true);
         badgeCircle.setStyle("-fx-border-color: red;");
         // cercare metodo per risolvere il problema
+        visualizzazioneT.setOnAction(e -> aggiornaGrafico());
+
+        // 👇 Se hai un paziente corrente salvato, crea la gestione
+        gestione = new GestioneRilevazioniGlicemia(paziente);
+
+        aggiornaGrafico();
     }
 
     public void openProfile() {
@@ -138,4 +157,49 @@ public class PortalePazienteController {
             System.out.println(e.getMessage());
         }
     }
+
+    public void aggiornaGrafico() {
+        andamentoGlicemiaLC.getData().clear();
+        XYChart.Series<String, Number> serie = new XYChart.Series<>();
+
+        LocalDate oggi = LocalDate.now();
+        int anno = oggi.getYear();
+
+        if (visualizzazioneMensile) {
+            // Visualizzazione mensile: media settimanale del mese corrente
+            int mese = oggi.getMonthValue();
+            serie.setName("Media Settimanale del Mese");
+
+            // Recupera media settimanale filtrata per mese corrente
+            Map<String, Double> mediaSettimanale = gestione.getMediaMensileGlicemiaPerMeseCorrente(anno, mese);
+
+            for (var entry : mediaSettimanale.entrySet()) {
+                // entry.getKey() sarà tipo "2025-W15" o simile
+                serie.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+            }
+
+        } else {
+            // Visualizzazione settimanale: media giornaliera della settimana corrente
+            WeekFields wf = WeekFields.of(Locale.getDefault());
+            int settimana = oggi.get(wf.weekOfWeekBasedYear());
+            serie.setName("Media Giornaliera della Settimana ");
+
+            // Recupera media giornaliera filtrata per settimana corrente
+            Map<String, Double> mediaGiornaliera = gestione.getMediaGiornalieraGlicemia(anno, settimana);
+
+            for (var entry : mediaGiornaliera.entrySet()) {
+                // entry.getKey() sarà tipo "2025-05-13" (giorno)
+                serie.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+            }
+        }
+
+        andamentoGlicemiaLC.getData().add(serie);
+        visualizzazioneMensile = !visualizzazioneMensile;
+    }
+
+
+
+
+
+
 }

@@ -4,7 +4,9 @@ import com.univr.glicontrol.bll.RilevazioneGlicemica;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemia {
     private final String url = "jdbc:mysql://localhost:3306/glicontrol";
@@ -108,4 +110,55 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
 
         return success;
     }
+
+    // Media giornaliera per Settimana (utile per visualizzazione settimanale)
+    public Map<String, Double> recuperaMediaGiornalieraPerSettimanaGlicemia(int idPaziente, int anno, int numeroSettimana) {
+        Map<String, Double> mediaGiornaliera = new LinkedHashMap<>();
+        String sql = "SELECT DATE(data) AS giorno, AVG(valore) AS media " +
+                "FROM livelloglicemia WHERE id_paziente_glicemico = ? " +
+                "AND YEAR(data) = ? AND WEEK(data, 1) = ? " +
+                "GROUP BY giorno ORDER BY giorno";
+        try (Connection conn = DriverManager.getConnection(url, user, pwd);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idPaziente);
+            stmt.setInt(2, anno);
+            stmt.setInt(3, numeroSettimana);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                mediaGiornaliera.put(rs.getString("giorno"), rs.getDouble("media"));
+            }
+        } catch (SQLException e) {
+            System.out.println("[ERRORE MEDIA GIORNALIERA PER SETTIMANA]: " + e.getMessage());
+        }
+        return mediaGiornaliera;
+    }
+
+
+    // Media settimanale per mese (utile per visualizzazione mensile)
+    public Map<String, Double> recuperaMediaMensileGlicemiaPerMeseCorrente(int idPaziente, int anno, int mese) {
+        Map<String, Double> mediaMensile = new LinkedHashMap<>();
+        String sql = "SELECT DATE_FORMAT(data, '%Y-%m-%d') AS giorno, AVG(valore) AS media " +
+                "FROM livelloglicemia " +
+                "WHERE id_paziente_glicemico = ? AND YEAR(data) = ? AND MONTH(data) = ? " +
+                "GROUP BY giorno ORDER BY giorno";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pwd);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idPaziente);
+            stmt.setInt(2, anno);
+            stmt.setInt(3, mese);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                mediaMensile.put(rs.getString("giorno"), rs.getDouble("media"));
+            }
+        } catch (SQLException e) {
+            System.out.println("[ERRORE MEDIA MENSILE FILTRATA]: " + e.getMessage());
+        }
+        return mediaMensile;
+    }
+
+
+
+
+
 }
