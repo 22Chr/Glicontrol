@@ -4,15 +4,14 @@ import java.sql.Date;
 import java.util.List;
 
 public class TerapiaDiabete implements Terapia {
-    private final int idTerapiaDiabete;
+    private int idTerapiaDiabete;
     private final int idPaziente;
     private int idMedicoUltimaModifica;
     private final Date dataInizio;
     private Date dataFine;
     private List<FarmacoTerapia> farmaci;
 
-    public TerapiaDiabete(int idTerapiaDiabete, int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
-        this.idTerapiaDiabete = idTerapiaDiabete;
+    public TerapiaDiabete(int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
         this.idPaziente = idPaziente;
         this.idMedicoUltimaModifica = idMedicoUltimaModifica;
         this.dataInizio = dataInizio;
@@ -22,6 +21,9 @@ public class TerapiaDiabete implements Terapia {
 
     public int getIdTerapiaDiabete() {
         return idTerapiaDiabete;
+    }
+    public void setIdTerapiaDiabete(int idTerapiaDiabete) {
+        this.idTerapiaDiabete = idTerapiaDiabete;
     }
 
     public int getIdPaziente() {

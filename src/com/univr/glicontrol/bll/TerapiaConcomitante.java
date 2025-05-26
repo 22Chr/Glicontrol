@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TerapiaConcomitante implements Terapia {
-    private final int idTerapiaConcomitante;
+    private int idTerapiaConcomitante;
     private final int idPaziente;
     private int idPatologiaConcomitante;
     private int idMedicoUltimaModifica;
@@ -13,8 +13,7 @@ public class TerapiaConcomitante implements Terapia {
     private Date dataFine;
     private List<FarmacoTerapia> farmaci;
 
-    public TerapiaConcomitante(int idTerapiaConcomitante, int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
-        this.idTerapiaConcomitante = idTerapiaConcomitante;
+    public TerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
         this.idPaziente = idPaziente;
         this.idPatologiaConcomitante = idPatologiaConcomitante;
         this.idMedicoUltimaModifica = idMedicoUltimaModifica;
@@ -26,6 +25,10 @@ public class TerapiaConcomitante implements Terapia {
     public int getIdTerapiaConcomitante() {
         return idTerapiaConcomitante;
     }
+    public void setIdTerapiaConcomitante(int idTerapiaConcomitante) {
+        this.idTerapiaConcomitante = idTerapiaConcomitante;
+    }
+
     public void setIdPatologiaConcomitante(int idPatologiaConcomitante) {
         this.idPatologiaConcomitante = idPatologiaConcomitante;
     }

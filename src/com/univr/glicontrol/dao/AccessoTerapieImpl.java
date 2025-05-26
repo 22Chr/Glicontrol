@@ -29,17 +29,16 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             try (ResultSet rs = recuperaTerapiaDiabeteStmt.executeQuery()) {
                 while (rs.next()) {
                     int idTerapiaDiabete = rs.getInt("id_terapia_diabete");
-                    terapiaDiabete.add(new TerapiaDiabete(
-                            idTerapiaDiabete,
-                            rs.getInt("id_paziente_connesso"),
+                    TerapiaDiabete t = new TerapiaDiabete (rs.getInt("id_paziente_connesso"),
                             rs.getInt("id_medico_ultima_modifica"),
                             rs.getDate("data_inizio"),
                             rs.getDate("data_fine"),
                             getListaFarmaciPerTerapia(
                                     accessoPonteFarmaciTerapia.getListaFarmaciPerTerapia(idTerapiaDiabete),
                                     idTerapiaDiabete
-                            )
-                    ));
+                            ));
+                    t.setIdTerapiaDiabete(idTerapiaDiabete);
+                    terapiaDiabete.add(t);
                 }
             }
 
@@ -63,9 +62,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             try (ResultSet rs = recuperaTerapieConcomitantiStmt.executeQuery()) {
                 while (rs.next()) {
                     int idTerapiaConcomitante = rs.getInt("id_terapia_concomitante");
-                    terapieConcomitanti.add(new TerapiaConcomitante(
-                            idTerapiaConcomitante,
-                            rs.getInt("id_paziente_terapia_concomitante"),
+                    TerapiaConcomitante t = new TerapiaConcomitante (rs.getInt("id_paziente_terapia_concomitante"),
                             rs.getInt("id_patologia_comorbidita"),
                             rs.getInt("id_medico_ultima_modifica"),
                             rs.getDate("data_inizio"),
@@ -73,8 +70,9 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                             getListaFarmaciPerTerapia(
                                     accessoPonteFarmaciTerapia.getListaFarmaciPerTerapia(idTerapiaConcomitante),
                                     idTerapiaConcomitante
-                            )
-                    ));
+                            ));
+                    t.setIdTerapiaConcomitante(idTerapiaConcomitante);
+                    terapieConcomitanti.add(t);
                 }
             }
 
