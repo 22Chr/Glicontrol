@@ -98,7 +98,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="117.0" text="Dosaggi:">
+                              <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="117.0" text="Dosaggio:">
                                  <font>
                                     <Font name="Carlito" size="14.0" />
                                  </font>

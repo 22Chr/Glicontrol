@@ -58,10 +58,11 @@ public class PortalePazienteController {
         badgeCircle.setFill(new ImagePattern(upp.getBadge()));
         badgeCircle.setSmooth(true);
         badgeCircle.setStyle("-fx-border-color: red;");
+
         // cercare metodo per risolvere il problema
         visualizzazioneT.setOnAction(e -> aggiornaGrafico());
 
-        // 👇 Se hai un paziente corrente salvato, crea la gestione
+        // Se hai un paziente corrente salvato, crea la gestione
         gestione = new GestioneRilevazioniGlicemia(paziente);
 
         aggiornaGrafico();
