@@ -37,7 +37,7 @@
                                 <Insets bottom="5.0" left="7.0" right="7.0" />
                             </VBox.margin>
                         </ListView>
-                  <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#aggiungiTerapiaConcomitante" prefHeight="45.0" prefWidth="143.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi una terapia &#10;concomitante" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#aggiungiTerapiaConcomitante" prefHeight="45.0" prefWidth="154.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi una terapia &#10;concomitante" textAlignment="CENTER" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>

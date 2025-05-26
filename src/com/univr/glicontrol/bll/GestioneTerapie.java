@@ -75,7 +75,7 @@ public class GestioneTerapie {
         return accessoTerapie.insertTerapiaDiabete(paziente.getIdUtente(), idMedicoUltimaModifica, dataInizio, dataFine, farmaci) ? 1 : 0;
     }
 
-    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggi, String frequenza, String orari, List<FarmacoTerapia> farmaci) {
+    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
         aggiornaListaTerapie();
         for (TerapiaConcomitante terapia : terapiaConcomitante) {
             if (terapia.getDataInizio().equals(dataInizio) && terapia.getListaFarmaciTerapia().equals(farmaci) && terapia.getIdPaziente() == paziente.getIdUtente()) {
@@ -116,4 +116,28 @@ public class GestioneTerapie {
         return null;
     }
 
+    private List<FarmacoTerapia> ft = new ArrayList<>();
+
+    public boolean generaFarmaciTerapia(Farmaco farmaco, IndicazioniFarmaciTerapia indicazioni){
+        List<Farmaco> farmaciCaricati =  new ArrayList<>();
+
+        for(FarmacoTerapia cache: ft) {
+            farmaciCaricati.add(cache.getFarmaco());
+        }
+        // Verifica che il farmaco non sia già presenta nella terapia
+        // Se arriva un farmaco non valido si scartano anche le indicazioni
+
+        for(Farmaco f:  farmaciCaricati){
+            if(f.equals(farmaco)){
+                return false;
+            }
+        }
+
+        ft.add(new FarmacoTerapia(farmaco, indicazioni));
+        return true;
+    }
+
+    public List<FarmacoTerapia> getFarmaciTerapia() {
+        return ft;
+    }
 }

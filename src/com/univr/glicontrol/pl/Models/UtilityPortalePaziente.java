@@ -294,5 +294,13 @@ public class UtilityPortalePaziente {
         return indicazioniTemporali;
     }
 
+    public List<String> getListaFarmaciFormattatiCompleta() {
+        List<String> listaFarmaciFormattati = new ArrayList<>();
+        for(Farmaco f: GestioneFarmaci.getInstance().getListaFarmaci()) {
+            listaFarmaciFormattati.add(f.getNome());
+        }
+        return listaFarmaciFormattati;
+    }
+
 
 }

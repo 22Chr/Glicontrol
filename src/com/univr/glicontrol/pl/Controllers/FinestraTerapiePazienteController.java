@@ -5,13 +5,18 @@ import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -84,7 +89,18 @@ public class FinestraTerapiePazienteController {
     }
 
     public void aggiungiTerapiaConcomitante() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/AggiungiNuovaTerapiaConcomitantePaziente.fxml"));
+            Parent root = fxmlLoader.load();
 
+            Stage terapiePaziente = new Stage();
+            terapiePaziente.setTitle("Aggiungi terapia");
+            terapiePaziente.setScene(new Scene(root));
+
+            terapiePaziente.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void mostraFarmaciTerapia() {
