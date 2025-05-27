@@ -50,11 +50,27 @@ public class ModificaPastoController {
         nomePastoTF.setText(pastoDaModificare);
     }
 
+    public void eliminaPastoEOrario() {
+        if (gp.eliminaPasto(pasto.getIdPasto())) {
+            Alert successoInserimentoPastoAlert = new Alert(Alert.AlertType.INFORMATION);
+            successoInserimentoPastoAlert.setTitle("System Information Service");
+            successoInserimentoPastoAlert.setHeaderText("Pasto eliminato con successo");
+            successoInserimentoPastoAlert.setContentText("Il pasto è stato eliminato con successo");
+            successoInserimentoPastoAlert.showAndWait();
 
+            mipc.resetListViewPasti();
 
-
-
-    public void eliminaPastoEOrario(ActionEvent actionEvent) {
+            Window currentWindow = confermaPastoeOrarioB.getScene().getWindow();
+            if (currentWindow instanceof Stage) {
+                ((Stage) currentWindow).close();
+            }
+        } else {
+            Alert erroreInserimentoPastoAlert = new Alert(Alert.AlertType.ERROR);
+            erroreInserimentoPastoAlert.setTitle("System Information Service");
+            erroreInserimentoPastoAlert.setHeaderText("Errore durante l'eliminazione del pasto");
+            erroreInserimentoPastoAlert.setContentText("Non è stato possibile eliminare il pasto, riprova");
+            erroreInserimentoPastoAlert.showAndWait();
+        }
     }
 
     public void setInstance(ModificaInformazioniPazienteController bpc){
@@ -83,8 +99,8 @@ public class ModificaPastoController {
         if (gp.aggiornaPasto(pasto)) {
             Alert successoInserimentoPastoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoInserimentoPastoAlert.setTitle("System Information Service");
-            successoInserimentoPastoAlert.setHeaderText("Pasto inserito con successo");
-            successoInserimentoPastoAlert.setContentText("Il pasto è stato inserito con successo");
+            successoInserimentoPastoAlert.setHeaderText("Pasto modificato con successo");
+            successoInserimentoPastoAlert.setContentText("Il pasto è stato modificato con successo");
             successoInserimentoPastoAlert.showAndWait();
 
             mipc.resetListViewPasti();
@@ -96,8 +112,8 @@ public class ModificaPastoController {
         } else {
             Alert erroreInserimentoPastoAlert = new Alert(Alert.AlertType.ERROR);
             erroreInserimentoPastoAlert.setTitle("System Information Service");
-            erroreInserimentoPastoAlert.setHeaderText("Errore durante l'inserimento del pasto");
-            erroreInserimentoPastoAlert.setContentText("Non è stato possibile inserire il pasto, riprova");
+            erroreInserimentoPastoAlert.setHeaderText("Errore durante la modifica del pasto");
+            erroreInserimentoPastoAlert.setContentText("Non è stato possibile modificare il pasto, riprova");
             erroreInserimentoPastoAlert.showAndWait();
         }
     }
