@@ -2,6 +2,7 @@ package com.univr.glicontrol.bll;
 
 import com.univr.glicontrol.dao.AccessoTerapie;
 import com.univr.glicontrol.dao.AccessoTerapieImpl;
+import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class GestioneTerapie {
         }
     }
 
-    public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggio, String frequenza, String orari, List<FarmacoTerapia> farmaci) {
+    public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
         // Verificare successivamente se inserire un controllo sui duplicati
         aggiornaListaTerapie();
         for (TerapiaDiabete terapia : terapiaDiabete) {
@@ -75,10 +76,19 @@ public class GestioneTerapie {
         return accessoTerapie.insertTerapiaDiabete(paziente.getIdUtente(), idMedicoUltimaModifica, dataInizio, dataFine, farmaci) ? 1 : 0;
     }
 
-    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
+    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci, String nomePatologia) {
         aggiornaListaTerapie();
+        UtilityPortalePaziente upp = new UtilityPortalePaziente();
+
+        String check = " (";
+        int limit = nomePatologia.indexOf(check);
+
         for (TerapiaConcomitante terapia : terapiaConcomitante) {
             if (terapia.getDataInizio().equals(dataInizio) && terapia.getListaFarmaciTerapia().equals(farmaci) && terapia.getIdPaziente() == paziente.getIdUtente()) {
+                return -1;
+            }
+
+            if (terapia.getIdPatologiaConcomitante() == upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia()) {
                 return -1;
             }
         }

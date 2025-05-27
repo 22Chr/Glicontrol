@@ -23,14 +23,15 @@ public class AccessoIndicazioniFarmaciTerapiaImpl implements AccessoIndicazioniF
 
             try (ResultSet rs = getListaIndicazioniFarmaciStmt.executeQuery()) {
                 while (rs.next()) {
-                    indicazioniFarmaciTerapia.add(new IndicazioniFarmaciTerapia(
-                            rs.getInt("id_indicazioni_farmaci"),
+                    IndicazioniFarmaciTerapia indicazione = new IndicazioniFarmaciTerapia(
                             rs.getInt("id_terapia_annessa"),
                             rs.getInt("id_farmaco_annesso"),
                             rs.getFloat("dosaggio"),
                             rs.getString("frequenza_assunzione"),
                             rs.getString("orari_assunzione")
-                    ));
+                    );
+                    indicazione.setIdIndicazioniFarmaci(rs.getInt("id_indicazioni_farmaci"));
+                    indicazioniFarmaciTerapia.add(indicazione);
                 }
             }
 
@@ -62,8 +63,6 @@ public class AccessoIndicazioniFarmaciTerapiaImpl implements AccessoIndicazioniF
             }
 
             insertIndicazioniFarmaciStmt.close();
-            conn.setAutoCommit(true);
-            conn.close();
 
         } catch (SQLException e) {
             System.out.println("[ERRORE INSERT INDICAZIONI FARMACI]: " + e.getMessage());

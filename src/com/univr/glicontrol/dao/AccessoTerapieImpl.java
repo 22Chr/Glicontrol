@@ -172,25 +172,32 @@ public class AccessoTerapieImpl implements AccessoTerapie {
         String insertTerapiaConcomitanteSql = "insert into TerapiaConcomitante (id_terapia_concomitante, id_paziente_terapia_concomitante, id_patologia_comorbidita, id_medico_ultima_modifica, data_inizio, data_fine) values (?, ?, ?, ?, ?, ?)";
         List<Farmaco> farmaciConcomitante = ottieniListaFarmaciDaFarmacoTerapia(farmaciTerapia);
         List<IndicazioniFarmaciTerapia> indicazioni = ottieniListaIndicazioniFarmaciDaFarmacoTerapia(farmaciTerapia);
+        int idTerapiaConcomitante = 0;
 
-        try (Connection conn = DriverManager.getConnection(url, user, pwd);
-             PreparedStatement insertTerapiaConcomitanteStmt = conn.prepareStatement(insertTerapiaConcomitanteSql, Statement.RETURN_GENERATED_KEYS)) {
-
-            conn.setAutoCommit(false);
-            String generaTerapia = "insert into Terapia () values ()";
-            try (PreparedStatement generaTerapiaStmt = conn.prepareStatement(generaTerapia, Statement.RETURN_GENERATED_KEYS)) {
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            String generaTerapiaSql = "insert into Terapia values ()";
+            try (PreparedStatement generaTerapiaStmt = conn.prepareStatement(generaTerapiaSql, Statement.RETURN_GENERATED_KEYS)) {
                 generaTerapiaStmt.executeUpdate();
                 try (ResultSet rs = generaTerapiaStmt.getGeneratedKeys()) {
-                    if (!rs.next()) {
-                        System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile ottenere l'id generato per la nuova terapia");
-                        conn.rollback();
-                        return false;
+                    if (rs.next()) {
+                        idTerapiaConcomitante = rs.getInt(1);
                     }
-                    int idTerapiaConcomitante = rs.getInt(1);
-                    insertTerapiaConcomitanteStmt.setInt(1, idTerapiaConcomitante);
                 }
             }
 
+        } catch (SQLException e) {
+            System.out.println("[ERRORE GENERAZIONE ID TERAPIA]: " + e.getMessage());
+            return false;
+        }
+
+
+        try (Connection conn = DriverManager.getConnection(url, user, pwd);
+             PreparedStatement insertTerapiaConcomitanteStmt = conn.prepareStatement(insertTerapiaConcomitanteSql)) {
+
+            conn.setAutoCommit(false);
+
+            insertTerapiaConcomitanteStmt.setInt(1, idTerapiaConcomitante);
             insertTerapiaConcomitanteStmt.setInt(2, idPaziente);
             insertTerapiaConcomitanteStmt.setInt(3, idPatologiaConcomitante);
             insertTerapiaConcomitanteStmt.setInt(4, idMedicoUltimaModifica);
@@ -203,44 +210,35 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                 return false;
             }
 
-            try (ResultSet rs = insertTerapiaConcomitanteStmt.getGeneratedKeys()) {
-                if (!rs.next()) {
-                    System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile ottenere l'id generato");
-                    conn.rollback();
-                    return false;
-                }
 
-                int idTerapiaConcomitante = rs.getInt(1);
-
-                if (!accessoPonteFarmaciTerapia.insertFarmaciTerapia(conn, idTerapiaConcomitante, farmaciConcomitante)) {
-                    System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire i farmaci selezionati per la terapia");
-                    conn.rollback();
-                    return false;
-                }
-
-                if (indicazioni.size() != farmaciConcomitante.size()) {
-                    System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Dimensione indicazioni e farmaci discordante");
-                    conn.rollback();
-                    return false;
-                }
-
-                for (int i = 0; i < indicazioni.size(); i++) {
-                    if (!accessoIndicazioniFarmaciTerapia.insertIndicazioniFarmaci(
-                            conn,
-                            idTerapiaConcomitante,
-                            farmaciConcomitante.get(i).getIdFarmaco(),
-                            indicazioni.get(i).getDosaggio(),
-                            indicazioni.get(i).getFrequenzaAssunzione(),
-                            indicazioni.get(i).getOrariAssunzione())) {
-                        System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire indicazioni farmaco id " + farmaciConcomitante.get(i).getIdFarmaco());
-                        conn.rollback();
-                        return false;
-                    }
-                }
-
-                conn.commit();
-                success = true;
+            if (!accessoPonteFarmaciTerapia.insertFarmaciTerapia(conn, idTerapiaConcomitante, farmaciConcomitante)) {
+                System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire i farmaci selezionati per la terapia");
+                conn.rollback();
+                return false;
             }
+
+            if (indicazioni.size() != farmaciConcomitante.size()) {
+                System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Dimensione indicazioni e farmaci discordante");
+                conn.rollback();
+                return false;
+            }
+
+            for (int i = 0; i < indicazioni.size(); i++) {
+                if (!accessoIndicazioniFarmaciTerapia.insertIndicazioniFarmaci(
+                        conn,
+                        idTerapiaConcomitante,
+                        farmaciConcomitante.get(i).getIdFarmaco(),
+                        indicazioni.get(i).getDosaggio(),
+                        indicazioni.get(i).getFrequenzaAssunzione(),
+                        indicazioni.get(i).getOrariAssunzione())) {
+                    System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire indicazioni farmaco id " + farmaciConcomitante.get(i).getIdFarmaco());
+                    conn.rollback();
+                    return false;
+                }
+            }
+
+            conn.commit();
+            return true;
 
         } catch (SQLException e) {
             System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTI]: " + e.getMessage());

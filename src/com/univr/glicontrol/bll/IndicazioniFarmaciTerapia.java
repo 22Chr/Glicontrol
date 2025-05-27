@@ -1,15 +1,14 @@
 package com.univr.glicontrol.bll;
 
 public class IndicazioniFarmaciTerapia {
-    private final int idIndicazioniFarmaci;
+    private int idIndicazioniFarmaci;
     private final int idTerapiaDiabeteAnnessa;
     private final int idFarmacoAnnesso;
     private float dosaggio;
     private String frequenzaAssunzione;
     private String orariAssunzione;
 
-    public IndicazioniFarmaciTerapia(int idIndicazioniFarmaci, int idTerapiaDiabeteAnnessa, int idFarmacoAnnesso, float dosaggio, String frequenzaAssunzione, String orariAssunzione) {
-        this.idIndicazioniFarmaci = idIndicazioniFarmaci;
+    public IndicazioniFarmaciTerapia(int idTerapiaDiabeteAnnessa, int idFarmacoAnnesso, float dosaggio, String frequenzaAssunzione, String orariAssunzione) {
         this.idTerapiaDiabeteAnnessa = idTerapiaDiabeteAnnessa;
         this.idFarmacoAnnesso = idFarmacoAnnesso;
         this.dosaggio = dosaggio;
@@ -19,6 +18,9 @@ public class IndicazioniFarmaciTerapia {
 
     public int getIdIndicazioniFarmaci() {
         return idIndicazioniFarmaci;
+    }
+    public void setIdIndicazioniFarmaci(int idIndicazioniFarmaci) {
+        this.idIndicazioniFarmaci = idIndicazioniFarmaci;
     }
 
     public int getIdTerapiaDiabeteAnnessa() {

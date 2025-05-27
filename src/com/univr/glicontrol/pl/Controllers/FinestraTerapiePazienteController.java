@@ -87,17 +87,21 @@ public class FinestraTerapiePazienteController {
             return cell;
         });
     }
+
     public void resetListViewTerapie(){
         UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
         ObservableList<String> newTerapie = FXCollections.observableArrayList();
-        newTerapie.addAll(newUpp.getListaPatologieConcomitantiPazienti());
+        newTerapie.addAll(newUpp.getListaTerapiePaziente());
         terapiePazienteLV.setItems(newTerapie);
-
     }
+
     public void aggiungiTerapiaConcomitante() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/AggiungiNuovaTerapiaConcomitantePaziente.fxml"));
             Parent root = fxmlLoader.load();
+
+            InserisciNuovaTerapiaConcomitantePazienteController intcpc = fxmlLoader.getController();
+            intcpc.setInstance(this);
 
             Stage terapiePaziente = new Stage();
             terapiePaziente.setTitle("Aggiungi terapia");
@@ -128,7 +132,6 @@ public class FinestraTerapiePazienteController {
     }
 
     private void mostraIndicazinoiFarmaciTerapia() {
-
 
         Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
 
