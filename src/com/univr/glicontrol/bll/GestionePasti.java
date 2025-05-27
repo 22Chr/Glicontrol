@@ -32,7 +32,7 @@ public class GestionePasti {
         return accessoPasti.deletePasto(idPasto);
     }
 
-    public boolean modificaPasto(Pasto pasto) {
+    public boolean aggiornaPasto(Pasto pasto) {
         return accessoPasti.updatePasto(pasto);
     }
 

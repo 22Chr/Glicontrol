@@ -65,11 +65,42 @@ public class AggiungiNuovaTerapiaConcomitantePazienteController {
     public void aggiungiNuovaTerapia(){
         String nomePatologia = patologiaCB.getSelectionModel().getSelectedItem();
         Date dataInizio = Date.valueOf(dataInizioDP.getValue());
-        Date dataFine = Date.valueOf(dataFineDP.getValue());
-
+        Date dataFine;
+        if(dataFineDP.getValue() == null){
+            dataFine = null;
+        }else{
+            dataFine = Date.valueOf(dataFineDP.getValue());
+        }
+        // da rivedere per il null del medico
         int idPatologia = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia();
         List<FarmacoTerapia> farmaciConIndicazioni = gt.getFarmaciTerapia();
+        int status = gt.inserisciTerapiaConcomitante(idPatologia, 0, dataInizio, dataFine, farmaciConIndicazioni);
+        if(status == 1){
+            Alert successoInserimentoTerapiaAlert = new Alert(Alert.AlertType.INFORMATION);
+            successoInserimentoTerapiaAlert.setTitle("System Information Service");
+            successoInserimentoTerapiaAlert.setHeaderText("Terapia inserita con successo");
+            successoInserimentoTerapiaAlert.setContentText("La nuova terapia è stata inserita con successo");
+            successoInserimentoTerapiaAlert.showAndWait();
 
+            dataInizioDP.setValue(null);
+            dataFineDP.setValue(null);
+
+
+        } else if (status == 0) {
+            Alert erroreInserimentoTerapiaAlert = new Alert(Alert.AlertType.ERROR);
+            erroreInserimentoTerapiaAlert.setTitle("System Information Service");
+            erroreInserimentoTerapiaAlert.setHeaderText("Errore durante l'inserimento della nuova terapia");
+            erroreInserimentoTerapiaAlert.setContentText("Non è stato possibile inserire la nuova terapia.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
+            erroreInserimentoTerapiaAlert.showAndWait();
+        } else {
+            Alert erroreDuplicazioneTerapiaAlert = new Alert(Alert.AlertType.ERROR);
+            erroreDuplicazioneTerapiaAlert.setTitle("System Information Service");
+            erroreDuplicazioneTerapiaAlert.setHeaderText("Errore durante l'inserimento della nuova terapia");
+            erroreDuplicazioneTerapiaAlert.setContentText("La terapia che stai cercando di inserire esiste già nel sistema");
+            erroreDuplicazioneTerapiaAlert.showAndWait();
+            dataInizioDP.setValue(null);
+            dataFineDP.setValue(null);
+        }
     }
 
     public GestioneTerapie getGestioneTerapie() {

@@ -87,7 +87,13 @@ public class FinestraTerapiePazienteController {
             return cell;
         });
     }
+    public void resetListViewTerapie(){
+        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        ObservableList<String> newTerapie = FXCollections.observableArrayList();
+        newTerapie.addAll(newUpp.getListaPatologieConcomitantiPazienti());
+        terapiePazienteLV.setItems(newTerapie);
 
+    }
     public void aggiungiTerapiaConcomitante() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/AggiungiNuovaTerapiaConcomitantePaziente.fxml"));

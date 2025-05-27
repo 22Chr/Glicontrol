@@ -2,10 +2,18 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import java.io.IOException;
 
 public class ModificaInformazioniPazienteController {
 
@@ -21,12 +29,17 @@ public class ModificaInformazioniPazienteController {
     @FXML
     private Button salvaModifiche;
 
+    @FXML
+    private ListView<String> pastiLV;
+
     private Paziente p;
 
     private final GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
     Paziente paziente = new UtilityPortalePaziente().getPazienteSessione();
     private final FattoriRischio fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
     private final InputChecker valueChecker = new InputChecker();
+    private final UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    String pastoDaModificare;
 
     @FXML
     private void initialize() {
@@ -67,6 +80,29 @@ public class ModificaInformazioniPazienteController {
         pesoTF.setText(p.getPeso() + " kg");
         allergieTA.setText(p.getAllergie());
 
+        ObservableList<String> pasti = FXCollections.observableArrayList();
+        pasti.addAll(upp.getListaPasti());
+        pastiLV.setItems(pasti);
+
+        pastiLV.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && !cell.isEmpty()) {
+                    pastoDaModificare = cell.getItem();
+                    modificaPasto(pastoDaModificare);
+                }
+            });
+
+            return cell;
+        });
+
 
         // Verifica attiva dei campi
         emailTF.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -86,6 +122,26 @@ public class ModificaInformazioniPazienteController {
                 pesoTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
         });
+    }
+
+    private void modificaPasto(String pastoDaModificare) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../uiElements/ModificaPasto.fxml"));
+            Parent root = loader.load();
+
+            // Ottieni il controller associato
+            ModificaPastoController controller = loader.getController();
+            controller.setInstance(this, pastoDaModificare); // Passa il dato al controller
+
+            // Crea e mostra la nuova scena/finestra
+            Stage stage = new Stage();
+            stage.setTitle("Modifica il pasto");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // blocca finestra principale
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void salvaModificheInformazioni() {
@@ -129,5 +185,12 @@ public class ModificaInformazioniPazienteController {
             erroreModificaPazienteAlert.setContentText("Si è verificato un errore durante il salvataggio delle nuove informazioni.\nVerifica che tutti i dati siano corretti e riprova");
             erroreModificaPazienteAlert.showAndWait();
         }
+    }
+
+    public void resetListViewPasti() {
+        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        ObservableList<String> newPasti = FXCollections.observableArrayList();
+        newPasti.addAll(newUpp.getListaPasti());
+        pastiLV.setItems(newPasti);
     }
 }

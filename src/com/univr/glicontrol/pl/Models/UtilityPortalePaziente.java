@@ -9,7 +9,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -46,6 +45,28 @@ public class UtilityPortalePaziente {
         }
 
         return listaPasti;
+    }
+
+    private void aggiornaListaPasti() {
+        getListaPasti();
+    }
+
+    public String getNomePastoPerPastoFormattato(String pastoFormattato) {
+        aggiornaListaPasti();
+        for (Pasto pasto : mappaPasti.values()) {
+            String check = " - ";
+            int limit = pastoFormattato.indexOf(check);
+
+            if (limit == -1) {
+                return null;
+            }
+
+            if (pasto.getNomePasto().equals(pastoFormattato.substring(0, limit))) {
+                return pasto.getNomePasto();
+            }
+        }
+
+        return null;
     }
 
     public Paziente getPazienteSessione() {

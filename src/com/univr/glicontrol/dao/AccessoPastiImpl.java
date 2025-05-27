@@ -101,14 +101,15 @@ public class AccessoPastiImpl implements AccessoPasti{
     @Override
     public boolean updatePasto(Pasto pasto) {
         boolean success = false;
-        String updatePastoSql = "update Pasto set nome_pasto = ?, ora = ? where id_pasto = ?";
+        String updatePastoSql = "update Pasto set ora = ? where id_pasto = ? and nome_pasto = ?";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
             conn.setAutoCommit(false);
             PreparedStatement updatePastoStmt = conn.prepareStatement(updatePastoSql);
-            updatePastoStmt.setString(1, pasto.getNomePasto());
-            updatePastoStmt.setTime(2, pasto.getOrario());
+            updatePastoStmt.setTime(1, pasto.getOrario());
+            updatePastoStmt.setInt(2, pasto.getIdPasto());
+            updatePastoStmt.setString(3, pasto.getNomePasto());
 
             if (updatePastoStmt.executeUpdate() != 0) {
                 conn.commit();
