@@ -22,7 +22,8 @@ public class InserisciPastoController {
     private final UtilityPortalePaziente upp = new UtilityPortalePaziente();
     private final Paziente paziente = upp.getPazienteSessione();
 
-    private BenvenutoPazienteController bpc = new BenvenutoPazienteController();
+    private BenvenutoPazienteController bpc = null;
+    private ModificaInformazioniPazienteController mipc = null;
 
     public void initialize(){
         pastoCB.getItems().addAll("Colazione", "Pranzo", "Cena", "Merenda");
@@ -33,7 +34,7 @@ public class InserisciPastoController {
         confermaPastoeOrarioB.requestFocus();
     }
 
-    private GestionePasti gp = new GestionePasti(paziente);
+    private final GestionePasti gp = new GestionePasti(paziente);
 
     public void confermaPastoeOrario(){
         String pasto;
@@ -63,7 +64,12 @@ public class InserisciPastoController {
             successoInserimentoPastoAlert.setContentText("Il pasto è stato inserito con successo");
             successoInserimentoPastoAlert.showAndWait();
 
-            bpc.resetListViewPasti();
+            if (bpc != null) {
+                bpc.resetListViewPasti();
+            }
+            if (mipc != null) {
+                mipc.resetListViewPasti();
+            }
 
             Window currentWindow = confermaPastoeOrarioB.getScene().getWindow();
             if (currentWindow instanceof Stage) {
@@ -79,7 +85,14 @@ public class InserisciPastoController {
     }
 
     // Setta l'istanza del controllore sottostante
-    public void setInstance(BenvenutoPazienteController bpc){
-        this.bpc = bpc;
+    public void setInstance(InserimentoPastiController controller){
+        if (controller instanceof BenvenutoPazienteController) {
+            this.bpc = (BenvenutoPazienteController) controller;
+        } else if (controller instanceof ModificaInformazioniPazienteController) {
+            this.mipc = (ModificaInformazioniPazienteController) controller;
+        } else {
+            throw new IllegalArgumentException("Controller non valido");
+        }
     }
+
 }

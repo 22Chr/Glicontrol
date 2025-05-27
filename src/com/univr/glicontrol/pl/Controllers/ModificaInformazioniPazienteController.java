@@ -15,7 +15,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 
-public class ModificaInformazioniPazienteController {
+public class ModificaInformazioniPazienteController implements InserimentoPastiController {
 
     @FXML
     private CheckBox fumatoreCB, alcolismoCB, familiaritaCB, sedentarietaCB, alimentazioneCB;
@@ -140,7 +140,26 @@ public class ModificaInformazioniPazienteController {
             stage.initModality(Modality.APPLICATION_MODAL); // blocca finestra principale
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void aggiungiPasto() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../uiElements/InserisciNuovoPasto.fxml"));
+            Parent root = loader.load();
+
+            InserisciPastoController ipc = loader.getController();
+            ipc.setInstance(this);
+
+            Stage stage = new Stage();
+            stage.setTitle("Aggiungi un nuovo pasto");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // blocca finestra principale
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 

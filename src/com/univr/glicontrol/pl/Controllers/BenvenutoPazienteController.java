@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class BenvenutoPazienteController {
+public class BenvenutoPazienteController implements InserimentoPastiController {
     //page0: bottone Avanti
     //page1: familiarità si/no e bottone avanti
     //page2: fumo e/o alcool, bottone avanti e indietro

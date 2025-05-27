@@ -119,12 +119,12 @@
                         </GridPane>
                      </children>
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="30.0" />
                      </HBox.margin>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefHeight="356.0" prefWidth="319.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="366.0" style="-fx-background-color: #22577a; -fx-background-radius: 7; -fx-border-radius: 7;" text="Fattori principali" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="366.0" style="-fx-background-color: #22577a; -fx-background-radius: 7; -fx-border-radius: 7;" text="Fattori di rischio principali" textAlignment="CENTER" textFill="WHITE">
                            <VBox.margin>
                               <Insets left="2.0" right="2.0" top="2.0" />
                            </VBox.margin>
@@ -226,9 +226,9 @@
                         <Insets />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="356.0" prefWidth="259.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+                  <VBox alignment="CENTER" prefHeight="356.0" prefWidth="259.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                      <HBox.margin>
-                        <Insets right="10.0" />
+                        <Insets right="30.0" />
                      </HBox.margin>
                      <children>
                         <Label alignment="CENTER" prefHeight="36.0" prefWidth="280.0" style="-fx-background-color: #22577a; -fx-border-radius: 7; -fx-background-radius: 7;" text="Pasti" textAlignment="CENTER" textFill="WHITE">
@@ -244,9 +244,17 @@
                         </Label>
                         <ListView fx:id="pastiLV" prefHeight="340.0" prefWidth="235.0">
                            <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+                              <Insets bottom="10.0" left="5.0" right="5.0" top="15.0" />
                            </VBox.margin>
                         </ListView>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiPasto" style="-fx-background-color: #22577a;" text="Aggiungi un pasto" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Button>
                      </children>
                   </VBox>
                </children>
