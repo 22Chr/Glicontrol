@@ -97,7 +97,7 @@ public class FinestraTerapiePazienteController {
 
     public void aggiungiTerapiaConcomitante() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/AggiungiNuovaTerapiaConcomitantePaziente.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/InserisciNuovaTerapiaConcomitantePaziente.fxml"));
             Parent root = fxmlLoader.load();
 
             InserisciNuovaTerapiaConcomitantePazienteController intcpc = fxmlLoader.getController();

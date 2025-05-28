@@ -1,6 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.GestionePatologieConcomitanti;
+import com.univr.glicontrol.bll.PatologiaConcomitante;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.collections.FXCollections;
@@ -11,6 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class FinestraPatologieConcomitantiPazienteController {
 
@@ -138,17 +141,29 @@ public class FinestraPatologieConcomitantiPazienteController {
         }
     }
 
-    public void eliminaPatologia(){
-        String patologiaFormattata = patologiePazienteLV.getSelectionModel().getSelectedItem();
-        if (gpc.eliminaPatologiaConcomitante(upp.getPatologiaConcomitantePerNomeFormattata(patologiaFormattata).getIdPatologia())) {
-            Alert successoEliminazioneSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoEliminazioneSintomoAlert.setTitle("System Information Service");
-            successoEliminazioneSintomoAlert.setHeaderText("Patologia concomitante eliminata con successo");
-            successoEliminazioneSintomoAlert.setContentText("La patologia concomitante è stata eliminata con successo");
-            successoEliminazioneSintomoAlert.showAndWait();
+    public void terminaPatologiaConcomitante() {
+        PatologiaConcomitante patologia = upp.getPatologiaConcomitantePerNomeFormattata(patologiePazienteLV.getSelectionModel().getSelectedItem());
+        if (patologia.getDataFine() != null) {
+            Alert terminazioneGiaAvvenutaAlert = new Alert(Alert.AlertType.ERROR);
+            terminazioneGiaAvvenutaAlert.setTitle("System Information Service");
+            terminazioneGiaAvvenutaAlert.setHeaderText("Patologia concomitante già terminata");
+            String dataFormattata = new SimpleDateFormat("dd/MM/yyyy").format(patologia.getDataFine());
+            terminazioneGiaAvvenutaAlert.setContentText("La patologia concomitante è già stata terminata in data: " + dataFormattata);
+            terminazioneGiaAvvenutaAlert.showAndWait();
+            return;
+        }
 
-            cambiaPagina();
+        patologia.setDataFine(Date.valueOf(LocalDate.now()));
+
+        if (gpc.aggiornaPatologiaConcomitante(patologia)) {
+            Alert successoTerminazionePatologiaAlert = new Alert(Alert.AlertType.INFORMATION);
+            successoTerminazionePatologiaAlert.setTitle("System Information Service");
+            successoTerminazionePatologiaAlert.setHeaderText("Patologia concomitante terminata con successo");
+            successoTerminazionePatologiaAlert.setContentText("La patologia concomitante è stata segnata come conclusa in data odierna");
+            successoTerminazionePatologiaAlert.showAndWait();
+
             resetListViewPatologie();
+            cambiaPagina();
         }
     }
 }

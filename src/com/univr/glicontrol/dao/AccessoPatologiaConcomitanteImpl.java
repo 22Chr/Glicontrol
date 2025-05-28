@@ -124,6 +124,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
 
             if (updatePatologiaStmt.executeUpdate() != 0) {
                 conn.commit();
+                success = true;
             } else {
                 conn.rollback();
                 System.out.println("[ERRORE UPDATE PATOLOGIA CONCOMITANTE]: Impossibile aggiornare la patologia concomitante selezionata nel database");

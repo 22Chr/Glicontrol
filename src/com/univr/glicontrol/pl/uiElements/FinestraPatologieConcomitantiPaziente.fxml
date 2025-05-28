@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraPatologieConcomitantiPazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="631.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraPatologieConcomitantiPazienteController">
     <children>
         <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
             <children>
@@ -154,7 +154,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaPatologia" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
+                  <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#terminaPatologiaConcomitante" style="-fx-background-color: #22577a;" text="Segna come terminata" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>

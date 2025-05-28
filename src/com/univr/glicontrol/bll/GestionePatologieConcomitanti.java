@@ -21,9 +21,6 @@ public class GestionePatologieConcomitanti {
         return listaPatologieConcomitanti;
     }
 
-    public void updateListaPatologieConcomitanti() {
-        getListaPatologieConcomitanti();
-    }
 
     public int inserisciPatologiaConcomitante(String nomePatologia, String descrizione, Date dataInizio, Date dataFine) {
         // Verifica che la patologia non esista già
@@ -48,5 +45,9 @@ public class GestionePatologieConcomitanti {
         }
 
         return null;
+    }
+
+    public boolean aggiornaPatologiaConcomitante(PatologiaConcomitante patologia) {
+        return apc.updatePatologiaConcomitante(patologia);
     }
 }

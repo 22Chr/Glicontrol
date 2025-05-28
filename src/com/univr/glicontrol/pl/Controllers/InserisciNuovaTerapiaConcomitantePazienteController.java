@@ -14,6 +14,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +31,14 @@ public class InserisciNuovaTerapiaConcomitantePazienteController {
 
     @FXML
     private void initialize(){
-        patologiaCB.getItems().addAll(upp.getListaPatologieConcomitantiPazienti());
+        List<String> listaPatologieInCorso = new ArrayList<>();
+        for (String patologia : upp.getListaPatologieConcomitantiPazienti()) {
+            if (patologia.contains("in corso")) {
+                listaPatologieInCorso.add(patologia);
+            }
+        }
+
+        patologiaCB.getItems().addAll(listaPatologieInCorso);
 
     }
 
