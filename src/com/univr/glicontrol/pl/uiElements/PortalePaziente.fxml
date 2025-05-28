@@ -10,12 +10,14 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
@@ -114,6 +116,13 @@
                      <font>
                         <Font size="15.0" />
                      </font>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.06666667014360428" green="0.2980392277240753" blue="0.3764705955982208" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                   <Button fx:id="sintomiB" alignment="CENTER" mnemonicParsing="false" onAction="#openSintomi" prefHeight="55.0" prefWidth="116.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="I miei sintomi" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
@@ -122,6 +131,13 @@
                      <font>
                         <Font size="15.0" />
                      </font>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                   <Button fx:id="assunzioniInsulinaB" alignment="CENTER" lineSpacing="3.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="157.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Registra i tuoi farmaci" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
@@ -130,6 +146,13 @@
                      <font>
                         <Font size="15.0" />
                      </font>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                </children>
                <VBox.margin>
@@ -151,6 +174,13 @@
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                   <Button fx:id="terapiaB" alignment="CENTER" mnemonicParsing="false" onAction="#openGestoreTerapie" prefHeight="55.0" prefWidth="119.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Le mie terapie" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
@@ -159,6 +189,13 @@
                      <font>
                         <Font size="15.0" />
                      </font>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                </children>
             </HBox>

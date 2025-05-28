@@ -96,7 +96,7 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="nomePazienteTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1">
+            <TextField fx:id="nomePazienteTF" prefHeight="25.0" prefWidth="174.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1">
                 <GridPane.margin>
                     <Insets right="5.0" />
                 </GridPane.margin>
@@ -104,7 +104,7 @@
                     <Font size="14.0" />
                 </font>
             </TextField>
-            <TextField fx:id="cognomePazienteTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="cognomePazienteTF" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <GridPane.margin>
                     <Insets right="5.0" />
                 </GridPane.margin>
@@ -112,7 +112,7 @@
                     <Font size="14.0" />
                 </font>
             </TextField>
-            <TextField fx:id="CFPazienteTF" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="CFPazienteTF" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <GridPane.margin>
                     <Insets right="5.0" />
                 </GridPane.margin>
@@ -120,19 +120,19 @@
                     <Font size="14.0" />
                 </font>
             </TextField>
-            <TextField fx:id="emailPazienteTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <TextField fx:id="emailPazienteTF" prefHeight="25.0" prefWidth="174.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="passwordPazienteTF" prefHeight="25.0" prefWidth="174.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <TextField fx:id="passwordPazienteTF" prefHeight="25.0" prefWidth="174.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <ComboBox fx:id="medicoRifCB" onAction="#selezionaMedicoRiferimento" prefHeight="28.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ComboBox fx:id="sessoPazienteCB" prefHeight="28.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DatePicker fx:id="dataNascitaPazienteDP" prefHeight="28.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="medicoRifCB" onAction="#selezionaMedicoRiferimento" prefHeight="28.0" prefWidth="193.0" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="sessoPazienteCB" prefHeight="28.0" prefWidth="193.0" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="dataNascitaPazienteDP" prefHeight="28.0" prefWidth="193.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         </children>
         <StackPane.margin>
             <Insets top="-45.0" />

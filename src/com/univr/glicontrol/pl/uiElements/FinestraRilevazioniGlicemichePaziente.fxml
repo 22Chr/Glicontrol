@@ -98,14 +98,14 @@
                               <Font name="Carlito" size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="28.0" prefWidth="203.0" GridPane.columnIndex="1">
+                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="28.0" prefWidth="203.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </DatePicker>
                         <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="28.0" prefWidth="73.0" promptText="ore">
+                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="28.0" prefWidth="73.0" promptText="ore" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin></ComboBox>
@@ -114,18 +114,18 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="28.0" prefWidth="73.0" promptText="min" />
+                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="28.0" prefWidth="73.0" promptText="min" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
                            </children>
                         </HBox>
-                        <TextField fx:id="valoreGlicemiaTF" prefHeight="28.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="valoreGlicemiaTF" prefHeight="28.0" prefWidth="199.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </TextField>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <ComboBox fx:id="primaODopoCB" prefHeight="28.0" prefWidth="100.0" />
-                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="28.0" prefWidth="120.0" />
+                              <ComboBox fx:id="primaODopoCB" prefHeight="28.0" prefWidth="100.0" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
+                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="28.0" prefWidth="120.0" style="-fx-border-color: #22577a; -fx-background-color: #ffffffff;" />
                            </children>
                         </HBox>
                      </children>

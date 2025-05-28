@@ -83,7 +83,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Text>
-                              <ListView fx:id="farmaciTerapiaLV" maxHeight="348.0" prefHeight="315.0" prefWidth="206.0" />
+                              <ListView fx:id="farmaciTerapiaLV" maxHeight="348.0" prefHeight="315.0" prefWidth="206.0" style="-fx-border-color: #22577a;" />
                            </children>
                         </VBox>
                         <GridPane fx:id="indicazioniFarmacoGP" prefHeight="315.0" prefWidth="356.0" visible="false">
@@ -122,15 +122,15 @@
                                     <Insets right="4.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextArea fx:id="dosaggiTerapiaTA" editable="false" maxHeight="173.0" prefHeight="48.0" prefWidth="260.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
+                              <TextArea fx:id="dosaggiTerapiaTA" editable="false" maxHeight="173.0" prefHeight="48.0" prefWidth="260.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
                                  <GridPane.margin>
                                     <Insets bottom="20.0" top="20.0" />
                                  </GridPane.margin></TextArea>
-                              <TextArea fx:id="frequenzaTerapiaTA" editable="false" maxHeight="156.0" prefHeight="116.0" prefWidth="155.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+                              <TextArea fx:id="frequenzaTerapiaTA" editable="false" maxHeight="156.0" prefHeight="116.0" prefWidth="155.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="20.0" top="20.0" />
                                  </GridPane.margin></TextArea>
-                              <TextArea fx:id="orariTerapiaTA" editable="false" maxHeight="145.0" prefHeight="116.0" prefWidth="161.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+                              <TextArea fx:id="orariTerapiaTA" editable="false" maxHeight="145.0" prefHeight="116.0" prefWidth="161.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets bottom="20.0" top="20.0" />
                                  </GridPane.margin></TextArea>

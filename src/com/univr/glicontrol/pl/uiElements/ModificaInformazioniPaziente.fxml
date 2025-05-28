@@ -87,27 +87,27 @@
                                     <Insets right="4.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="nomeTF" prefHeight="25.0" prefWidth="133.0" GridPane.columnIndex="1">
+                              <TextField fx:id="nomeTF" prefHeight="25.0" prefWidth="133.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets right="6.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="cognomeTF" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField fx:id="cognomeTF" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="6.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="codFisTF" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <TextField fx:id="codFisTF" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets right="6.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="emailTF" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                              <TextField fx:id="emailTF" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets right="6.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="pesoTF" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <TextField fx:id="pesoTF" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets right="6.0" />
                                  </GridPane.margin>

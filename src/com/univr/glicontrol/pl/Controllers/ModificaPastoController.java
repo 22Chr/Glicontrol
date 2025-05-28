@@ -73,7 +73,7 @@ public class ModificaPastoController {
         }
     }
 
-    public void setInstance(ModificaInformazioniPazienteController bpc){
+    public void setInstance(ModificaInformazioniPazienteController mipc){
         this.mipc = mipc;
     }
 

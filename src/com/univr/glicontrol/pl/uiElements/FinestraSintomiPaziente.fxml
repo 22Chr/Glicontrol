@@ -45,7 +45,7 @@
                         <Font name="Carlito" size="14.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="descrizioneTA" maxHeight="100.0" maxWidth="200.0" prefHeight="100.0" prefWidth="150.0" wrapText="true">
+                  <TextArea fx:id="descrizioneTA" maxHeight="100.0" maxWidth="200.0" prefHeight="100.0" prefWidth="150.0" style="-fx-border-color: #22577a;" wrapText="true">
                      <VBox.margin>
                         <Insets top="-15.0" />
                      </VBox.margin>
