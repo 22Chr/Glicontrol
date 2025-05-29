@@ -19,6 +19,7 @@ public class FinestraRilevazioniGlicemichePazienteController {
     UtilityPortalePaziente upp = new UtilityPortalePaziente();
     Paziente paziente = upp.getPazienteSessione();
     GestioneRilevazioniGlicemia grg = new GestioneRilevazioniGlicemia(paziente);
+    private PortalePazienteController ppc;
 
     @FXML
     private ComboBox<String> oraGlicemiaCB, minutiGlicemiaCB, primaODopoCB, pastoGlicemiaCB;
@@ -123,6 +124,8 @@ public class FinestraRilevazioniGlicemichePazienteController {
             successoInserimentoRilevazioneGlicemicaAlert.showAndWait();
 
             resetListViewRilevazioniGlicemiche();
+            ppc.aggiornaListaRilevazioniGlicemicheOdierne();
+            ppc.aggiornaGrafico();
 
             // Ripulisci i campi per l'inserimento di nuove rilevazioni
             dataGlicemiaDP.setValue(null);
@@ -155,6 +158,8 @@ public class FinestraRilevazioniGlicemichePazienteController {
 
             cambiaPagina();
             resetListViewRilevazioniGlicemiche();
+            ppc.aggiornaListaRilevazioniGlicemicheOdierne();
+            ppc.aggiornaGrafico();
 
         } else {
             Alert erroreEliminazioneRilevazioneGlicemicaAlert = new Alert(Alert.AlertType.ERROR);
@@ -163,5 +168,9 @@ public class FinestraRilevazioniGlicemichePazienteController {
             erroreEliminazioneRilevazioneGlicemicaAlert.setContentText("Si è verificato un errore durante l'eliminazione della rilevazione glicemica selezionata. Riprova");
             erroreEliminazioneRilevazioneGlicemicaAlert.showAndWait();
         }
+    }
+
+    public void setInstance(PortalePazienteController ppc){
+        this.ppc = ppc;
     }
 }

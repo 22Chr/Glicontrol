@@ -59,7 +59,7 @@
                <font>
                   <Font name="Carlito Bold" size="14.0" />
                </font></Label>
-            <ListView fx:id="ultimeRilevazioniLW" prefHeight="153.0" prefWidth="151.0" VBox.vgrow="ALWAYS">
+            <ListView fx:id="ultimeRilevazioniLV" prefHeight="153.0" prefWidth="151.0" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets left="4.0" right="4.0" />
                </VBox.margin></ListView>

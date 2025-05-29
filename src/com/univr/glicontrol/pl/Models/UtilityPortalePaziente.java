@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -137,8 +138,8 @@ public class UtilityPortalePaziente {
     // Restituisce il sintomo a partire dalla sua voce grafica di tipo String
     public Sintomo getSintomoPerDescrizioneFormattata(String descrizione) {
         aggiornaListaSintomiPazienti();
+        String check = "   (inserito";
         for (Sintomo s : mappaSintomi.values()) {
-            String check = "   (inserito";
             int limit = descrizione.indexOf(check);
 
             if (limit == -1) {
@@ -217,6 +218,17 @@ public class UtilityPortalePaziente {
             String rilevazioneGlicemicaFormattata = rg.getValore() + " mg/dl   (" + dataFormattata + " -  (" + rg.getIndicazioniTemporali() + ") " + rg.getPasto() + " - " + rg.getOra().toString().substring(0, 5) + ")";
             listaRilevazioniGlicemiche.add(rilevazioneGlicemicaFormattata);
             mappaRilevazioniGlicemia.put(rilevazioneGlicemicaFormattata, rg);
+        }
+
+        return listaRilevazioniGlicemiche;
+    }
+
+    public List<String> getListaRilevazioniGlicemicheOdierne(){
+        List<String> listaRilevazioniGlicemiche = new ArrayList<>();
+        for(String r : getListaRilevazioniGlicemichePazienti()){
+            if(getRilevazioneGlicemicaPerValoreFormattata(r).getData().equals(Date.valueOf(LocalDate.now()))){
+                listaRilevazioniGlicemiche.add(r);
+            }
         }
 
         return listaRilevazioniGlicemiche;

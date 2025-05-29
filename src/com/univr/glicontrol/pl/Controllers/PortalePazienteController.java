@@ -2,22 +2,22 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.*;
 
@@ -48,6 +48,9 @@ public class PortalePazienteController {
     private ToggleButton visualizzazioneT;
 
     @FXML
+    private ListView<String> ultimeRilevazioniLV;
+
+    @FXML
     private void initialize() {
         // Popola box con i dati di contatto del medico di riferimento
         nomeMedicoRiferimentoTF.setText(medicoRiferimento.getNome());
@@ -57,7 +60,7 @@ public class PortalePazienteController {
         // Inizializza l'avatar con le iniziali del paziente
         badgeCircle.setFill(new ImagePattern(upp.getBadge()));
         badgeCircle.setSmooth(true);
-        badgeCircle.setStyle("-fx-border-color: red;");
+        badgeCircle.setStyle("-fx-border-color: #ff0404;");
 
         // cercare metodo per risolvere il problema
         visualizzazioneT.setOnAction(e -> aggiornaGrafico());
@@ -66,6 +69,11 @@ public class PortalePazienteController {
         gestione = new GestioneRilevazioniGlicemia(paziente);
 
         aggiornaGrafico();
+
+        //Inizializza la lista delle ultime rilevazioni glicemiche
+        ObservableList<String> ultimeRilevazioni = FXCollections.observableArrayList();
+        ultimeRilevazioni.addAll(upp.getListaRilevazioniGlicemicheOdierne());
+        ultimeRilevazioniLV.setItems(ultimeRilevazioni);
     }
 
     public void openProfile() {
@@ -134,6 +142,9 @@ public class PortalePazienteController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraRilevazioniGlicemichePaziente.fxml"));
             Parent root = fxmlLoader.load();
 
+            FinestraRilevazioniGlicemichePazienteController frgpc =  fxmlLoader.getController();
+            frgpc.setInstance(this);
+
             Stage rilevazioniGlicemiaPaziente = new Stage();
             rilevazioniGlicemiaPaziente.setTitle("Le mie rilevazioni glicemiche");
             rilevazioniGlicemiaPaziente.setScene(new Scene(root));
@@ -161,6 +172,7 @@ public class PortalePazienteController {
 
     public void aggiornaGrafico() {
         andamentoGlicemiaLC.getData().clear();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
 
         LocalDate oggi = LocalDate.now();
@@ -175,8 +187,9 @@ public class PortalePazienteController {
             Map<String, Double> mediaSettimanale = gestione.getMediaMensileGlicemiaPerMeseCorrente(anno, mese);
 
             for (var entry : mediaSettimanale.entrySet()) {
-                // entry.getKey() sarà tipo "2025-W15" o simile
-                serie.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+                LocalDate data = LocalDate.parse(entry.getKey());
+                String dataFormattata = data.format(formatter);
+                serie.getData().add(new XYChart.Data<>(dataFormattata, entry.getValue()));
             }
 
         } else {
@@ -189,8 +202,9 @@ public class PortalePazienteController {
             Map<String, Double> mediaGiornaliera = gestione.getMediaGiornalieraGlicemia(anno, settimana);
 
             for (var entry : mediaGiornaliera.entrySet()) {
-                // entry.getKey() sarà tipo "2025-05-13" (giorno)
-                serie.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+                LocalDate data = LocalDate.parse(entry.getKey());
+                String dataFormattata = data.format(formatter);
+                serie.getData().add(new XYChart.Data<>(dataFormattata, entry.getValue()));
             }
         }
 
@@ -211,5 +225,12 @@ public class PortalePazienteController {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void aggiornaListaRilevazioniGlicemicheOdierne(){
+        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
+        newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemicheOdierne());
+        ultimeRilevazioniLV.setItems(newRilevazioni);
     }
 }

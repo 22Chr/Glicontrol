@@ -89,13 +89,13 @@
                         <DatePicker fx:id="dataFarmacoPazienteDP" prefHeight="28.0" prefWidth="193.0" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <ComboBox fx:id="oraFarmacoCB" prefHeight="28.0" prefWidth="73.0" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
+                              <ComboBox fx:id="oraFarmacoCB" prefHeight="28.0" prefWidth="73.0" promptText="ora" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
                               <Label text=" : ">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="minutiFarmacoCB" prefHeight="28.0" prefWidth="73.0" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
+                              <ComboBox fx:id="minutiFarmacoCB" prefHeight="28.0" prefWidth="73.0" promptText="min" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
                            </children>
                         </HBox>
                      </children>
