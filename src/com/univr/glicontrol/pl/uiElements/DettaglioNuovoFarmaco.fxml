@@ -57,7 +57,7 @@
                   <Insets right="4.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox fx:id="listaFarmaciCompletaCB" prefWidth="200.0" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" GridPane.columnIndex="1" />
+            <ComboBox fx:id="listaFarmaciCompletaCB" editable="true" prefWidth="200.0" promptText="Digita per eseguire la ricerca" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" GridPane.columnIndex="1" />
             <TextArea fx:id="dosaggioTA" maxHeight="50.0" maxWidth="200.0" prefHeight="60.0" prefWidth="200.0" promptText="Es. 80 mg" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextArea fx:id="frequenzaTA" maxHeight="50.0" maxWidth="200.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextArea fx:id="orariTA" maxHeight="50.0" maxWidth="200.0" prefHeight="200.0" prefWidth="200.0" promptText="Es. 07:00, 13:00, 00:00" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />

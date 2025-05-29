@@ -2,10 +2,11 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -29,10 +30,31 @@ public class DettaglioNuovoFarmacoController {
     }
 
     @FXML
-    private void initialize(){
-        listaFarmaciCompletaCB.getItems().addAll(upp.getListaFarmaciFormattatiCompleta());
-    }
+    private void initialize() {
+        ObservableList<String> farmaci = FXCollections.observableArrayList(upp.getListaFarmaciFormattatiCompleta());
+        listaFarmaciCompletaCB.setItems(farmaci);
 
+        // Filtro dinamico basato sul testo digitato
+        FilteredList<String> filteredItems = new FilteredList<>(farmaci, p -> true);
+        listaFarmaciCompletaCB.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+            final TextField editor = listaFarmaciCompletaCB.getEditor();
+            final String selected = listaFarmaciCompletaCB.getSelectionModel().getSelectedItem();
+
+            listaFarmaciCompletaCB.show();
+
+            if (selected == null || !selected.equals(editor.getText())) {
+                filteredItems.setPredicate(item -> {
+                    if (newValue == null || newValue.isEmpty()) return true;
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return item.toLowerCase().contains(lowerCaseFilter);
+                });
+                listaFarmaciCompletaCB.setItems(filteredItems);
+            }
+        });
+
+        // Reset della lista completa dopo selezione
+        listaFarmaciCompletaCB.setOnAction(e -> listaFarmaciCompletaCB.setItems(farmaci));
+    }
 
     public void aggiungiFarmaco() {
         Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciCompletaCB.getSelectionModel().getSelectedItem());
