@@ -128,9 +128,11 @@ public class FinestraAssunzioneFarmaciPazienteController {
                 idAssunzione = af.getIdAssunzioneFarmaco();
                 break;
 
-            } else {
-                throw new RuntimeException("Impossibile trovare idAssunzione");
             }
+        }
+
+        if (idAssunzione == 0) {
+            throw new RuntimeException("Errore: non è stato possibile trovare l'id dell'assunzione del farmaco");
         }
 
         if (gaf.eliminaAssunzioneFarmaco(idAssunzione)) {
