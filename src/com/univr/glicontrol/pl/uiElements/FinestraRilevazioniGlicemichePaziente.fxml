@@ -17,9 +17,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="715.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="799.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
     <children>
-        <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
+        <HBox fx:id="mainPage" prefHeight="487.0" prefWidth="817.0">
             <children>
                 <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                     <children>
@@ -44,7 +44,7 @@
                         <Insets bottom="10.0" left="10.0" top="10.0" />
                     </HBox.margin>
                 </VBox>
-                <VBox alignment="CENTER" prefHeight="449.0" prefWidth="434.0" spacing="30.0">
+                <VBox alignment="CENTER" prefHeight="487.0" prefWidth="500.0" spacing="30.0" HBox.hgrow="ALWAYS">
                     <children>
                         <Label text="Inserisci la tua ultima rilevazione &#10;glicemica:&#10;&#10;" textAlignment="CENTER">
                             <font>
@@ -54,10 +54,11 @@
                         <Insets top="20.0" />
                      </padding>
                         </Label>
-                  <GridPane prefHeight="181.0" prefWidth="299.0">
+                  <GridPane maxHeight="200.0" maxWidth="500.0" prefHeight="181.0" prefWidth="493.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="155.33331298828125" minWidth="10.0" prefWidth="122.99995930989583" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.00000762939453" minWidth="10.0" prefWidth="175.66670735677087" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="196.00000762939453" minWidth="10.0" prefWidth="175.66670735677087" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="196.00000762939453" minWidth="10.0" prefWidth="175.66670735677087" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -98,14 +99,14 @@
                               <Font name="Carlito" size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="28.0" prefWidth="203.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1">
+                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="28.0" prefWidth="380.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.columnSpan="2">
                            <GridPane.margin>
-                              <Insets />
+                              <Insets right="100.0" />
                            </GridPane.margin>
                         </DatePicker>
-                        <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
                            <children>
-                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="28.0" prefWidth="73.0" promptText="ore" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
+                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="28.0" prefWidth="80.0" promptText="ore" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin></ComboBox>
@@ -114,18 +115,21 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="28.0" prefWidth="73.0" promptText="min" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
+                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="28.0" prefWidth="80.0" promptText="min" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
                            </children>
                         </HBox>
-                        <TextField fx:id="valoreGlicemiaTF" prefHeight="28.0" prefWidth="199.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="valoreGlicemiaTF" prefHeight="28.0" prefWidth="311.0" promptText="es. 125.3" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets />
+                              <Insets right="100.0" />
                            </GridPane.margin>
                         </TextField>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="234.0" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
                            <children>
-                              <ComboBox fx:id="primaODopoCB" prefHeight="28.0" prefWidth="100.0" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
-                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="28.0" prefWidth="120.0" style="-fx-border-color: #22577a; -fx-background-color: #ffffffff;" />
+                              <ComboBox fx:id="primaODopoCB" prefHeight="28.0" prefWidth="195.0" promptText="prima/dopo" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
+                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="28.0" prefWidth="232.0" promptText="pasto" style="-fx-border-color: #22577a; -fx-background-color: #ffffffff;">
+                                 <HBox.margin>
+                                    <Insets right="100.0" />
+                                 </HBox.margin></ComboBox>
                            </children>
                         </HBox>
                      </children>

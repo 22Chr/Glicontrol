@@ -50,11 +50,11 @@
       </HBox>
    </top>
    <left>
-      <VBox alignment="CENTER" maxHeight="600.0" prefHeight="400.0" prefWidth="287.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="600.0" prefHeight="432.0" prefWidth="300.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="39.0" prefWidth="282.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #ffffffff; -fx-padding: 2;" text="ULTIME RILEVAZIONI" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Label alignment="CENTER" prefHeight="39.0" prefWidth="341.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #ffffffff; -fx-padding: 2;" text="RILEVAZIONI ODIERNE" textAlignment="CENTER" VBox.vgrow="ALWAYS">
                <VBox.margin>
-                  <Insets left="4.0" right="4.0" top="3.0" />
+                  <Insets left="3.0" right="3.0" top="3.0" />
                </VBox.margin>
                <font>
                   <Font name="Carlito Bold" size="14.0" />

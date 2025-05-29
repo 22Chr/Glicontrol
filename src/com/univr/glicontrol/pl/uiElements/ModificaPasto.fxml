@@ -22,7 +22,7 @@
     <children>
         <HBox alignment="CENTER" prefHeight="95.0" prefWidth="191.0" spacing="5.0" GridPane.columnIndex="1">
             <children>
-                <ComboBox fx:id="oraCB" prefHeight="25.0" prefWidth="64.0" promptText="ore" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
+                <ComboBox fx:id="oraCB" prefHeight="28.0" prefWidth="70.0" promptText="ore" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
                     <HBox.margin>
                         <Insets top="-40.0" />
                     </HBox.margin>
@@ -35,7 +35,7 @@
                         <Insets top="-40.0" />
                     </HBox.margin>
                 </Label>
-                <ComboBox fx:id="minutiCB" prefHeight="25.0" prefWidth="77.0" promptText="minuti" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
+                <ComboBox fx:id="minutiCB" prefHeight="25.0" prefWidth="70.0" promptText="min" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
                     <HBox.margin>
                         <Insets top="-40.0" />
                     </HBox.margin>
