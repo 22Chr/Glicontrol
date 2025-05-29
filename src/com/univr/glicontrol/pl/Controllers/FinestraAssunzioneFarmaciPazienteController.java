@@ -37,7 +37,10 @@ public class FinestraAssunzioneFarmaciPazienteController {
     @FXML
     private void initialize() {
         ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
-        farmaciDaAssumere.addAll(upp.getListaFarmaciDaAssumere());
+        for (String farmaco : upp.getListaFarmaciDaAssumere()) {
+            if (!farmaciDaAssumere.contains(farmaco))
+                farmaciDaAssumere.add(farmaco);
+        }
         listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
 
         ObservableList<String> farmaciAssuntiOggi = FXCollections.observableArrayList();
@@ -85,7 +88,8 @@ public class FinestraAssunzioneFarmaciPazienteController {
             return;
         }
 
-        if (gaf.registraAssunzioneFarmaco(GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciDaAssumereCB.getValue()), data, getOra())) {
+        int status = gaf.registraAssunzioneFarmaco(GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciDaAssumereCB.getValue()), data, getOra());
+        if (status != 0) {
             Alert successoInserimentoFarmacoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoInserimentoFarmacoAlert.setTitle("System Information Service");
             successoInserimentoFarmacoAlert.setHeaderText("Farmaco registrato con successo");
@@ -100,6 +104,15 @@ public class FinestraAssunzioneFarmaciPazienteController {
             erroreInserimentoFarmacoAlert.setHeaderText("Errore durante l'inserimento del farmaco");
             erroreInserimentoFarmacoAlert.setContentText("Non è stato possibile registrare l'assunzione del farmaco.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
             erroreInserimentoFarmacoAlert.showAndWait();
+            return;
+        }
+
+        if (status == -1) {
+            Alert eccessoDosaggioFarmacoAlert = new Alert(Alert.AlertType.WARNING);
+            eccessoDosaggioFarmacoAlert.setTitle("System Information Service");
+            eccessoDosaggioFarmacoAlert.setHeaderText("Dosaggio eccessivo");
+            eccessoDosaggioFarmacoAlert.setContentText("Il quantitativo che hai assunto per questo farmaco supera quello giornaliero previsto dalla tua terapia.\nLo staff medico ne sarà informato");
+            eccessoDosaggioFarmacoAlert.showAndWait();
         }
 
         resetListViewFarmaciAssuntiOggi();

@@ -24,6 +24,7 @@ public class ListaPazienti {
     }
 
     public List<Paziente> getListaCompletaPazienti() {
+        aggiornaListaPazienti();
         return listaPazienti;
     }
 
@@ -60,7 +61,7 @@ public class ListaPazienti {
         return null;
     }
 
-    public void updateListaPazienti() {
+    public void aggiornaListaPazienti() {
         listaPazienti = accessoListaUtenti.recuperaTuttiIPazienti();
     }
 }

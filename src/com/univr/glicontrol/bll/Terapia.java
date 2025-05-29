@@ -1,6 +1,7 @@
 package com.univr.glicontrol.bll;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 public interface Terapia {
