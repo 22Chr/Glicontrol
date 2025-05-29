@@ -134,9 +134,9 @@ public class GestioneTerapie {
         for(FarmacoTerapia cache: ft) {
             farmaciCaricati.add(cache.getFarmaco());
         }
+
         // Verifica che il farmaco non sia già presenta nella terapia
         // Se arriva un farmaco non valido si scartano anche le indicazioni
-
         for(Farmaco f:  farmaciCaricati){
             if(f.equals(farmaco)){
                 return false;
@@ -147,7 +147,7 @@ public class GestioneTerapie {
         return true;
     }
 
-    public List<FarmacoTerapia> getFarmaciTerapia() {
+    public List<FarmacoTerapia> getFarmaciSingolaTerapia() {
         return ft;
     }
 }

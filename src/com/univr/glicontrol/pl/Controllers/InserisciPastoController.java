@@ -53,7 +53,7 @@ public class InserisciPastoController {
             pasto = pastoCB.getValue();
             ora = oraCB.getValue().equals("00") ? 0 : Integer.parseInt(oraCB.getValue());
             minuti = minutiCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiCB.getValue());
-            orario = upp.convertiOraPasto(ora, minuti);
+            orario = upp.convertiOra(ora, minuti);
 
         }
 

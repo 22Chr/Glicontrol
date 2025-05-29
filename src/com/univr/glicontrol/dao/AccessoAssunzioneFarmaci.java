@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.util.List;
 
 public interface AccessoAssunzioneFarmaci {
-    List<AssunzioneFarmaco> getListaAssunzioneFarmaci(int idPaziente);
+    List<AssunzioneFarmaco> getListaFarmaciAssunti(int idPaziente);
     boolean insertAssunzioneFarmaci(int idPaziente, int idFarmaco, Date data, Time ora, float dose);
+    boolean deleteAssunzioneFarmaco(int idAssunzioneFarmaco);
 }

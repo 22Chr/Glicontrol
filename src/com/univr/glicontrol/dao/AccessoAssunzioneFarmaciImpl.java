@@ -13,7 +13,7 @@ public class AccessoAssunzioneFarmaciImpl implements AccessoAssunzioneFarmaci {
     private final String pwd = "Sitecom12";
 
     @Override
-    public List<AssunzioneFarmaco> getListaAssunzioneFarmaci(int idPaziente) {
+    public List<AssunzioneFarmaco> getListaFarmaciAssunti(int idPaziente) {
         List<AssunzioneFarmaco> assunzioneFarmaci = new ArrayList<>();
         String recuperaAssunzioneFarmaciSql = "select * from AssunzioneFarmaco where id_paziente_assumente = ?";
 
@@ -70,6 +70,31 @@ public class AccessoAssunzioneFarmaciImpl implements AccessoAssunzioneFarmaci {
 
         } catch (SQLException e) {
             System.out.println("[ERRORE INSERT ASSUNZIONE FARMACI]: " + e.getMessage());
+        }
+
+        return success;
+    }
+
+    @Override
+    public boolean deleteAssunzioneFarmaco(int idAssunzioneFarmaco) {
+        boolean success = false;
+        String deleteAssunzioneFarmaciSql = "delete from AssunzioneFarmaco where id_assunzione = ?";
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            PreparedStatement deleteAssunzioneFarmaciStmt = conn.prepareStatement(deleteAssunzioneFarmaciSql);
+            deleteAssunzioneFarmaciStmt.setInt(1, idAssunzioneFarmaco);
+
+            if (deleteAssunzioneFarmaciStmt.executeUpdate() != 0) {
+                success = true;
+            } else {
+                System.out.println("[ERRORE DELETE ASSUNZIONE FARMACI]: Impossibile eliminare l'assunzione del farmaco dal database");
+            }
+
+            deleteAssunzioneFarmaciStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("[ERRORE DELETE ASSUNZIONE FARMACI]: " + e.getMessage());
         }
 
         return success;

@@ -29,6 +29,7 @@ public class GestioneFarmaci {
     }
 
     public List<Farmaco> getListaFarmaci() {
+        aggiornaListaFarmaci();
         return farmaci;
     }
 
@@ -72,6 +73,7 @@ public class GestioneFarmaci {
 
     // Restituisce un farmaco a partire dal suo id
     public Farmaco getFarmacoById(int idFarmaco) {
+        aggiornaListaFarmaci();
         for (Farmaco farmaco : farmaci) {
             if (farmaco.getIdFarmaco() == idFarmaco) {
                 return farmaco;
@@ -83,6 +85,7 @@ public class GestioneFarmaci {
 
     // Restituisce un farmaco a partire dal suo nome
     public Farmaco getFarmacoByName(String nomeFarmaco) {
+        aggiornaListaFarmaci();
         for (Farmaco farmaco : farmaci) {
             if (farmaco.getNome().equals(nomeFarmaco)) {
                 return farmaco;
@@ -90,5 +93,10 @@ public class GestioneFarmaci {
         }
 
         return null;
+    }
+
+    private void aggiornaListaFarmaci() {
+        farmaci.clear();
+        farmaci.addAll(inizializzaFarmaci());
     }
 }

@@ -198,9 +198,18 @@ public class PortalePazienteController {
         visualizzazioneMensile = !visualizzazioneMensile;
     }
 
+    public void openAssunzioneFarmaci() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraAssunzioneFarmaciPaziente.fxml"));
+            Parent root = fxmlLoader.load();
 
+            Stage assunzioneFarmaciPaziente = new Stage();
+            assunzioneFarmaciPaziente.setTitle("Registra i farmaci");
+            assunzioneFarmaciPaziente.setScene(new Scene(root));
 
-
-
-
+            assunzioneFarmaciPaziente.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.GestionePatologieConcomitanti;
 import com.univr.glicontrol.bll.GestioneRilevazioniGlicemia;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.bll.RilevazioneGlicemica;
@@ -14,8 +13,6 @@ import javafx.scene.layout.VBox;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class FinestraRilevazioniGlicemichePazienteController {
 
@@ -102,7 +99,7 @@ public class FinestraRilevazioniGlicemichePazienteController {
 
         int ora = oraGlicemiaCB.getValue().equals("00") ? 0 : Integer.parseInt(oraGlicemiaCB.getValue());
         int minuti = minutiGlicemiaCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiGlicemiaCB.getValue());
-        Time orario = upp.convertiOraPasto(ora, minuti);
+        Time orario = upp.convertiOra(ora, minuti);
 
         int status = grg.inserisciRilevazione(data, orario, Float.parseFloat(valoreGlicemiaTF.getText()), pastoGlicemiaCB.getValue(), primaODopoCB.getValue());
 

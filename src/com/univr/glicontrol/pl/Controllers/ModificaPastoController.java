@@ -4,7 +4,6 @@ import com.univr.glicontrol.bll.GestionePasti;
 import com.univr.glicontrol.bll.Pasto;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -92,7 +91,7 @@ public class ModificaPastoController {
         } else {
             ora = oraCB.getValue().equals("00") ? 0 : Integer.parseInt(oraCB.getValue());
             minuti = minutiCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiCB.getValue());
-            orario = upp.convertiOraPasto(ora, minuti);
+            orario = upp.convertiOra(ora, minuti);
             pasto.setOrario(orario);
         }
 

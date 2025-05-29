@@ -30,7 +30,7 @@ public class UtilityPortalePaziente {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
     }
 
-    public Time convertiOraPasto(int ora, int minuti) {
+    public Time convertiOra(int ora, int minuti) {
         LocalTime localTime = LocalTime.of(ora, minuti);
         return Time.valueOf(localTime);
     }
@@ -324,4 +324,59 @@ public class UtilityPortalePaziente {
     }
 
 
+    public List<String> getListaFarmaciDaAssumere() {
+        List<String> listaFarmaciDaAssumere = new ArrayList<>();
+        GestioneTerapie gt = new GestioneTerapie(paziente);
+        List<TerapiaDiabete> listaTd = new ArrayList<>();
+        List<TerapiaConcomitante> listaTc = new ArrayList<>();
+
+        for (Terapia t : gt.getTerapiePaziente()) {
+            if (t instanceof TerapiaDiabete td) {
+                listaTd.add(td);
+            } else if (t instanceof TerapiaConcomitante tc) {
+                listaTc.add(tc);
+            }
+        }
+
+        for (TerapiaDiabete td : listaTd) {
+            List<FarmacoTerapia> ft = td.getListaFarmaciTerapia();
+            for (FarmacoTerapia f : ft) {
+                listaFarmaciDaAssumere.add(f.getFarmaco().getNome());
+            }
+        }
+        for (TerapiaConcomitante tc : listaTc) {
+            List<FarmacoTerapia> ft = tc.getListaFarmaciTerapia();
+            for (FarmacoTerapia f : ft) {
+                listaFarmaciDaAssumere.add(f.getFarmaco().getNome());
+            }
+        }
+
+        return listaFarmaciDaAssumere;
+    }
+
+    public List<String> getListaFarmaciAssuntiOggi() {
+        List<String> listaFarmaciAssuntiOggi = new ArrayList<>();
+        GestioneAssunzioneFarmaci gaf = new GestioneAssunzioneFarmaci(paziente);
+        for (AssunzioneFarmaco af : gaf.getListaAssunzioneFarmaci()) {
+            LocalDate data = af.getData().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormattata = data.format(formatter);
+            if (dataFormattata.equals(LocalDate.now().format(formatter))) {
+                String assunzioneFormattata = GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco()).getNome() + "   (assunto il " + dataFormattata + " alle " + af.getOra().toString().substring(0, 5) + ")";
+                listaFarmaciAssuntiOggi.add(assunzioneFormattata);
+            }
+        }
+
+        return listaFarmaciAssuntiOggi;
+    }
+
+    public Farmaco getFarmacoPerNomeFormattato(String nomeFarmacoFormattato) {
+        String check = "   (assunto il";
+        int limit = nomeFarmacoFormattato.indexOf(check);
+        if (limit == -1) {
+            return null;
+        }
+
+        return GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmacoFormattato.substring(0, limit));
+    }
 }

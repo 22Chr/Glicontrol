@@ -95,7 +95,7 @@ public class InserisciNuovaTerapiaConcomitantePazienteController {
         Date dataFine = ottieniDataFinePatologia();
 
         int idPatologia = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia();
-        List<FarmacoTerapia> farmaciConIndicazioni = gt.getFarmaciTerapia();
+        List<FarmacoTerapia> farmaciConIndicazioni = gt.getFarmaciSingolaTerapia();
 
         int status = gt.inserisciTerapiaConcomitante(idPatologia, paziente.getMedicoRiferimento(), dataInizio, dataFine, farmaciConIndicazioni, nomePatologia);
         if (status == 1) {
