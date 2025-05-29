@@ -17,16 +17,9 @@ public class GestioneAssunzioneFarmaci {
         assunzioni = asf.getListaFarmaciAssunti(paziente.getIdUtente());
     }
 
-    public int registraAssunzioneFarmaco(Farmaco farmaco, Date data, Time ora) {
-        StringBuilder buildDosaggio = new StringBuilder();
-        for (int i = 0; i < farmaco.getNome().length(); i++) {
-            if (Character.isDigit(farmaco.getNome().charAt(i))) {
-                buildDosaggio.append(farmaco.getNome().charAt(i));
-            }
-        }
-        float dosaggio = Float.parseFloat(buildDosaggio.toString());
+    public int registraAssunzioneFarmaco(Farmaco farmaco, Date data, Time ora, float dosaggio) {
 
-        int checkDosaggio = GlicontrolCoreSystem.getInstance().verificaCoerenzaDosaggioFarmaci(paziente, farmaco.getNome()) ? 1 : 0;
+        int checkDosaggio = GlicontrolCoreSystem.getInstance().verificaCoerenzaDosaggioFarmaci(paziente, farmaco.getNome(), dosaggio) ? 1 : 0;
         boolean success = asf.insertAssunzioneFarmaci(paziente.getIdUtente(), farmaco.getIdFarmaco(), data, ora, dosaggio);
         if (success && checkDosaggio == 1) {
             return 1;

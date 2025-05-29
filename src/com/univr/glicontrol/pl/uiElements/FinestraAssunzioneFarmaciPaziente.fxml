@@ -115,7 +115,7 @@
                               <Insets right="4.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="dosaggioTF" prefHeight="28.0" prefWidth="193.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="dosaggioTF" prefHeight="28.0" prefWidth="193.0" promptText="es. 120.3" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets right="15.0" />
                            </GridPane.margin>

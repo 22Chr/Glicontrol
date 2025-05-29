@@ -38,7 +38,7 @@ public class GlicontrolCoreSystem {
 
 
     // VERIFICA IL RISPETTO DEI DOSAGGI DEI FARMACI RISPETTO AL SINGOLO UTENTE (LIVELLO PORTALE PAZIENTE)
-    public boolean verificaCoerenzaDosaggioFarmaci(Paziente paziente, String nomeFarmaco) {
+    public boolean verificaCoerenzaDosaggioFarmaci(Paziente paziente, String nomeFarmaco, float dosaggio) {
 
         // Recupera il dosaggio già assunto per quel farmaco nel corso della giornata
         gestioneAssunzioneFarmaci = new GestioneAssunzioneFarmaci(paziente);
@@ -48,12 +48,6 @@ public class GlicontrolCoreSystem {
             if (GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco()).getNome().equals(nomeFarmaco) && af.getData().equals(Date.valueOf(LocalDate.now()))) {
                 doseGiaAssunta += af.getDose();
             }
-        }
-
-        //Estrapoliamo il dosaggio dal nome del farmaco
-        float dosaggio = getDosaggioDaNomeFarmaco(nomeFarmaco);
-        if (dosaggio == -1) {
-            return false;
         }
 
         // Sommiamo la dose complessiva già assunta per questo farmaco nell'arco della giornata

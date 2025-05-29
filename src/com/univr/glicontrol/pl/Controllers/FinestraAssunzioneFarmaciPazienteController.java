@@ -33,6 +33,8 @@ public class FinestraAssunzioneFarmaciPazienteController {
     private DatePicker dataFarmacoPazienteDP;
     @FXML
     private TextArea descrizioneEstesaTA;
+    @FXML
+    private TextField dosaggioTF;
 
     @FXML
     private void initialize() {
@@ -79,16 +81,16 @@ public class FinestraAssunzioneFarmaciPazienteController {
             data = Date.valueOf(dataFarmacoPazienteDP.getValue());
         }
 
-        if (listaFarmaciDaAssumereCB.getValue() == null || oraFarmacoCB.getValue() == null || minutiFarmacoCB.getValue() == null || data == null) {
+        if (listaFarmaciDaAssumereCB.getValue() == null || oraFarmacoCB.getValue() == null || minutiFarmacoCB.getValue() == null || data == null || dosaggioTF.getText().isEmpty()) {
             Alert datiMancantiAlert = new Alert(Alert.AlertType.ERROR);
             datiMancantiAlert.setTitle("System Information Service");
             datiMancantiAlert.setHeaderText("Dati mancanti");
-            datiMancantiAlert.setContentText("Per poter registrare l'assunzione di un farmaco devi scegliere un farmaco e precisare la data e l'ora di assunzione.\nInserisci tutti i dati e riprova");
+            datiMancantiAlert.setContentText("Per poter registrare l'assunzione di un farmaco devi scegliere un farmaco e precisare il dosaggio, la data e l'ora di assunzione.\nInserisci tutti i dati e riprova");
             datiMancantiAlert.showAndWait();
             return;
         }
 
-        int status = gaf.registraAssunzioneFarmaco(GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciDaAssumereCB.getValue()), data, getOra());
+        int status = gaf.registraAssunzioneFarmaco(GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciDaAssumereCB.getValue()), data, getOra(), Float.parseFloat(dosaggioTF.getText()));
         if (status != 0) {
             Alert successoInserimentoFarmacoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoInserimentoFarmacoAlert.setTitle("System Information Service");
@@ -174,10 +176,13 @@ public class FinestraAssunzioneFarmaciPazienteController {
         farmaciAssuntiOggiLV.setItems(newFarmaciAssuntiOggi);
         dataFarmacoPazienteDP.setValue(null);
         oraFarmacoCB.setValue(null);
+        oraFarmacoCB.setPromptText("ora");
         minutiFarmacoCB.setValue(null);
+        minutiFarmacoCB.setPromptText("min");
         dataFarmacoPazienteDP.requestFocus();
         listaFarmaciDaAssumereCB.setValue(null);
         listaFarmaciDaAssumereCB.requestFocus();
+        dosaggioTF.clear();
     }
 
     private Time getOra() {
