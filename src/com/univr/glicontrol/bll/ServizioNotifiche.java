@@ -1,16 +1,18 @@
 package com.univr.glicontrol.bll;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
+import javafx.scene.control.Alert;
+
 import java.util.Properties;
 
-public class ServizioNotificheMail {
+public class ServizioNotifiche {
 
     private final String username = "system.glicontrol@gmail.com";
     private final String password = "sull rihb tdac dzpb";
 
     final Properties props;
 
-    public ServizioNotificheMail() {
+    public ServizioNotifiche() {
         props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -32,5 +34,13 @@ public class ServizioNotificheMail {
         message.setText(body);
 
         Transport.send(message);
+    }
+
+    public void mostraNotifichePromemoriaAssunzioneFarmaci() {
+        Alert promemoriaAssunzioneFarmaciAlert = new Alert(Alert.AlertType.WARNING);
+        promemoriaAssunzioneFarmaciAlert.setTitle("System Notification Service");
+        promemoriaAssunzioneFarmaciAlert.setHeaderText("Promemoria di assunzione dei farmaci");
+        promemoriaAssunzioneFarmaciAlert.setContentText("Hai alcuni farmaci che risultano essere non ancora assunti.\nRicordati di registrare tutti i tuoi farmaci");
+        promemoriaAssunzioneFarmaciAlert.showAndWait();
     }
 }

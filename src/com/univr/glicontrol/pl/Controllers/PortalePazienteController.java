@@ -2,6 +2,8 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -74,6 +76,20 @@ public class PortalePazienteController {
         ObservableList<String> ultimeRilevazioni = FXCollections.observableArrayList();
         ultimeRilevazioni.addAll(upp.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.setItems(ultimeRilevazioni);
+
+        PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(1));
+        pause.setOnFinished(e -> {
+            if (GlicontrolCoreSystem.getInstance().presenzaFarmaciNonRegistrati(paziente)) {
+                Platform.runLater(() -> {
+                    Alert promemoriaAssunzioneFarmaciAlert = new Alert(Alert.AlertType.INFORMATION);
+                    promemoriaAssunzioneFarmaciAlert.setTitle("System Notification Service");
+                    promemoriaAssunzioneFarmaciAlert.setHeaderText("Promemoria farmaci");
+                    promemoriaAssunzioneFarmaciAlert.setContentText("Ci sono dei farmaci non ancora registrati come assunti.\nAssicurati di assumere tutti i farmaci");
+                    promemoriaAssunzioneFarmaciAlert.showAndWait();
+                });
+            }
+        });
+        pause.play();
     }
 
     public void openProfile() {

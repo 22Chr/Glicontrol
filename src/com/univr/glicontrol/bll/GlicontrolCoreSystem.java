@@ -9,6 +9,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class GlicontrolCoreSystem {
 //    TODO
@@ -24,6 +27,7 @@ public class GlicontrolCoreSystem {
     private GestioneTerapie gestioneTerapie = null;
     private GestioneAssunzioneFarmaci gestioneAssunzioneFarmaci = null;
     private final UtilityPortalePaziente utilityPortalePaziente = new UtilityPortalePaziente();
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     private GlicontrolCoreSystem() {
         listaPazienti = utilityListaPazienti.getListaCompletaPazienti();
@@ -201,6 +205,48 @@ public class GlicontrolCoreSystem {
 
         return false;
 
+    }
+
+
+    public boolean presenzaFarmaciNonRegistrati(Paziente paziente) {
+
+        List<Farmaco> farmaciPaziente = new ArrayList<>();
+        gestioneTerapie = new GestioneTerapie(paziente);
+
+        // Ottieni tutta la lista di farmaci per il paziente
+        for (Terapia t : gestioneTerapie.getTerapiePaziente()) {
+            for (FarmacoTerapia f : t.getListaFarmaciTerapia()) {
+                farmaciPaziente.add(f.getFarmaco());
+            }
+        }
+
+        int resultAssunzioni = 1;
+
+        // Cicla sui farmaci e verifica se qualcuno tra questi non sia stato registrato come assunto
+        for (Farmaco f : farmaciPaziente) {
+            if (!verificaAssunzioneRispettoAllOrario(paziente, f.getNome())) {
+                resultAssunzioni = 0;
+                break;
+            } else {
+                resultAssunzioni *= 1;
+            }
+        }
+
+        return resultAssunzioni == 0;
+    }
+
+    public void monitoraAssunzioneFarmaci(Paziente paziente) {
+
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                if (presenzaFarmaciNonRegistrati(paziente)) {
+                    ServizioNotifiche notificheAssunzione = new ServizioNotifiche();
+                    notificheAssunzione.mostraNotifichePromemoriaAssunzioneFarmaci();
+                }
+            } catch (Exception e) {
+                System.err.println("Errore durante il controllo periodico delle assunzioni dei farmaci: " + e.getMessage());
+            }
+        }, 0, 10, TimeUnit.MINUTES);
     }
 
 }

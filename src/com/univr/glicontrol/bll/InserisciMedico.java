@@ -18,7 +18,7 @@ public class InserisciMedico {
     }
 
     public boolean inviaCredenzialiMedico(String email, String pwd) {
-        ServizioNotificheMail ms = new ServizioNotificheMail();
+        ServizioNotifiche ms = new ServizioNotifiche();
         boolean status;
         try {
             ms.sendEmail(email, "Benvenuto su Glicontrol", "Benvenuto nel sistema medico Glicontrol, l'alleato numero uno per la gestione del diabete.\n\nPuoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd + ".\n\n\nGlicontrol Medical System");

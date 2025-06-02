@@ -44,6 +44,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
         }
         listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
 
+
         ObservableList<String> farmaciAssuntiOggi = FXCollections.observableArrayList();
         farmaciAssuntiOggi.addAll(upp.getListaFarmaciAssuntiOggi());
         farmaciAssuntiOggiLV.setItems(farmaciAssuntiOggi);
@@ -121,11 +122,8 @@ public class FinestraAssunzioneFarmaciPazienteController {
         pause.setOnFinished(event -> {
             if (!GlicontrolCoreSystem.getInstance().verificaCoerenzaOrarioAssunzione(paziente, farmaco.getNome(), oraAssunzione)) {
                 Platform.runLater(() -> {
-                    Alert mancatoRispettoOrarioAssunzioneAlert = new Alert(Alert.AlertType.WARNING);
-                    mancatoRispettoOrarioAssunzioneAlert.setTitle("System Information Service");
-                    mancatoRispettoOrarioAssunzioneAlert.setHeaderText("Orario di assunzione incoerente");
-                    mancatoRispettoOrarioAssunzioneAlert.setContentText("L'orario di assunzione del farmaco non è coerente con quello previsto dalla tua terapia.\nSei invitato a rispettare gli orari previsti dai tuoi medici");
-                    mancatoRispettoOrarioAssunzioneAlert.showAndWait();
+                    ServizioNotifiche promemoriaNotifiche = new ServizioNotifiche();
+                    promemoriaNotifiche.mostraNotifichePromemoriaAssunzioneFarmaci();
                 });
             }
         });
@@ -177,7 +175,10 @@ public class FinestraAssunzioneFarmaciPazienteController {
 
             cambiaPagina();
             resetListViewFarmaciAssuntiOggi();
-            resetListViewFarmaciDaAssumere();
+
+            PauseTransition pausaAggiornamentoListaFarmaciDaAssumere = new PauseTransition(javafx.util.Duration.seconds(0.8));
+            pausaAggiornamentoListaFarmaciDaAssumere.setOnFinished(event -> resetListViewFarmaciDaAssumere());
+            pausaAggiornamentoListaFarmaciDaAssumere.play();
 
         } else {
             Alert erroreEliminazioneFarmacoAlert = new Alert(Alert.AlertType.ERROR);

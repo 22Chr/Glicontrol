@@ -16,7 +16,7 @@ public class AggiornaPaziente {
     }
 
     public boolean inviaCredenzialiAggiornatePaziente(String email, String pwd) {
-        ServizioNotificheMail ms = new ServizioNotificheMail();
+        ServizioNotifiche ms = new ServizioNotifiche();
         boolean status;
         try {
             ms.sendEmail(email, "Modifica accesso Glicontrol", "La tua password di accesso al portale è stata modificata.\n\nUtilizza la nuova password: " + pwd + " per continuare ad utilizzare il tuo miglior alleato contro il diabete.\n\n\nGlicontrol Medical System");

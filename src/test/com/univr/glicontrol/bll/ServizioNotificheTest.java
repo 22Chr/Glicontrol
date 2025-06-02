@@ -5,18 +5,18 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ServizioNotificheMailTest {
+class ServizioNotificheTest {
 
     @Test
     void sendEmail() {
-        ServizioNotificheMail servizioNotificheMail = new ServizioNotificheMail();
+        ServizioNotifiche servizioNotifiche = new ServizioNotifiche();
 
         String destinatario = "anna.martini2004@gmail.com";
         String oggetto = "Test invio email";
         String corpo = "Questa è un'email di test";
 
         try {
-            servizioNotificheMail.sendEmail(destinatario, oggetto, corpo);
+            servizioNotifiche.sendEmail(destinatario, oggetto, corpo);
             System.out.println("Email inviata con successo!");
             assertTrue(true);
         } catch (MessagingException e) {
@@ -28,7 +28,7 @@ class ServizioNotificheMailTest {
     @Test
     void sendEmail_shouldThrowMessagingException() {
         // Classe anonima per forzare credenziali errate
-        ServizioNotificheMail servizioNotificheMail = new ServizioNotificheMail() {
+        ServizioNotifiche servizioNotifiche = new ServizioNotifiche() {
             @Override
             public void sendEmail(String to, String subject, String body) throws MessagingException {
                 // Forziamo un mittente sbagliato che farà fallire l'autenticazione
@@ -56,7 +56,7 @@ class ServizioNotificheMailTest {
         };
 
         assertThrows(MessagingException.class, () -> {
-            servizioNotificheMail.sendEmail("destinatario@esempio.com", "Oggetto test", "Corpo test");
+            servizioNotifiche.sendEmail("destinatario@esempio.com", "Oggetto test", "Corpo test");
         });
     }
 }
