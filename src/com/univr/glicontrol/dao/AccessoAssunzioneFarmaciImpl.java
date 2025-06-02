@@ -46,6 +46,41 @@ public class AccessoAssunzioneFarmaciImpl implements AccessoAssunzioneFarmaci {
     }
 
     @Override
+    public List<AssunzioneFarmaco> getListaFarmaciAssuntiOggi(int idPaziente, Date data, int idFarmaco) {
+        List<AssunzioneFarmaco> assunzioneFarmaciOdierna = new ArrayList<>();
+        String recuperaAssunzioneFarmaciOdiernaSql = "select * from AssunzioneFarmaco where id_paziente_assumente = ? and data = ? and id_farmaco_assunto = ?";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            PreparedStatement recuperaAssunzioneFarmaciOdiernaStmt = conn.prepareStatement(recuperaAssunzioneFarmaciOdiernaSql);
+            recuperaAssunzioneFarmaciOdiernaStmt.setInt(1, idPaziente);
+            recuperaAssunzioneFarmaciOdiernaStmt.setDate(2, data);
+            recuperaAssunzioneFarmaciOdiernaStmt.setInt(3, idFarmaco);
+
+            try (ResultSet rs = recuperaAssunzioneFarmaciOdiernaStmt.executeQuery()) {
+                while (rs.next()) {
+                    assunzioneFarmaciOdierna.add(new AssunzioneFarmaco(
+                            rs.getInt("id_assunzione"),
+                            rs.getInt("id_paziente_assumente"),
+                            rs.getInt("id_farmaco_assunto"),
+                            rs.getDate("data"),
+                            rs.getTime("ora"),
+                            rs.getFloat("quantity")
+                    ));
+                }
+            }
+
+            recuperaAssunzioneFarmaciOdiernaStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("[ERRORE RECUPERO TABELLA ASSUNZIONE ODIERNA FARMACI]: " + e.getMessage());
+        }
+
+        return assunzioneFarmaciOdierna;
+    }
+
+    @Override
     public boolean insertAssunzioneFarmaci(int idPaziente, int idFarmaco, Date data, Time ora, float dose) {
         boolean success = false;
         String insertAssunzioneFarmaciSql = "insert into AssunzioneFarmaco (id_paziente_assumente, id_farmaco_assunto, data, ora, quantity) values (?, ?, ?, ?, ?)";

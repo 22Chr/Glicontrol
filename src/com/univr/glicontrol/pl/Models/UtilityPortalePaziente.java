@@ -363,6 +363,8 @@ public class UtilityPortalePaziente {
             }
         }
 
+        listaFarmaciDaAssumere.removeIf(farmaco -> GlicontrolCoreSystem.getInstance().verificaAssunzioneRispettoAllOrario(paziente, farmaco));
+
         return listaFarmaciDaAssumere;
     }
 

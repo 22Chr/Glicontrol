@@ -19,9 +19,9 @@ public class GestioneAssunzioneFarmaci {
 
     public int registraAssunzioneFarmaco(Farmaco farmaco, Date data, Time ora, float dosaggio) {
 
-        int checkDosaggio = GlicontrolCoreSystem.getInstance().verificaCoerenzaDosaggioFarmaci(paziente, farmaco.getNome(), dosaggio) ? 1 : 0;
+        boolean checkDosaggio = GlicontrolCoreSystem.getInstance().verificaCoerenzaDosaggioFarmaci(paziente, farmaco.getNome(), dosaggio);
         boolean success = asf.insertAssunzioneFarmaci(paziente.getIdUtente(), farmaco.getIdFarmaco(), data, ora, dosaggio);
-        if (success && checkDosaggio == 1) {
+        if (success && checkDosaggio) {
             return 1;
         } else if (success) {
             return -1;
@@ -33,6 +33,10 @@ public class GestioneAssunzioneFarmaci {
     public List<AssunzioneFarmaco> getListaAssunzioneFarmaci() {
         aggiornaListaFarmaciAssunzione();
         return assunzioni;
+    }
+
+    public List<AssunzioneFarmaco> getListaFarmaciAssuntiOggi(Date data, String nomeFarmaco) {
+        return asf.getListaFarmaciAssuntiOggi(paziente.getIdUtente(), data, GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco).getIdFarmaco());
     }
 
     private void aggiornaListaFarmaciAssunzione() {

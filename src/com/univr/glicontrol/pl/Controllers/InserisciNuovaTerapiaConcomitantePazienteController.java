@@ -50,6 +50,16 @@ public class InserisciNuovaTerapiaConcomitantePazienteController {
         String nomePatologia = patologiaCB.getSelectionModel().getSelectedItem();
         Date dataInizio = ottieniDataInizioPatologia();
 
+        if (dataInizio == null) {
+            Alert erroreDataMancataAlert = new Alert(Alert.AlertType.ERROR);
+            erroreDataMancataAlert.setTitle("System Information Service");
+            erroreDataMancataAlert.setHeaderText("Data mancante");
+            erroreDataMancataAlert.setContentText("Prima di poter selezionare dei farmaci per la tua terapia è necessario precisarne la data di inizio. Riprova");
+            erroreDataMancataAlert.showAndWait();
+            dataInizioDP.setValue(null);
+            return;
+        }
+
         PatologiaConcomitante patologia = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
         if (dataInizio.before(patologia.getDataInizio())) {
             Alert erroreDiscrepanzaData = new Alert(Alert.AlertType.ERROR);
@@ -133,7 +143,7 @@ public class InserisciNuovaTerapiaConcomitantePazienteController {
     }
 
     private Date ottieniDataInizioPatologia() {
-        return Date.valueOf(dataInizioDP.getValue());
+        return dataInizioDP.getValue() == null ? null : Date.valueOf(dataInizioDP.getValue());
     }
 
     private Date ottieniDataFinePatologia() {

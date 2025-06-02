@@ -10,6 +10,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DettaglioNuovoFarmacoController {
 
     private InserisciNuovaTerapiaConcomitantePazienteController antcpc;
@@ -34,26 +37,35 @@ public class DettaglioNuovoFarmacoController {
         ObservableList<String> farmaci = FXCollections.observableArrayList(upp.getListaFarmaciFormattatiCompleta());
         listaFarmaciCompletaCB.setItems(farmaci);
 
-        // Filtro dinamico basato sul testo digitato
+
+        Map<String, String> nomePrincipioMap = new HashMap<>();
+        for (String nome : farmaci) {
+            Farmaco f = GestioneFarmaci.getInstance().getFarmacoByName(nome);
+            nomePrincipioMap.put(nome, f.getPrincipioAttivo());
+        }
+
+        // Filtro dinamico ottimizzato
         FilteredList<String> filteredItems = new FilteredList<>(farmaci, p -> true);
         listaFarmaciCompletaCB.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
             final TextField editor = listaFarmaciCompletaCB.getEditor();
-            final String selected = listaFarmaciCompletaCB.getSelectionModel().getSelectedItem();
+            final String nomeSelezionato = listaFarmaciCompletaCB.getSelectionModel().getSelectedItem();
+            final String principioAttivoSelezionato = nomePrincipioMap.getOrDefault(nomeSelezionato, "");
 
             listaFarmaciCompletaCB.show();
 
-            if (selected == null || !selected.equals(editor.getText())) {
+            if (nomeSelezionato == null || !nomeSelezionato.equals(editor.getText()) || !principioAttivoSelezionato.equalsIgnoreCase(editor.getText())) {
                 filteredItems.setPredicate(item -> {
                     if (newValue == null || newValue.isEmpty()) return true;
-                    String lowerCaseFilter = newValue.toLowerCase();
-                    return item.toLowerCase().contains(lowerCaseFilter);
+
+                    String filtro = newValue.toLowerCase();
+                    String nome = item.toLowerCase();
+                    String principio = nomePrincipioMap.getOrDefault(item, "").toLowerCase();
+
+                    return nome.contains(filtro) || principio.contains(filtro);
                 });
                 listaFarmaciCompletaCB.setItems(filteredItems);
             }
         });
-
-        // Reset della lista completa dopo selezione
-        listaFarmaciCompletaCB.setOnAction(e -> listaFarmaciCompletaCB.setItems(farmaci));
     }
 
     public void aggiungiFarmaco() {

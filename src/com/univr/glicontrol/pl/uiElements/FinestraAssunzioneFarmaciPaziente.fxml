@@ -122,7 +122,7 @@
                         </TextField>
                      </children>
                   </GridPane>
-                        <Button mnemonicParsing="false" onAction="#inserisciNuovoFarmaco" style="-fx-background-color: #22577a;" text="Inserisci" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#registraAssunzioneFarmaco" style="-fx-background-color: #22577a;" text="Inserisci" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

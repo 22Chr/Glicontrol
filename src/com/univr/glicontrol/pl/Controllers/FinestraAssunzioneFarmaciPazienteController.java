@@ -1,10 +1,9 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.AssunzioneFarmaco;
-import com.univr.glicontrol.bll.GestioneAssunzioneFarmaci;
-import com.univr.glicontrol.bll.GestioneFarmaci;
-import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -73,7 +72,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
         });
     }
 
-    public void inserisciNuovoFarmaco() {
+    public void registraAssunzioneFarmaco() {
         Date data;
         if (dataFarmacoPazienteDP.getValue() == null) {
             data = null;
@@ -90,15 +89,16 @@ public class FinestraAssunzioneFarmaciPazienteController {
             return;
         }
 
-        int status = gaf.registraAssunzioneFarmaco(GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciDaAssumereCB.getValue()), data, getOra(), Float.parseFloat(dosaggioTF.getText()));
+        Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciDaAssumereCB.getValue());
+        Time oraAssunzione = getOra();
+
+        int status = gaf.registraAssunzioneFarmaco(farmaco, data, oraAssunzione, Float.parseFloat(dosaggioTF.getText()));
         if (status != 0) {
             Alert successoInserimentoFarmacoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoInserimentoFarmacoAlert.setTitle("System Information Service");
             successoInserimentoFarmacoAlert.setHeaderText("Farmaco registrato con successo");
             successoInserimentoFarmacoAlert.setContentText("L'assunzione del farmaco è stata registrata correttamente");
             successoInserimentoFarmacoAlert.showAndWait();
-
-            resetListViewFarmaciAssuntiOggi();
 
         } else {
             Alert erroreInserimentoFarmacoAlert = new Alert(Alert.AlertType.ERROR);
@@ -117,7 +117,25 @@ public class FinestraAssunzioneFarmaciPazienteController {
             eccessoDosaggioFarmacoAlert.showAndWait();
         }
 
+        PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(1));
+        pause.setOnFinished(event -> {
+            if (!GlicontrolCoreSystem.getInstance().verificaCoerenzaOrarioAssunzione(paziente, farmaco.getNome(), oraAssunzione)) {
+                Platform.runLater(() -> {
+                    Alert mancatoRispettoOrarioAssunzioneAlert = new Alert(Alert.AlertType.WARNING);
+                    mancatoRispettoOrarioAssunzioneAlert.setTitle("System Information Service");
+                    mancatoRispettoOrarioAssunzioneAlert.setHeaderText("Orario di assunzione incoerente");
+                    mancatoRispettoOrarioAssunzioneAlert.setContentText("L'orario di assunzione del farmaco non è coerente con quello previsto dalla tua terapia.\nSei invitato a rispettare gli orari previsti dai tuoi medici");
+                    mancatoRispettoOrarioAssunzioneAlert.showAndWait();
+                });
+            }
+        });
+        pause.play();
+
         resetListViewFarmaciAssuntiOggi();
+
+        PauseTransition pausaAggiornamentoListaFarmaciDaAssumere = new PauseTransition(javafx.util.Duration.seconds(1.5));
+        pausaAggiornamentoListaFarmaciDaAssumere.setOnFinished(event -> resetListViewFarmaciDaAssumere());
+        pausaAggiornamentoListaFarmaciDaAssumere.play();
     }
 
     public void cambiaPagina() {
@@ -159,6 +177,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
 
             cambiaPagina();
             resetListViewFarmaciAssuntiOggi();
+            resetListViewFarmaciDaAssumere();
 
         } else {
             Alert erroreEliminazioneFarmacoAlert = new Alert(Alert.AlertType.ERROR);
@@ -183,6 +202,13 @@ public class FinestraAssunzioneFarmaciPazienteController {
         listaFarmaciDaAssumereCB.setValue(null);
         listaFarmaciDaAssumereCB.requestFocus();
         dosaggioTF.clear();
+    }
+
+    private void resetListViewFarmaciDaAssumere() {
+        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
+        farmaciDaAssumere.addAll(newUpp.getListaFarmaciDaAssumere());
+        listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
     }
 
     private Time getOra() {
