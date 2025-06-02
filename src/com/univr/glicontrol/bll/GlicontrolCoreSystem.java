@@ -65,21 +65,6 @@ public class GlicontrolCoreSystem {
     }
 
 
-    private float getDosaggioDaNomeFarmaco(String nomeFarmaco) {
-        StringBuilder stringaDosaggio = new StringBuilder();
-        for (int i = 0; i < nomeFarmaco.length(); i++) {
-            if (Character.isDigit(nomeFarmaco.charAt(i))) {
-                stringaDosaggio.append(nomeFarmaco.charAt(i));
-            }
-        }
-
-        if (stringaDosaggio.isEmpty()) {
-            return -1;
-        }
-
-        return Float.parseFloat(stringaDosaggio.toString());
-    }
-
     private float getDosaggioComplessivoQuotidianoPerFarmaco(Paziente paziente, String nomeFarmaco) {
         gestioneTerapie = new GestioneTerapie(paziente);
         List<Terapia> terapiePaziente = gestioneTerapie.getTerapiePaziente();
@@ -192,18 +177,15 @@ public class GlicontrolCoreSystem {
 
         List<LocalTime> orariPrevisti = getOrariPrevisti(paziente, nomeFarmaco);
         LocalTime orarioPiuVicino = getOrarioPiuVicino(LocalTime.now(), orariPrevisti);
+
+        Duration intervalloDaOraAllaProssimaAssunzione = Duration.between(LocalTime.now(), orarioPiuVicino).abs();
         // Se l'ora dell'ultima registrazione ha superato l'orario più vicino, nel corso della giornata odierna, significa che ho assunto il farmaco
         if (oraUltimaRegistrazione.toLocalTime().isAfter(orarioPiuVicino) || oraUltimaRegistrazione.toLocalTime().equals(orarioPiuVicino)) {
             return true;
         }
 
-        // Quando ci si avvicina al prossimo orario di assunzione e mancano 15 minuti, il farmaco riappare in lista
-        Duration intervallo = Duration.between(LocalTime.now(), orarioPiuVicino).abs();
-        if (intervallo.toMinutes() <= 15) {
-            return false;
-        }
-
-        return false;
+        // Quando ci si avvicina al prossimo orario di assunzione e mancano 15 minuti, il farmaco riappare in lista, altrimenti risulta come assunto
+        return intervalloDaOraAllaProssimaAssunzione.toMinutes() >= 15;
 
     }
 
@@ -227,8 +209,6 @@ public class GlicontrolCoreSystem {
             if (!verificaAssunzioneRispettoAllOrario(paziente, f.getNome())) {
                 resultAssunzioni = 0;
                 break;
-            } else {
-                resultAssunzioni *= 1;
             }
         }
 
