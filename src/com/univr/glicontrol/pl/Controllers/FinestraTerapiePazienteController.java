@@ -2,17 +2,19 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -40,16 +42,54 @@ public class FinestraTerapiePazienteController {
     @FXML
     private GridPane indicazioniFarmacoGP;
 
+    @FXML
+    private HBox loadingPage, mainPage;
+
+    @FXML
+    private ProgressIndicator progressIndicator;
+
 
     UtilityPortalePaziente upp = new UtilityPortalePaziente();
-    Paziente paziente = upp.getPazienteSessione();
-    GestioneTerapie gt = new GestioneTerapie(paziente);
 
     @FXML
     private void initialize() {
-        ObservableList<String> terapie = FXCollections.observableArrayList();
-        terapie.addAll(upp.getListaTerapiePaziente());
-        terapiePazienteLV.setItems(terapie);
+        loadingPage.setVisible(true);
+        progressIndicator.setVisible(true);
+        progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+
+        Task<Void> loadingTask = new Task<>() {
+            @Override
+            protected Void call() {
+                ObservableList<String> terapie = FXCollections.observableArrayList();
+                terapie.addAll(upp.getListaTerapiePaziente());
+
+                Platform.runLater(() -> {
+                    terapiePazienteLV.setItems(terapie);
+                });
+
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                progressIndicator.setVisible(false);
+                loadingPage.setVisible(false);
+                mainPage.setVisible(true);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(250), mainPage);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            }
+
+            @Override
+            protected void failed() {
+                progressIndicator.setVisible(false);
+                loadingPage.setVisible(false);
+                System.err.println("Errore durante il caricamento dei dati.");
+            }
+        };
+
+        new Thread(loadingTask).start();
 
         terapiePazienteLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
@@ -114,10 +154,23 @@ public class FinestraTerapiePazienteController {
     }
 
     private void mostraFarmaciTerapia() {
-        infoTerapiaVB.setVisible(true);
+        indicazioniFarmacoGP.setVisible(false);
+
+        FadeTransition fadeOut = new FadeTransition(javafx.util.Duration.millis(500), infoTerapiaVB);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.play();
+
+        if (!(infoTerapiaVB.isVisible())) {
+            infoTerapiaVB.setVisible(true);
+        }
         nomeTerapiaTF.setText(terapiePazienteLV.getSelectionModel().getSelectedItem());
         Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
         dateTerapiaTF.setText(upp.getIndicazioniTemporaliTerapia(terapia));
+        FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(750), infoTerapiaVB);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
 
         // Popola la lista dei farmaci associati alla terapia visualizzata
         ObservableList<String> farmaci = FXCollections.observableArrayList();
