@@ -2,8 +2,6 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -77,16 +74,18 @@ public class PortalePazienteController {
         ultimeRilevazioni.addAll(upp.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.setItems(ultimeRilevazioni);
 
-        PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(0.5));
-        pause.setOnFinished(e -> {
-            if (GlicontrolCoreSystem.getInstance().presenzaFarmaciNonRegistrati(paziente)) {
-                Platform.runLater(() -> {
-                    ServizioNotifiche promemoriaFarmaci = new ServizioNotifiche();
-                    promemoriaFarmaci.mostraNotifichePromemoriaAssunzioneFarmaci();
-                });
-            }
-        });
-        pause.play();
+//        PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(0.5));
+//        pause.setOnFinished(e -> {
+//            if (GlicontrolCoreSystem.getInstance().presenzaFarmaciNonRegistrati(paziente)) {
+//                Platform.runLater(() -> {
+//                    ServizioNotifiche promemoriaFarmaci = new ServizioNotifiche();
+//                    promemoriaFarmaci.mostraNotifichePromemoriaAssunzioneFarmaci();
+//                });
+//            }
+//        });
+//        pause.play();
+
+        GlicontrolCoreSystem.getInstance().monitoraAssunzioneFarmaci(paziente);
     }
 
     public void openProfile() {
@@ -130,6 +129,7 @@ public class PortalePazienteController {
             alert.setHeaderText("Sei sicuro di voler uscire?");
 
             if (alert.showAndWait().get() == ButtonType.OK) {
+                GlicontrolCoreSystem.getInstance().stopMonitoraggioAssunzioneFarmaci();
                 stage.close();
             }
         });

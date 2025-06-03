@@ -1,6 +1,9 @@
 package com.univr.glicontrol.bll;
 
+import com.univr.glicontrol.dao.AccessoListaUtenti;
+import com.univr.glicontrol.dao.AccessoListaUtentiImpl;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.application.Platform;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -8,7 +11,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -209,7 +211,6 @@ public class GlicontrolCoreSystem {
         }
 
         int resultAssunzioni = 1;
-
         // Cicla sui farmaci e verifica se qualcuno tra questi non sia stato registrato come assunto
         for (Farmaco f : farmaciPaziente) {
             if (!verificaAssunzioneRispettoAllOrario(paziente, f.getNome())) {
@@ -222,12 +223,13 @@ public class GlicontrolCoreSystem {
     }
 
     public void monitoraAssunzioneFarmaci(Paziente paziente) {
-
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 if (presenzaFarmaciNonRegistrati(paziente)) {
-                    ServizioNotifiche notificheAssunzione = new ServizioNotifiche();
-                    notificheAssunzione.mostraNotifichePromemoriaAssunzioneFarmaci();
+                    Platform.runLater(() -> {
+                        ServizioNotifiche notificheAssunzione = new ServizioNotifiche();
+                        notificheAssunzione.mostraNotifichePromemoriaAssunzioneFarmaci();
+                    });
                 }
             } catch (Exception e) {
                 System.err.println("Errore durante il controllo periodico delle assunzioni dei farmaci: " + e.getMessage());
@@ -235,4 +237,62 @@ public class GlicontrolCoreSystem {
         }, 0, 10, TimeUnit.MINUTES);
     }
 
+    public void stopMonitoraggioAssunzioneFarmaci() {
+        scheduler.shutdownNow();
+    }
+
+
+    // Verifica se il paziente passato come parametro non sta assumendo la terapia farmacologica prescritta
+    private boolean verificaSospensioneFarmaci(Paziente paziente) {
+        gestioneTerapie = new GestioneTerapie(paziente);
+        gestioneAssunzioneFarmaci = new GestioneAssunzioneFarmaci(paziente);
+        List<List<FarmacoTerapia>> farmaciTerapie = new ArrayList<>();
+        List<Farmaco> farmaciPrescritti = new ArrayList<>();
+
+        for (Terapia t : gestioneTerapie.getTerapiePaziente()) {
+            farmaciTerapie.add(t.getListaFarmaciTerapia());
+        }
+        for (List<FarmacoTerapia> l : farmaciTerapie) {
+            for (FarmacoTerapia f : l) {
+                if (!farmaciPrescritti.contains(f.getFarmaco())) {
+                    farmaciPrescritti.add(f.getFarmaco());
+                }
+            }
+        }
+
+        for (Farmaco farmaco : farmaciPrescritti) {
+            List<AssunzioneFarmaco> assunzioniDiQuestoFarmaco = new ArrayList<>();
+            for (AssunzioneFarmaco af : gestioneAssunzioneFarmaci.getListaAssunzioneFarmaci()) {
+                if (af.getIdFarmaco() == farmaco.getIdFarmaco() && af.getIdPaziente() == paziente.getIdUtente()) {
+                    assunzioniDiQuestoFarmaco.add(af);
+                }
+            }
+            Duration intervallo = Duration.between((assunzioniDiQuestoFarmaco.getLast().getData().toLocalDate()), LocalDate.now()).abs();
+            if (intervallo.toDays() > 3) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Task automatico che verifica se uno dei pazienti presenti nel sistema non sta assumendo i suoi farmaci da più di 3 giorni
+    public void monitoraSospensioneFarmaci() {
+        listaPazienti = new AccessoListaUtentiImpl().recuperaTuttiIPazienti();
+
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                for (Paziente paziente : listaPazienti) {
+                    if (verificaSospensioneFarmaci(paziente)) {
+                        Platform.runLater(() -> {
+                            ServizioNotifiche notificheSospensione = new ServizioNotifiche();
+                            notificheSospensione.sospensioneFarmacoTerapia(paziente);
+                        });
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Errore durante il controllo periodico delle sospensioni dei farmaci: " + e.getMessage());
+            }
+        }, 0, 1, TimeUnit.HOURS);
+    }
 }

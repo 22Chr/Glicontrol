@@ -51,4 +51,12 @@ public class ServizioNotifiche {
         orariTerapiaNonRispettatiAlert.setContentText("L'orario in cui hai registrato questo farmaco non corrisponde a quello previsto dalla tua terapia.\nSei invitato ad assumere i tuoi farmaci rispettando gli orari stabiliti dai medici");
         orariTerapiaNonRispettatiAlert.showAndWait();
     }
+
+    public void sospensioneFarmacoTerapia(Paziente paziente) {
+        Alert sospensioneFarmacoTerapiaAlert = new Alert(Alert.AlertType.WARNING);
+        sospensioneFarmacoTerapiaAlert.setTitle("System Notification Service");
+        sospensioneFarmacoTerapiaAlert.setHeaderText("Sospensione farmaci");
+        sospensioneFarmacoTerapiaAlert.setContentText("Il paziente " + paziente.getNome() + " non assume i farmaci prescritti da più di 3 giorni.\nSi consiglia di contattare il paziente per dei chiarimenti");
+        sospensioneFarmacoTerapiaAlert.showAndWait();
+    }
 }
