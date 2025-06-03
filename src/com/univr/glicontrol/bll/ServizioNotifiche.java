@@ -37,10 +37,18 @@ public class ServizioNotifiche {
     }
 
     public void mostraNotifichePromemoriaAssunzioneFarmaci() {
-        Alert promemoriaAssunzioneFarmaciAlert = new Alert(Alert.AlertType.WARNING);
+        Alert promemoriaAssunzioneFarmaciAlert = new Alert(Alert.AlertType.INFORMATION);
         promemoriaAssunzioneFarmaciAlert.setTitle("System Notification Service");
         promemoriaAssunzioneFarmaciAlert.setHeaderText("Promemoria di assunzione dei farmaci");
         promemoriaAssunzioneFarmaciAlert.setContentText("Hai alcuni farmaci che risultano essere non ancora assunti.\nRicordati di registrare tutti i tuoi farmaci");
         promemoriaAssunzioneFarmaciAlert.showAndWait();
+    }
+
+    public void mancataAderenzaOrariFarmaciTerapia() {
+        Alert orariTerapiaNonRispettatiAlert = new Alert(Alert.AlertType.WARNING);
+        orariTerapiaNonRispettatiAlert.setTitle("System Notification Service");
+        orariTerapiaNonRispettatiAlert.setHeaderText("Orario di assunzione non conforme");
+        orariTerapiaNonRispettatiAlert.setContentText("L'orario in cui hai registrato questo farmaco non corrisponde a quello previsto dalla tua terapia.\nSei invitato ad assumere i tuoi farmaci rispettando gli orari stabiliti dai medici");
+        orariTerapiaNonRispettatiAlert.showAndWait();
     }
 }

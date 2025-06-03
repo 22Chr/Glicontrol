@@ -2,10 +2,12 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -34,24 +36,71 @@ public class FinestraAssunzioneFarmaciPazienteController {
     private TextArea descrizioneEstesaTA;
     @FXML
     private TextField dosaggioTF;
-
     @FXML
-    private void initialize() {
-        ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
-        for (String farmaco : upp.getListaFarmaciDaAssumere()) {
-            if (!farmaciDaAssumere.contains(farmaco))
-                farmaciDaAssumere.add(farmaco);
-        }
-        listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
+    private ProgressIndicator loadingIndicator;
+    @FXML
+    private HBox loadingPage;
 
+    public void initialize() {
+        // Mostra l'indicatore di caricamento
+        loadingPage.setVisible(true);
+        loadingIndicator.setVisible(true);
+        loadingIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
-        ObservableList<String> farmaciAssuntiOggi = FXCollections.observableArrayList();
-        farmaciAssuntiOggi.addAll(upp.getListaFarmaciAssuntiOggi());
-        farmaciAssuntiOggiLV.setItems(farmaciAssuntiOggi);
+        // Esegui il caricamento in background
+        Task<Void> loadingTask = new Task<>() {
+            @Override
+            protected Void call() {
+                // Caricamento delle due liste (operazioni potenzialmente lente)
+                ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
+                for (String farmaco : upp.getListaFarmaciDaAssumere()) {
+                    if (!farmaciDaAssumere.contains(farmaco))
+                        farmaciDaAssumere.add(farmaco);
+                }
 
-        oraFarmacoCB.getItems().addAll("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23");
-        minutiFarmacoCB.getItems().addAll("00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55");
+                ObservableList<String> farmaciAssuntiOggi = FXCollections.observableArrayList();
+                farmaciAssuntiOggi.addAll(upp.getListaFarmaciAssuntiOggi());
+
+                // Aggiornamento della UI va fatto sul thread dell'interfaccia
+                Platform.runLater(() -> {
+                    listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
+                    farmaciAssuntiOggiLV.setItems(farmaciAssuntiOggi);
+                });
+
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                // Nasconde l'indicatore di caricamento quando ha finito
+                loadingIndicator.setVisible(false);
+                loadingPage.setVisible(false);
+                mainPage.setVisible(true);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(250), mainPage);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            }
+
+            @Override
+            protected void failed() {
+                loadingPage.setVisible(false);
+                loadingIndicator.setVisible(false);
+                // Qui puoi anche loggare o mostrare un messaggio d’errore
+                System.err.println("Errore durante il caricamento dei dati.");
+            }
+        };
+
+        new Thread(loadingTask).start();
+
+        // Inizializzazione immediata dei componenti statici
+        oraFarmacoCB.getItems().addAll(
+                "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"
+        );
+        minutiFarmacoCB.getItems().addAll(
+                "00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"
+        );
 
         farmaciAssuntiOggiLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
@@ -123,7 +172,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
             if (!GlicontrolCoreSystem.getInstance().verificaCoerenzaOrarioAssunzione(paziente, farmaco.getNome(), oraAssunzione)) {
                 Platform.runLater(() -> {
                     ServizioNotifiche promemoriaNotifiche = new ServizioNotifiche();
-                    promemoriaNotifiche.mostraNotifichePromemoriaAssunzioneFarmaci();
+                    promemoriaNotifiche.mancataAderenzaOrariFarmaciTerapia();
                 });
             }
         });

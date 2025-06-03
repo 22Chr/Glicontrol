@@ -77,15 +77,12 @@ public class PortalePazienteController {
         ultimeRilevazioni.addAll(upp.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.setItems(ultimeRilevazioni);
 
-        PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(1));
+        PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(0.5));
         pause.setOnFinished(e -> {
             if (GlicontrolCoreSystem.getInstance().presenzaFarmaciNonRegistrati(paziente)) {
                 Platform.runLater(() -> {
-                    Alert promemoriaAssunzioneFarmaciAlert = new Alert(Alert.AlertType.INFORMATION);
-                    promemoriaAssunzioneFarmaciAlert.setTitle("System Notification Service");
-                    promemoriaAssunzioneFarmaciAlert.setHeaderText("Promemoria farmaci");
-                    promemoriaAssunzioneFarmaciAlert.setContentText("Ci sono dei farmaci non ancora registrati come assunti.\nAssicurati di assumere tutti i farmaci");
-                    promemoriaAssunzioneFarmaciAlert.showAndWait();
+                    ServizioNotifiche promemoriaFarmaci = new ServizioNotifiche();
+                    promemoriaFarmaci.mostraNotifichePromemoriaAssunzioneFarmaci();
                 });
             }
         });
