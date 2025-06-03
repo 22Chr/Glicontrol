@@ -31,7 +31,9 @@ public class PortalePazienteController {
     private final Paziente paziente = upp.getPazienteSessione();
     private final Medico medicoRiferimento = new ListaMedici().ottieniMedicoPerId(paziente.getMedicoRiferimento());
     private GestioneRilevazioniGlicemia gestione;
-    private boolean visualizzazioneMensile = true;
+    private enum ModalitaVisualizzazione { GIORNALIERA, SETTIMANALE, MENSILE }
+    private ModalitaVisualizzazione visualizzazioneAttuale = ModalitaVisualizzazione.GIORNALIERA;
+
 
 
     @FXML
@@ -51,6 +53,7 @@ public class PortalePazienteController {
 
     @FXML
     private void initialize() {
+
         // Popola box con i dati di contatto del medico di riferimento
         nomeMedicoRiferimentoTF.setText(medicoRiferimento.getNome());
         cognomeMedicoRiferimentoTF.setText(medicoRiferimento.getCognome());
@@ -61,8 +64,9 @@ public class PortalePazienteController {
         badgeCircle.setSmooth(true);
         badgeCircle.setStyle("-fx-border-color: #ff0404;");
 
-        // cercare metodo per risolvere il problema
+        //Gestione del bottone visulizzazione per switchare tra i vari grafici
         visualizzazioneT.setOnAction(e -> aggiornaGrafico());
+
 
         // Se hai un paziente corrente salvato, crea la gestione
         gestione = new GestioneRilevazioniGlicemia(paziente);
@@ -191,38 +195,50 @@ public class PortalePazienteController {
         LocalDate oggi = LocalDate.now();
         int anno = oggi.getYear();
 
-        if (visualizzazioneMensile) {
-            // Visualizzazione mensile: media settimanale del mese corrente
-            int mese = oggi.getMonthValue();
-            serie.setName("Media Settimanale del Mese");
+        switch (visualizzazioneAttuale) {
+            case MENSILE -> {
+                int mese = oggi.getMonthValue();
+                serie.setName("Media Settimanale del Mese");
 
-            // Recupera media settimanale filtrata per mese corrente
-            Map<String, Double> mediaSettimanale = gestione.getMediaMensileGlicemiaPerMeseCorrente(anno, mese);
+                Map<String, Double> mediaSettimanale = gestione.getMediaMensileGlicemiaPerMeseCorrente(anno, mese);
 
-            for (var entry : mediaSettimanale.entrySet()) {
-                LocalDate data = LocalDate.parse(entry.getKey());
-                String dataFormattata = data.format(formatter);
-                serie.getData().add(new XYChart.Data<>(dataFormattata, entry.getValue()));
+                for (var entry : mediaSettimanale.entrySet()) {
+                    String settimanaLabel = entry.getKey();
+                    serie.getData().add(new XYChart.Data<>(settimanaLabel, entry.getValue()));
+                }
             }
 
-        } else {
-            // Visualizzazione settimanale: media giornaliera della settimana corrente
-            WeekFields wf = WeekFields.of(Locale.getDefault());
-            int settimana = oggi.get(wf.weekOfWeekBasedYear());
-            serie.setName("Media Giornaliera della Settimana ");
+            case SETTIMANALE -> {
+                WeekFields wf = WeekFields.of(Locale.getDefault());
+                int settimana = oggi.get(wf.weekOfWeekBasedYear());
+                serie.setName("Media Giornaliera della Settimana");
 
-            // Recupera media giornaliera filtrata per settimana corrente
-            Map<String, Double> mediaGiornaliera = gestione.getMediaGiornalieraGlicemia(anno, settimana);
+                Map<String, Double> mediaGiornaliera = gestione.getMediaGiornalieraGlicemia(anno, settimana);
+                for (var entry : mediaGiornaliera.entrySet()) {
+                    LocalDate data = LocalDate.parse(entry.getKey());
+                    String dataFormattata = data.format(formatter);
+                    serie.getData().add(new XYChart.Data<>(dataFormattata, entry.getValue()));
+                }
+            }
 
-            for (var entry : mediaGiornaliera.entrySet()) {
-                LocalDate data = LocalDate.parse(entry.getKey());
-                String dataFormattata = data.format(formatter);
-                serie.getData().add(new XYChart.Data<>(dataFormattata, entry.getValue()));
+            case GIORNALIERA -> {
+                serie.setName("Rilevazioni Odierne");
+
+                List<RilevazioneGlicemica> rilevazioniOggi = gestione.getRilevazioniPerData(oggi);
+                for (RilevazioneGlicemica rilevazione : rilevazioniOggi) {
+                    String orario = rilevazione.getOra().toString().substring(0,5);
+                    serie.getData().add(new XYChart.Data<>(orario, rilevazione.getValore()));
+                }
             }
         }
 
         andamentoGlicemiaLC.getData().add(serie);
-        visualizzazioneMensile = !visualizzazioneMensile;
+
+        visualizzazioneAttuale = switch (visualizzazioneAttuale) {
+            case MENSILE -> visualizzazioneAttuale.SETTIMANALE;
+            case SETTIMANALE -> visualizzazioneAttuale.GIORNALIERA;
+            case GIORNALIERA -> visualizzazioneAttuale.MENSILE;
+        };
     }
 
     public void openAssunzioneFarmaci() {

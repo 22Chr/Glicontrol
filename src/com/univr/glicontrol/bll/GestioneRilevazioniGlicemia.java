@@ -5,6 +5,7 @@ import com.univr.glicontrol.dao.AccessoRilevazioniGlicemiaImpl;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -46,5 +47,10 @@ public class GestioneRilevazioniGlicemia {
 
     public Map<String, Double> getMediaMensileGlicemiaPerMeseCorrente(int anno, int mese) {
         return accessoRilevazioniGlicemia.recuperaMediaMensileGlicemiaPerMeseCorrente(paziente.getIdUtente(), anno, mese);
+    }
+
+    public List<RilevazioneGlicemica> getRilevazioniPerData(LocalDate data) {
+        AccessoRilevazioniGlicemiaImpl dao = new AccessoRilevazioniGlicemiaImpl();
+        return dao.recuperaRilevazioniPerData(paziente.getIdUtente(), data);
     }
 }

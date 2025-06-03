@@ -3,6 +3,7 @@ package com.univr.glicontrol.dao;
 import com.univr.glicontrol.bll.RilevazioneGlicemica;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -137,10 +138,11 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
     // Media settimanale per mese (utile per visualizzazione mensile)
     public Map<String, Double> recuperaMediaMensileGlicemiaPerMeseCorrente(int idPaziente, int anno, int mese) {
         Map<String, Double> mediaMensile = new LinkedHashMap<>();
-        String sql = "SELECT DATE_FORMAT(data, '%Y-%m-%d') AS giorno, AVG(valore) AS media " +
+        String sql = "SELECT YEAR(data) AS anno, WEEK(data, 1) AS settimana, AVG(valore) AS media " +
                 "FROM livelloglicemia " +
                 "WHERE id_paziente_glicemico = ? AND YEAR(data) = ? AND MONTH(data) = ? " +
-                "GROUP BY giorno ORDER BY giorno";
+                "GROUP BY anno, settimana " +
+                "ORDER BY anno, settimana";
 
         try (Connection conn = DriverManager.getConnection(url, user, pwd);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -149,13 +151,49 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
             stmt.setInt(3, mese);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                mediaMensile.put(rs.getString("giorno"), rs.getDouble("media"));
+                int week = rs.getInt("settimana");
+                int year = rs.getInt("anno");
+                String label = "Settimana " + week;
+                mediaMensile.put(label, rs.getDouble("media"));
             }
         } catch (SQLException e) {
             System.out.println("[ERRORE MEDIA MENSILE FILTRATA]: " + e.getMessage());
         }
+
         return mediaMensile;
     }
+
+    public List<RilevazioneGlicemica> recuperaRilevazioniPerData(int idPaziente, LocalDate data) {
+        List<RilevazioneGlicemica> lista = new ArrayList<>();
+        String sql = "SELECT * FROM livelloglicemia WHERE id_paziente_glicemico = ? AND data = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pwd);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idPaziente);
+            ps.setDate(2, Date.valueOf(data));
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                RilevazioneGlicemica r = new RilevazioneGlicemica(
+                        rs.getInt("id_glicemia"),
+                        rs.getInt("id_paziente_glicemico"),
+                        rs.getDate("data"),
+                        rs.getTime("ora"),
+                        rs.getInt("valore"),
+                        rs.getString("pasto"),
+                        rs.getString("indicazioni_temporali")
+                );
+                lista.add(r);
+            }
+        } catch (SQLException e) {
+            System.out.println("[ERRORE RILEVAZIONI GIORNALIERE]: " + e.getMessage());
+
+        }
+
+        return lista;
+    }
+
 
 
 

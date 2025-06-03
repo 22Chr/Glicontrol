@@ -4,6 +4,7 @@ import com.univr.glicontrol.bll.RilevazioneGlicemica;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -13,4 +14,5 @@ public interface AccessoRilevazioniGlicemia {
     boolean insertRilevazioneGlicemica(int idPaziente, Date data, Time ora, float glicemia, String pasto, String indicazioniTemporali);
     Map<String, Double> recuperaMediaGiornalieraPerSettimanaGlicemia(int idPaziente, int anno, int numeroSettimana);
     Map<String, Double> recuperaMediaMensileGlicemiaPerMeseCorrente(int idPaziente, int anno, int mese);
+    List<RilevazioneGlicemica> recuperaRilevazioniPerData(int idPaziente, LocalDate data);
 }
