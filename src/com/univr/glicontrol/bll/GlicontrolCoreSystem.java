@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -155,38 +156,43 @@ public class GlicontrolCoreSystem {
     // In caso di mancata assunzione, il metodo ritornerà false e verrà utilizzato per segnalare al paziente la necessità di assumere i farmaci
     public boolean verificaAssunzioneRispettoAllOrario(Paziente paziente, String nomeFarmaco) {
         gestioneAssunzioneFarmaci = new GestioneAssunzioneFarmaci(paziente);
-        List<AssunzioneFarmaco> farmaciAssuntiOggi = gestioneAssunzioneFarmaci.getListaFarmaciAssuntiOggi(Date.valueOf(LocalDate.now()), nomeFarmaco);
+        List<AssunzioneFarmaco> farmaciAssuntiOggi = gestioneAssunzioneFarmaci
+                .getListaFarmaciAssuntiOggi(Date.valueOf(LocalDate.now()), nomeFarmaco);
 
-        // Verifica se il farmaco è stato assunto oggi
-        if (farmaciAssuntiOggi.isEmpty()) {
-            return false;
-        }
+        // Recupera gli orari di assunzione previsti per il farmaco
+        List<LocalTime> orariPrevisti = getOrariPrevisti(paziente, nomeFarmaco);
+        if (orariPrevisti.isEmpty()) return false;
 
+        // Trova l'orario più vicino rispetto all'orario attuale
+        LocalTime oraAttuale = LocalTime.now();
+        LocalTime orarioPiuVicino = getOrarioPiuVicino(oraAttuale, orariPrevisti);
+
+        // Calcola la finestra di assunzione valida: -15 minuti fino a +∞
+        LocalTime inizioFinestra = orarioPiuVicino.minusMinutes(15);
+
+        // Estrai l’orario dell’ultima registrazione (se presente)
         Time oraUltimaRegistrazione = null;
-        // Scorre l'intera lista per corrispondenza del farmaco alla ricerca dell'ultimo orario di assunzione registrato nella giornata attuale
         for (AssunzioneFarmaco af : farmaciAssuntiOggi) {
             if (GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco).getNome().equals(nomeFarmaco)) {
-                oraUltimaRegistrazione = af.getOra();
+                if (oraUltimaRegistrazione == null || af.getOra().after(oraUltimaRegistrazione)) {
+                    oraUltimaRegistrazione = af.getOra(); // tiene l'assunzione più recente
+                }
             }
         }
 
-        // Il farmaco non è ancora stato registrato come assunto
-        if (oraUltimaRegistrazione == null) {
-            return false;
-        }
-
-        List<LocalTime> orariPrevisti = getOrariPrevisti(paziente, nomeFarmaco);
-        LocalTime orarioPiuVicino = getOrarioPiuVicino(LocalTime.now(), orariPrevisti);
-
-        Duration intervalloDaOraAllaProssimaAssunzione = Duration.between(LocalTime.now(), orarioPiuVicino).abs();
-        // Se l'ora dell'ultima registrazione ha superato l'orario più vicino, nel corso della giornata odierna, significa che ho assunto il farmaco
-        if (oraUltimaRegistrazione.toLocalTime().isAfter(orarioPiuVicino) || oraUltimaRegistrazione.toLocalTime().equals(orarioPiuVicino)) {
+        // Se il farmaco è stato assunto dopo l’inizio della finestra per questo orario, consideralo "assunto"
+        if (oraUltimaRegistrazione != null &&
+                !oraUltimaRegistrazione.toLocalTime().isBefore(inizioFinestra)) {
             return true;
         }
 
-        // Quando ci si avvicina al prossimo orario di assunzione e mancano 15 minuti, il farmaco riappare in lista, altrimenti risulta come assunto
-        return intervalloDaOraAllaProssimaAssunzione.toMinutes() >= 15;
+        // Se non è stato assunto, e siamo entro i 15 minuti prima dell’orario o oltre, segnala che deve essere assunto
+        if (!oraAttuale.isBefore(inizioFinestra)) {
+            return false; // Deve essere assunto (o è in ritardo)
+        }
 
+        // Troppo presto, non mostrare ancora
+        return true;
     }
 
 
