@@ -1,6 +1,5 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoListaUtenti;
 import com.univr.glicontrol.dao.AccessoListaUtentiImpl;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.application.Platform;
@@ -30,6 +29,7 @@ public class GlicontrolCoreSystem {
     private GestioneTerapie gestioneTerapie = null;
     private GestioneAssunzioneFarmaci gestioneAssunzioneFarmaci = null;
     private final UtilityPortalePaziente utilityPortalePaziente = new UtilityPortalePaziente();
+    private GestionePasti gestionePasti = null;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     private GlicontrolCoreSystem() {
@@ -189,12 +189,8 @@ public class GlicontrolCoreSystem {
         }
 
         // Se non è stato assunto, e siamo entro i 15 minuti prima dell’orario o oltre, segnala che deve essere assunto
-        if (!oraAttuale.isBefore(inizioFinestra)) {
-            return false; // Deve essere assunto (o è in ritardo)
-        }
+        return oraAttuale.isBefore(inizioFinestra); // Deve essere assunto (o è in ritardo)
 
-        // Troppo presto, non mostrare ancora
-        return true;
     }
 
 
@@ -237,7 +233,7 @@ public class GlicontrolCoreSystem {
         }, 0, 10, TimeUnit.MINUTES);
     }
 
-    public void stopMonitoraggioAssunzioneFarmaci() {
+    public void stopScheduler() {
         scheduler.shutdownNow();
     }
 
@@ -276,6 +272,7 @@ public class GlicontrolCoreSystem {
         return false;
     }
 
+
     // Task automatico che verifica se uno dei pazienti presenti nel sistema non sta assumendo i suoi farmaci da più di 3 giorni
     public void monitoraSospensioneFarmaci() {
         listaPazienti = new AccessoListaUtentiImpl().recuperaTuttiIPazienti();
@@ -294,5 +291,40 @@ public class GlicontrolCoreSystem {
                 System.err.println("Errore durante il controllo periodico delle sospensioni dei farmaci: " + e.getMessage());
             }
         }, 0, 1, TimeUnit.HOURS);
+    }
+
+    // Recupera gli orari dei pasti per il paziente selezionato al fine di inviargli promemoria circa la registrazione dei valori glicemici
+    public void promemoriaRegistrazioneGlicemica(Paziente paziente) {
+        Runnable task = () -> {
+            try {
+                gestionePasti = new GestionePasti(paziente);
+                List<Pasto> pastiPaziente = gestionePasti.getPasti();
+                List<LocalTime> orariPasti = new ArrayList<>();
+
+                for (Pasto p : pastiPaziente) {
+                    LocalTime orario = p.getOrario().toLocalTime();
+                    orariPasti.add(orario.minusMinutes(20));  // prima del pasto
+                    orariPasti.add(orario.plusMinutes(20));   // dopo il pasto
+                }
+
+                LocalTime oraAttuale = LocalTime.now().withSecond(0).withNano(0); // allineato al minuto
+                LocalTime orarioTarget = getOrarioPiuVicino(oraAttuale, orariPasti);
+
+                if (orarioTarget.equals(oraAttuale)) {
+                    Platform.runLater(() -> {
+                        ServizioNotifiche notifichePasti = new ServizioNotifiche();
+                        notifichePasti.promemoriaRegistrazioneGlicemia();
+                    });
+                }
+
+            } catch (Exception e) {
+                System.err.println("Errore nel promemoria glicemia: " + e.getMessage());
+            }
+        };
+
+        long millisNow = System.currentTimeMillis();
+        long delayMillis = 60000 - (millisNow % 60000); // sincronizzazione al minuto esatto
+
+        scheduler.scheduleAtFixedRate(task, delayMillis, 60000, TimeUnit.MILLISECONDS);
     }
 }

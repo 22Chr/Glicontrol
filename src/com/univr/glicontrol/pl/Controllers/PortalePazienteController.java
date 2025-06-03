@@ -78,18 +78,9 @@ public class PortalePazienteController {
         ultimeRilevazioni.addAll(upp.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.setItems(ultimeRilevazioni);
 
-//        PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(0.5));
-//        pause.setOnFinished(e -> {
-//            if (GlicontrolCoreSystem.getInstance().presenzaFarmaciNonRegistrati(paziente)) {
-//                Platform.runLater(() -> {
-//                    ServizioNotifiche promemoriaFarmaci = new ServizioNotifiche();
-//                    promemoriaFarmaci.mostraNotifichePromemoriaAssunzioneFarmaci();
-//                });
-//            }
-//        });
-//        pause.play();
-
+        // Task automatici sempre attivi in background
         GlicontrolCoreSystem.getInstance().monitoraAssunzioneFarmaci(paziente);
+        GlicontrolCoreSystem.getInstance().promemoriaRegistrazioneGlicemica(paziente);
     }
 
     public void openProfile() {
@@ -133,7 +124,7 @@ public class PortalePazienteController {
             alert.setHeaderText("Sei sicuro di voler uscire?");
 
             if (alert.showAndWait().get() == ButtonType.OK) {
-                GlicontrolCoreSystem.getInstance().stopMonitoraggioAssunzioneFarmaci();
+                GlicontrolCoreSystem.getInstance().stopScheduler();
                 stage.close();
             }
         });

@@ -17,10 +17,11 @@ public class GestionePasti {
     }
 
     public List<Pasto> getPasti() {
+        aggiornaListaPasti();
         return pasti;
     }
 
-    public void aggiornaListaPasti() {
+    private void aggiornaListaPasti() {
         pasti = accessoPasti.recuperaPastiPerUtente(paziente.getIdUtente());
     }
 

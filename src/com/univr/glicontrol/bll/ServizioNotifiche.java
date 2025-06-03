@@ -59,4 +59,12 @@ public class ServizioNotifiche {
         sospensioneFarmacoTerapiaAlert.setContentText("Il paziente " + paziente.getNome() + " non assume i farmaci prescritti da più di 3 giorni.\nSi consiglia di contattare il paziente per dei chiarimenti");
         sospensioneFarmacoTerapiaAlert.showAndWait();
     }
+
+    public void promemoriaRegistrazioneGlicemia() {
+        Alert promemoriaRegistrazioneGlicemiaAlert = new Alert(Alert.AlertType.INFORMATION);
+        promemoriaRegistrazioneGlicemiaAlert.setTitle("System Notification Service");
+        promemoriaRegistrazioneGlicemiaAlert.setHeaderText("Promemoria di registrazione della glicemia");
+        promemoriaRegistrazioneGlicemiaAlert.setContentText("Ricorda di registrare i tuoi valori glicemici");
+        promemoriaRegistrazioneGlicemiaAlert.showAndWait();
+    }
 }
