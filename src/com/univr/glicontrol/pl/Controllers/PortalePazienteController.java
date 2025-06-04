@@ -70,13 +70,43 @@ public class PortalePazienteController {
 
         // Se hai un paziente corrente salvato, crea la gestione
         gestione = new GestioneRilevazioniGlicemia(paziente);
+        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente);
 
         aggiornaGrafico();
 
         //Inizializza la lista delle ultime rilevazioni glicemiche
         ObservableList<String> ultimeRilevazioni = FXCollections.observableArrayList();
         ultimeRilevazioni.addAll(upp.getListaRilevazioniGlicemicheOdierne());
-        ultimeRilevazioniLV.setItems(ultimeRilevazioni);
+        ultimeRilevazioniLV.getItems().setAll(ultimeRilevazioni);
+
+        ultimeRilevazioniLV.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+
+                int index = getIndex();
+                if (index >= 0 && index < codiciRilevazioni.size()) {
+                    int severity = codiciRilevazioni.get(index);
+                    String style;
+
+                    switch (Math.abs(severity)) {
+                        case 0 -> style = "";
+                        case 1 -> style = "-fx-background-color: #ffdd00; -fx-text-fill: black;";
+                        case 2 -> style = "-fx-background-color: #ff9900; -fx-text-fill: black;";
+                        case 3 -> style = "-fx-background-color: #ff0000; -fx-text-fill: white;";
+                        case 4 -> style = "-fx-background-color: #6b0c8a; -fx-text-fill: white;";
+                        default -> style = "";
+                    }
+
+                    setStyle(style);
+                } else {
+                    setStyle("");
+                }
+            }
+        });
+
+
 
         // Task automatici sempre attivi in background
         GlicontrolCoreSystem.getInstance().monitoraAssunzioneFarmaci(paziente);
@@ -251,6 +281,35 @@ public class PortalePazienteController {
         UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
         ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
         newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemicheOdierne());
-        ultimeRilevazioniLV.setItems(newRilevazioni);
+        ultimeRilevazioniLV.getItems().setAll(newRilevazioni);
+
+        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente);
+
+        ultimeRilevazioniLV.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+
+                int index = getIndex();
+                if (index >= 0 && index < codiciRilevazioni.size()) {
+                    int severity = codiciRilevazioni.get(index);
+                    String style;
+
+                    switch (Math.abs(severity)) {
+                        case 0 -> style = "";
+                        case 1 -> style = "-fx-background-color: #ffdd00; -fx-text-fill: black;";
+                        case 2 -> style = "-fx-background-color: #ff9900; -fx-text-fill: black;";
+                        case 3 -> style = "-fx-background-color: #ff0000; -fx-text-fill: white;";
+                        case 4 -> style = "-fx-background-color: #6b0c8a; -fx-text-fill: white;";
+                        default -> style = "";
+                    }
+
+                    setStyle(style);
+                } else {
+                    setStyle("");
+                }
+            }
+        });
     }
 }

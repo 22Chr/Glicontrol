@@ -229,7 +229,7 @@ public class GlicontrolCoreSystem {
             } catch (Exception e) {
                 System.err.println("Errore durante il controllo periodico delle assunzioni dei farmaci: " + e.getMessage());
             }
-        }, 0, 10, TimeUnit.MINUTES);
+        }, 0, 5, TimeUnit.MINUTES);
     }
 
     public void stopScheduler() {
