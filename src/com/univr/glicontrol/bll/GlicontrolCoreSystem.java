@@ -1,6 +1,5 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoListaUtentiImpl;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.application.Platform;
 
@@ -24,15 +23,16 @@ public class GlicontrolCoreSystem {
 //     1) Invia alert ai medici con codici differenti a seconda della gravità
 //     2) Colora con tinte diverse i valori nelle liste delle rilevazioni (sia lato paziente che medico): verde ok, arancione insomma, rosso male
 
-    private final ListaPazienti utilityListaPazienti = new ListaPazienti();
-    private List<Paziente> listaPazienti = null;
+    private final List<Paziente> listaPazienti;
     private GestioneTerapie gestioneTerapie = null;
     private GestioneAssunzioneFarmaci gestioneAssunzioneFarmaci = null;
     private final UtilityPortalePaziente utilityPortalePaziente = new UtilityPortalePaziente();
     private GestionePasti gestionePasti = null;
+    private GestioneRilevazioniGlicemia gestioneRilevazioniGlicemia = null;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     private GlicontrolCoreSystem() {
+        ListaPazienti utilityListaPazienti = new ListaPazienti();
         listaPazienti = utilityListaPazienti.getListaCompletaPazienti();
     }
 
@@ -45,7 +45,6 @@ public class GlicontrolCoreSystem {
     public static GlicontrolCoreSystem getInstance() {
         return GlicontrolCoreSystem.Holder.INSTANCE;
     }
-
 
     // VERIFICA IL RISPETTO DEI DOSAGGI DEI FARMACI RISPETTO AL SINGOLO UTENTE (LIVELLO PORTALE PAZIENTE)
     public boolean verificaCoerenzaDosaggioFarmaci(Paziente paziente, String nomeFarmaco, float dosaggio) {
@@ -275,15 +274,13 @@ public class GlicontrolCoreSystem {
 
     // Task automatico che verifica se uno dei pazienti presenti nel sistema non sta assumendo i suoi farmaci da più di 3 giorni
     public void monitoraSospensioneFarmaci() {
-        listaPazienti = new AccessoListaUtentiImpl().recuperaTuttiIPazienti();
-
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 for (Paziente paziente : listaPazienti) {
                     if (verificaSospensioneFarmaci(paziente)) {
                         Platform.runLater(() -> {
                             ServizioNotifiche notificheSospensione = new ServizioNotifiche();
-                            notificheSospensione.sospensioneFarmacoTerapia(paziente);
+                            notificheSospensione.notificaSospensioneFarmacoTerapia(paziente);
                         });
                     }
                 }
@@ -303,8 +300,8 @@ public class GlicontrolCoreSystem {
 
                 for (Pasto p : pastiPaziente) {
                     LocalTime orario = p.getOrario().toLocalTime();
-                    orariPasti.add(orario.minusMinutes(20));  // prima del pasto
-                    orariPasti.add(orario.plusMinutes(20));   // dopo il pasto
+                    orariPasti.add(orario.minusMinutes(20));  // 20 minuti prima del pasto
+                    orariPasti.add(orario.plusHours(2));   // 2 ore dopo il pasto
                 }
 
                 LocalTime oraAttuale = LocalTime.now().withSecond(0).withNano(0); // allineato al minuto
@@ -313,7 +310,7 @@ public class GlicontrolCoreSystem {
                 if (orarioTarget.equals(oraAttuale)) {
                     Platform.runLater(() -> {
                         ServizioNotifiche notifichePasti = new ServizioNotifiche();
-                        notifichePasti.promemoriaRegistrazioneGlicemia();
+                        notifichePasti.notificaPromemoriaRegistrazioneGlicemia();
                     });
                 }
 
@@ -326,5 +323,77 @@ public class GlicontrolCoreSystem {
         long delayMillis = 60000 - (millisNow % 60000); // sincronizzazione al minuto esatto
 
         scheduler.scheduleAtFixedRate(task, delayMillis, 60000, TimeUnit.MILLISECONDS);
+    }
+
+    // Verifica i livelli glicemici in relazione ai pasti e classifica i diversi livelli in base alla gravità
+    public List<Integer> verificaLivelliGlicemici(Paziente paziente) {
+        // Legenda codici:
+        //  0: normale (valido anche in caso di assenza di rilevazioni per la giornata)
+        // -1: lieve anomalia a digiuno
+        //  1: lieve anomalia post-prandiale
+        // -2: moderata criticità a digiuno
+        //  2: moderata criticità post-prandiale
+        // -3: alta criticità a digiuno
+        //  3: alta criticità post-prandiale
+        // -4: emergenza medica a digiuno
+        //  4: emergenza medica post-prandiale
+
+        gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
+        List<RilevazioneGlicemica> rilevazioniOdierne = gestioneRilevazioniGlicemia.getRilevazioniPerData(LocalDate.now());
+        List<Integer> codiciLivelli = new ArrayList<>();
+
+        if (rilevazioniOdierne.isEmpty()) return null;
+
+        for (RilevazioneGlicemica r : rilevazioniOdierne) {
+            if (r.getIndicazioniTemporali().equals("prima")) {
+                if (r.getValore() >= 80 && r.getValore() <= 130) {
+                    codiciLivelli.add(0);
+                } else if (r.getValore() >= 70 && r.getValore() < 80 || r.getValore() > 130 && r.getValore() <= 150) {
+                    codiciLivelli.add(-1);
+                } else if (r.getValore() >= 60 && r.getValore() < 70 || r.getValore() > 150 && r.getValore() <= 180) {
+                    codiciLivelli.add(-2);
+                } else if (r.getValore() >= 50 && r.getValore() < 60 || r.getValore() > 180 && r.getValore() <= 250) {
+                    codiciLivelli.add(-3);
+                } else {
+                    codiciLivelli.add(-4);
+                }
+            } else {
+                if (r.getValore() >= 90 && r.getValore() < 180) {
+                    codiciLivelli.add(0);
+                } else if (r.getValore() >= 80 && r.getValore() < 90 || r.getValore() >= 180 && r.getValore() < 200) {
+                    codiciLivelli.add(1);
+                } else if (r.getValore() >= 70 && r.getValore() < 80 || r.getValore() >= 200 && r.getValore() < 250) {
+                    codiciLivelli.add(2);
+                } else if (r.getValore() >= 60 && r.getValore() < 70 || r.getValore() >= 250 && r.getValore() < 300) {
+                    codiciLivelli.add(3);
+                } else {
+                    codiciLivelli.add(4);
+                }
+            }
+        }
+
+        return codiciLivelli;
+    }
+
+    // Task in background per monitorare i livelli glicemici dei pazienti e inviare alert ai medici
+    public void monitoraLivelliGlicemici() {
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                for (int i = 0; i < listaPazienti.size(); i++) {
+                    if (verificaLivelliGlicemici(listaPazienti.get(i)) != null) {
+                        int livelloGlicemico = verificaLivelliGlicemici(listaPazienti.get(i)).get(i);
+                        if (livelloGlicemico != 0) {
+                            int index = i;
+                            Platform.runLater(() -> {
+                                ServizioNotifiche notificheLivelli = new ServizioNotifiche();
+                                notificheLivelli.notificaLivelliGlicemici(listaPazienti.get(index), livelloGlicemico);
+                            });
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Errore nel controllo dei livelli glicemici: " + e.getMessage());
+            }
+        }, 0, 30, TimeUnit.SECONDS);
     }
 }

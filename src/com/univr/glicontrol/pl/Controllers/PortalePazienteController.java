@@ -189,7 +189,7 @@ public class PortalePazienteController {
         switch (visualizzazioneAttuale) {
             case MENSILE -> {
                 int mese = oggi.getMonthValue();
-                serie.setName("Media Settimanale del Mese");
+                serie.setName("Andamento mensile");
 
                 Map<String, Double> mediaSettimanale = gestione.getMediaMensileGlicemiaPerMeseCorrente(anno, mese);
 
@@ -202,7 +202,7 @@ public class PortalePazienteController {
             case SETTIMANALE -> {
                 WeekFields wf = WeekFields.of(Locale.getDefault());
                 int settimana = oggi.get(wf.weekOfWeekBasedYear());
-                serie.setName("Media Giornaliera della Settimana");
+                serie.setName("Andamento settimanale");
 
                 Map<String, Double> mediaGiornaliera = gestione.getMediaGiornalieraGlicemia(anno, settimana);
                 for (var entry : mediaGiornaliera.entrySet()) {
@@ -213,7 +213,7 @@ public class PortalePazienteController {
             }
 
             case GIORNALIERA -> {
-                serie.setName("Rilevazioni Odierne");
+                serie.setName("Andamento odierno");
 
                 List<RilevazioneGlicemica> rilevazioniOggi = gestione.getRilevazioniPerData(oggi);
                 for (RilevazioneGlicemica rilevazione : rilevazioniOggi) {
@@ -226,9 +226,9 @@ public class PortalePazienteController {
         andamentoGlicemiaLC.getData().add(serie);
 
         visualizzazioneAttuale = switch (visualizzazioneAttuale) {
-            case MENSILE -> visualizzazioneAttuale.SETTIMANALE;
-            case SETTIMANALE -> visualizzazioneAttuale.GIORNALIERA;
-            case GIORNALIERA -> visualizzazioneAttuale.MENSILE;
+            case MENSILE -> ModalitaVisualizzazione.SETTIMANALE;
+            case SETTIMANALE -> ModalitaVisualizzazione.GIORNALIERA;
+            case GIORNALIERA -> ModalitaVisualizzazione.MENSILE;
         };
     }
 

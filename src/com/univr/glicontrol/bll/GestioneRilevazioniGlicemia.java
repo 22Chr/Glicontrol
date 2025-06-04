@@ -28,6 +28,7 @@ public class GestioneRilevazioniGlicemia {
     }
 
     public int inserisciRilevazione(Date data, Time ora, float valore, String pasto, String indicazioniTemporali) {
+        aggiornaListaRilevazioni();
         for (RilevazioneGlicemica rilevazione : rilevazioni) {
             if (rilevazione.getData().equals(data) && rilevazione.getOra().equals(ora)) {
                 return -1;

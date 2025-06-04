@@ -23,6 +23,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
             java.sql.Connection conn = DriverManager.getConnection(url, user, pwd);
             PreparedStatement recuperaRilevazioniStmt = conn.prepareStatement(recuperaRilevazioniSql);
             recuperaRilevazioniStmt.setInt(1, idPaziente);
+
             try (ResultSet rs = recuperaRilevazioniStmt.executeQuery()) {
                 while (rs.next()) {
                     rilevazioni.add(new RilevazioneGlicemica(
@@ -180,7 +181,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                         rs.getInt("id_paziente_glicemico"),
                         rs.getDate("data"),
                         rs.getTime("ora"),
-                        rs.getInt("valore"),
+                        rs.getFloat("valore"),
                         rs.getString("pasto"),
                         rs.getString("indicazioni_temporali")
                 );

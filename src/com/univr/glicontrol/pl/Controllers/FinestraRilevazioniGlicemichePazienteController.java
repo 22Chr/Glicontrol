@@ -1,9 +1,8 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.GestioneRilevazioniGlicemia;
-import com.univr.glicontrol.bll.Paziente;
-import com.univr.glicontrol.bll.RilevazioneGlicemica;
+import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

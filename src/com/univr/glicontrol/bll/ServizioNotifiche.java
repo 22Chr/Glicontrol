@@ -2,6 +2,8 @@ package com.univr.glicontrol.bll;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 
 import java.util.Properties;
 
@@ -44,7 +46,7 @@ public class ServizioNotifiche {
         promemoriaAssunzioneFarmaciAlert.showAndWait();
     }
 
-    public void mancataAderenzaOrariFarmaciTerapia() {
+    public void notificaMancataAderenzaOrariFarmaciTerapia() {
         Alert orariTerapiaNonRispettatiAlert = new Alert(Alert.AlertType.WARNING);
         orariTerapiaNonRispettatiAlert.setTitle("System Notification Service");
         orariTerapiaNonRispettatiAlert.setHeaderText("Orario di assunzione non conforme");
@@ -52,7 +54,7 @@ public class ServizioNotifiche {
         orariTerapiaNonRispettatiAlert.showAndWait();
     }
 
-    public void sospensioneFarmacoTerapia(Paziente paziente) {
+    public void notificaSospensioneFarmacoTerapia(Paziente paziente) {
         Alert sospensioneFarmacoTerapiaAlert = new Alert(Alert.AlertType.WARNING);
         sospensioneFarmacoTerapiaAlert.setTitle("System Notification Service");
         sospensioneFarmacoTerapiaAlert.setHeaderText("Sospensione farmaci");
@@ -60,11 +62,46 @@ public class ServizioNotifiche {
         sospensioneFarmacoTerapiaAlert.showAndWait();
     }
 
-    public void promemoriaRegistrazioneGlicemia() {
+    public void notificaPromemoriaRegistrazioneGlicemia() {
         Alert promemoriaRegistrazioneGlicemiaAlert = new Alert(Alert.AlertType.INFORMATION);
         promemoriaRegistrazioneGlicemiaAlert.setTitle("System Notification Service");
         promemoriaRegistrazioneGlicemiaAlert.setHeaderText("Promemoria di registrazione della glicemia");
         promemoriaRegistrazioneGlicemiaAlert.setContentText("Ricorda di registrare i tuoi valori glicemici");
         promemoriaRegistrazioneGlicemiaAlert.showAndWait();
+    }
+
+    public void notificaLivelliGlicemici(Paziente paziente, int indiceGlicemico) {
+        Alert livelliGlicemiciAlert = new Alert(Alert.AlertType.WARNING);
+        livelliGlicemiciAlert.setTitle("System Notification Service");
+
+        if (indiceGlicemico < 0) {
+            livelliGlicemiciAlert.setHeaderText("Anomalia nei livelli glicemici a digiuno");
+        } else {
+            livelliGlicemiciAlert.setHeaderText("Anomalia nei livelli glicemici postprandiali");
+        }
+
+        Label textLabel;
+        switch (Math.abs(indiceGlicemico)) {
+            case 1:
+                    livelliGlicemiciAlert.setContentText("Il paziente " + paziente.getNome() + " " + paziente.getCognome() + " (" + paziente.getCodiceFiscale() + ") ha registrato un livello glicemico lievemente alterato");
+                    livelliGlicemiciAlert.getDialogPane().setStyle("-fx-background-color: #ffdd00;");
+                    break;
+            case 2: livelliGlicemiciAlert.setContentText("Il paziente " + paziente.getNome() + " " + paziente.getCognome() + " (" + paziente.getCodiceFiscale() + ") ha registrato un livello glicemico moderatamente critico.\nSi consiglia di tenere monitorato il paziente");
+                    livelliGlicemiciAlert.getDialogPane().setStyle("-fx-background-color: #ff9900;");
+                    break;
+
+            case 3: textLabel = new Label("Il paziente " + paziente.getNome() + " " + paziente.getCognome() + " (" + paziente.getCodiceFiscale() + ") ha registrato un livello glicemico critico.\nSi consiglia di rivedere la dieta e/o la terapia farmacologica");
+                    textLabel.setStyle("-fx-text-fill: white;");
+                    livelliGlicemiciAlert.getDialogPane().setContent(textLabel);
+                    livelliGlicemiciAlert.getDialogPane().setStyle("-fx-background-color: #ff0000;");
+                    break;
+            case 4: textLabel = new Label("Il paziente " + paziente.getNome() + " " + paziente.getCognome() + " (" + paziente.getCodiceFiscale() + ") ha registrato un livello glicemico estremamente critico.\nÈ necessario un intervento medico immediato");
+                    textLabel.setStyle("-fx-text-fill: white;");
+                    livelliGlicemiciAlert.getDialogPane().setContent(textLabel);
+                    livelliGlicemiciAlert.getDialogPane().setStyle("-fx-background-color: #6b0c8a;");
+                    break;
+        }
+
+        livelliGlicemiciAlert.showAndWait();
     }
 }

@@ -172,7 +172,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
             if (!GlicontrolCoreSystem.getInstance().verificaCoerenzaOrarioAssunzione(paziente, farmaco.getNome(), oraAssunzione)) {
                 Platform.runLater(() -> {
                     ServizioNotifiche promemoriaNotifiche = new ServizioNotifiche();
-                    promemoriaNotifiche.mancataAderenzaOrariFarmaciTerapia();
+                    promemoriaNotifiche.notificaMancataAderenzaOrariFarmaciTerapia();
                 });
             }
         });
