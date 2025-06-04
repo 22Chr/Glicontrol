@@ -3,6 +3,7 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.animation.FadeTransition;
+import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -153,33 +154,61 @@ public class FinestraTerapiePazienteController {
     }
 
     private void mostraFarmaciTerapia() {
+        FadeTransition fadeOutIndicazioniFarmaci = new FadeTransition(javafx.util.Duration.millis(150), indicazioniFarmacoGP);
+        fadeOutIndicazioniFarmaci.setFromValue(1.0);
+        fadeOutIndicazioniFarmaci.setToValue(0.0);
+        fadeOutIndicazioniFarmaci.play();
         indicazioniFarmacoGP.setVisible(false);
 
-        FadeTransition fadeOut = new FadeTransition(javafx.util.Duration.millis(500), infoTerapiaVB);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.0);
-        fadeOut.play();
+        FadeTransition fadeOutInfoTerapia = new FadeTransition(javafx.util.Duration.millis(150), infoTerapiaVB);
+        fadeOutInfoTerapia.setFromValue(1.0);
+        fadeOutInfoTerapia.setToValue(0.0);
+        fadeOutInfoTerapia.play();
+        infoTerapiaVB.setVisible(false);
 
-        if (!(infoTerapiaVB.isVisible())) {
-            infoTerapiaVB.setVisible(true);
-        }
-        nomeTerapiaTF.setText(terapiePazienteLV.getSelectionModel().getSelectedItem());
-        Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
-        dateTerapiaTF.setText(upp.getIndicazioniTemporaliTerapia(terapia));
-        FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(750), infoTerapiaVB);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
-        fadeIn.play();
+        String nomeTerapia = terapiePazienteLV.getSelectionModel().getSelectedItem();
 
-        // Popola la lista dei farmaci associati alla terapia visualizzata
-        ObservableList<String> farmaci = FXCollections.observableArrayList();
-        List<FarmacoTerapia> listaFarmaci = terapia.getListaFarmaciTerapia();
+        Task<Void> loadingTask = new Task<>() {
 
-        for (FarmacoTerapia farmaco : listaFarmaci) {
-            farmaci.add(farmaco.getFarmaco().getNome());
-        }
-        farmaciTerapiaLV.setItems(farmaci);
+            @Override
+            protected Void call() {
+                Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapia);
+                String dataTerapia = upp.getIndicazioniTemporaliTerapia(terapia);
 
+                // Popola la lista dei farmaci associati alla terapia visualizzata
+                ObservableList<String> farmaci = FXCollections.observableArrayList();
+                List<FarmacoTerapia> listaFarmaci = terapia.getListaFarmaciTerapia();
+
+                for (FarmacoTerapia farmaco : listaFarmaci) {
+                    farmaci.add(farmaco.getFarmaco().getNome());
+                }
+
+                Platform.runLater(() -> {
+                    nomeTerapiaTF.setText(nomeTerapia);
+                    dateTerapiaTF.setText(dataTerapia);
+                    farmaciTerapiaLV.setItems(farmaci);
+                });
+
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                infoTerapiaVB.setVisible(true);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(100), infoTerapiaVB);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            }
+
+            @Override
+            protected void failed() {
+                infoTerapiaVB.setVisible(false);
+                System.err.println("Errore durante il caricamento dei dati della terapia selezionata");
+            }
+        };
+
+        new Thread(loadingTask).start();
 
     }
 
@@ -206,7 +235,7 @@ public class FinestraTerapiePazienteController {
             @Override
             protected void succeeded() {
                 indicazioniFarmacoGP.setVisible(true);
-                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(250), indicazioniFarmacoGP);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(100), indicazioniFarmacoGP);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
                 fadeIn.play();
