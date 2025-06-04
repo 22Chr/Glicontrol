@@ -36,6 +36,7 @@ public class PortalePazienteController {
 
 
 
+
     @FXML
     private TextField nomeMedicoRiferimentoTF, cognomeMedicoRiferimentoTF, emailMedicoRiferimentoTF;
 
