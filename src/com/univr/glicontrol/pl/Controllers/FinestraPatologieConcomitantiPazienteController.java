@@ -12,8 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 public class FinestraPatologieConcomitantiPazienteController {
 
@@ -33,9 +31,14 @@ public class FinestraPatologieConcomitantiPazienteController {
     private HBox mainPage;
     @FXML
     private VBox detailPage;
+    @FXML
+    private Button indietroPortaleMedicoB, indietroPortalePazienteB, terminaPatologiaB;
 
     @FXML
     private void initialize(){
+        indietroPortaleMedicoB.setVisible(false);
+        terminaPatologiaB.setVisible(false);
+
         ObservableList<String> patologie = FXCollections.observableArrayList();
         patologie.addAll(upp.getListaPatologieConcomitantiPazienti());
         patologiePazienteLV.setItems(patologie);
@@ -141,29 +144,4 @@ public class FinestraPatologieConcomitantiPazienteController {
         }
     }
 
-    public void terminaPatologiaConcomitante() {
-        PatologiaConcomitante patologia = upp.getPatologiaConcomitantePerNomeFormattata(patologiePazienteLV.getSelectionModel().getSelectedItem());
-        if (patologia.getDataFine() != null) {
-            Alert terminazioneGiaAvvenutaAlert = new Alert(Alert.AlertType.ERROR);
-            terminazioneGiaAvvenutaAlert.setTitle("System Information Service");
-            terminazioneGiaAvvenutaAlert.setHeaderText("Patologia concomitante già terminata");
-            String dataFormattata = new SimpleDateFormat("dd/MM/yyyy").format(patologia.getDataFine());
-            terminazioneGiaAvvenutaAlert.setContentText("La patologia concomitante è già stata terminata in data: " + dataFormattata);
-            terminazioneGiaAvvenutaAlert.showAndWait();
-            return;
-        }
-
-        patologia.setDataFine(Date.valueOf(LocalDate.now()));
-
-        if (gpc.aggiornaPatologiaConcomitante(patologia)) {
-            Alert successoTerminazionePatologiaAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoTerminazionePatologiaAlert.setTitle("System Information Service");
-            successoTerminazionePatologiaAlert.setHeaderText("Patologia concomitante terminata con successo");
-            successoTerminazionePatologiaAlert.setContentText("La patologia concomitante è stata segnata come conclusa in data odierna");
-            successoTerminazionePatologiaAlert.showAndWait();
-
-            resetListViewPatologie();
-            cambiaPagina();
-        }
-    }
 }

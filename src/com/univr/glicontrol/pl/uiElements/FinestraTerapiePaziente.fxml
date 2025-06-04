@@ -18,12 +18,12 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="1000.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraTerapiePazienteController">
     <children>
-      <HBox fx:id="loadingPage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="loadingPage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
          <children>
             <ProgressIndicator fx:id="progressIndicator" prefHeight="36.0" prefWidth="36.0" progress="0.0" radius="50.0" />
          </children>
       </HBox>
-        <HBox fx:id="mainPage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+        <HBox fx:id="mainPage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
                 <VBox fx:id="pageStorico" alignment="TOP_CENTER" prefHeight="523.0" prefWidth="329.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                     <children>

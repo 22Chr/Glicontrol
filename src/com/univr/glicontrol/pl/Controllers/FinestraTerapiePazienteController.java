@@ -3,7 +3,6 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
 import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,7 +74,7 @@ public class FinestraTerapiePazienteController {
                 progressIndicator.setVisible(false);
                 loadingPage.setVisible(false);
                 mainPage.setVisible(true);
-                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(250), mainPage);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(100), mainPage);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
                 fadeIn.play();
@@ -185,16 +184,41 @@ public class FinestraTerapiePazienteController {
     }
 
     private void mostraIndicazinoiFarmaciTerapia() {
-
         Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
 
-        indicazioniFarmacoGP.setVisible(true);
+        Task<Void> loadingTask = new Task<>() {
+            @Override
+            protected Void call() {
+                String dosaggioTerapia = terapia.getDosaggioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()) + " " +
+                        GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem()).getUnitaMisura();
+                String frequenzaTerapia = terapia.getFrequenzaPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
+                String orariTerapia = terapia.getOrarioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
 
-        dosaggiTerapiaTA.setText(
-                terapia.getDosaggioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()) + " " +
-                GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem()).getUnitaMisura()
-        );
-        frequenzaTerapiaTA.setText(terapia.getFrequenzaPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()));
-        orariTerapiaTA.setText(terapia.getOrarioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()));
+                Platform.runLater(() -> {
+                    dosaggiTerapiaTA.setText(dosaggioTerapia);
+                    frequenzaTerapiaTA.setText(frequenzaTerapia);
+                    orariTerapiaTA.setText(orariTerapia);
+                });
+
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                indicazioniFarmacoGP.setVisible(true);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(250), indicazioniFarmacoGP);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            }
+
+            @Override
+            protected void failed() {
+                indicazioniFarmacoGP.setVisible(false);
+                System.err.println("Errore durante il caricamento dei dati.");
+            }
+        };
+
+        new Thread(loadingTask).start();
     }
 }
