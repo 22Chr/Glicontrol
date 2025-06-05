@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="918.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortaleMedicoController">
+   <top>
+      <HBox prefHeight="78.0" prefWidth="855.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="56.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+               <image>
+                  <Image url="@logo.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Region prefHeight="78.0" prefWidth="350.0" HBox.hgrow="ALWAYS" />
+            <Circle fx:id="badgeC" fill="DODGERBLUE" radius="18.0" stroke="BLACK" strokeType="INSIDE" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </Circle>
+            <Button fx:id="centroNotificheB" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="20.0" top="17.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="36.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@centroNotifiche.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefWidth="275.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #ffffffff;" text="ELENCO DEI PAZIENTI IN CURA" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="3.0" right="3.0" top="3.0" />
+               </VBox.margin>
+            </Label>
+            <Label alignment="CENTER" prefHeight="20.0" prefWidth="295.0" text="Pazienti di cui sei referente " textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ListView fx:id="pazientiReferenteLV" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets left="3.0" right="3.0" />
+               </VBox.margin>
+            </ListView>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="308.0" text="Tutti i pazienti" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ListView fx:id="pazientiGenericiLV" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="3.0" left="3.0" right="3.0" />
+               </VBox.margin>
+            </ListView>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="40.0" left="30.0" right="20.0" top="40.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <center>
+      <VBox alignment="CENTER" prefHeight="506.0" prefWidth="378.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="pazienteSelezionatoTF" maxWidth="400.0" promptText="Paziente selezionato" style="-fx-background-color: transparent; -fx-border-color: #22577a; -fx-border-radius: 5;" VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="terapieB" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Terapie" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="sintomiB" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Sintomi" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="rilevazioniGlicemicheB" alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Rilevazioni&#10;glicemiche&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="farmaciB" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Farmaci&#10;assunti&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="informazioniB" alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Informazioni &#10;del paziente&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" top="40.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <right>
+      <VBox prefWidth="275.0" spacing="10.0" style="-fx-border-color: #22577a; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
+         <children>
+            <LineChart fx:id="rilevazioniGiornaliereLC" VBox.vgrow="ALWAYS">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <LineChart fx:id="rilevazioniSettimanaliLC" VBox.vgrow="ALWAYS">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <LineChart fx:id="rilevazioniMensiliLC" VBox.vgrow="ALWAYS">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="40.0" left="20.0" right="30.0" top="40.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+</BorderPane>
