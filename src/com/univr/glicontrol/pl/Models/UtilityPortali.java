@@ -401,10 +401,10 @@ public class UtilityPortali {
 
 
     // genera la lista di tipo String formattata per la visualizzazione dei log in Portale Admin
+    private List<String> listaLogTerapieFormattata = new ArrayList<>();
     public List<String> getListaLogTerapieFormattata() {
         ListaPazienti lp = new ListaPazienti();
         ListaMedici lm = new ListaMedici();
-        List<String> listaLogTerapieFormattata = new ArrayList<>();
         GestioneLogTerapie glt = new GestioneLogTerapie();
         GestioneTerapie gt = new GestioneTerapie();
 
@@ -420,5 +420,27 @@ public class UtilityPortali {
         }
 
         return listaLogTerapieFormattata;
+    }
+
+    private void aggiornaListaLogTerapieFormattata() {
+        getListaLogTerapieFormattata();
+    }
+
+    public LogTerapia getLogTerapiaPerLogFormattato(String logFormattato) {
+        aggiornaListaLogTerapieFormattata();
+        ListaMedici lm = new ListaMedici();
+
+        for (LogTerapia lt : mappaLogTerapia.values()) {
+            String check = " in data " + lt.getTimestamp().toLocalDateTime().toLocalDate()
+                    + " alle ore " + lt.getTimestamp().toLocalDateTime().toLocalTime();
+
+            int limit = logFormattato.indexOf(check);
+
+            if (limit != -1 && check.equals(logFormattato.substring(limit))) {
+                return lt;
+            }
+        }
+
+        return null;
     }
 }
