@@ -433,6 +433,28 @@ public class UtilityPortali {
         return listaLogTerapieFormattata;
     }
 
+    private void aggiornaListaLogTerapieFormattata() {
+        getListaLogTerapieFormattata();
+    }
+
+    public LogTerapia getLogTerapiaPerLogFormattato(String logFormattato) {
+        aggiornaListaLogTerapieFormattata();
+        ListaMedici lm = new ListaMedici();
+
+        for (LogTerapia lt : mappaLogTerapia.values()) {
+            String check = " in data " + lt.getTimestamp().toLocalDateTime().toLocalDate()
+                    + " alle ore " + lt.getTimestamp().toLocalDateTime().toLocalTime();
+
+            int limit = logFormattato.indexOf(check);
+
+            if (limit != -1 && check.equals(logFormattato.substring(limit))) {
+                return lt;
+            }
+        }
+
+        return null;
+    }
+
 
     // recuperiamo le liste dei pazienti partizionandoli tra pazienti associati ad un dato referente attualmente connesso e gli altri
     private List<String> pazientiAssociatiAlReferente = new ArrayList<>();
