@@ -1,6 +1,6 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.application.Platform;
 
 import java.sql.Date;
@@ -26,7 +26,7 @@ public class GlicontrolCoreSystem {
     private final List<Paziente> listaPazienti;
     private GestioneTerapie gestioneTerapie = null;
     private GestioneAssunzioneFarmaci gestioneAssunzioneFarmaci = null;
-    private final UtilityPortalePaziente utilityPortalePaziente = new UtilityPortalePaziente();
+    private final UtilityPortali utilityPortali = new UtilityPortali();
     private GestionePasti gestionePasti = null;
     private GestioneRilevazioniGlicemia gestioneRilevazioniGlicemia = null;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();

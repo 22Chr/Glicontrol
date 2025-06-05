@@ -61,6 +61,16 @@ public class ListaPazienti {
         return null;
     }
 
+    // restituisce il paziente per id
+    public Paziente getPazientePerId(int id) {
+        for (Paziente p : listaPazienti) {
+            if (p.getIdUtente() == id) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public void aggiornaListaPazienti() {
         listaPazienti = accessoListaUtenti.recuperaTuttiIPazienti();
     }

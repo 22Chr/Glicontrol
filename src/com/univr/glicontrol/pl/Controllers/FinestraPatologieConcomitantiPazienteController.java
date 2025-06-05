@@ -1,9 +1,8 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.GestionePatologieConcomitanti;
-import com.univr.glicontrol.bll.PatologiaConcomitante;
 import com.univr.glicontrol.bll.Paziente;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ import java.sql.Date;
 
 public class FinestraPatologieConcomitantiPazienteController {
 
-    UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    UtilityPortali upp = new UtilityPortali();
     Paziente paziente = upp.getPazienteSessione();
     GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
 
@@ -74,7 +73,7 @@ public class FinestraPatologieConcomitantiPazienteController {
     }
 
     public void resetListViewPatologie(){
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newPatologie = FXCollections.observableArrayList();
         newPatologie.addAll(newUpp.getListaPatologieConcomitantiPazienti());
         patologiePazienteLV.setItems(newPatologie);

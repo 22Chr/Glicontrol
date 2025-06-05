@@ -1,7 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -18,7 +18,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 
 public class FinestraAssunzioneFarmaciPazienteController {
-    UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    UtilityPortali upp = new UtilityPortali();
     Paziente paziente = upp.getPazienteSessione();
     GestioneAssunzioneFarmaci gaf = new GestioneAssunzioneFarmaci(paziente);
 
@@ -239,7 +239,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
     }
 
     private void resetListViewFarmaciAssuntiOggi() {
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newFarmaciAssuntiOggi = FXCollections.observableArrayList();
         newFarmaciAssuntiOggi.addAll(newUpp.getListaFarmaciAssuntiOggi());
         farmaciAssuntiOggiLV.setItems(newFarmaciAssuntiOggi);
@@ -255,7 +255,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
     }
 
     private void resetListViewFarmaciDaAssumere() {
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
         farmaciDaAssumere.addAll(newUpp.getListaFarmaciDaAssumere());
         listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);

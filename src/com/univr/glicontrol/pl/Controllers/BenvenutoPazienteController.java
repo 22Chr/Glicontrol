@@ -1,7 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,7 +37,7 @@ public class BenvenutoPazienteController implements InserimentoPastiController {
     private int paginaCorrente = 0; //page 0
 
     private GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
-    Paziente paziente = new UtilityPortalePaziente().getPazienteSessione();
+    Paziente paziente = new UtilityPortali().getPazienteSessione();
     private FattoriRischio fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
 
     // ==============================
@@ -172,7 +172,7 @@ public class BenvenutoPazienteController implements InserimentoPastiController {
     @FXML
     private void initialize() {
         // Popola lista pasti
-        UtilityPortalePaziente upp = new UtilityPortalePaziente();
+        UtilityPortali upp = new UtilityPortali();
         ObservableList<String> pasti = FXCollections.observableArrayList();
         pasti.addAll(upp.getListaPasti());
         listaPasti.setItems(pasti);
@@ -181,7 +181,7 @@ public class BenvenutoPazienteController implements InserimentoPastiController {
     }
 
     public void resetListViewPasti() {
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newPasti = FXCollections.observableArrayList();
         newPasti.addAll(newUpp.getListaPasti());
         listaPasti.setItems(newPasti);

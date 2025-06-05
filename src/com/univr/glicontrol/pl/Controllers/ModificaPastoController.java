@@ -3,7 +3,7 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.GestionePasti;
 import com.univr.glicontrol.bll.Pasto;
 import com.univr.glicontrol.bll.Paziente;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,7 +16,7 @@ import java.sql.Time;
 
 
 public class ModificaPastoController {
-    private final UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    private final UtilityPortali upp = new UtilityPortali();
     private final Paziente paziente = upp.getPazienteSessione();
     private final GestionePasti gp = new GestionePasti(paziente);
     private ModificaInformazioniPazienteController mipc;

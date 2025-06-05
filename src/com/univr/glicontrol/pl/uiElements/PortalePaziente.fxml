@@ -23,7 +23,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="905.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortalePazienteController">
    <top>
-      <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="70.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: linear-gradient(to left, #b3d8f2, #d0e9f9);" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="70.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, whitesmoke, ghostwhite, whitesmoke);" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="56.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>

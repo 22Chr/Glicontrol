@@ -1,7 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +19,7 @@ import java.util.List;
 
 
 public class InserisciNuovaTerapiaConcomitantePazienteController {
-    UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    UtilityPortali upp = new UtilityPortali();
     private final Paziente paziente = upp.getPazienteSessione();
     GestioneTerapie gt = new GestioneTerapie(paziente);
     private FinestraTerapiePazienteController ftpc = new FinestraTerapiePazienteController();

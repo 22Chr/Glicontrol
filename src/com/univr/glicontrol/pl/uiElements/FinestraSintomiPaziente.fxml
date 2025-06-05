@@ -40,7 +40,12 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="400.0" prefWidth="321.0" spacing="40.0">
                <children>
-                  <Label text="Descrivi i tuoi sintomi:">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="320.0" text="Aggiungi un sintomo" textAlignment="CENTER">
+                     <font>
+                        <Font name="Avenir Next Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="322.0" text="Descrivi i tuoi sintomi:" textAlignment="CENTER">
                      <font>
                         <Font name="Carlito" size="14.0" />
                      </font>

@@ -1,9 +1,8 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,7 +48,7 @@ public class FinestraTerapiePazienteController {
     private ProgressIndicator progressIndicator;
 
 
-    UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    UtilityPortali upp = new UtilityPortali();
 
     @FXML
     private void initialize() {
@@ -129,7 +128,7 @@ public class FinestraTerapiePazienteController {
     }
 
     public void resetListViewTerapie(){
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newTerapie = FXCollections.observableArrayList();
         newTerapie.addAll(newUpp.getListaTerapiePaziente());
         terapiePazienteLV.setItems(newTerapie);

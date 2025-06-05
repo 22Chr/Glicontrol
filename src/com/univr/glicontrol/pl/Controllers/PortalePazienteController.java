@@ -1,7 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +27,7 @@ public class PortalePazienteController {
     //i vari textfield e la text area contengono le info sul medico di riferimento
     //il profileB deve rimandare a una paginetta con le info del paziente e il bottone di logout
 
-    private final UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    private final UtilityPortali upp = new UtilityPortali();
     private final Paziente paziente = upp.getPazienteSessione();
     private final Medico medicoRiferimento = new ListaMedici().ottieniMedicoPerId(paziente.getMedicoRiferimento());
     private GestioneRilevazioniGlicemia gestione;
@@ -279,7 +279,7 @@ public class PortalePazienteController {
     }
 
     public void aggiornaListaRilevazioniGlicemicheOdierne(){
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
         newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.getItems().setAll(newRilevazioni);

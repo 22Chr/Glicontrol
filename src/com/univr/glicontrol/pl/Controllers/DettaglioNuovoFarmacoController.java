@@ -1,7 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,7 +17,7 @@ public class DettaglioNuovoFarmacoController {
 
     private InserisciNuovaTerapiaConcomitantePazienteController antcpc;
     private GestioneTerapie gt;
-    private final UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    private final UtilityPortali upp = new UtilityPortali();
 
     @FXML
     private ComboBox<String> listaFarmaciCompletaCB;

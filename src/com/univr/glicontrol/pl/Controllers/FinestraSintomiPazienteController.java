@@ -2,7 +2,7 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.GestioneSintomi;
 import com.univr.glicontrol.bll.Paziente;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,11 +13,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.util.List;
-
 
 public class FinestraSintomiPazienteController {
-    UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    UtilityPortali upp = new UtilityPortali();
     Paziente paziente = upp.getPazienteSessione();
 
     GestioneSintomi gs = new GestioneSintomi(paziente);
@@ -58,7 +56,7 @@ public class FinestraSintomiPazienteController {
     }
 
     public void resetListViewSintomi() {
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newSintomi = FXCollections.observableArrayList();
         newSintomi.addAll(newUpp.getListaSintomiPazienti());
         sintomiPazienteLV.setItems(newSintomi);

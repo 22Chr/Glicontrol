@@ -1,7 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -35,10 +35,10 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
     private Paziente p;
 
     private final GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
-    Paziente paziente = new UtilityPortalePaziente().getPazienteSessione();
+    Paziente paziente = new UtilityPortali().getPazienteSessione();
     private final FattoriRischio fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
     private final InputChecker valueChecker = new InputChecker();
-    private final UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    private final UtilityPortali upp = new UtilityPortali();
     String pastoDaModificare;
 
     @FXML
@@ -207,7 +207,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
     }
 
     public void resetListViewPasti() {
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newPasti = FXCollections.observableArrayList();
         newPasti.addAll(newUpp.getListaPasti());
         pastiLV.setItems(newPasti);

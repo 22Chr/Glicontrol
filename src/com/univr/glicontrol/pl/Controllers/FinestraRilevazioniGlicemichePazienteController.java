@@ -1,8 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
-import com.univr.glicontrol.pl.Models.UtilityPortalePaziente;
-import javafx.animation.PauseTransition;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ import java.sql.Time;
 
 public class FinestraRilevazioniGlicemichePazienteController {
 
-    UtilityPortalePaziente upp = new UtilityPortalePaziente();
+    UtilityPortali upp = new UtilityPortali();
     Paziente paziente = upp.getPazienteSessione();
     GestioneRilevazioniGlicemia grg = new GestioneRilevazioniGlicemia(paziente);
     private PortalePazienteController ppc;
@@ -138,7 +137,7 @@ public class FinestraRilevazioniGlicemichePazienteController {
     }
 
     private void resetListViewRilevazioniGlicemiche(){
-        UtilityPortalePaziente newUpp = new UtilityPortalePaziente();
+        UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
         newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemichePazienti());
         glicemiaPazienteLV.setItems(newRilevazioni);

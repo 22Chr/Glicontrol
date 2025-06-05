@@ -19,16 +19,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UtilityPortalePaziente {
+public class UtilityPortali {
     private final Paziente paziente;
+    private final Medico medico;
     private final Map<String, Pasto> mappaPasti = new HashMap<>();
     private final Map<String, Sintomo> mappaSintomi = new HashMap<>();
     private final Map<String, PatologiaConcomitante> mappaPatologieConcomitanti = new HashMap<>();
     private final Map<String, RilevazioneGlicemica> mappaRilevazioniGlicemia = new HashMap<>();
     private final Map<String, Terapia> mappaTerapie = new HashMap<>();
+    private final Map<String, LogTerapia> mappaLogTerapia = new HashMap<>();
 
-    public UtilityPortalePaziente() {
+    public UtilityPortali() {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
+        this.medico = UtenteSessione.getInstance().getMedicoSessione();
     }
 
     public Time convertiOra(int ora, int minuti) {
@@ -73,6 +76,8 @@ public class UtilityPortalePaziente {
     public Paziente getPazienteSessione() {
         return paziente;
     }
+
+    public Medico getMedicoSessione() {return medico;}
 
     public Image getBadge() {
         double width = 40;
@@ -392,5 +397,28 @@ public class UtilityPortalePaziente {
         }
 
         return GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmacoFormattato.substring(0, limit));
+    }
+
+
+    // genera la lista di tipo String formattata per la visualizzazione dei log in Portale Admin
+    public List<String> getListaLogTerapieFormattata() {
+        ListaPazienti lp = new ListaPazienti();
+        ListaMedici lm = new ListaMedici();
+        List<String> listaLogTerapieFormattata = new ArrayList<>();
+        GestioneLogTerapie glt = new GestioneLogTerapie();
+        GestioneTerapie gt = new GestioneTerapie();
+
+        for (LogTerapia lt : glt.getListaLogTerapia()) {
+            Terapia t = gt.getTerapiaById(lt.getIdTerapia());
+            LocalDate data = lt.getTimestamp().toLocalDateTime().toLocalDate();
+            LocalTime ora = lt.getTimestamp().toLocalDateTime().toLocalTime();
+            String logFormattato = t.getNome() + " (" + lp.getPazientePerId(t.getIdPaziente()).getCodiceFiscale() + ") modificata dal medico " +
+                    lm.ottieniMedicoPerId(lt.getIdMedico()).getCodiceFiscale() +
+                    " in data " + data + " alle ore " + ora;
+            listaLogTerapieFormattata.add(logFormattato);
+            mappaLogTerapia.put(logFormattato, lt);
+        }
+
+        return listaLogTerapieFormattata;
     }
 }
