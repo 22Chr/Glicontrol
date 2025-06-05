@@ -52,6 +52,7 @@ public class PortalePazienteController implements Portale {
     @FXML
     private ListView<String> ultimeRilevazioniLV;
 
+
     @FXML
     private void initialize() {
 
