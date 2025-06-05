@@ -28,6 +28,8 @@ public class UtilityPortali {
     private final Map<String, RilevazioneGlicemica> mappaRilevazioniGlicemia = new HashMap<>();
     private final Map<String, Terapia> mappaTerapie = new HashMap<>();
     private final Map<String, LogTerapia> mappaLogTerapia = new HashMap<>();
+    private final Map<String, Paziente> mappaPazientiAssociatiAlReferente = new HashMap<>();
+    private final Map<String, Paziente> mappaPazientiNonAssociatiAlReferente = new HashMap<>();
 
     public UtilityPortali() {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
@@ -95,11 +97,20 @@ public class UtilityPortali {
 
         // Iniziali (gestione sicura)
         String iniziali = "";
-        if (paziente.getNome() != null && !paziente.getNome().isEmpty()) {
-            iniziali += paziente.getNome().substring(0, 1).toUpperCase();
-        }
-        if (paziente.getCognome() != null && !paziente.getCognome().isEmpty()) {
-            iniziali += paziente.getCognome().substring(0, 1).toUpperCase();
+        if(paziente != null) {
+            if (paziente.getNome() != null && !paziente.getNome().isEmpty()) {
+                iniziali += paziente.getNome().substring(0, 1).toUpperCase();
+            }
+            if (paziente.getCognome() != null && !paziente.getCognome().isEmpty()) {
+                iniziali += paziente.getCognome().substring(0, 1).toUpperCase();
+            }
+        }else{
+            if(medico.getNome() != null && !medico.getNome().isEmpty()) {
+                iniziali += medico.getNome().substring(0, 1).toUpperCase();
+            }
+            if(medico.getCognome() != null && !medico.getCognome().isEmpty()) {
+                iniziali += medico.getCognome().substring(0, 1).toUpperCase();
+            }
         }
 
         // Calcolo per centrare il testo
@@ -420,5 +431,66 @@ public class UtilityPortali {
         }
 
         return listaLogTerapieFormattata;
+    }
+
+
+    // recuperiamo le liste dei pazienti partizionandoli tra pazienti associati ad un dato referente attualmente connesso e gli altri
+    private List<String> pazientiAssociatiAlReferente = new ArrayList<>();
+    private List<String> pazientiNonAssociatiAlReferente = new ArrayList<>();
+
+    public List<String> getPazientiAssociatiAlReferente(int idReferente) {
+        ListaPazienti listaPazienti = new ListaPazienti();
+        for  (Paziente p : listaPazienti.getListaCompletaPazienti()) {
+            if (p.getMedicoRiferimento() == idReferente) {
+                String pazienteAssociatoFormattato = p.getCognome() + " " + p.getNome() + " (" + p.getCodiceFiscale() + ")";
+                pazientiAssociatiAlReferente.add(pazienteAssociatoFormattato);
+                mappaPazientiAssociatiAlReferente.put(pazienteAssociatoFormattato, p);
+            }
+        }
+
+        return  pazientiAssociatiAlReferente;
+    }
+
+    public List<String> getPazientiNonAssociatiAlReferente(int idReferente) {
+        ListaPazienti listaPazienti = new ListaPazienti();
+        for(Paziente p : listaPazienti.getListaCompletaPazienti()) {
+            if(p.getMedicoRiferimento() != idReferente) {
+                String pazienteNonAssociatoFormattato = p.getCognome() + " " + p.getNome() + " (" + p.getCodiceFiscale() + ")";
+                pazientiNonAssociatiAlReferente.add(pazienteNonAssociatoFormattato);
+                mappaPazientiNonAssociatiAlReferente.put(pazienteNonAssociatoFormattato, p);
+            }
+        }
+
+        return  pazientiNonAssociatiAlReferente;
+    }
+
+    private void aggiornaPazientiAssociatiAlReferente(int idReferente) {
+        getPazientiAssociatiAlReferente(idReferente);
+    }
+
+    private void aggiornaPazientiNonAssociatiAlReferente(int idReferente) {
+        getPazientiNonAssociatiAlReferente(idReferente);
+    }
+
+    public Paziente getPazienteAssociatoDaNomeFormattato(String nomePazienteFormattato, int idReferente) {
+        aggiornaPazientiAssociatiAlReferente(idReferente);
+        for(Paziente p: mappaPazientiAssociatiAlReferente.values()){
+            String check = p.getCognome() + " " + p.getNome() + " (" + p.getCodiceFiscale() + ")";
+            if(nomePazienteFormattato.equals(check)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public Paziente getPazienteNonAssociatoDaNomeFormattato(String nomePazienteFormattato, int idReferente) {
+        aggiornaPazientiNonAssociatiAlReferente(idReferente);
+        for(Paziente p: mappaPazientiNonAssociatiAlReferente.values()){
+            String check = p.getCognome() + " " + p.getNome() + " (" + p.getCodiceFiscale() + ")";
+            if(nomePazienteFormattato.equals(check)) {
+                return p;
+            }
+        }
+        return null;
     }
 }

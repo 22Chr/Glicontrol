@@ -60,7 +60,7 @@ public class PortaleAdminController {
 
         // Paziente
         GetListaUtenti glpaPaziente = new GetListaUtenti();
-        List<String> pazientiList = glpaPaziente.getListaPazientiPortaleAdmin();
+        List<String> pazientiList = glpaPaziente.getListaPazientiCompleta();
 
         ObservableList<String> pazienti = FXCollections.observableArrayList();
         pazienti.addAll(pazientiList);
@@ -98,7 +98,7 @@ public class PortaleAdminController {
 
     public void resetListViewPazienti() {
         GetListaUtenti newGlpaPaziente = new GetListaUtenti();
-        List<String> newPazientiList = newGlpaPaziente.getListaPazientiPortaleAdmin();
+        List<String> newPazientiList = newGlpaPaziente.getListaPazientiCompleta();
         ObservableList<String> newPazienti = FXCollections.observableArrayList();
         newPazienti.addAll(newPazientiList);
         listaPazienti.setItems(newPazienti);

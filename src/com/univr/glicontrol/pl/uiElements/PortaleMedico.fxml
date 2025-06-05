@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -35,17 +36,20 @@
                   <Insets top="20.0" />
                </HBox.margin>
             </Circle>
-            <Button fx:id="centroNotificheB" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+            <Button fx:id="centroNotificheB" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" prefHeight="27.0" prefWidth="42.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets right="20.0" top="17.0" />
+                  <Insets right="20.0" top="20.0" />
                </HBox.margin>
                <graphic>
-                  <ImageView fitHeight="36.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="27.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@centroNotifiche.png" />
                      </image>
                   </ImageView>
                </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </HBox>
@@ -97,11 +101,17 @@
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>
@@ -111,11 +121,17 @@
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="rilevazioniGlicemicheB" alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Rilevazioni&#10;glicemiche&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>
@@ -125,11 +141,17 @@
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button fx:id="informazioniB" alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Informazioni &#10;del paziente&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>
