@@ -34,7 +34,7 @@ public class GetListaUtenti {
     }
 
     Map<String, Paziente> mappaPazienti = new HashMap<>();
-    public List<String> getListaPazientiPortaleAdmin() {
+    public List<String> getListaPazientiCompleta() {
         ListaPazienti listaPazienti = new ListaPazienti();
         // Mappa usata analogamente per ottenere l'id del paziente
         String nomePaziente;
@@ -50,7 +50,7 @@ public class GetListaUtenti {
     }
 
     public void updateListaPazientiPortaleAdmin() {
-        getListaPazientiPortaleAdmin();
+        getListaPazientiCompleta();
     }
 
     //aggiungere i metodi per ottenere l'id del medico e del paziente mediante associazione delle mappe
