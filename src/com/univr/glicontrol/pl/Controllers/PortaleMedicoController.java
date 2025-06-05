@@ -1,5 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.univr.glicontrol.bll.GlicontrolCoreSystem;
 import com.univr.glicontrol.bll.ListaPazienti;
 import com.univr.glicontrol.bll.Medico;
 import com.univr.glicontrol.bll.Paziente;
@@ -7,13 +8,17 @@ import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
-public class PortaleMedicoController {
+import java.io.IOException;
+
+public class PortaleMedicoController implements Portale {
 
     private final UtilityPortali upm = new UtilityPortali();
     private final Medico medico = upm.getMedicoSessione();
@@ -58,7 +63,7 @@ public class PortaleMedicoController {
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
                     pazienteSelezionatoTF.setText(cell.getItem()); //carica il nome al centro
-                    pazienteSelezionato = upm.getPazienteAssociatoDaNomeFormattato(pazientiReferenteLV.getSelectionModel().getSelectedItem(), medico.getIdUtente());
+                    pazienteSelezionato = upm.getPazienteAssociatoDaNomeFormattato(pazientiReferenteLV.getSelectionModel().getSelectedItem());
                 }
             });
 
@@ -77,7 +82,7 @@ public class PortaleMedicoController {
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
                     pazienteSelezionatoTF.setText(cell.getItem()); //carica il nome al centro
-                    pazienteSelezionato = upm.getPazienteNonAssociatoDaNomeFormattato(pazientiGenericiLV.getSelectionModel().getSelectedItem(), medico.getIdUtente());
+                    pazienteSelezionato = upm.getPazienteNonAssociatoDaNomeFormattato(pazientiGenericiLV.getSelectionModel().getSelectedItem());
                 }
             });
 
@@ -87,4 +92,39 @@ public class PortaleMedicoController {
     }
 
 
+    public void logout(Stage stage) {
+        stage.setOnCloseRequest(event -> {
+            event.consume();
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Sei sicuro di voler uscire?");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                stage.close();
+            }
+        });
+    }
+
+    public void openGestoreTerapie() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraTerapiePaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            FinestraTerapiePazienteController gestoreTerapiaController = fxmlLoader.getController();
+            gestoreTerapiaController.setInstance(this);
+            gestoreTerapiaController.setNomeBottoneInserimentoTerapia();
+
+            Stage gestoreTerapiePaziente = new Stage();
+            gestoreTerapiePaziente.setTitle("Terapie paziente");
+            gestoreTerapiePaziente.setScene(new Scene(root));
+
+            gestoreTerapiePaziente.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void sayHello() {
+        System.out.println("Hello World!");
+    }
 }

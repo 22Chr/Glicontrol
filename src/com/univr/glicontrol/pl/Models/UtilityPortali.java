@@ -486,16 +486,7 @@ public class UtilityPortali {
         return  pazientiNonAssociatiAlReferente;
     }
 
-    private void aggiornaPazientiAssociatiAlReferente(int idReferente) {
-        getPazientiAssociatiAlReferente(idReferente);
-    }
-
-    private void aggiornaPazientiNonAssociatiAlReferente(int idReferente) {
-        getPazientiNonAssociatiAlReferente(idReferente);
-    }
-
-    public Paziente getPazienteAssociatoDaNomeFormattato(String nomePazienteFormattato, int idReferente) {
-        aggiornaPazientiAssociatiAlReferente(idReferente);
+    public Paziente getPazienteAssociatoDaNomeFormattato(String nomePazienteFormattato) {
         for(Paziente p: mappaPazientiAssociatiAlReferente.values()){
             String check = p.getCognome() + " " + p.getNome() + " (" + p.getCodiceFiscale() + ")";
             if(nomePazienteFormattato.equals(check)) {
@@ -505,8 +496,7 @@ public class UtilityPortali {
         return null;
     }
 
-    public Paziente getPazienteNonAssociatoDaNomeFormattato(String nomePazienteFormattato, int idReferente) {
-        aggiornaPazientiNonAssociatiAlReferente(idReferente);
+    public Paziente getPazienteNonAssociatoDaNomeFormattato(String nomePazienteFormattato) {
         for(Paziente p: mappaPazientiNonAssociatiAlReferente.values()){
             String check = p.getCognome() + " " + p.getNome() + " (" + p.getCodiceFiscale() + ")";
             if(nomePazienteFormattato.equals(check)) {

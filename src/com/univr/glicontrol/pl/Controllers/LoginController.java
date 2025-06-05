@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Objects;
 
 public class LoginController {
@@ -85,6 +84,8 @@ public class LoginController {
             pac.logout(stage); // 💡 Attiva listener sulla chiusura con X rossa
         } else if (controller instanceof PortalePazienteController ppc) {
             ppc.logout(stage);
+        } else if (controller instanceof PortaleMedicoController pmc) {
+            pmc.logout(stage);
         }
         stage.setScene(new Scene(root, 1200, 700));
         stage.centerOnScreen();

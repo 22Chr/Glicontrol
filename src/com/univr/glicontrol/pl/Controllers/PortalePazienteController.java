@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.*;
 
-public class PortalePazienteController {
+public class PortalePazienteController implements Portale {
     //ultimeRilevazioniLW dovrà contenere il sunto delle ultime rilevazioni
     //andamentoGlicemia dovrà mostrare una rappresentazione grafica -> cercare come fare
     //l'avatar deve mostrare le iniziali dell'utente
@@ -198,6 +198,9 @@ public class PortalePazienteController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraTerapiePaziente.fxml"));
             Parent root = fxmlLoader.load();
+
+            FinestraTerapiePazienteController ftpc =  fxmlLoader.getController();
+
 
             Stage gestoreTerapiePaziente = new Stage();
             gestoreTerapiePaziente.setTitle("Le mie terapie");
