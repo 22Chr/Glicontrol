@@ -81,12 +81,15 @@ public class GestioneTerapie {
 
     public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
         aggiornaListaTerapiePaziente();
+        List<TerapiaDiabete> terapieDelPaziente = new ArrayList<>();
         for (TerapiaDiabete terapia : terapiaDiabete) {
-            if (terapia.getDataInizio().equals(dataInizio)
-                    && terapia.getListaFarmaciTerapia().equals(farmaci)
-                    && terapia.getIdPaziente() == pazienteSessione.getIdUtente()) {
-                return -1;
+            if (terapia.getIdPaziente() == pazienteSessione.getIdUtente()) {
+                terapieDelPaziente.add(terapia);
             }
+        }
+
+        if (!terapieDelPaziente.isEmpty()) {
+            return -1;
         }
 
         return accessoTerapie.insertTerapiaDiabete(pazienteSessione.getIdUtente(), idMedicoUltimaModifica, dataInizio, dataFine, farmaci) ? 1 : 0;
