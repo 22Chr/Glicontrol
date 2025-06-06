@@ -252,7 +252,8 @@ public class InserisciNuovaTerapiaController {
 
         String nomePatologia = "", corpo = "";
         if (terapiaSelezionata == 1) {
-            nomePatologia = upp.getTerapiaPerNomeFormattata(patologiaCB.getSelectionModel().getSelectedItem()).getNome();
+            // Verificare il controllo sulla data di inizio
+            nomePatologia = upp.getPatologiaConcomitantePerNomeFormattata(patologiaCB.getSelectionModel().getSelectedItem()).getNomePatologia();
             corpo = "Ti è stata registrata una nuova terapia per la patologia " + nomePatologia + ".\nAccedi all'applicazione per maggiori dettagli.\n\nGlicontrol Medical System";
         } else {
             corpo = "Ti è stata registrata una nuova terapia per il diabete.\nAccedi all'applicazione per maggiori dettagli.\n\nGlicontrol Medical System";
