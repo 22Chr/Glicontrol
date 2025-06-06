@@ -50,10 +50,10 @@ public class FinestraTerapiePazienteController {
     @FXML
     private Button aggiungiTerapiaButton;
 
-    UtilityPortali upp = new UtilityPortali();
     private PortaleMedicoController pmc = null;
     private PortalePazienteController ppc = null;
     private Paziente pazienteSelezionato;
+    UtilityPortali upp;
 
     @FXML
     private void initialize() {
@@ -96,19 +96,27 @@ public class FinestraTerapiePazienteController {
     }
 
     public void resetListViewTerapie(){
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUpp = new UtilityPortali(pazienteSelezionato);
         ObservableList<String> newTerapie = FXCollections.observableArrayList();
-        newTerapie.addAll(newUpp.getListaTerapiePaziente(pazienteSelezionato));
+        newTerapie.addAll(newUpp.getListaTerapiePaziente());
         terapiePazienteLV.setItems(newTerapie);
     }
 
-    public void aggiungiTerapiaConcomitante() {
+    public void aggiungiTerapia() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/InserisciNuovaTerapiaConcomitantePaziente.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/InserisciNuovaTerapia.fxml"));
             Parent root = fxmlLoader.load();
 
-            InserisciNuovaTerapiaConcomitantePazienteController intcpc = fxmlLoader.getController();
-            intcpc.setInstance(this);
+            InserisciNuovaTerapiaController intc = fxmlLoader.getController();
+
+            String ruoloAccesso;
+            if (pmc != null) {
+                ruoloAccesso = "medico";
+            } else {
+                ruoloAccesso = "paziente";
+            }
+
+            intc.setInstance(this, ruoloAccesso, pazienteSelezionato);
 
             Stage terapiePaziente = new Stage();
             terapiePaziente.setTitle("Aggiungi terapia");
@@ -139,7 +147,8 @@ public class FinestraTerapiePazienteController {
 
             @Override
             protected Void call() {
-                Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapia, pazienteSelezionato);
+                upp = new UtilityPortali(pazienteSelezionato);
+                Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapia);
                 String dataTerapia = upp.getIndicazioniTemporaliTerapia(terapia);
 
                 // Popola la lista dei farmaci associati alla terapia visualizzata
@@ -180,7 +189,7 @@ public class FinestraTerapiePazienteController {
     }
 
     private void mostraIndicazinoiFarmaciTerapia() {
-        Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText(),  pazienteSelezionato);
+        Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
 
         Task<Void> loadingTask = new Task<>() {
             @Override
@@ -228,6 +237,7 @@ public class FinestraTerapiePazienteController {
         }
 
         this.pazienteSelezionato = pazienteSelezionato;
+        upp = new UtilityPortali(pazienteSelezionato);
 
         Platform.runLater(this::caricaPatologiePaziente);
     }
@@ -247,7 +257,7 @@ public class FinestraTerapiePazienteController {
             @Override
             protected Void call() {
                 ObservableList<String> terapie = FXCollections.observableArrayList();
-                terapie.addAll(upp.getListaTerapiePaziente(pazienteSelezionato));
+                terapie.addAll(upp.getListaTerapiePaziente());
                 Platform.runLater(() -> terapiePazienteLV.setItems(terapie));
 
                 return null;

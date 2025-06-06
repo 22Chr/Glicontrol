@@ -46,8 +46,6 @@ public class InserisciPazienteController {
 
     private PortaleAdminController pac;
 
-    private final InputChecker valueChecker = new InputChecker();
-
     private int id;
 
     //carica la lista di medici nel controller p
@@ -63,7 +61,7 @@ public class InserisciPazienteController {
         sessoNuovoPazienteCB.setItems(FXCollections.observableArrayList("M", "F"));
 
         nomeNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (valueChecker.verificaNome(newValue) && nomeNuovoPazienteTF != null) {
+           if (InputChecker.getInstance().verificaNome(newValue) && nomeNuovoPazienteTF != null) {
                nomeNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
            }  else {
                assert nomeNuovoPazienteTF != null;
@@ -72,7 +70,7 @@ public class InserisciPazienteController {
         });
 
         cognomeNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaCognome(newValue) && cognomeNuovoPazienteTF != null) {
+            if (InputChecker.getInstance().verificaCognome(newValue) && cognomeNuovoPazienteTF != null) {
                cognomeNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                 assert cognomeNuovoPazienteTF != null;
@@ -81,7 +79,7 @@ public class InserisciPazienteController {
         });
 
         emailNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaEmail(newValue) && emailNuovoPazienteTF != null) {
+            if (InputChecker.getInstance().verificaEmail(newValue) && emailNuovoPazienteTF != null) {
                emailNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                 assert emailNuovoPazienteTF != null;
@@ -90,7 +88,7 @@ public class InserisciPazienteController {
         });
 
         CFNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaCodiceFiscale(newValue) && CFNuovoPazienteTF != null) {
+            if (InputChecker.getInstance().verificaCodiceFiscale(newValue) && CFNuovoPazienteTF != null) {
                CFNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                 assert CFNuovoPazienteTF != null;
@@ -99,7 +97,7 @@ public class InserisciPazienteController {
         });
 
         passwordNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaPassword(newValue) && passwordNuovoPazienteTF != null) {
+            if (InputChecker.getInstance().verificaPassword(newValue) && passwordNuovoPazienteTF != null) {
                passwordNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                 assert passwordNuovoPazienteTF != null;
@@ -108,7 +106,7 @@ public class InserisciPazienteController {
         });
 
         dataNascitaNuovoPazienteDP.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaNascita(Date.valueOf(newValue)) && dataNascitaNuovoPazienteDP != null) {
+            if (InputChecker.getInstance().verificaNascita(Date.valueOf(newValue)) && dataNascitaNuovoPazienteDP != null) {
                 dataNascitaNuovoPazienteDP.setStyle("-fx-border-color: #43a047");
             } else {
                 assert dataNascitaNuovoPazienteDP != null;
@@ -131,7 +129,7 @@ public class InserisciPazienteController {
         String sesso = sessoNuovoPazienteCB.getValue();
         String password = passwordNuovoPazienteTF.getText();
 
-        if (!valueChecker.allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita)) {
+        if (!InputChecker.getInstance().allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita)) {
             Alert inputPazienteSbagliati = new Alert(Alert.AlertType.ERROR);
             inputPazienteSbagliati.setTitle("System Information Service");
             inputPazienteSbagliati.setHeaderText(null);

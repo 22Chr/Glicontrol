@@ -7,6 +7,16 @@ import java.time.format.DateTimeParseException;
 
 public class InputChecker {
 
+    private InputChecker() {}
+
+    private static class Holder {
+        private static final InputChecker INSTANCE = new InputChecker();
+    }
+
+    public static InputChecker getInstance() {
+        return InputChecker.Holder.INSTANCE;
+    }
+
     public boolean verificaCodiceFiscale(String codiceFiscale) {
         return codiceFiscale.matches("[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]");
     }
@@ -67,5 +77,9 @@ public class InputChecker {
 
     public boolean allCheckForPaziente(String nome, String cognome, String codiceFiscale, String password, String email, String sesso, Date dataNascita) {
         return verificaNome(nome) && verificaCognome(cognome) && verificaCodiceFiscale(codiceFiscale) && verificaPassword(password) && verificaEmail(email) && sesso != null && verificaNascita(dataNascita);
+    }
+
+    public boolean verificaDataInizioTerapiaConcomitante(Date dataInizioTerapia, Date dataInizioPatologia) {
+        return dataInizioTerapia.after(dataInizioPatologia);
     }
 }

@@ -86,81 +86,84 @@ public class AccessoTerapieImpl implements AccessoTerapie {
     @Override
     public boolean insertTerapiaDiabete(int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaciTerapia) {
         boolean success = false;
-        String insertTerapiaDiabeteSql = "insert into TerapiaDiabete (id_terapia_diabete, id_paziente_connesso, id_medico_ultima_modifica, data_inizio, data_fine) value (?, ?, ?, ?, ?)";
+        String insertTerapiaDiabeteSql = "INSERT INTO TerapiaDiabete (id_terapia_diabete, id_paziente_connesso, id_medico_ultima_modifica, data_inizio, data_fine) VALUES (?, ?, ?, ?, ?)";
+
         List<Farmaco> farmaciDiabete = ottieniListaFarmaciDaFarmacoTerapia(farmaciTerapia);
         List<IndicazioniFarmaciTerapia> indicazioni = ottieniListaIndicazioniFarmaciDaFarmacoTerapia(farmaciTerapia);
 
+        int idTerapiaDiabete = 0;
+
+        // Genera nuova entry in Terapia e recupera l'ID
+        try (Connection conn = DriverManager.getConnection(url, user, pwd)) {
+            String generaTerapiaSql = "INSERT INTO Terapia () VALUES ()";
+            try (PreparedStatement generaTerapiaStmt = conn.prepareStatement(generaTerapiaSql, Statement.RETURN_GENERATED_KEYS)) {
+                generaTerapiaStmt.executeUpdate();
+                try (ResultSet rs = generaTerapiaStmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        idTerapiaDiabete = rs.getInt(1);
+                    } else {
+                        System.err.println("[ERRORE GENERAZIONE ID TERAPIA]: Nessun ID generato");
+                        return false;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERRORE GENERAZIONE ID TERAPIA]: " + e.getMessage());
+            return false;
+        }
+
+        // Inserisce la terapia diabete e relativi farmaci/indicazioni
         try (Connection conn = DriverManager.getConnection(url, user, pwd);
-             PreparedStatement insertTerapiaDiabeteStmt = conn.prepareStatement(insertTerapiaDiabeteSql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement insertTerapiaDiabeteStmt = conn.prepareStatement(insertTerapiaDiabeteSql)) {
 
             conn.setAutoCommit(false);
 
-            String generaTerapia = "insert into Terapia () values ()";
-            try (PreparedStatement generaTerapiaStmt = conn.prepareStatement(generaTerapia, Statement.RETURN_GENERATED_KEYS)) {
-                generaTerapiaStmt.executeUpdate();
-                try (ResultSet rs = generaTerapiaStmt.getGeneratedKeys()) {
-                    if (!rs.next()) {
-                        System.out.println("[ERRORE INSERT TERAPIA DIABETE]: Impossibile ottenere l'id generato per la nuova terapia");
-                        conn.rollback();
-                        return false;
-                    }
-                    int idTerapia = rs.getInt(1);
-                    insertTerapiaDiabeteStmt.setInt(1, idTerapia);
-                }
-            }
-
+            insertTerapiaDiabeteStmt.setInt(1, idTerapiaDiabete);
             insertTerapiaDiabeteStmt.setInt(2, idPaziente);
             insertTerapiaDiabeteStmt.setInt(3, idMedicoUltimaModifica);
             insertTerapiaDiabeteStmt.setDate(4, dataInizio);
             insertTerapiaDiabeteStmt.setDate(5, dataFine);
 
             if (insertTerapiaDiabeteStmt.executeUpdate() == 0) {
-                System.out.println("[ERRORE INSERT TERAPIA DIABETE]: Impossibile inserire la terapia diabete nel database");
+                System.err.println("[ERRORE INSERT TERAPIA DIABETE]: Nessuna riga inserita");
                 conn.rollback();
                 return false;
             }
 
-            try (ResultSet rs = insertTerapiaDiabeteStmt.getGeneratedKeys()) {
-                if (!rs.next()) {
-                    System.out.println("[ERRORE INSERT TERAPIA DIABETE]: Impossibile ottenere l'id generato");
-                    conn.rollback();
-                    return false;
-                }
-
-                int idTerapia = rs.getInt(1);
-
-                if (!accessoPonteFarmaciTerapia.insertFarmaciTerapia(conn, idTerapia, farmaciDiabete)) {
-                    System.out.println("[ERRORE INSERT TERAPIA DIABETE]: Impossibile inserire i farmaci selezionati per la terapia");
-                    conn.rollback();
-                    return false;
-                }
-
-                if (indicazioni.size() != farmaciDiabete.size()) {
-                    System.out.println("[ERRORE INSERT TERAPIA DIABETE]: Dimensione indicazioni e farmaci discordante");
-                    conn.rollback();
-                    return false;
-                }
-
-                for (int i = 0; i < indicazioni.size(); i++) {
-                    if (!accessoIndicazioniFarmaciTerapia.insertIndicazioniFarmaci(
-                            conn,
-                            idTerapia,
-                            farmaciDiabete.get(i).getIdFarmaco(),
-                            indicazioni.get(i).getDosaggio(),
-                            indicazioni.get(i).getFrequenzaAssunzione(),
-                            indicazioni.get(i).getOrariAssunzione())) {
-                        System.out.println("[ERRORE INSERT TERAPIA DIABETE]: Impossibile inserire indicazioni farmaco id " + farmaciDiabete.get(i).getIdFarmaco());
-                        conn.rollback();
-                        return false;
-                    }
-                }
-
-                conn.commit();
-                success = true;
+            // Inserisce i farmaci associati alla terapia
+            if (!accessoPonteFarmaciTerapia.insertFarmaciTerapia(conn, idTerapiaDiabete, farmaciDiabete)) {
+                System.err.println("[ERRORE INSERT TERAPIA DIABETE]: Errore inserimento farmaci");
+                conn.rollback();
+                return false;
             }
 
+            // Verifica coerenza tra farmaci e indicazioni
+            if (indicazioni.size() != farmaciDiabete.size()) {
+                System.err.println("[ERRORE INSERT TERAPIA DIABETE]: Dimensione indicazioni e farmaci non corrisponde");
+                conn.rollback();
+                return false;
+            }
+
+            // Inserisce le indicazioni per ciascun farmaco
+            for (int i = 0; i < indicazioni.size(); i++) {
+                if (!accessoIndicazioniFarmaciTerapia.insertIndicazioniFarmaci(
+                        conn,
+                        idTerapiaDiabete,
+                        farmaciDiabete.get(i).getIdFarmaco(),
+                        indicazioni.get(i).getDosaggio(),
+                        indicazioni.get(i).getFrequenzaAssunzione(),
+                        indicazioni.get(i).getOrariAssunzione())) {
+                    System.err.println("[ERRORE INSERT TERAPIA DIABETE]: Errore inserimento indicazioni per farmaco ID " + farmaciDiabete.get(i).getIdFarmaco());
+                    conn.rollback();
+                    return false;
+                }
+            }
+
+            conn.commit();
+            success = true;
+
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT TERAPIA DIABETE]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT TERAPIA DIABETE]: " + e.getMessage());
         }
 
         return success;

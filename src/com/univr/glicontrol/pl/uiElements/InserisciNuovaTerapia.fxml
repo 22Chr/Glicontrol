@@ -15,12 +15,11 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.InserisciNuovaTerapiaConcomitantePazienteController">
+<StackPane style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.InserisciNuovaTerapiaController">
    <children>
-      <HBox fx:id="finestra1" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+      <HBox fx:id="finestraSceltaTerapia" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#caricaFinestraTerapiaDiabete" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #22577a; -fx-background-radius: 5;" text="Diabete" textFill="WHITE">
+            <Button fx:id="selezionaTerapiaDiabeteButton" mnemonicParsing="false" onAction="#caricaFinestraTerapiaDiabete" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #22577a; -fx-background-radius: 5;" text="Diabete" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -32,7 +31,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button mnemonicParsing="false" onAction="#caricaFinestraTerapiaPatologiaConcomitante" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #22577a; -fx-background-radius: 5;" text="Patologia&#10;concomitante" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="selezionaTerapiaPatologiaConcomitanteButton" mnemonicParsing="false" onAction="#caricaFinestraTerapiaPatologiaConcomitante" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #22577a; -fx-background-radius: 5;" text="Patologia&#10;concomitante" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -46,7 +45,7 @@
             </Button>
          </children>
       </HBox>
-      <VBox fx:id="finestra2" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="30.0" visible="false">
+      <VBox fx:id="finestraInserimentoTerapia" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="30.0" visible="false">
          <children>
             <GridPane maxWidth="400.0" prefHeight="150.0" prefWidth="300.0">
               <columnConstraints>

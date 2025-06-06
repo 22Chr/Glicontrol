@@ -51,8 +51,6 @@ public class ModificaPazienteController {
     private String defaultPassword;
     private int defaultMed;
 
-    private final InputChecker valueChecker = new InputChecker();
-
     GetListaUtenti glpa = new GetListaUtenti();
 
     @FXML
@@ -63,7 +61,7 @@ public class ModificaPazienteController {
         sessoPazienteCB.setItems(FXCollections.observableArrayList("M", "F"));
 
         nomePazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (valueChecker.verificaNome(newValue)) {
+           if (InputChecker.getInstance().verificaNome(newValue)) {
                nomePazienteTF.setStyle("-fx-border-color: #43a047");
            }  else {
                nomePazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -71,7 +69,7 @@ public class ModificaPazienteController {
         });
 
         cognomePazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaCognome(newValue)) {
+            if (InputChecker.getInstance().verificaCognome(newValue)) {
                cognomePazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                cognomePazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -79,7 +77,7 @@ public class ModificaPazienteController {
         });
 
         emailPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaEmail(newValue)) {
+            if (InputChecker.getInstance().verificaEmail(newValue)) {
                emailPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                emailPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -87,7 +85,7 @@ public class ModificaPazienteController {
         });
 
         CFPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaCodiceFiscale(newValue)) {
+            if (InputChecker.getInstance().verificaCodiceFiscale(newValue)) {
                CFPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                CFPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -95,7 +93,7 @@ public class ModificaPazienteController {
         });
 
         passwordPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaPassword(newValue)) {
+            if (InputChecker.getInstance().verificaPassword(newValue)) {
                passwordPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                passwordPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -103,7 +101,7 @@ public class ModificaPazienteController {
         });
 
         dataNascitaPazienteDP.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaNascita(Date.valueOf(newValue))) {
+            if (InputChecker.getInstance().verificaNascita(Date.valueOf(newValue))) {
                 dataNascitaPazienteDP.setStyle("-fx-border-color: #43a047");
             } else {
                dataNascitaPazienteDP.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -144,7 +142,7 @@ public class ModificaPazienteController {
         p.setSesso(sessoPazienteCB.getValue().toString());
         p.setPassword(passwordPazienteTF.getText());
 
-        if (!valueChecker.allCheckForPaziente(p.getNome(), p.getCognome(), p.getCodiceFiscale(), p.getPassword(), p.getEmail(), p.getSesso(), p.getDataNascita())) {
+        if (!InputChecker.getInstance().allCheckForPaziente(p.getNome(), p.getCognome(), p.getCodiceFiscale(), p.getPassword(), p.getEmail(), p.getSesso(), p.getDataNascita())) {
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
             inputSbagliatiAlert.setTitle("System Information Service");
             inputSbagliatiAlert.setHeaderText(null);

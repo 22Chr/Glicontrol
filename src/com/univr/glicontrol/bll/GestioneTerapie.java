@@ -27,9 +27,6 @@ public class GestioneTerapie {
     }
 
     public List<Terapia> getTerapiePaziente() {
-        if (pazienteSessione == null) {
-            throw new IllegalStateException("Paziente non inizializzato");
-        }
         aggiornaListaTerapiePaziente();
         return terapiePaziente;
     }
@@ -50,9 +47,6 @@ public class GestioneTerapie {
     }
 
     private void aggiornaListaTerapiePaziente() {
-        if (pazienteSessione == null) {
-            throw new IllegalStateException("Paziente di sessione non inizializzato.");
-        }
 
         terapiePaziente = new ArrayList<>();
         aggiornaListaTerapieDiabete(pazienteSessione);
@@ -86,10 +80,6 @@ public class GestioneTerapie {
     }
 
     public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
-        if (pazienteSessione == null) {
-            throw new IllegalStateException("Paziente di sessione non inizializzato.");
-        }
-
         aggiornaListaTerapiePaziente();
         for (TerapiaDiabete terapia : terapiaDiabete) {
             if (terapia.getDataInizio().equals(dataInizio)
@@ -103,12 +93,8 @@ public class GestioneTerapie {
     }
 
     public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci, String nomePatologia) {
-        if (pazienteSessione == null) {
-            throw new IllegalStateException("Paziente di sessione non inizializzato.");
-        }
-
         aggiornaListaTerapiePaziente();
-        UtilityPortali upp = new UtilityPortali();
+        UtilityPortali upp = new UtilityPortali(pazienteSessione);
 
         for (TerapiaConcomitante terapia : terapiaConcomitante) {
             if (terapia.getDataInizio().equals(dataInizio)
@@ -117,7 +103,7 @@ public class GestioneTerapie {
                 return -1;
             }
 
-            var pat = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
+            PatologiaConcomitante pat = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
             if (pat != null && terapia.getIdPatologiaConcomitante() == pat.getIdPatologia()) {
                 return -1;
             }

@@ -34,7 +34,6 @@ public class InserisciMedicoController {
 
     private PortaleAdminController pac;
 
-    private final InputChecker valueChecker = new InputChecker();
 
     public void setInstance(PortaleAdminController pac) {
         this.pac = pac;
@@ -48,7 +47,7 @@ public class InserisciMedicoController {
         String CF = CFNuovoMedicoTF.getText();
         String password = passwordNuovoMedicoTF.getText();
 
-        if (!valueChecker.allCheckForMedico(nome, cognome, CF, password, email)) {
+        if (!InputChecker.getInstance().allCheckForMedico(nome, cognome, CF, password, email)) {
 
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
             inputSbagliatiAlert.setTitle("Errore dati utente");
@@ -119,7 +118,7 @@ public class InserisciMedicoController {
 
 
         nomeNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaNome(newValue) && nomeNuovoMedicoTF != null)
+            if (InputChecker.getInstance().verificaNome(newValue) && nomeNuovoMedicoTF != null)
                 nomeNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert nomeNuovoMedicoTF != null;
@@ -128,7 +127,7 @@ public class InserisciMedicoController {
         });
 
         cognomeNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaCognome(newValue) && cognomeNuovoMedicoTF != null)
+            if (InputChecker.getInstance().verificaCognome(newValue) && cognomeNuovoMedicoTF != null)
                 cognomeNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert cognomeNuovoMedicoTF != null;
@@ -137,7 +136,7 @@ public class InserisciMedicoController {
         });
 
         emailNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaEmail(newValue) && emailNuovoMedicoTF != null)
+            if (InputChecker.getInstance().verificaEmail(newValue) && emailNuovoMedicoTF != null)
                 emailNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert emailNuovoMedicoTF != null;
@@ -146,7 +145,7 @@ public class InserisciMedicoController {
         });
 
         CFNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaCodiceFiscale(newValue) && CFNuovoMedicoTF != null)
+            if (InputChecker.getInstance().verificaCodiceFiscale(newValue) && CFNuovoMedicoTF != null)
                 CFNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert CFNuovoMedicoTF != null;
@@ -155,7 +154,7 @@ public class InserisciMedicoController {
         });
 
         passwordNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaPassword(newValue) && passwordNuovoMedicoTF != null)
+            if (InputChecker.getInstance().verificaPassword(newValue) && passwordNuovoMedicoTF != null)
                 passwordNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert passwordNuovoMedicoTF != null;

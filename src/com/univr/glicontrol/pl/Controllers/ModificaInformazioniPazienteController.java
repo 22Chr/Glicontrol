@@ -37,7 +37,6 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
     private final GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
     Paziente paziente = new UtilityPortali().getPazienteSessione();
     private final FattoriRischio fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
-    private final InputChecker valueChecker = new InputChecker();
     private final UtilityPortali upp = new UtilityPortali();
     String pastoDaModificare;
 
@@ -106,7 +105,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
 
         // Verifica attiva dei campi
         emailTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaEmail(newValue) && emailTF != null)
+            if (InputChecker.getInstance().verificaEmail(newValue) && emailTF != null)
                 emailTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert emailTF != null;
@@ -115,7 +114,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
         });
 
         pesoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (valueChecker.verificaPeso(newValue) && pesoTF != null)
+            if (InputChecker.getInstance().verificaPeso(newValue) && pesoTF != null)
                 pesoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert pesoTF != null;
@@ -165,7 +164,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
 
     public void salvaModificheInformazioni() {
 
-        if (valueChecker.verificaPeso(pesoTF.getText()) && valueChecker.verificaEmail(emailTF.getText())) {
+        if (InputChecker.getInstance().verificaPeso(pesoTF.getText()) && InputChecker.getInstance().verificaEmail(emailTF.getText())) {
             p.setEmail(emailTF.getText());
             p.setPeso(Float.parseFloat(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
         } else {

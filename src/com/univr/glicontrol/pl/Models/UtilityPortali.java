@@ -31,6 +31,10 @@ public class UtilityPortali {
     private final Map<String, Paziente> mappaPazientiAssociatiAlReferente = new HashMap<>();
     private final Map<String, Paziente> mappaPazientiNonAssociatiAlReferente = new HashMap<>();
 
+    public UtilityPortali(Paziente paziente) {
+        this.paziente = paziente;
+        this.medico = UtenteSessione.getInstance().getMedicoSessione();
+    }
     public UtilityPortali() {
         this.paziente = UtenteSessione.getInstance().getPazienteSessione();
         this.medico = UtenteSessione.getInstance().getMedicoSessione();
@@ -173,7 +177,6 @@ public class UtilityPortali {
     // Restituisce la lista di tipo String delle patologie concomitanti del paziente
     public List<String> getListaPatologieConcomitantiPazienti() {
         List<String> listaPatologieConcomitanti = new ArrayList<>();
-
         GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
         for (PatologiaConcomitante p : gpc.getListaPatologieConcomitanti()) {
             LocalDate dataInizio = p.getDataInizio().toLocalDate();
@@ -281,9 +284,9 @@ public class UtilityPortali {
 //    }
 
     // Restituisce la lista di tipo String formattata per le terapie dei pazienti
-    public List<String> getListaTerapiePaziente(Paziente pazienteSelezionato) {
+    public List<String> getListaTerapiePaziente() {
         List<String> listaTerapie = new ArrayList<>();
-        GestioneTerapie gt = new GestioneTerapie(pazienteSelezionato);
+        GestioneTerapie gt = new GestioneTerapie(paziente);
         for (Terapia t : gt.getTerapiePaziente()) {
             String terapiaFormattata = t.getNome();
             listaTerapie.add(terapiaFormattata);
@@ -294,12 +297,12 @@ public class UtilityPortali {
     }
 
     // Restituisce la terapia a partire dal suo nome nella lista di tipo String
-    private void aggiornaListaTerapiePaziente(Paziente pazienteSelezionato) {
-        getListaTerapiePaziente(pazienteSelezionato);
+    private void aggiornaListaTerapiePaziente() {
+        getListaTerapiePaziente();
     }
 
-    public Terapia getTerapiaPerNomeFormattata(String nomeTerapiaFormattato, Paziente pazienteSelezionato) {
-        aggiornaListaTerapiePaziente(pazienteSelezionato);
+    public Terapia getTerapiaPerNomeFormattata(String nomeTerapiaFormattato) {
+        aggiornaListaTerapiePaziente();
         for (Terapia t : mappaTerapie.values()) {
             if (t.getNome().equals(nomeTerapiaFormattato)) {
                 return t;

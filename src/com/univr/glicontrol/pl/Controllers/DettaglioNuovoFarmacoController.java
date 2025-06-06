@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class DettaglioNuovoFarmacoController {
 
-    private InserisciNuovaTerapiaConcomitantePazienteController antcpc;
+    private InserisciNuovaTerapiaController antcpc;
     private GestioneTerapie gt;
     private final UtilityPortali upp = new UtilityPortali();
 
@@ -24,7 +24,7 @@ public class DettaglioNuovoFarmacoController {
     @FXML
     private TextArea dosaggioTA, frequenzaTA, orariTA;
 
-    public void setInstance(InserisciNuovaTerapiaConcomitantePazienteController antcpc) {
+    public void setInstance(InserisciNuovaTerapiaController antcpc) {
         this.antcpc = antcpc;
     }
 
