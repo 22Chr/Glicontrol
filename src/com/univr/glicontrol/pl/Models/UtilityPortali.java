@@ -281,9 +281,9 @@ public class UtilityPortali {
 //    }
 
     // Restituisce la lista di tipo String formattata per le terapie dei pazienti
-    public List<String> getListaTerapiePaziente() {
+    public List<String> getListaTerapiePaziente(Paziente pazienteSelezionato) {
         List<String> listaTerapie = new ArrayList<>();
-        GestioneTerapie gt = new GestioneTerapie(paziente);
+        GestioneTerapie gt = new GestioneTerapie(pazienteSelezionato);
         for (Terapia t : gt.getTerapiePaziente()) {
             String terapiaFormattata = t.getNome();
             listaTerapie.add(terapiaFormattata);
@@ -294,12 +294,12 @@ public class UtilityPortali {
     }
 
     // Restituisce la terapia a partire dal suo nome nella lista di tipo String
-    private void aggiornaListaTerapiePaziente() {
-        getListaTerapiePaziente();
+    private void aggiornaListaTerapiePaziente(Paziente pazienteSelezionato) {
+        getListaTerapiePaziente(pazienteSelezionato);
     }
 
-    public Terapia getTerapiaPerNomeFormattata(String nomeTerapiaFormattato) {
-        aggiornaListaTerapiePaziente();
+    public Terapia getTerapiaPerNomeFormattata(String nomeTerapiaFormattato, Paziente pazienteSelezionato) {
+        aggiornaListaTerapiePaziente(pazienteSelezionato);
         for (Terapia t : mappaTerapie.values()) {
             if (t.getNome().equals(nomeTerapiaFormattato)) {
                 return t;

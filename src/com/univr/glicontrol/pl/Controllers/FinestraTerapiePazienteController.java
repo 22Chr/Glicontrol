@@ -53,45 +53,10 @@ public class FinestraTerapiePazienteController {
     UtilityPortali upp = new UtilityPortali();
     private PortaleMedicoController pmc = null;
     private PortalePazienteController ppc = null;
+    private Paziente pazienteSelezionato;
 
     @FXML
     private void initialize() {
-
-        loadingPage.setVisible(true);
-        progressIndicator.setVisible(true);
-        progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
-
-        Task<Void> loadingTask = new Task<>() {
-            @Override
-            protected Void call() {
-                ObservableList<String> terapie = FXCollections.observableArrayList();
-                terapie.addAll(upp.getListaTerapiePaziente());
-
-                Platform.runLater(() -> terapiePazienteLV.setItems(terapie));
-
-                return null;
-            }
-
-            @Override
-            protected void succeeded() {
-                progressIndicator.setVisible(false);
-                loadingPage.setVisible(false);
-                mainPage.setVisible(true);
-                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(100), mainPage);
-                fadeIn.setFromValue(0.0);
-                fadeIn.setToValue(1.0);
-                fadeIn.play();
-            }
-
-            @Override
-            protected void failed() {
-                progressIndicator.setVisible(false);
-                loadingPage.setVisible(false);
-                System.err.println("Errore durante il caricamento dei dati.");
-            }
-        };
-
-        new Thread(loadingTask).start();
 
         terapiePazienteLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
@@ -133,7 +98,7 @@ public class FinestraTerapiePazienteController {
     public void resetListViewTerapie(){
         UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newTerapie = FXCollections.observableArrayList();
-        newTerapie.addAll(newUpp.getListaTerapiePaziente());
+        newTerapie.addAll(newUpp.getListaTerapiePaziente(pazienteSelezionato));
         terapiePazienteLV.setItems(newTerapie);
     }
 
@@ -174,7 +139,7 @@ public class FinestraTerapiePazienteController {
 
             @Override
             protected Void call() {
-                Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapia);
+                Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapia, pazienteSelezionato);
                 String dataTerapia = upp.getIndicazioniTemporaliTerapia(terapia);
 
                 // Popola la lista dei farmaci associati alla terapia visualizzata
@@ -215,7 +180,7 @@ public class FinestraTerapiePazienteController {
     }
 
     private void mostraIndicazinoiFarmaciTerapia() {
-        Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
+        Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText(),  pazienteSelezionato);
 
         Task<Void> loadingTask = new Task<>() {
             @Override
@@ -253,7 +218,7 @@ public class FinestraTerapiePazienteController {
         new Thread(loadingTask).start();
     }
 
-    public void setInstance(Portale controller) {
+    public void setInstance(Portale controller, Paziente pazienteSelezionato) {
         if (controller instanceof PortaleMedicoController) {
             pmc = (PortaleMedicoController) controller;
         } else if  (controller instanceof PortalePazienteController) {
@@ -261,11 +226,52 @@ public class FinestraTerapiePazienteController {
         } else {
             throw new IllegalArgumentException("Nessun controller valido selezionato");
         }
+
+        this.pazienteSelezionato = pazienteSelezionato;
+
+        Platform.runLater(this::caricaPatologiePaziente);
     }
 
     public void setNomeBottoneInserimentoTerapia() {
         if (pmc != null) {
             aggiungiTerapiaButton.setText("Aggiungi Terapia");
         }
+    }
+
+    private void caricaPatologiePaziente() {
+        loadingPage.setVisible(true);
+        progressIndicator.setVisible(true);
+        progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+
+        Task<Void> loadingTerapieTask = new Task<>() {
+            @Override
+            protected Void call() {
+                ObservableList<String> terapie = FXCollections.observableArrayList();
+                terapie.addAll(upp.getListaTerapiePaziente(pazienteSelezionato));
+                Platform.runLater(() -> terapiePazienteLV.setItems(terapie));
+
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                progressIndicator.setVisible(false);
+                loadingPage.setVisible(false);
+                mainPage.setVisible(true);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(100), mainPage);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            }
+
+            @Override
+            protected void failed() {
+                progressIndicator.setVisible(false);
+                loadingPage.setVisible(false);
+                System.err.println("Errore durante il caricamento dei dati.");
+            }
+        };
+
+        new Thread(loadingTerapieTask).start();
     }
 }

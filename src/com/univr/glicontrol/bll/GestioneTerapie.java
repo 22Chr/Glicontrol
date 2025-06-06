@@ -10,26 +10,26 @@ import java.util.List;
 
 public class GestioneTerapie {
     private final Paziente pazienteSessione;
-    private final List<Terapia> terapiePaziente = new ArrayList<>();
-    private final List<Terapia> listaCompletaTerapie =  new ArrayList<>();
+    private List<Terapia> terapiePaziente = new ArrayList<>();
+    private List<Terapia> listaCompletaTerapie = new ArrayList<>();
     private final AccessoTerapie accessoTerapie = new AccessoTerapieImpl();
     private final ListaPazienti listaPazienti = new ListaPazienti();
 
-    List<TerapiaDiabete> terapiaDiabete;
-    List<TerapiaConcomitante> terapiaConcomitante;
+    List<TerapiaDiabete> terapiaDiabete = new ArrayList<>();
+    List<TerapiaConcomitante> terapiaConcomitante = new ArrayList<>();
 
     public GestioneTerapie(Paziente pazienteSessione) {
         this.pazienteSessione = pazienteSessione;
-        aggiornaListaTerapiePaziente();
     }
 
     public GestioneTerapie() {
         this.pazienteSessione = null;
-
-        aggiornaListaTerapieCompleta();
     }
 
     public List<Terapia> getTerapiePaziente() {
+        if (pazienteSessione == null) {
+            throw new IllegalStateException("Paziente non inizializzato");
+        }
         aggiornaListaTerapiePaziente();
         return terapiePaziente;
     }
@@ -39,23 +39,34 @@ public class GestioneTerapie {
         return listaCompletaTerapie;
     }
 
-    private void aggiornaListaTerapieDiabete(Paziente paziente) {
-        terapiaDiabete = accessoTerapie.getTerapieDiabetePaziente(paziente.getIdUtente());
+    private void aggiornaListaTerapieDiabete(Paziente pazienteSelezionato) {
+        terapiaDiabete.clear();
+        terapiaDiabete = accessoTerapie.getTerapieDiabetePaziente(pazienteSelezionato.getIdUtente());
     }
 
-    private void aggiornaListaTerapieConcomitanti(Paziente paziente) {
-        terapiaConcomitante = accessoTerapie.getTerapieConcomitantiPaziente(paziente.getIdUtente());
+    private void aggiornaListaTerapieConcomitanti(Paziente pazienteSelezionato) {
+        terapiaConcomitante.clear();
+        terapiaConcomitante = accessoTerapie.getTerapieConcomitantiPaziente(pazienteSelezionato.getIdUtente());
     }
 
     private void aggiornaListaTerapiePaziente() {
-        terapiePaziente.clear();
+        if (pazienteSessione == null) {
+            throw new IllegalStateException("Paziente di sessione non inizializzato.");
+        }
+
+        terapiePaziente = new ArrayList<>();
         aggiornaListaTerapieDiabete(pazienteSessione);
         aggiornaListaTerapieConcomitanti(pazienteSessione);
-        terapiePaziente.addAll(terapiaDiabete);
-        terapiePaziente.addAll(terapiaConcomitante);
+        if (terapiaDiabete != null) {
+            terapiePaziente.addAll(terapiaDiabete);
+        }
+        if (terapiaConcomitante != null) {
+            terapiePaziente.addAll(terapiaConcomitante);
+        }
     }
 
     private void aggiornaListaTerapieCompleta() {
+        listaCompletaTerapie.clear();
         for (Paziente p : listaPazienti.getListaCompletaPazienti()) {
             aggiornaListaTerapieDiabete(p);
             aggiornaListaTerapieConcomitanti(p);
@@ -75,10 +86,15 @@ public class GestioneTerapie {
     }
 
     public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
-        // Verificare successivamente se inserire un controllo sui duplicati
+        if (pazienteSessione == null) {
+            throw new IllegalStateException("Paziente di sessione non inizializzato.");
+        }
+
         aggiornaListaTerapiePaziente();
         for (TerapiaDiabete terapia : terapiaDiabete) {
-            if (terapia.getDataInizio().equals(dataInizio) && terapia.getListaFarmaciTerapia().equals(farmaci) && terapia.getIdPaziente() == pazienteSessione.getIdUtente()) {
+            if (terapia.getDataInizio().equals(dataInizio)
+                    && terapia.getListaFarmaciTerapia().equals(farmaci)
+                    && terapia.getIdPaziente() == pazienteSessione.getIdUtente()) {
                 return -1;
             }
         }
@@ -87,15 +103,22 @@ public class GestioneTerapie {
     }
 
     public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci, String nomePatologia) {
+        if (pazienteSessione == null) {
+            throw new IllegalStateException("Paziente di sessione non inizializzato.");
+        }
+
         aggiornaListaTerapiePaziente();
         UtilityPortali upp = new UtilityPortali();
 
         for (TerapiaConcomitante terapia : terapiaConcomitante) {
-            if (terapia.getDataInizio().equals(dataInizio) && terapia.getListaFarmaciTerapia().equals(farmaci) && terapia.getIdPaziente() == pazienteSessione.getIdUtente()) {
+            if (terapia.getDataInizio().equals(dataInizio)
+                    && terapia.getListaFarmaciTerapia().equals(farmaci)
+                    && terapia.getIdPaziente() == pazienteSessione.getIdUtente()) {
                 return -1;
             }
 
-            if (terapia.getIdPatologiaConcomitante() == upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia()) {
+            var pat = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
+            if (pat != null && terapia.getIdPatologiaConcomitante() == pat.getIdPatologia()) {
                 return -1;
             }
         }
@@ -111,8 +134,6 @@ public class GestioneTerapie {
         return accessoTerapie.updateTerapiaConcomitante(terapia);
     }
 
-
-    // Verificare se potranno servire in futuro, probabilmente no
     public TerapiaDiabete getTerapiaDiabete(int idTerapia) {
         for (Terapia terapia : terapiePaziente) {
             if (terapia instanceof TerapiaDiabete td && td.getIdTerapiaDiabete() == idTerapia) {
@@ -137,7 +158,7 @@ public class GestioneTerapie {
         for (Terapia terapia : listaCompletaTerapie) {
             if (terapia instanceof TerapiaDiabete td && td.getIdTerapiaDiabete() == idTerapia) {
                 return td;
-            } else if (terapia instanceof TerapiaConcomitante tc  && tc.getIdTerapiaConcomitante() == idTerapia) {
+            } else if (terapia instanceof TerapiaConcomitante tc && tc.getIdTerapiaConcomitante() == idTerapia) {
                 return tc;
             }
         }
@@ -147,17 +168,15 @@ public class GestioneTerapie {
 
     private List<FarmacoTerapia> ft = new ArrayList<>();
 
-    public boolean generaFarmaciTerapia(Farmaco farmaco, IndicazioniFarmaciTerapia indicazioni){
-        List<Farmaco> farmaciCaricati =  new ArrayList<>();
+    public boolean generaFarmaciTerapia(Farmaco farmaco, IndicazioniFarmaciTerapia indicazioni) {
+        List<Farmaco> farmaciCaricati = new ArrayList<>();
 
-        for(FarmacoTerapia cache: ft) {
+        for (FarmacoTerapia cache : ft) {
             farmaciCaricati.add(cache.getFarmaco());
         }
 
-        // Verifica che il farmaco non sia già presenta nella terapia
-        // Se arriva un farmaco non valido si scartano anche le indicazioni
-        for(Farmaco f:  farmaciCaricati){
-            if(f.equals(farmaco)){
+        for (Farmaco f : farmaciCaricati) {
+            if (f.equals(farmaco)) {
                 return false;
             }
         }

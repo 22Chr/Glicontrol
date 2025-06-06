@@ -201,7 +201,7 @@ public class PortalePazienteController implements Portale {
             Parent root = fxmlLoader.load();
 
             FinestraTerapiePazienteController ftpc =  fxmlLoader.getController();
-
+            ftpc.setInstance(this, paziente);
 
             Stage gestoreTerapiePaziente = new Stage();
             gestoreTerapiePaziente.setTitle("Le mie terapie");

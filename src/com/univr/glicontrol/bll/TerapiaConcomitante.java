@@ -92,7 +92,8 @@ public class TerapiaConcomitante implements Terapia {
 
 
     public String getNome() {
-        GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(UtenteSessione.getInstance().getPazienteSessione());
+        ListaPazienti listaPazienti = new ListaPazienti();
+        GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(listaPazienti.getPazientePerId(idPaziente));
         return "Terapia " + gpc.getPatologiaConcomitante(idPatologiaConcomitante).getNomePatologia();
     }
 

@@ -62,7 +62,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             try (ResultSet rs = recuperaTerapieConcomitantiStmt.executeQuery()) {
                 while (rs.next()) {
                     int idTerapiaConcomitante = rs.getInt("id_terapia_concomitante");
-                    TerapiaConcomitante t = new TerapiaConcomitante (rs.getInt("id_paziente_terapia_concomitante"),
+                    TerapiaConcomitante t = new TerapiaConcomitante (idPaziente,
                             rs.getInt("id_patologia_comorbidita"),
                             rs.getInt("id_medico_ultima_modifica"),
                             rs.getDate("data_inizio"),

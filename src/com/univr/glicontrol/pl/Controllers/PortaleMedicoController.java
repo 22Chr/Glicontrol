@@ -197,9 +197,10 @@ public class PortaleMedicoController implements Portale {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraTerapiePaziente.fxml"));
             Parent root = fxmlLoader.load();
 
-            FinestraTerapiePazienteController gestoreTerapiaController = fxmlLoader.getController();
-            gestoreTerapiaController.setInstance(this);
-            gestoreTerapiaController.setNomeBottoneInserimentoTerapia();
+            FinestraTerapiePazienteController ftpc = fxmlLoader.getController();
+            ftpc.setInstance(this, pazienteSelezionato);
+            ftpc.setNomeBottoneInserimentoTerapia();
+
 
             Stage gestoreTerapiePaziente = new Stage();
             gestoreTerapiePaziente.setTitle("Terapie paziente");
@@ -210,6 +211,5 @@ public class PortaleMedicoController implements Portale {
             System.out.println(e.getMessage());
         }
     }
-
 
 }
