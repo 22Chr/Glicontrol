@@ -101,9 +101,9 @@
       </VBox>
    </left>
    <center>
-      <VBox fx:id="centerVB" alignment="CENTER" prefHeight="506.0" prefWidth="378.0" spacing="30.0" visible="false" BorderPane.alignment="CENTER">
+      <VBox fx:id="centerVB" alignment="CENTER" prefHeight="506.0" prefWidth="378.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="pazienteSelezionatoTF" editable="false" maxWidth="400.0" style="-fx-background-color: transparent; -fx-border-color: #22577a; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
+            <TextField fx:id="pazienteSelezionatoTF" alignment="CENTER" editable="false" maxWidth="400.0" style="-fx-background-color: transparent; -fx-border-color: #22577a; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="16.0" />
                </font></TextField>
@@ -116,6 +116,13 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                   <Button fx:id="patologieB" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
@@ -124,6 +131,13 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                </children>
             </HBox>
@@ -136,6 +150,13 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                   <Button fx:id="rilevazioniGlicemicheB" alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Rilevazioni&#10;glicemiche&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
@@ -144,6 +165,13 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                </children>
             </HBox>
@@ -156,6 +184,13 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                   <Button fx:id="informazioniB" alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Informazioni &#10;del paziente&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
@@ -164,6 +199,13 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <effect>
+                        <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                           <color>
+                              <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                           </color>
+                        </DropShadow>
+                     </effect>
                   </Button>
                </children>
             </HBox>
@@ -174,11 +216,11 @@
       </VBox>
    </center>
    <right>
-      <VBox fx:id="rightVB" prefHeight="520.0" prefWidth="275.0" style="-fx-border-color: #22577a; -fx-border-radius: 5;" visible="false" BorderPane.alignment="CENTER">
+      <VBox fx:id="rightVB" prefHeight="520.0" prefWidth="275.0" style="-fx-border-color: #22577a; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
          <children>
             <LineChart fx:id="rilevazioniGiornaliereLC" VBox.vgrow="ALWAYS">
               <xAxis>
-                <CategoryAxis label="Andamento odierno" prefHeight="41.0" prefWidth="216.0" side="BOTTOM" />
+                <CategoryAxis prefHeight="29.0" prefWidth="216.0" side="BOTTOM" />
               </xAxis>
               <yAxis>
                 <NumberAxis side="LEFT" />
@@ -189,7 +231,7 @@
             </LineChart>
             <LineChart fx:id="rilevazioniSettimanaliLC" VBox.vgrow="ALWAYS">
               <xAxis>
-                <CategoryAxis label="Andamento settimanale" prefHeight="41.0" prefWidth="216.0" side="BOTTOM" />
+                <CategoryAxis prefHeight="28.0" prefWidth="216.0" side="BOTTOM" />
               </xAxis>
               <yAxis>
                 <NumberAxis side="LEFT" />
@@ -197,13 +239,13 @@
             </LineChart>
             <LineChart fx:id="rilevazioniMensiliLC" VBox.vgrow="ALWAYS">
               <xAxis>
-                <CategoryAxis label="Andamento mensile" prefHeight="40.0" prefWidth="216.0" side="BOTTOM" />
+                <CategoryAxis prefHeight="29.0" prefWidth="216.0" side="BOTTOM" />
               </xAxis>
               <yAxis>
                 <NumberAxis side="LEFT" />
               </yAxis>
                <VBox.margin>
-                  <Insets bottom="-10.0" />
+                  <Insets />
                </VBox.margin>
             </LineChart>
          </children>
