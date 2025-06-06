@@ -249,7 +249,8 @@ public class InserisciNuovaTerapiaController {
     private void informaPazienteInserimentoTerapia() throws MessagingException {
         ServizioNotifiche inviaMailInserimentoNuovaPatologia = new ServizioNotifiche();
         String oggetto = "Hai una nuova terapia";
-        String corpo = "Ti è stata registrata una nuova terapia per la patologia " + patologiaCB.getSelectionModel().getSelectedItem() + ".\nAccedi all'applicazione per maggiori dettagli.\n\nGlicontrol Medical System";
+        String nomePatologia = upp.getTerapiaPerNomeFormattata(patologiaCB.getSelectionModel().getSelectedItem()).getNome();
+        String corpo = "Ti è stata registrata una nuova terapia per la patologia " + nomePatologia + ".\nAccedi all'applicazione per maggiori dettagli.\n\nGlicontrol Medical System";
         inviaMailInserimentoNuovaPatologia.sendEmail(paziente.getEmail(), oggetto, corpo);
     }
 }

@@ -45,7 +45,7 @@
                 </VBox>
                 <VBox alignment="CENTER" prefHeight="416.0" prefWidth="353.0" spacing="20.0">
                     <children>
-                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="358.0" text="Inserisci una Patologia" textAlignment="CENTER">
+                  <Label alignment="CENTER" prefHeight="27.0" prefWidth="358.0" text="Inserisci una patologia" textAlignment="CENTER">
                      <font>
                         <Font name="Avenir Next Bold" size="20.0" />
                      </font>
