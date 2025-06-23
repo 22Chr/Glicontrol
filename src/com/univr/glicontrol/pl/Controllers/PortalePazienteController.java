@@ -251,8 +251,11 @@ public class PortalePazienteController implements Portale {
                 serie.setName("Andamento odierno");
 
                 List<RilevazioneGlicemica> rilevazioniOggi = gestione.getRilevazioniPerData(oggi);
+
+                rilevazioniOggi.sort(Comparator.comparing(RilevazioneGlicemica::getOra));
+
                 for (RilevazioneGlicemica rilevazione : rilevazioniOggi) {
-                    String orario = rilevazione.getOra().toString().substring(0,5);
+                    String orario = rilevazione.getOra().toString().substring(0,5); // es. "15:30"
                     serie.getData().add(new XYChart.Data<>(orario, rilevazione.getValore()));
                 }
             }
