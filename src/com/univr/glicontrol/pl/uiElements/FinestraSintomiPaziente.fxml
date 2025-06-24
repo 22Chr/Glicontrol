@@ -13,7 +13,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraSintomiPazienteController">
    <children>
-      <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0" visible="false">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                <children>
@@ -99,7 +99,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox fx:id="pageSintomiPerMedico" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="519.0" spacing="15.0" visible="false">
+      <VBox fx:id="pageSintomiPerMedico" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="519.0" spacing="15.0">
          <children>
             <Label alignment="CENTER" prefHeight="39.0" prefWidth="263.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DEI SINTOMI" textAlignment="CENTER" textFill="WHITE">
                <font>

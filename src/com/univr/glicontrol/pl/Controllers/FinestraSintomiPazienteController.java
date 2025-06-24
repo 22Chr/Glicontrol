@@ -53,13 +53,36 @@ public class FinestraSintomiPazienteController {
 
             return cell;
         });
+
+        sintomiPazientePortaleMedicoLV.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !cell.isEmpty()) {
+                    descrizioneEstesaTA.setText(cell.getText());
+                    cambiaPagina();
+                }
+            });
+
+            return cell;
+        });
     }
 
     public void resetListViewSintomi() {
         UtilityPortali newUpp = new UtilityPortali(paziente);
         ObservableList<String> newSintomi = FXCollections.observableArrayList();
         newSintomi.addAll(newUpp.getListaSintomiPazienti());
-        sintomiPazienteLV.setItems(newSintomi);
+        if(pmc == null){
+            sintomiPazienteLV.setItems(newSintomi);
+        }else{
+            sintomiPazientePortaleMedicoLV.setItems(newSintomi);
+        }
         descrizioneTA.clear();
         descrizioneTA.requestFocus();
     }
@@ -85,15 +108,25 @@ public class FinestraSintomiPazienteController {
     public void cambiaPagina() {
         if(detailPage.isVisible()) {
             detailPage.setVisible(false);
-            mainPage.setVisible(true);
+            if (pmc == null) {
+                mainPage.setVisible(true);
+            } else {
+                pageSintomiPerMedico.setVisible(true);
+            }
         } else {
             detailPage.setVisible(true);
             mainPage.setVisible(false);
+            pageSintomiPerMedico.setVisible(false);
         }
     }
 
     public void eliminaSintomo() {
-        String sintomoFormattato = sintomiPazienteLV.getSelectionModel().getSelectedItem();
+        String sintomoFormattato;
+        if(pmc == null) {
+            sintomoFormattato = sintomiPazienteLV.getSelectionModel().getSelectedItem();
+        }else{
+            sintomoFormattato = sintomiPazientePortaleMedicoLV.getSelectionModel().getSelectedItem();
+        }
         if (gs.eliminaSintomo(upp.getSintomoPerDescrizioneFormattata(sintomoFormattato).getIdSintomo())) {
             Alert successoEliminazioneSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoEliminazioneSintomoAlert.setTitle("System Information Service");
