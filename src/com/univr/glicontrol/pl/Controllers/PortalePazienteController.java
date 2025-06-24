@@ -284,6 +284,9 @@ public class PortalePazienteController implements Portale {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraAssunzioneFarmaciPaziente.fxml"));
             Parent root = fxmlLoader.load();
 
+            FinestraAssunzioneFarmaciPazienteController fafpc = fxmlLoader.getController();
+            fafpc.setInstance(this, paziente);
+
             Stage assunzioneFarmaciPaziente = new Stage();
             assunzioneFarmaciPaziente.setTitle("Registra i farmaci");
             assunzioneFarmaciPaziente.setScene(new Scene(root));

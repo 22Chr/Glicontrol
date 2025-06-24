@@ -403,6 +403,21 @@ public class UtilityPortali {
         return listaFarmaciAssuntiOggi;
     }
 
+    // lista completa dei farmaci assunti dal paziente
+    public List<String> getListaFarmaciAssuntiPerPaziente() {
+        List<String> listaFarmaciAssuntiPerPaziente = new ArrayList<>();
+        GestioneAssunzioneFarmaci gaf = new GestioneAssunzioneFarmaci(paziente);
+        for (AssunzioneFarmaco af : gaf.getListaAssunzioneFarmaci()) {
+            LocalDate data = af.getData().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormattata = data.format(formatter);
+            String assunzioneFormattata = GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco()).getNome() + "   (assunto il " + dataFormattata + " alle " + af.getOra().toString().substring(0, 5) + ")";
+            listaFarmaciAssuntiPerPaziente.add(assunzioneFormattata);
+        }
+
+        return  listaFarmaciAssuntiPerPaziente.reversed();
+    }
+
     public Farmaco getFarmacoPerNomeFormattato(String nomeFarmacoFormattato) {
         String check = "   (assunto il";
         int limit = nomeFarmacoFormattato.indexOf(check);

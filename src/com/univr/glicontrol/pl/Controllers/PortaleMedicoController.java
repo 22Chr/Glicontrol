@@ -288,4 +288,25 @@ public class PortaleMedicoController implements Portale {
         }
     }
 
+    public void visualizzaAssunzioneFarmaciPaziente() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraAssunzioneFarmaciPaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            FinestraAssunzioneFarmaciPazienteController fafpc = fxmlLoader.getController();
+            fafpc.setInstance(this, pazienteSelezionato);
+
+            Stage assunzioneFarmaciPaziente = new Stage();
+            assunzioneFarmaciPaziente.setTitle("Storico assunzioni");
+            assunzioneFarmaciPaziente.setScene(new Scene(root));
+            assunzioneFarmaciPaziente.setHeight(700);
+            assunzioneFarmaciPaziente.setWidth(920);
+
+            assunzioneFarmaciPaziente.show();
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
 }

@@ -18,16 +18,18 @@ import java.sql.Time;
 import java.time.LocalDate;
 
 public class FinestraAssunzioneFarmaciPazienteController {
-    UtilityPortali upp = new UtilityPortali();
-    Paziente paziente = upp.getPazienteSessione();
-    GestioneAssunzioneFarmaci gaf = new GestioneAssunzioneFarmaci(paziente);
+    private UtilityPortali upp;
+    private Paziente paziente;
+    private GestioneAssunzioneFarmaci gaf;
+    private PortaleMedicoController pmc = null;
+    private PortalePazienteController ppc = null;
 
     @FXML
     private HBox mainPage;
     @FXML
     private VBox detailPage;
     @FXML
-    private ListView<String> farmaciAssuntiOggiLV;
+    private ListView<String> farmaciAssuntiOggiLV, listaFarmaciAssuntiPortaleMedicoLV;
     @FXML
     private ComboBox<String> listaFarmaciDaAssumereCB, oraFarmacoCB, minutiFarmacoCB;
     @FXML
@@ -39,59 +41,13 @@ public class FinestraAssunzioneFarmaciPazienteController {
     @FXML
     private ProgressIndicator loadingIndicator;
     @FXML
-    private HBox loadingPage;
+    private HBox loadingPage, mainPagePortaleMedico;
 
     public void initialize() {
         // Mostra l'indicatore di caricamento
         loadingPage.setVisible(true);
         loadingIndicator.setVisible(true);
         loadingIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
-
-        // Esegui il caricamento in background
-        Task<Void> loadingTask = new Task<>() {
-            @Override
-            protected Void call() {
-                // Caricamento delle due liste (operazioni potenzialmente lente)
-                ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
-                for (String farmaco : upp.getListaFarmaciDaAssumere()) {
-                    if (!farmaciDaAssumere.contains(farmaco))
-                        farmaciDaAssumere.add(farmaco);
-                }
-
-                ObservableList<String> farmaciAssuntiOggi = FXCollections.observableArrayList();
-                farmaciAssuntiOggi.addAll(upp.getListaFarmaciAssuntiOggi());
-
-                // Aggiornamento della UI va fatto sul thread dell'interfaccia
-                Platform.runLater(() -> {
-                    listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
-                    farmaciAssuntiOggiLV.setItems(farmaciAssuntiOggi);
-                });
-
-                return null;
-            }
-
-            @Override
-            protected void succeeded() {
-                // Nasconde l'indicatore di caricamento quando ha finito
-                loadingIndicator.setVisible(false);
-                loadingPage.setVisible(false);
-                mainPage.setVisible(true);
-                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(250), mainPage);
-                fadeIn.setFromValue(0.0);
-                fadeIn.setToValue(1.0);
-                fadeIn.play();
-            }
-
-            @Override
-            protected void failed() {
-                loadingPage.setVisible(false);
-                loadingIndicator.setVisible(false);
-                // Qui puoi anche loggare o mostrare un messaggio d’errore
-                System.err.println("Errore durante il caricamento dei dati.");
-            }
-        };
-
-        new Thread(loadingTask).start();
 
         // Inizializzazione immediata dei componenti statici
         oraFarmacoCB.getItems().addAll(
@@ -188,10 +144,16 @@ public class FinestraAssunzioneFarmaciPazienteController {
     public void cambiaPagina() {
         if(detailPage.isVisible()) {
             detailPage.setVisible(false);
-            mainPage.setVisible(true);
+            if (pmc != null) {
+                mainPage.setVisible(false);
+                mainPagePortaleMedico.setVisible(true);
+            } else {
+                mainPage.setVisible(true);
+            }
         } else {
             detailPage.setVisible(true);
             mainPage.setVisible(false);
+            mainPagePortaleMedico.setVisible(false);
         }
     }
 
@@ -239,7 +201,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
     }
 
     private void resetListViewFarmaciAssuntiOggi() {
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUpp = new UtilityPortali(paziente);
         ObservableList<String> newFarmaciAssuntiOggi = FXCollections.observableArrayList();
         newFarmaciAssuntiOggi.addAll(newUpp.getListaFarmaciAssuntiOggi());
         farmaciAssuntiOggiLV.setItems(newFarmaciAssuntiOggi);
@@ -275,5 +237,107 @@ public class FinestraAssunzioneFarmaciPazienteController {
         } else {
             return nomeAssunzione.substring(limit + 6, limit + 11);
         }
+    }
+
+    public void setInstance(Portale portale, Paziente paziente) {
+        this.paziente = paziente;
+        upp = new UtilityPortali(paziente);
+        gaf = new GestioneAssunzioneFarmaci(paziente);
+
+        if (portale instanceof PortalePazienteController) {
+            this.ppc = (PortalePazienteController) portale;
+            Platform.runLater(this::caricaListePortalePaziente);
+        } else {
+            this.pmc = (PortaleMedicoController)  portale;
+            Platform.runLater(this::caricaListaPortaleMedico);
+        }
+    }
+
+    private void caricaListaPortaleMedico() {
+        Task<Void> loadListaPortaleMedico = new Task<>() {
+            @Override
+            protected Void call() {
+                ObservableList<String> listaFarmaciAssuntiDalPaziente = FXCollections.observableArrayList();
+                listaFarmaciAssuntiDalPaziente.addAll(upp.getListaFarmaciAssuntiPerPaziente());
+                Platform.runLater(() -> listaFarmaciAssuntiPortaleMedicoLV.setItems(listaFarmaciAssuntiDalPaziente));
+
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                // Nasconde l'indicatore di caricamento quando ha finito
+                loadingIndicator.setVisible(false);
+                loadingPage.setVisible(false);
+                mainPagePortaleMedico.setVisible(true);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(250), mainPage);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            }
+
+            @Override
+            protected void failed() {
+                loadingIndicator.setVisible(false);
+                loadingPage.setVisible(false);
+
+                System.err.println("Si è verificato un errore durante il caricamento dei dati");
+
+                Alert erroreCaricamentoListaAssunzioneFarmaciCompleta = new Alert(Alert.AlertType.ERROR);
+                erroreCaricamentoListaAssunzioneFarmaciCompleta.setTitle("System Notification Service");
+                erroreCaricamentoListaAssunzioneFarmaciCompleta.setHeaderText("Errore durante il caricamento dei dati");
+                erroreCaricamentoListaAssunzioneFarmaciCompleta.setContentText("Si è verificato un errore durante il caricamento della lista complessiva dei farmaci assunti dal paziente.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
+                erroreCaricamentoListaAssunzioneFarmaciCompleta.showAndWait();
+            }
+        };
+
+        new Thread(loadListaPortaleMedico).start();
+    }
+
+    private void caricaListePortalePaziente() {
+        Task<Void> loadListePortalePaziente = new Task<>() {
+            @Override
+            protected Void call() {
+                // Caricamento delle due liste (operazioni potenzialmente lente)
+                ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
+                for (String farmaco : upp.getListaFarmaciDaAssumere()) {
+                    if (!farmaciDaAssumere.contains(farmaco))
+                        farmaciDaAssumere.add(farmaco);
+                }
+
+                ObservableList<String> farmaciAssuntiOggi = FXCollections.observableArrayList();
+                farmaciAssuntiOggi.addAll(upp.getListaFarmaciAssuntiOggi());
+
+                // Aggiornamento della UI va fatto sul thread dell'interfaccia
+                Platform.runLater(() -> {
+                    listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
+                    farmaciAssuntiOggiLV.setItems(farmaciAssuntiOggi);
+                });
+
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                // Nasconde l'indicatore di caricamento quando ha finito
+                loadingIndicator.setVisible(false);
+                loadingPage.setVisible(false);
+                mainPage.setVisible(true);
+                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(250), mainPage);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            }
+
+            @Override
+            protected void failed() {
+                loadingPage.setVisible(false);
+                loadingIndicator.setVisible(false);
+
+                System.err.println("Si è verificato un errore durante il caricamento dei dati.");
+            }
+        };
+
+        new Thread(loadListePortalePaziente).start();
     }
 }

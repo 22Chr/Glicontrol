@@ -159,7 +159,7 @@ public class FinestraSintomiPazienteController {
     }
 
     private void caricaSintomi() {
-        Task<Void> loadingSintomiTask = new Task<>() {
+        Task<Void> loadSintomiTask = new Task<>() {
             @Override
             protected Void call(){
                 ObservableList<String> sintomi = FXCollections.observableArrayList();
@@ -173,8 +173,19 @@ public class FinestraSintomiPazienteController {
 
                 return null;
             }
+
+            @Override
+            protected void failed() {
+                System.err.println("Si è verificato un errore durante il caricamento dei dati");
+
+                Alert erroreCaricamentoSintomi = new Alert(Alert.AlertType.ERROR);
+                erroreCaricamentoSintomi.setTitle("System Notification Service");
+                erroreCaricamentoSintomi.setHeaderText("Errore durante il caricamento dei dati");
+                erroreCaricamentoSintomi.setContentText("Si è verificato un errore durante il caricamento dei sintomi del paziente.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
+                erroreCaricamentoSintomi.showAndWait();
+            }
         };
 
-        new Thread(loadingSintomiTask).start();
+        new Thread(loadSintomiTask).start();
     }
 }
