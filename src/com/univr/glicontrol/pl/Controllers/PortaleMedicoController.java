@@ -299,8 +299,8 @@ public class PortaleMedicoController implements Portale {
             Stage assunzioneFarmaciPaziente = new Stage();
             assunzioneFarmaciPaziente.setTitle("Storico assunzioni");
             assunzioneFarmaciPaziente.setScene(new Scene(root));
-            assunzioneFarmaciPaziente.setHeight(700);
-            assunzioneFarmaciPaziente.setWidth(920);
+            assunzioneFarmaciPaziente.setHeight(650);
+            assunzioneFarmaciPaziente.setWidth(700);
 
             assunzioneFarmaciPaziente.show();
 

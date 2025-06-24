@@ -29,7 +29,7 @@ public class FinestraAssunzioneFarmaciPazienteController {
     @FXML
     private VBox detailPage;
     @FXML
-    private ListView<String> farmaciAssuntiOggiLV, listaFarmaciAssuntiPortaleMedicoLV;
+    private ListView<String> farmaciAssuntiOggiLV, farmaciTerapieConcomitantiLV, farmaciTerapiaDiabeteLV;
     @FXML
     private ComboBox<String> listaFarmaciDaAssumereCB, oraFarmacoCB, minutiFarmacoCB;
     @FXML
@@ -257,9 +257,13 @@ public class FinestraAssunzioneFarmaciPazienteController {
         Task<Void> loadListaPortaleMedico = new Task<>() {
             @Override
             protected Void call() {
-                ObservableList<String> listaFarmaciAssuntiDalPaziente = FXCollections.observableArrayList();
-                listaFarmaciAssuntiDalPaziente.addAll(upp.getListaFarmaciAssuntiPerPaziente());
-                Platform.runLater(() -> listaFarmaciAssuntiPortaleMedicoLV.setItems(listaFarmaciAssuntiDalPaziente));
+                ObservableList<String> listaFarmaciDiabeteAssuntiDalPaziente = FXCollections.observableArrayList();
+                listaFarmaciDiabeteAssuntiDalPaziente.addAll(upp.getListaCompletaAssunzioneFarmaciDiabete());
+                Platform.runLater(() -> farmaciTerapiaDiabeteLV.setItems(listaFarmaciDiabeteAssuntiDalPaziente));
+
+                ObservableList<String> listaFarmaciTerapieConcomitantiAssuntiDalPaziente = FXCollections.observableArrayList();
+                listaFarmaciTerapieConcomitantiAssuntiDalPaziente.addAll(upp.getListaCompletaAssunzioneFarmaciTerapieConcomitanti());
+                Platform.runLater(() -> farmaciTerapieConcomitantiLV.setItems(listaFarmaciTerapieConcomitantiAssuntiDalPaziente));
 
                 return null;
             }

@@ -403,20 +403,44 @@ public class UtilityPortali {
         return listaFarmaciAssuntiOggi;
     }
 
-    // lista completa dei farmaci assunti dal paziente
-    public List<String> getListaFarmaciAssuntiPerPaziente() {
-        List<String> listaFarmaciAssuntiPerPaziente = new ArrayList<>();
+    // lista completa farmaci diabete per paziente
+    public List<String> getListaCompletaAssunzioneFarmaciDiabete(){
+        List<String> listaCompletaAssunzioneFarmaciDiabete = new ArrayList<>();
         GestioneAssunzioneFarmaci gaf = new GestioneAssunzioneFarmaci(paziente);
-        for (AssunzioneFarmaco af : gaf.getListaAssunzioneFarmaci()) {
+        Farmaco f;
+        for(AssunzioneFarmaco af: gaf.getListaAssunzioneFarmaci()){
             LocalDate data = af.getData().toLocalDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String dataFormattata = data.format(formatter);
-            String assunzioneFormattata = GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco()).getNome() + "   (assunto il " + dataFormattata + " alle " + af.getOra().toString().substring(0, 5) + ")";
-            listaFarmaciAssuntiPerPaziente.add(assunzioneFormattata);
+            f = GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco());
+            if(f.getTipologia().equals("Ipoglicemizzante") || f.getTipologia().equals("Insulina")){
+                String nomeFormattato = f.getNome() + "   (assunto il " + dataFormattata + " alle " + af.getOra().toString().substring(0, 5) + ")";
+                listaCompletaAssunzioneFarmaciDiabete.add(nomeFormattato);
+            }
         }
 
-        return  listaFarmaciAssuntiPerPaziente.reversed();
+        return  listaCompletaAssunzioneFarmaciDiabete.reversed();
     }
+
+    public List<String> getListaCompletaAssunzioneFarmaciTerapieConcomitanti(){
+        List<String> listaCompletaAssunzioneFarmaciTerapieConcomitanti = new ArrayList<>();
+        GestioneAssunzioneFarmaci gaf = new GestioneAssunzioneFarmaci(paziente);
+        Farmaco f;
+        for(AssunzioneFarmaco af: gaf.getListaAssunzioneFarmaci()){
+            LocalDate data = af.getData().toLocalDate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormattata = data.format(formatter);
+            f = GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco());
+            if(!f.getTipologia().equals("Ipoglicemizzante") && !f.getTipologia().equals("Insulina")){
+                String nomeFormattato = f.getNome() + "   (assunto il " + dataFormattata + " alle " + af.getOra().toString().substring(0, 5) + ")";
+                listaCompletaAssunzioneFarmaciTerapieConcomitanti.add(nomeFormattato);
+            }
+        }
+
+        return listaCompletaAssunzioneFarmaciTerapieConcomitanti.reversed();
+    }
+
+
 
     public Farmaco getFarmacoPerNomeFormattato(String nomeFarmacoFormattato) {
         String check = "   (assunto il";
