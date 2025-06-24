@@ -3,8 +3,10 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.GestioneSintomi;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
@@ -15,25 +17,23 @@ import javafx.scene.layout.VBox;
 
 
 public class FinestraSintomiPazienteController {
-    UtilityPortali upp = new UtilityPortali();
-    Paziente paziente = upp.getPazienteSessione();
-
-    GestioneSintomi gs = new GestioneSintomi(paziente);
+    UtilityPortali upp;
+    Paziente paziente;
+    GestioneSintomi gs;
+    PortaleMedicoController pmc = null;
+    PortalePazienteController ppc = null;
 
     @FXML
     private TextArea descrizioneTA, descrizioneEstesaTA;
     @FXML
-    private ListView<String> sintomiPazienteLV;
+    private ListView<String> sintomiPazienteLV, sintomiPazientePortaleMedicoLV;
     @FXML
     private HBox mainPage;
     @FXML
-    private VBox detailPage;
+    private VBox detailPage, pageSintomiPerMedico;
 
     @FXML
     private void initialize() {
-        ObservableList<String> sintomi = FXCollections.observableArrayList();
-        sintomi.addAll(upp.getListaSintomiPazienti());
-        sintomiPazienteLV.setItems(sintomi);
 
         sintomiPazienteLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
@@ -56,7 +56,7 @@ public class FinestraSintomiPazienteController {
     }
 
     public void resetListViewSintomi() {
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUpp = new UtilityPortali(paziente);
         ObservableList<String> newSintomi = FXCollections.observableArrayList();
         newSintomi.addAll(newUpp.getListaSintomiPazienti());
         sintomiPazienteLV.setItems(newSintomi);
@@ -104,5 +104,44 @@ public class FinestraSintomiPazienteController {
             cambiaPagina();
             resetListViewSintomi();
         }
+    }
+
+    public void setInstance(Portale portale, Paziente paziente) {
+        if(portale instanceof PortaleMedicoController){
+            this.pmc = (PortaleMedicoController) portale;
+            mainPage.setVisible(false);
+            detailPage.setVisible(false);
+            pageSintomiPerMedico.setVisible(true);
+        } else {
+            this.ppc = (PortalePazienteController) portale;
+            mainPage.setVisible(true);
+            detailPage.setVisible(true);
+            pageSintomiPerMedico.setVisible(false);
+        }
+
+        this.paziente = paziente;
+        upp = new UtilityPortali(paziente);
+        gs = new GestioneSintomi(paziente);
+        Platform.runLater(this::caricaSintomi);
+    }
+
+    private void caricaSintomi() {
+        Task<Void> loadingSintomiTask = new Task<>() {
+            @Override
+            protected Void call(){
+                ObservableList<String> sintomi = FXCollections.observableArrayList();
+                sintomi.addAll(upp.getListaSintomiPazienti());
+
+                if(pmc == null) {
+                    Platform.runLater(() -> sintomiPazienteLV.setItems(sintomi));
+                }else{
+                    Platform.runLater(() -> sintomiPazientePortaleMedicoLV.setItems(sintomi));
+                }
+
+                return null;
+            }
+        };
+
+        new Thread(loadingSintomiTask).start();
     }
 }

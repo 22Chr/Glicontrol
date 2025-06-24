@@ -138,6 +138,9 @@ public class PortalePazienteController implements Portale {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraSintomiPaziente.fxml"));
             Parent root = fxmlLoader.load();
 
+            FinestraSintomiPazienteController fspc = fxmlLoader.getController();
+            fspc.setInstance(this, paziente);
+
             Stage sintomiPaziente = new Stage();
             sintomiPaziente.setTitle("I miei sintomi");
             sintomiPaziente.setScene(new Scene(root));

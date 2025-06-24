@@ -230,4 +230,22 @@ public class PortaleMedicoController implements Portale {
         }
     }
 
+    public void openSintomiPaziente(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraSintomiPaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            FinestraSintomiPazienteController fspc = fxmlLoader.getController();
+            fspc.setInstance(this, pazienteSelezionato);
+
+            Stage sintomiPaziente = new Stage();
+            sintomiPaziente.setTitle("Sintomi");
+            sintomiPaziente.setScene(new Scene(root));
+
+            sintomiPaziente.show();
+        } catch (IOException e){
+            System.err.println(e.getMessage());
+        }
+    }
+
 }
