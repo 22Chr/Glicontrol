@@ -20,10 +20,10 @@ import java.io.IOException;
 public class ModificaInformazioniPazienteController implements InserimentoPastiController {
 
     @FXML
-    private CheckBox fumatoreCB, alcolismoCB, familiaritaCB, sedentarietaCB, alimentazioneCB;
+    private CheckBox fumatoreCB, alcolismoCB, familiaritaCB, sedentarietaCB, alimentazioneCB, obesitaCB;
 
     @FXML
-    private TextField nomeTF, cognomeTF, codFisTF, emailTF, pesoTF;
+    private TextField nomeTF, cognomeTF, codFisTF, emailTF, pesoTF, altezzaTF;
 
     @FXML
     private TextArea allergieTA;
@@ -112,6 +112,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
 
         if (InputChecker.getInstance().verificaPeso(pesoTF.getText()) && InputChecker.getInstance().verificaEmail(emailTF.getText())) {
             paziente.setEmail(emailTF.getText());
+            paziente.setAltezza(Integer.parseInt(altezzaTF.getText().substring(0, altezzaTF.getText().length() - 3)));
             paziente.setPeso(Float.parseFloat(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
         } else {
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
@@ -126,7 +127,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
         fattoriRischioAggiornati.setFumatore(fumatoreCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setProblemiAlcol(alcolismoCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setFamiliarita(familiaritaCB.isSelected() ? 1 : 0);
-        fattoriRischioAggiornati.setObesita(sedentarietaCB.isSelected() ? 1 : 0);
+        fattoriRischioAggiornati.setSedentarieta(sedentarietaCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setAlimentazioneScorretta(alimentazioneCB.isSelected() ? 1 : 0);
 
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
@@ -186,6 +187,8 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
                 int familiarita = fattoriRischioAggiornati.getFamiliarita();
                 int sedentarieta = fattoriRischioAggiornati.getSedentarieta();
                 int alimentazione = fattoriRischioAggiornati.getAlimentazioneScorretta();
+                fattoriRischioAggiornati.setObesita(GlicontrolCoreSystem.getInstance().isObeso(paziente));
+                boolean obesita =  fattoriRischioAggiornati.getObesita();
 
                 if (fumatore == 1) {
                     fumatoreCB.setSelected(true);
@@ -202,6 +205,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
                 if (alimentazione == 1) {
                     alimentazioneCB.setSelected(true);
                 }
+                obesitaCB.setSelected(obesita);
 
                 //inizializza le informazioni del paziente
                 nomeTF.setText(paziente.getNome());
@@ -213,6 +217,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
                 emailTF.setText(paziente.getEmail());
                 pesoTF.setText(paziente.getPeso() + " kg");
                 allergieTA.setText(paziente.getAllergie());
+                altezzaTF.setText(paziente.getAltezza() + " cm");
 
                 ObservableList<String> pasti = FXCollections.observableArrayList();
                 pasti.addAll(upp.getListaPasti());

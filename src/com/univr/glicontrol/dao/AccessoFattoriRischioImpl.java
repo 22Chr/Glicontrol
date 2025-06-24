@@ -31,7 +31,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
                     return new FattoriRischio(
                             paziente,
                             rs.getInt("familiarita"),
-                            rs.getInt("obesita"),
+                            rs.getBoolean("obesita"),
                             rs.getInt("sedentarieta"),
                             rs.getInt("alimentazione_scorretta"),
                             rs.getInt("fumatore"),
@@ -61,7 +61,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
             PreparedStatement updateStmt = conn.prepareStatement(updateFattoriRischioSql);
             updateStmt.setInt(1, fattore.getEta());
             updateStmt.setInt(2, fattore.getFamiliarita());
-            updateStmt.setInt(3, fattore.getObesita());
+            updateStmt.setBoolean(3, fattore.getObesita());
             updateStmt.setInt(4, fattore.getSedentarieta());
             updateStmt.setInt(5, fattore.getAlimentazioneScorretta());
             updateStmt.setInt(6, fattore.getFumatore());
@@ -99,7 +99,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
             insertStmt.setInt(1, fattore.getIdPaziente());
             insertStmt.setInt(2, fattore.getEta());
             insertStmt.setInt(3, fattore.getFamiliarita());
-            insertStmt.setInt(4, fattore.getObesita());
+            insertStmt.setBoolean(4, fattore.getObesita());
             insertStmt.setInt(5, fattore.getSedentarieta());
             insertStmt.setInt(6, fattore.getAlimentazioneScorretta());
             insertStmt.setInt(7, fattore.getFumatore());

@@ -32,7 +32,7 @@
                 <Insets left="10.0" top="10.0" />
             </StackPane.margin>
         </ImageView>
-        <VBox fx:id="page0" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" visible="false">
+        <VBox fx:id="page0" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
             <children>
                 <Text fill="#22577a" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto in Glicontrol&#10;il tuo alleato smart per una vita in equilibrio!" textAlignment="CENTER" wrappingWidth="421.78125">
                     <font>
@@ -182,14 +182,6 @@
                         <Insets left="-37.0" />
                     </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="obesCB" mnemonicParsing="false" onAction="#gestisciAltreCattiveAbitudini" text="Soffro di obesità">
-                    <font>
-                        <Font name="Avenir Next Regular" size="14.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets left="-82.0" />
-                    </VBox.margin>
-                </CheckBox>
                 <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="60.0">
                     <children>
                         <Button fx:id="indietro3B" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
@@ -215,21 +207,31 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox fx:id="page4" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" visible="false">
+        <VBox fx:id="page4" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" visible="false">
             <children>
                 <Label text="Inserisci il tuo peso corrente">
                     <font>
-                        <Font name="Avenir Next Regular" size="16.0" />
+                        <Font size="14.0" />
                     </font>
                 </Label>
                 <TextField fx:id="pesoTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="kg" style="-fx-border-color: #22577a;">
                     <font>
-                        <Font size="14.0" />
+                        <Font size="13.0" />
                     </font>
                 </TextField>
+            <Label text="Inserisci la tua altezza">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="altezzaTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="cm" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </TextField>
                 <Label text="Inserisci le tue allergie">
                     <font>
-                        <Font name="Avenir Next Regular" size="16.0" />
+                        <Font size="14.0" />
                     </font>
                 </Label>
                 <TextArea fx:id="allergieTA" maxHeight="80.0" maxWidth="160.0" prefHeight="80.0" prefWidth="160.0" style="-fx-border-color: #22577a;" wrapText="true">
@@ -262,7 +264,7 @@
                 <Insets top="60.0" />
             </StackPane.margin>
         </VBox>
-        <VBox fx:id="page5" alignment="CENTER" prefHeight="468.0" prefWidth="652.0" spacing="10.0">
+        <VBox fx:id="page5" alignment="CENTER" prefHeight="468.0" prefWidth="652.0" spacing="10.0" visible="false">
             <children>
                 <Region prefHeight="132.0" prefWidth="652.0" />
                 <GridPane alignment="TOP_CENTER" maxHeight="250.0" maxWidth="530.0" prefHeight="205.0" prefWidth="522.0" VBox.vgrow="NEVER">

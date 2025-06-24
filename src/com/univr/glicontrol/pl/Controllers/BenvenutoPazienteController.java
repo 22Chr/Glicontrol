@@ -26,13 +26,15 @@ public class BenvenutoPazienteController implements InserimentoPastiController {
     @FXML
     private RadioButton famSi, famNo;
     @FXML
-    private CheckBox fumoCB, alcoolCB, alimentCB, sedentCB, obesCB;
+    private CheckBox fumoCB, alcoolCB, alimentCB, sedentCB;
     @FXML
     private ListView<String> listaPasti;
     @FXML
     private Button salvaB;
     @FXML
-    private TextField pesoTF;
+    private TextField pesoTF, altezzaTF;
+    @FXML
+    private TextArea allergieTA;
 
     private int paginaCorrente = 0; //page 0
 
@@ -122,7 +124,6 @@ public class BenvenutoPazienteController implements InserimentoPastiController {
     public void gestisciAltreCattiveAbitudini() {
         boolean alimentazione = alimentCB.isSelected();
         boolean sedentarieta = sedentCB.isSelected();
-        boolean obesita = obesCB.isSelected();
 
         if (alimentazione) {
             fattoriRischioAggiornati.setAlimentazioneScorretta(1);
@@ -136,11 +137,6 @@ public class BenvenutoPazienteController implements InserimentoPastiController {
             fattoriRischioAggiornati.setSedentarieta(0);
         }
 
-        if (obesita) {
-            fattoriRischioAggiornati.setObesita(1);
-        } else {
-            fattoriRischioAggiornati.setObesita(0);
-        }
 
     }
 
@@ -149,7 +145,6 @@ public class BenvenutoPazienteController implements InserimentoPastiController {
     // ==============================
     //GESTIONE PESO E ALLERGIE
     // ==============================
-
 
 
     // ==============================
@@ -189,6 +184,9 @@ public class BenvenutoPazienteController implements InserimentoPastiController {
 
     public void salvaDatiPrimoAccesso() {
         paziente.setPrimoAccesso(0);
+        paziente.setAltezza(Integer.parseInt(altezzaTF.getText().substring(0, altezzaTF.getText().length() - 3)));
+        paziente.setPeso(Integer.parseInt(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
+        paziente.setAllergie(allergieTA.getText());
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
         if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert notificaSalvataggioAlert = new Alert(Alert.AlertType.INFORMATION);

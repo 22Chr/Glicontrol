@@ -8,13 +8,13 @@ public class FattoriRischio {
     private final int idPaziente;
     private int familiarita;
     private int eta;
-    private int obesita;
+    private boolean obesita;
     private int sedentarieta;
     private int alimentazioneScorretta;
     private int fumatore;
     private int problemiAlcol;
 
-    public FattoriRischio(Paziente paziente, int familiarita, int obesita, int sedentarieta, int alimentazioneScorretta, int fumatore, int problemiAlcol) {
+    public FattoriRischio(Paziente paziente, int familiarita, boolean obesita, int sedentarieta, int alimentazioneScorretta, int fumatore, int problemiAlcol) {
         this.paziente = paziente;
         this.idPaziente = paziente.getIdUtente();
         this.familiarita = familiarita;
@@ -37,10 +37,10 @@ public class FattoriRischio {
         return idPaziente;
     }
 
-    public int getObesita() {
+    public boolean getObesita() {
         return obesita;
     }
-    public void setObesita(int obesita) {
+    public void setObesita(boolean obesita) {
         this.obesita = obesita;
     }
 
@@ -101,7 +101,6 @@ public class FattoriRischio {
         result *= prime + idPaziente;
         result *= prime + familiarita;
         result *= prime + eta;
-        result *= prime + obesita;
         result *= prime + sedentarieta;
         result *= prime + alimentazioneScorretta;
         result *= prime + fumatore;

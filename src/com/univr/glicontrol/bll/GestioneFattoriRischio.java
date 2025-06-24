@@ -8,7 +8,7 @@ public class GestioneFattoriRischio {
 
     public boolean inserisciFattoriRischi(String codiceFiscale) {
         Paziente paziente = definisciPaziente.getPazientePerCodiceFiscale(codiceFiscale);
-        FattoriRischio fattoreRischioDefault = new FattoriRischio(paziente, 0, 0, 0, 0, 0, 0);
+        FattoriRischio fattoreRischioDefault = new FattoriRischio(paziente, 0, GlicontrolCoreSystem.getInstance().isObeso(paziente), 0, 0, 0, 0);
         AccessoFattoriRischio accessoFattori = new AccessoFattoriRischioImpl(paziente);
 
         return accessoFattori.insertFattoreRischio(fattoreRischioDefault);
