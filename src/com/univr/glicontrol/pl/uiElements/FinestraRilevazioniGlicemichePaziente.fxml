@@ -159,7 +159,7 @@
                         <Font size="15.0" />
                     </font>
                 </TextArea>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
                     <children>
                         <Button fx:id="indietroB" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
                             <font>
@@ -169,6 +169,14 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
+                  <Button fx:id="indietroPortaleMedicoB" layoutX="297.0" layoutY="47.0" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE" visible="false">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                         <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaRilevazione" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
@@ -181,5 +189,32 @@
                 </HBox>
             </children>
         </VBox>
+      <HBox fx:id="mainPagePortaleMedico" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+         <children>
+            <VBox alignment="CENTER" prefHeight="490.0" prefWidth="485.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+               <HBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </HBox.margin>
+               <children>
+                  <Label alignment="CENTER" prefHeight="76.0" prefWidth="519.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE RILEVAZIONI &#10;GLICEMICHE" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Carlito" size="16.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets bottom="5.0" left="3.0" right="3.0" top="5.0" />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ListView fx:id="rilevazioniGlicemichePortaleMedicoLV" prefHeight="349.0" prefWidth="483.0">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </ListView>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
     </children>
 </StackPane>

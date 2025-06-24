@@ -279,6 +279,12 @@ public class FinestraTerapiePazienteController {
                 progressIndicator.setVisible(false);
                 loadingPage.setVisible(false);
                 System.err.println("Errore durante il caricamento dei dati.");
+
+                Alert erroreCaricamentoTerapie = new Alert(Alert.AlertType.ERROR);
+                erroreCaricamentoTerapie.setTitle("System Notification Service");
+                erroreCaricamentoTerapie.setHeaderText("Errore durante il caricamento dei dati");
+                erroreCaricamentoTerapie.setContentText("Si è verificato un errore durante il caricamento delle terapie.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
+                erroreCaricamentoTerapie.showAndWait();
             }
         };
 

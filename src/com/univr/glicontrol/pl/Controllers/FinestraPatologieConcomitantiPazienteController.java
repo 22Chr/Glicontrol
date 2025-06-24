@@ -207,6 +207,12 @@ public class FinestraPatologieConcomitantiPazienteController {
             @Override
             protected void failed() {
                 System.err.println("Si è verificato un errore durante il caricamento dei dati");
+
+                Alert erroreCaricamentoPatologie = new Alert(Alert.AlertType.ERROR);
+                erroreCaricamentoPatologie.setTitle("System Notification Service");
+                erroreCaricamentoPatologie.setHeaderText("Errore durante il caricamento dei dati");
+                erroreCaricamentoPatologie.setContentText("Si è verificato un errore durante il caricamento delle patologie concomitanti.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
+                erroreCaricamentoPatologie.showAndWait();
             }
         };
 

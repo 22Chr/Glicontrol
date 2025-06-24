@@ -192,7 +192,7 @@ public class PortalePazienteController implements Portale {
             Parent root = fxmlLoader.load();
 
             FinestraRilevazioniGlicemichePazienteController frgpc =  fxmlLoader.getController();
-            frgpc.setInstance(this);
+            frgpc.setInstance(this, paziente);
 
             Stage rilevazioniGlicemiaPaziente = new Stage();
             rilevazioniGlicemiaPaziente.setTitle("Le mie rilevazioni glicemiche");

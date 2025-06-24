@@ -2,8 +2,10 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -14,25 +16,28 @@ import java.sql.Time;
 
 public class FinestraRilevazioniGlicemichePazienteController {
 
-    UtilityPortali upp = new UtilityPortali();
-    Paziente paziente = upp.getPazienteSessione();
-    GestioneRilevazioniGlicemia grg = new GestioneRilevazioniGlicemia(paziente);
-    private PortalePazienteController ppc;
+    UtilityPortali upp;
+    Paziente paziente;
+    GestioneRilevazioniGlicemia grg;
+    private PortalePazienteController ppc = null;
+    private PortaleMedicoController pmc = null;
 
     @FXML
     private ComboBox<String> oraGlicemiaCB, minutiGlicemiaCB, primaODopoCB, pastoGlicemiaCB;
     @FXML
     private VBox detailPage;
     @FXML
-    private HBox mainPage;
+    private HBox mainPage, mainPagePortaleMedico;
     @FXML
     private TextField valoreGlicemiaTF;
     @FXML
     private DatePicker dataGlicemiaDP;
     @FXML
-    private ListView<String> glicemiaPazienteLV;
+    private ListView<String> glicemiaPazienteLV, rilevazioniGlicemichePortaleMedicoLV;
     @FXML
     private TextArea descrizioneEstesaTA;
+    @FXML
+    private Button indietroPortaleMedicoB, indietroB, eliminaB;
 
     @FXML
     private void initialize(){
@@ -42,13 +47,26 @@ public class FinestraRilevazioniGlicemichePazienteController {
         primaODopoCB.getItems().addAll("Prima", "Dopo");
         pastoGlicemiaCB.getItems().addAll("Colazione", "Pranzo", "Cena", "Merenda");
 
-        RilevazioneGlicemica rilevazioneGlicemica;
-
-        ObservableList<String> rilevazioni = FXCollections.observableArrayList();
-        rilevazioni.addAll(upp.getListaRilevazioniGlicemichePazienti());
-        glicemiaPazienteLV.setItems(rilevazioni);
-
         glicemiaPazienteLV.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !cell.isEmpty()) {
+                    descrizioneEstesaTA.setText(cell.getText());
+                    cambiaPagina();
+                }
+            });
+
+            return cell;
+        });
+
+        rilevazioniGlicemichePortaleMedicoLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {
@@ -71,10 +89,21 @@ public class FinestraRilevazioniGlicemichePazienteController {
     public void cambiaPagina(){
         if(detailPage.isVisible()) {
             detailPage.setVisible(false);
-            mainPage.setVisible(true);
+            if (pmc != null) {
+                mainPage.setVisible(false);
+                mainPagePortaleMedico.setVisible(true);
+            } else {
+                mainPage.setVisible(true);
+            }
         } else {
             detailPage.setVisible(true);
+            if (pmc != null) {
+                indietroB.setVisible(false);
+                eliminaB.setVisible(false);
+                indietroPortaleMedicoB.setVisible(true);
+            }
             mainPage.setVisible(false);
+            mainPagePortaleMedico.setVisible(false);
         }
     }
 
@@ -168,7 +197,51 @@ public class FinestraRilevazioniGlicemichePazienteController {
         }
     }
 
-    public void setInstance(PortalePazienteController ppc){
-        this.ppc = ppc;
+    public void setInstance(Portale portale, Paziente paziente) {
+        this.paziente = paziente;
+        upp = new UtilityPortali(paziente);
+        grg = new GestioneRilevazioniGlicemia(paziente);
+
+        if (portale instanceof PortaleMedicoController) {
+            this.pmc = (PortaleMedicoController)  portale;
+            mainPage.setVisible(false);
+            mainPagePortaleMedico.setVisible(true);
+        } else {
+            this.ppc = (PortalePazienteController) portale;
+        }
+
+
+        Platform.runLater(this::caricaRilevazioniGlicemiche);
+    }
+
+    private void caricaRilevazioniGlicemiche() {
+        Task<Void> loadRilevazioniGlicemiche = new Task<>() {
+            @Override
+            protected Void call() {
+                ObservableList<String> rilevazioni = FXCollections.observableArrayList();
+                rilevazioni.addAll(upp.getListaRilevazioniGlicemichePazienti());
+
+                if (ppc != null) {
+                    Platform.runLater(() -> glicemiaPazienteLV.setItems(rilevazioni));
+                } else {
+                    Platform.runLater(() -> rilevazioniGlicemichePortaleMedicoLV.setItems(rilevazioni));
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void failed() {
+                System.err.println("Si è verificato un errore durante il caricamento delle rilevazioni glicemiche");
+
+                Alert erroreCaricamentoRilevazioniGlicemiche = new Alert(Alert.AlertType.ERROR);
+                erroreCaricamentoRilevazioniGlicemiche.setTitle("System Information Service");
+                erroreCaricamentoRilevazioniGlicemiche.setHeaderText("Errore durante il caricamento dei dati");
+                erroreCaricamentoRilevazioniGlicemiche.setContentText("Si è verificato un errore durante il caricamento delle rilevazioni glicemiche.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
+                erroreCaricamentoRilevazioniGlicemiche.showAndWait();
+            }
+        };
+
+        new Thread(loadRilevazioniGlicemiche).start();
     }
 }

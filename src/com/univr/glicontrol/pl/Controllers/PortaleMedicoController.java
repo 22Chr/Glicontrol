@@ -269,4 +269,23 @@ public class PortaleMedicoController implements Portale {
         }
     }
 
+    public void visualizzaRilevazioniGlicemiche() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraRilevazioniGlicemichePaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            FinestraRilevazioniGlicemichePazienteController frgpc = fxmlLoader.getController();
+            frgpc.setInstance(this, pazienteSelezionato);
+
+            Stage rirevazioniGlicemiche = new Stage();
+            rirevazioniGlicemiche.setTitle("Rilevazioni glicemiche");
+            rirevazioniGlicemiche.setScene(new Scene(root));
+
+            rirevazioniGlicemiche.show();
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
 }

@@ -158,7 +158,7 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <Button fx:id="rilevazioniGlicemicheB" alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Rilevazioni&#10;glicemiche&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="rilevazioniGlicemicheB" alignment="CENTER" mnemonicParsing="false" onAction="#visualizzaRilevazioniGlicemiche" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Rilevazioni&#10;glicemiche&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>
