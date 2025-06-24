@@ -171,7 +171,7 @@ public class PortalePazienteController implements Portale {
             Parent root = fxmlLoader.load();
 
             FinestraPatologieConcomitantiPazienteController fpcp = fxmlLoader.getController();
-            fpcp.setInstance(paziente);
+            fpcp.setInstance(this, paziente);
 
             Stage patologiePaziente = new Stage();
             patologiePaziente.setTitle("Le mie patologie");

@@ -31,7 +31,6 @@ public class PortaleMedicoController implements Portale {
     private Paziente pazienteSelezionato;
     private GestioneRilevazioniGlicemia gestione;
 
-
     @FXML
     private Circle badgeC;
 
@@ -218,7 +217,7 @@ public class PortaleMedicoController implements Portale {
             Parent root = fxmlLoader.load();
 
             FinestraPatologieConcomitantiPazienteController fpcp = fxmlLoader.getController();
-            fpcp.setInstance(pazienteSelezionato);
+            fpcp.setInstance(this, pazienteSelezionato);
 
             Stage patologiePaziente = new Stage();
             patologiePaziente.setTitle("Patologie concomitanti");

@@ -50,7 +50,7 @@
                         <Font name="Avenir Next Bold" size="20.0" />
                      </font>
                   </Label>
-                        <Label text="Descrivi la tua patologia:">
+                        <Label fx:id="descriviPatologiaLabel" text="Descrivi la tua patologia:">
                             <font>
                                 <Font name="Carlito" size="14.0" />
                             </font>
@@ -151,7 +151,7 @@
             </TextArea>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
-                  <Button fx:id="indietroPortaleMedicoB" mnemonicParsing="false" prefHeight="28.0" prefWidth="155.0" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                  <Button fx:id="indietroPortaleMedicoB" mnemonicParsing="false" onAction="#cambiaPagina" prefHeight="28.0" prefWidth="155.0" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -163,8 +163,11 @@
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button fx:id="terminaPatologiaB" mnemonicParsing="false" prefHeight="28.0" prefWidth="155.0" style="-fx-background-color: #22577a;" text="Segna come terminata" textFill="WHITE">
+                  <Button fx:id="terminaPatologiaB" mnemonicParsing="false" onAction="#terminaPatologiaConcomitante" prefHeight="28.0" prefWidth="155.0" style="-fx-background-color: #22577a;" text="Segna come terminata" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>

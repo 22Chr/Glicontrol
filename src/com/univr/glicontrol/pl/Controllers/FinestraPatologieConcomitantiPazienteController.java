@@ -1,6 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.GestionePatologieConcomitanti;
+import com.univr.glicontrol.bll.PatologiaConcomitante;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.application.Platform;
@@ -13,15 +14,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class FinestraPatologieConcomitantiPazienteController {
 
     UtilityPortali upp;
     Paziente paziente;
     GestionePatologieConcomitanti gpc;
+    PortalePazienteController ppc = null;
+    PortaleMedicoController pmc = null;
 
-    @FXML
-    private VBox root;
     @FXML
     private TextField nomePatologiaTF;
     @FXML
@@ -35,9 +37,17 @@ public class FinestraPatologieConcomitantiPazienteController {
     @FXML
     private VBox detailPage;
     @FXML
-    private Button indietroPortaleMedicoB, terminaPatologiaB;
+    private Button indietroPortaleMedicoB, indietroPortalePazienteB, terminaPatologiaB;
+    @FXML
+    private Label descriviPatologiaLabel;
 
-    public void setInstance(Paziente paziente) {
+    public void setInstance(Portale portale, Paziente paziente) {
+        if (portale instanceof PortalePazienteController) {
+            this.ppc = (PortalePazienteController) portale;
+        } else {
+            this.pmc = (PortaleMedicoController) portale;
+        }
+
         this.paziente = paziente;
         gpc = new GestionePatologieConcomitanti(paziente);
         upp = new UtilityPortali(paziente);
@@ -75,14 +85,22 @@ public class FinestraPatologieConcomitantiPazienteController {
         if(detailPage.isVisible()) {
             detailPage.setVisible(false);
             mainPage.setVisible(true);
+            if (pmc != null) {
+                descriviPatologiaLabel.setText("Descrivi la patologia del paziente");
+            }
         } else {
             detailPage.setVisible(true);
             mainPage.setVisible(false);
+            if (pmc != null) {
+                terminaPatologiaB.setVisible(true);
+                indietroPortaleMedicoB.setVisible(true);
+                indietroPortalePazienteB.setVisible(false);
+            }
         }
     }
 
     public void resetListViewPatologie(){
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUpp = new UtilityPortali(paziente);
         ObservableList<String> newPatologie = FXCollections.observableArrayList();
         newPatologie.addAll(newUpp.getListaPatologieConcomitantiPaziente());
         patologiePazienteLV.setItems(newPatologie);
@@ -149,6 +167,29 @@ public class FinestraPatologieConcomitantiPazienteController {
             descrizionePatologiaTA.clear();
             dataInizioDP.setValue(null);
             dataFineDP.setValue(null);
+        }
+    }
+
+    public void terminaPatologiaConcomitante() {
+        PatologiaConcomitante p = upp.getPatologiaConcomitantePerNomeFormattata(patologiePazienteLV.getSelectionModel().getSelectedItem());
+        p.setDataFine(Date.valueOf(LocalDate.now()));
+
+        if (gpc.aggiornaPatologiaConcomitante(p)) {
+            Alert conclusionePatologia = new Alert(Alert.AlertType.INFORMATION);
+            conclusionePatologia.setTitle("System Information Service");
+            conclusionePatologia.setHeaderText("Patologia concomitante aggiornata con successo");
+            conclusionePatologia.setContentText("La patologia è stata segnata come conclusa in data odierna.\n\nRicordati di segnare come conclusa anche l'eventuale terapia associata");
+            conclusionePatologia.showAndWait();
+
+            resetListViewPatologie();
+            cambiaPagina();
+
+        } else {
+            Alert erroreConclusionePatologia = new Alert(Alert.AlertType.ERROR);
+            erroreConclusionePatologia.setTitle("System Information Service");
+            erroreConclusionePatologia.setHeaderText("Si è verificato un errore durante l'operazione");
+            erroreConclusionePatologia.setContentText("Non è stato possibile segnare la patologia come terminata");
+            erroreConclusionePatologia.showAndWait();
         }
     }
 
