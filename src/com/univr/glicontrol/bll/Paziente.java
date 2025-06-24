@@ -8,18 +8,18 @@ public class Paziente extends Utente {
     private String sesso;
     private String email;
     private String allergie;
+    private int altezza;
     private float peso;
     private int primoAccesso;
 
 
-    public Paziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, String ruolo, int medicoRiferimento, Date dataNascita, String sesso, String email, String allergie, float peso, int primoAccesso) {
+    public Paziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, String ruolo, int medicoRiferimento, Date dataNascita, String sesso, String email, String allergie, int primoAccesso) {
         super(idPaziente, codiceFiscale, nome, cognome, password, ruolo);
         this.medicoRiferimento = medicoRiferimento;
         this.dataNascita = dataNascita;
         this.sesso = sesso;
         this.email = email;
         this.allergie = allergie;
-        this.peso = peso;
         this.primoAccesso = primoAccesso;
     }
 
@@ -56,6 +56,13 @@ public class Paziente extends Utente {
     }
     public void setAllergie(String allergie) {
         this.allergie = allergie;
+    }
+
+    public int getAltezza() {
+        return altezza;
+    }
+    public void setAltezza(int altezza) {
+        this.altezza = altezza;
     }
 
     public float getPeso() {

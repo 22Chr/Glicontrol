@@ -396,4 +396,11 @@ public class GlicontrolCoreSystem {
             }
         }, 0, 30, TimeUnit.SECONDS);
     }
+
+
+    // Verifica l'obesità come fattore di rischio per il paziente passato in input
+    public boolean isObeso(Paziente paziente) {
+        float altezzaInMetri = (float)paziente.getAltezza() / 100;
+        return (paziente.getPeso() / (altezzaInMetri * altezzaInMetri)) >= 30;
+    }
 }

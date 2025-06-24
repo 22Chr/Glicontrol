@@ -206,6 +206,7 @@ public class PortaleMedicoController implements Portale {
             gestoreTerapiePaziente.setScene(new Scene(root));
 
             gestoreTerapiePaziente.show();
+
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -224,6 +225,7 @@ public class PortaleMedicoController implements Portale {
             patologiePaziente.setScene(new Scene(root));
 
             patologiePaziente.show();
+
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -242,7 +244,27 @@ public class PortaleMedicoController implements Portale {
             sintomiPaziente.setScene(new Scene(root));
 
             sintomiPaziente.show();
+
         } catch (IOException e){
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void visualizzaInfoPaziente() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/ModificaInformazioniPaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            ModificaInformazioniPazienteController mipc = fxmlLoader.getController();
+            mipc.setInstance(this, pazienteSelezionato);
+
+            Stage infoPaziente = new Stage();
+            infoPaziente.setTitle("Informazioni personali");
+            infoPaziente.setScene(new Scene(root));
+
+            infoPaziente.show();
+
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }

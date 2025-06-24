@@ -140,7 +140,7 @@ public class InserisciPazienteController {
             InserisciPaziente inserisciPaziente = new InserisciPaziente();
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
-            int success = inserisciPaziente.insertPaziente(CF, nome, cognome, password, id, dataNascita, sesso, email, null, 1.0f);
+            int success = inserisciPaziente.insertPaziente(CF, nome, cognome, password, id, dataNascita, sesso, email, null);
 
             if (success == 1) {
                 Alert inserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);

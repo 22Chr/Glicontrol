@@ -247,7 +247,7 @@
                               <Insets bottom="10.0" left="5.0" right="5.0" top="15.0" />
                            </VBox.margin>
                         </ListView>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiPasto" style="-fx-background-color: #22577a;" text="Aggiungi un pasto" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="aggiungiPastoB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiPasto" style="-fx-background-color: #22577a;" text="Aggiungi un pasto" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>

@@ -12,7 +12,7 @@ class EliminaPazienteTest {
     @Test
     void deletePaziente() {
         InserisciPaziente inserisciTest = new InserisciPaziente();
-        inserisciTest.insertPaziente("GBTAGO98A78I972P", "Agostino", "Geberto", "1234567890", 3, Date.valueOf("1987-04-05"), "M", "gebertoago@gmail.com", null, 67 );
+        inserisciTest.insertPaziente("GBTAGO98A78I972P", "Agostino", "Geberto", "1234567890", 3, Date.valueOf("1987-04-05"), "M", "gebertoago@gmail.com", null);
         ListaPazienti trovaPaziente = new ListaPazienti();
         boolean el = false;
         for (Paziente p : trovaPaziente.getListaCompletaPazienti()) {

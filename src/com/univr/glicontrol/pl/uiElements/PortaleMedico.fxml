@@ -192,7 +192,7 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <Button fx:id="informazioniB" alignment="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Informazioni &#10;del paziente&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="informazioniB" alignment="CENTER" mnemonicParsing="false" onAction="#visualizzaInfoPaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Informazioni &#10;del paziente&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>

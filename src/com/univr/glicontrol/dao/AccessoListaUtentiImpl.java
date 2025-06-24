@@ -67,9 +67,10 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                             rs.getString("sesso"),
                             rs.getString("email"),
                             rs.getString("allergie"),
-                            rs.getFloat("peso"),
                             rs.getInt("primo_accesso")
                     );
+                    paz.setAltezza(rs.getInt("altezza"));
+                    paz.setPeso(rs.getFloat("peso"));
                     Pazienti.add(paz);
                 }
             }
@@ -222,7 +223,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean insertNuovoPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, float peso, int primoAccesso) {
+    public boolean insertNuovoPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, int primoAccesso) {
         boolean success = false;
         String inserimentoPazienteInUtenteSql = "insert into Utente (codice_fiscale, nome, cognome, ruolo, password) values (?, ?, ?, ?, ?)";
         try {
@@ -249,7 +250,6 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                         stmt2.setString(4, sesso);
                         stmt2.setString(5, email);
                         stmt2.setString(6, allergie);
-                        stmt2.setFloat(7, peso);
                         stmt2.setInt(8, primoAccesso);
 
                         success = stmt2.executeUpdate() != 0;

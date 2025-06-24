@@ -9,7 +9,7 @@ public class InserisciPaziente {
 
     private final ServizioNotifiche ms = new ServizioNotifiche();
 
-    public int insertPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, float peso) {
+    public int insertPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie) {
         int status;
         ListaPazienti listaPazienti = new ListaPazienti();
         if (listaPazienti.pazienteEsiste(codiceFiscale)) {
@@ -20,7 +20,7 @@ public class InserisciPaziente {
         int primoAccesso = 1;
 
         AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
-        status = accessoListaUtenti.insertNuovoPaziente(codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, peso, primoAccesso) ? 1 : 0;
+        status = accessoListaUtenti.insertNuovoPaziente(codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, primoAccesso) ? 1 : 0;
         if (status == 1) {
             GestioneFattoriRischio inizializzaFattoriPaziente = new GestioneFattoriRischio();
             status = inizializzaFattoriPaziente.inserisciFattoriRischi(codiceFiscale) ? 1 : 0;

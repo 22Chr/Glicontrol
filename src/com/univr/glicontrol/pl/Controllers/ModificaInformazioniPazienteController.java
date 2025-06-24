@@ -2,8 +2,10 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,76 +34,20 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
     @FXML
     private ListView<String> pastiLV;
 
-    private Paziente p;
+    @FXML
+    private Button aggiungiPastoB;
 
+    private Paziente paziente;
     private final GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
-    Paziente paziente = new UtilityPortali().getPazienteSessione();
-    private final FattoriRischio fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
-    private final UtilityPortali upp = new UtilityPortali();
+    private FattoriRischio fattoriRischioAggiornati;
+    private UtilityPortali upp;
     String pastoDaModificare;
+    private PortalePazienteController ppc = null;
+    private PortaleMedicoController pmc = null;
 
     @FXML
     private void initialize() {
         salvaModifiche.requestFocus();
-
-        //inizializzazione delle checkbox al loro stato attuale
-        int fumatore = fattoriRischioAggiornati.getFumatore();
-        int alcolismo = fattoriRischioAggiornati.getProblemiAlcol();
-        int familiarita = fattoriRischioAggiornati.getFamiliarita();
-        int sedentarieta = fattoriRischioAggiornati.getSedentarieta();
-        int alimentazione = fattoriRischioAggiornati.getAlimentazioneScorretta();
-
-        if (fumatore == 1) {
-            fumatoreCB.setSelected(true);
-        }
-        if (alcolismo == 1) {
-            alcolismoCB.setSelected(true);
-        }
-        if (familiarita == 1) {
-            familiaritaCB.setSelected(true);
-        }
-        if (sedentarieta == 1) {
-            sedentarietaCB.setSelected(true);
-        }
-        if (alimentazione == 1) {
-            alimentazioneCB.setSelected(true);
-        }
-
-        //inizializza le informazioni del paziente
-        this.p = paziente;
-        nomeTF.setText(p.getNome());
-        nomeTF.setEditable(false); //rende immodificabile il campo
-        cognomeTF.setText(p.getCognome());
-        cognomeTF.setEditable(false);
-        codFisTF.setText(p.getCodiceFiscale());
-        codFisTF.setEditable(false);
-        emailTF.setText(p.getEmail());
-        pesoTF.setText(p.getPeso() + " kg");
-        allergieTA.setText(p.getAllergie());
-
-        ObservableList<String> pasti = FXCollections.observableArrayList();
-        pasti.addAll(upp.getListaPasti());
-        pastiLV.setItems(pasti);
-
-        pastiLV.setCellFactory(lv -> {
-            ListCell<String> cell = new ListCell<>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(empty ? null : item);
-                }
-            };
-
-            cell.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1 && !cell.isEmpty()) {
-                    pastoDaModificare = cell.getItem();
-                    modificaPasto(pastoDaModificare);
-                }
-            });
-
-            return cell;
-        });
-
 
         // Verifica attiva dei campi
         emailTF.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -165,8 +111,8 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
     public void salvaModificheInformazioni() {
 
         if (InputChecker.getInstance().verificaPeso(pesoTF.getText()) && InputChecker.getInstance().verificaEmail(emailTF.getText())) {
-            p.setEmail(emailTF.getText());
-            p.setPeso(Float.parseFloat(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
+            paziente.setEmail(emailTF.getText());
+            paziente.setPeso(Float.parseFloat(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
         } else {
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
             inputSbagliatiAlert.setTitle("System Information Service");
@@ -176,14 +122,14 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
             return;
         }
 
-        p.setAllergie(allergieTA.getText());
+        paziente.setAllergie(allergieTA.getText());
         fattoriRischioAggiornati.setFumatore(fumatoreCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setProblemiAlcol(alcolismoCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setFamiliarita(familiaritaCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setObesita(sedentarietaCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setAlimentazioneScorretta(alimentazioneCB.isSelected() ? 1 : 0);
 
-        AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(p);
+        AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
 
         if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -210,5 +156,97 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
         ObservableList<String> newPasti = FXCollections.observableArrayList();
         newPasti.addAll(newUpp.getListaPasti());
         pastiLV.setItems(newPasti);
+    }
+
+    public void setInstance(Portale portale, Paziente paziente) {
+        this.paziente = paziente;
+        fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
+        upp = new UtilityPortali(paziente);
+
+        if (portale instanceof PortalePazienteController) {
+            this.ppc = (PortalePazienteController) portale;
+        } else {
+            this.pmc = (PortaleMedicoController)  portale;
+        }
+
+        Platform.runLater(this::caricaInfoPaziente);
+    }
+
+    private void caricaInfoPaziente() {
+        Task<Void> loadInfoTask = new Task<>() {
+            @Override
+            protected Void call() {
+                if (pmc != null) {
+                    aggiungiPastoB.setVisible(false);
+                }
+
+                //inizializzazione delle checkbox al loro stato attuale
+                int fumatore = fattoriRischioAggiornati.getFumatore();
+                int alcolismo = fattoriRischioAggiornati.getProblemiAlcol();
+                int familiarita = fattoriRischioAggiornati.getFamiliarita();
+                int sedentarieta = fattoriRischioAggiornati.getSedentarieta();
+                int alimentazione = fattoriRischioAggiornati.getAlimentazioneScorretta();
+
+                if (fumatore == 1) {
+                    fumatoreCB.setSelected(true);
+                }
+                if (alcolismo == 1) {
+                    alcolismoCB.setSelected(true);
+                }
+                if (familiarita == 1) {
+                    familiaritaCB.setSelected(true);
+                }
+                if (sedentarieta == 1) {
+                    sedentarietaCB.setSelected(true);
+                }
+                if (alimentazione == 1) {
+                    alimentazioneCB.setSelected(true);
+                }
+
+                //inizializza le informazioni del paziente
+                nomeTF.setText(paziente.getNome());
+                nomeTF.setEditable(false); //rende immodificabile il campo
+                cognomeTF.setText(paziente.getCognome());
+                cognomeTF.setEditable(false);
+                codFisTF.setText(paziente.getCodiceFiscale());
+                codFisTF.setEditable(false);
+                emailTF.setText(paziente.getEmail());
+                pesoTF.setText(paziente.getPeso() + " kg");
+                allergieTA.setText(paziente.getAllergie());
+
+                ObservableList<String> pasti = FXCollections.observableArrayList();
+                pasti.addAll(upp.getListaPasti());
+                pastiLV.setItems(pasti);
+
+
+                if (ppc != null) {
+                    pastiLV.setCellFactory(lv -> {
+                        ListCell<String> cell = new ListCell<>() {
+                            @Override
+                            protected void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                setText(empty ? null : item);
+                            }
+                        };
+
+                        cell.setOnMouseClicked(event -> {
+                            if (event.getClickCount() == 2 && !cell.isEmpty()) {
+                                pastoDaModificare = cell.getItem();
+                                modificaPasto(pastoDaModificare);
+                            }
+                        });
+
+                        return cell;
+                    });
+                } else {
+                    pastiLV.setMouseTransparent(true);
+                    pastiLV.setFocusTraversable(false);
+                }
+
+                return null;
+            }
+        };
+
+        new Thread(loadInfoTask).start();
     }
 }

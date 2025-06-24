@@ -106,6 +106,7 @@ public class UtenteSessione {
                 String sesso = paziente.getString("sesso");
                 String emailPaziente = paziente.getString("email_paziente");
                 String allergie = paziente.getString("allergie");
+                int altezza = paziente.getInt("altezza");
                 float p = paziente.getFloat("peso");
                 int primoAccesso = paziente.getInt("primo_accesso");
 
@@ -121,9 +122,10 @@ public class UtenteSessione {
                         sesso,
                         emailPaziente,
                         allergie,
-                        p,
                         primoAccesso
                 );
+                pazienteSessione.setAltezza(altezza);
+                pazienteSessione.setPeso(p);
 
                 return pazienteSessione;
 

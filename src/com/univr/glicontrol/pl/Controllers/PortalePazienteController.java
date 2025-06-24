@@ -121,6 +121,9 @@ public class PortalePazienteController implements Portale {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/ModificaInformazioniPaziente.fxml"));
             Parent root = fxmlLoader.load();
 
+            ModificaInformazioniPazienteController mipc = fxmlLoader.getController();
+            mipc.setInstance(this, paziente);
+
             // Crea una nuova finestra (Stage)
             Stage infoPaziente = new Stage();
             infoPaziente.setTitle("Informazioni personali");

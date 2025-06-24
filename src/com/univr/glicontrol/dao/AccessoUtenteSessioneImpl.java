@@ -15,7 +15,7 @@ public class AccessoUtenteSessioneImpl implements AccessoUtenteSessione {
         String sql = """
             select 
                 u.id AS id_utente, u.nome, u.cognome, u.codice_fiscale, u.password, u.ruolo,
-                p.data_nascita, p.sesso, p.email AS email_paziente, p.allergie, p.medico_riferimento, p.peso, p.primo_accesso,
+                p.data_nascita, p.sesso, p.email AS email_paziente, p.allergie, p.medico_riferimento, p.altezza, p.peso, p.primo_accesso,
                 m.email AS email_medico
             from Utente u
             left join Paziente p on u.id = p.id_paziente
