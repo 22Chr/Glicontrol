@@ -208,7 +208,25 @@ public class PortaleMedicoController implements Portale {
 
             gestoreTerapiePaziente.show();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void openPatologiePaziente() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraPatologieConcomitantiPaziente.fxml"));
+            Parent root = fxmlLoader.load();
+
+            FinestraPatologieConcomitantiPazienteController fpcp = fxmlLoader.getController();
+            fpcp.setInstance(pazienteSelezionato);
+
+            Stage patologiePaziente = new Stage();
+            patologiePaziente.setTitle("Patologie concomitanti");
+            patologiePaziente.setScene(new Scene(root));
+
+            patologiePaziente.show();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
     }
 

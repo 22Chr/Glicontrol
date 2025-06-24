@@ -3,8 +3,10 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.GestionePatologieConcomitanti;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -14,10 +16,12 @@ import java.sql.Date;
 
 public class FinestraPatologieConcomitantiPazienteController {
 
-    UtilityPortali upp = new UtilityPortali();
-    Paziente paziente = upp.getPazienteSessione();
-    GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
+    UtilityPortali upp;
+    Paziente paziente;
+    GestionePatologieConcomitanti gpc;
 
+    @FXML
+    private VBox root;
     @FXML
     private TextField nomePatologiaTF;
     @FXML
@@ -31,16 +35,21 @@ public class FinestraPatologieConcomitantiPazienteController {
     @FXML
     private VBox detailPage;
     @FXML
-    private Button indietroPortaleMedicoB, indietroPortalePazienteB, terminaPatologiaB;
+    private Button indietroPortaleMedicoB, terminaPatologiaB;
+
+    public void setInstance(Paziente paziente) {
+        this.paziente = paziente;
+        gpc = new GestionePatologieConcomitanti(paziente);
+        upp = new UtilityPortali(paziente);
+
+        Platform.runLater(this::caricaPatologieConcomitanti);
+    }
 
     @FXML
     private void initialize(){
         indietroPortaleMedicoB.setVisible(false);
         terminaPatologiaB.setVisible(false);
 
-        ObservableList<String> patologie = FXCollections.observableArrayList();
-        patologie.addAll(upp.getListaPatologieConcomitantiPazienti());
-        patologiePazienteLV.setItems(patologie);
 
         patologiePazienteLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
@@ -75,7 +84,7 @@ public class FinestraPatologieConcomitantiPazienteController {
     public void resetListViewPatologie(){
         UtilityPortali newUpp = new UtilityPortali();
         ObservableList<String> newPatologie = FXCollections.observableArrayList();
-        newPatologie.addAll(newUpp.getListaPatologieConcomitantiPazienti());
+        newPatologie.addAll(newUpp.getListaPatologieConcomitantiPaziente());
         patologiePazienteLV.setItems(newPatologie);
         descrizionePatologiaTA.clear();
         descrizionePatologiaTA.requestFocus();
@@ -141,6 +150,26 @@ public class FinestraPatologieConcomitantiPazienteController {
             dataInizioDP.setValue(null);
             dataFineDP.setValue(null);
         }
+    }
+
+    private void caricaPatologieConcomitanti() {
+        Task<Void> loadingPatologieTask = new Task<>() {
+            @Override
+            protected Void call() {
+                ObservableList<String> patologie = FXCollections.observableArrayList();
+                patologie.addAll(upp.getListaPatologieConcomitantiPaziente());
+                Platform.runLater(() -> patologiePazienteLV.setItems(patologie));
+
+                return null;
+            }
+
+            @Override
+            protected void failed() {
+                System.err.println("Si è verificato un errore durante il caricamento dei dati");
+            }
+        };
+
+        new Thread(loadingPatologieTask).start();
     }
 
 }

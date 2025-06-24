@@ -167,6 +167,9 @@ public class PortalePazienteController implements Portale {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraPatologieConcomitantiPaziente.fxml"));
             Parent root = fxmlLoader.load();
 
+            FinestraPatologieConcomitantiPazienteController fpcp = fxmlLoader.getController();
+            fpcp.setInstance(paziente);
+
             Stage patologiePaziente = new Stage();
             patologiePaziente.setTitle("Le mie patologie");
             patologiePaziente.setScene(new Scene(root));

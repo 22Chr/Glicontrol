@@ -175,7 +175,7 @@ public class UtilityPortali {
 
 
     // Restituisce la lista di tipo String delle patologie concomitanti del paziente
-    public List<String> getListaPatologieConcomitantiPazienti() {
+    public List<String> getListaPatologieConcomitantiPaziente() {
         List<String> listaPatologieConcomitanti = new ArrayList<>();
         GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
         for (PatologiaConcomitante p : gpc.getListaPatologieConcomitanti()) {
@@ -200,7 +200,7 @@ public class UtilityPortali {
 
     // Aggiorna la lista delle patologie concomitanti
     private void aggiornaListaPatologieConcomitantiPazienti() {
-        getListaPatologieConcomitantiPazienti();
+        getListaPatologieConcomitantiPaziente();
     }
 
     // Restituisce la patologia concomitante a partire dalla sua voce grafica di tipo String

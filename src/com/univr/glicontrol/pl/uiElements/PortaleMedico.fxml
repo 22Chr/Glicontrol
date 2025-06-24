@@ -124,7 +124,7 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <Button fx:id="patologieB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie &#10;concomitanti" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="patologieB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openPatologiePaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie &#10;concomitanti" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>

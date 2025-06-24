@@ -3,7 +3,6 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import jakarta.mail.MessagingException;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +46,7 @@ public class InserisciNuovaTerapiaController {
 
         Platform.runLater(()->{
             List<String> listaPatologieInCorso = new ArrayList<>();
-            for (String patologia : upp.getListaPatologieConcomitantiPazienti()) {
+            for (String patologia : upp.getListaPatologieConcomitantiPaziente()) {
                 if (patologia.contains("in corso")) {
                     listaPatologieInCorso.add(patologia);
                 }
