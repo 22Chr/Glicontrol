@@ -239,7 +239,7 @@ public class FinestraTerapiePazienteController {
         this.pazienteSelezionato = pazienteSelezionato;
         upp = new UtilityPortali(pazienteSelezionato);
 
-        Platform.runLater(this::caricaPatologiePaziente);
+        Platform.runLater(this::caricaTerapiePaziente);
     }
 
     public void setNomeBottoneInserimentoTerapia() {
@@ -248,7 +248,7 @@ public class FinestraTerapiePazienteController {
         }
     }
 
-    private void caricaPatologiePaziente() {
+    private void caricaTerapiePaziente() {
         loadingPage.setVisible(true);
         progressIndicator.setVisible(true);
         progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
