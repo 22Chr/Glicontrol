@@ -16,14 +16,14 @@ public class GestioneRilevazioniGlicemia {
 
     public GestioneRilevazioniGlicemia(Paziente paziente) {
         this.paziente = paziente;
-        rilevazioni = accessoRilevazioniGlicemia.recuperaRilevazioniPaziente(paziente.getIdUtente());
+        aggiornaListaRilevazioni();
     }
 
     public List<RilevazioneGlicemica> getRilevazioni() {
         return rilevazioni;
     }
 
-    public void aggiornaListaRilevazioni() {
+    private void aggiornaListaRilevazioni() {
         rilevazioni = accessoRilevazioniGlicemia.recuperaRilevazioniPaziente(paziente.getIdUtente());
     }
 

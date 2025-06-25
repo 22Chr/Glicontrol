@@ -257,7 +257,7 @@ public class FinestraRilevazioniGlicemichePazienteController {
         newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemichePazienti());
         rilevazioniGlicemichePortaleMedicoLV.getItems().setAll(newRilevazioni);
 
-        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente);
+        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente, false);
         rilevazioniGlicemichePortaleMedicoLV.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {

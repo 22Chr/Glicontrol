@@ -69,10 +69,9 @@ public class PortalePazienteController implements Portale {
         //Gestione del bottone visulizzazione per switchare tra i vari grafici
         visualizzazioneT.setOnAction(e -> aggiornaGrafico());
 
-
-        // Se hai un paziente corrente salvato, crea la gestione
+        // Gestione colorazione livelli glicemici per il paziente su base odierna
         gestione = new GestioneRilevazioniGlicemia(paziente);
-        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente);
+        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente, true);
 
         aggiornaGrafico();
 
@@ -303,7 +302,7 @@ public class PortalePazienteController implements Portale {
         newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.getItems().setAll(newRilevazioni);
 
-        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente);
+        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente, true);
 
         ultimeRilevazioniLV.setCellFactory(lv -> new ListCell<>() {
             @Override

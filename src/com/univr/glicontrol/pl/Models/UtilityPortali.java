@@ -250,7 +250,7 @@ public class UtilityPortali {
             }
         }
 
-        return listaRilevazioniGlicemiche.reversed();
+        return listaRilevazioniGlicemiche;
     }
 
     // Aggiorna la lista delle rilevazioni glicemiche
@@ -499,8 +499,8 @@ public class UtilityPortali {
 
 
     // recuperiamo le liste dei pazienti partizionandoli tra pazienti associati ad un dato referente attualmente connesso e gli altri
-    private List<String> pazientiAssociatiAlReferente = new ArrayList<>();
-    private List<String> pazientiNonAssociatiAlReferente = new ArrayList<>();
+    private final List<String> pazientiAssociatiAlReferente = new ArrayList<>();
+    private final List<String> pazientiNonAssociatiAlReferente = new ArrayList<>();
 
     public List<String> getPazientiAssociatiAlReferente(int idReferente) {
         ListaPazienti listaPazienti = new ListaPazienti();

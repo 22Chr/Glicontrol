@@ -326,9 +326,9 @@ public class GlicontrolCoreSystem {
     }
 
     // Verifica i livelli glicemici in relazione ai pasti e classifica i diversi livelli in base alla gravità
-    public List<Integer> verificaLivelliGlicemici(Paziente paziente) {
+    public List<Integer> verificaLivelliGlicemici(Paziente paziente, boolean odierne) {
         // Legenda codici:
-        //  0: normale (valido anche in caso di assenza di rilevazioni per la giornata)
+        //  0: normale (valido anche in caso di assenza di rilevazioniComplessive per la giornata)
         // -1: lieve anomalia a digiuno
         //  1: lieve anomalia post-prandiale
         // -2: moderata criticità a digiuno
@@ -339,49 +339,82 @@ public class GlicontrolCoreSystem {
         //  4: emergenza medica post-prandiale
 
         gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
-        List<RilevazioneGlicemica> rilevazioni = gestioneRilevazioniGlicemia.getRilevazioni();
-        List<Integer> codiciLivelli = new ArrayList<>();
+        List<RilevazioneGlicemica> rilevazioniComplessive = gestioneRilevazioniGlicemia.getRilevazioni();
+        List<RilevazioneGlicemica> rilevazioniOdierne = gestioneRilevazioniGlicemia.getRilevazioniPerData(LocalDate.now());
+        List<Integer> codiciLivelliOdierni = new ArrayList<>();
+        List<Integer> codiciLivelliComplessivi = new ArrayList<>();
 
-        if (rilevazioni.isEmpty()) return null;
+        if (rilevazioniComplessive.isEmpty() && !odierne) return null;
+        if (rilevazioniOdierne.isEmpty() && odierne) return null;
 
-        for (RilevazioneGlicemica r : rilevazioni) {
-            if (r.getIndicazioniTemporali().equals("prima")) {
-                if (r.getValore() >= 80 && r.getValore() <= 130) {
-                    codiciLivelli.add(0);
-                } else if (r.getValore() >= 70 && r.getValore() < 80 || r.getValore() > 130 && r.getValore() <= 150) {
-                    codiciLivelli.add(-1);
-                } else if (r.getValore() >= 60 && r.getValore() < 70 || r.getValore() > 150 && r.getValore() <= 180) {
-                    codiciLivelli.add(-2);
-                } else if (r.getValore() >= 50 && r.getValore() < 60 || r.getValore() > 180 && r.getValore() <= 250) {
-                    codiciLivelli.add(-3);
+        if (odierne) {
+            for (RilevazioneGlicemica r : rilevazioniOdierne) {
+                if (r.getIndicazioniTemporali().equals("prima")) {
+                    if (r.getValore() >= 80 && r.getValore() <= 130) {
+                        codiciLivelliOdierni.add(0);
+                    } else if (r.getValore() >= 70 && r.getValore() < 80 || r.getValore() > 130 && r.getValore() <= 150) {
+                        codiciLivelliOdierni.add(-1);
+                    } else if (r.getValore() >= 60 && r.getValore() < 70 || r.getValore() > 150 && r.getValore() <= 180) {
+                        codiciLivelliOdierni.add(-2);
+                    } else if (r.getValore() >= 50 && r.getValore() < 60 || r.getValore() > 180 && r.getValore() <= 250) {
+                        codiciLivelliOdierni.add(-3);
+                    } else {
+                        codiciLivelliOdierni.add(-4);
+                    }
                 } else {
-                    codiciLivelli.add(-4);
+                    if (r.getValore() >= 90 && r.getValore() < 180) {
+                        codiciLivelliOdierni.add(0);
+                    } else if (r.getValore() >= 80 && r.getValore() < 90 || r.getValore() >= 180 && r.getValore() < 200) {
+                        codiciLivelliOdierni.add(1);
+                    } else if (r.getValore() >= 70 && r.getValore() < 80 || r.getValore() >= 200 && r.getValore() < 250) {
+                        codiciLivelliOdierni.add(2);
+                    } else if (r.getValore() >= 60 && r.getValore() < 70 || r.getValore() >= 250 && r.getValore() < 300) {
+                        codiciLivelliOdierni.add(3);
+                    } else {
+                        codiciLivelliOdierni.add(4);
+                    }
                 }
-            } else {
-                if (r.getValore() >= 90 && r.getValore() < 180) {
-                    codiciLivelli.add(0);
-                } else if (r.getValore() >= 80 && r.getValore() < 90 || r.getValore() >= 180 && r.getValore() < 200) {
-                    codiciLivelli.add(1);
-                } else if (r.getValore() >= 70 && r.getValore() < 80 || r.getValore() >= 200 && r.getValore() < 250) {
-                    codiciLivelli.add(2);
-                } else if (r.getValore() >= 60 && r.getValore() < 70 || r.getValore() >= 250 && r.getValore() < 300) {
-                    codiciLivelli.add(3);
+            }
+        } else {
+            for (RilevazioneGlicemica r : rilevazioniComplessive) {
+                if (r.getIndicazioniTemporali().equals("prima")) {
+                    if (r.getValore() >= 80 && r.getValore() <= 130) {
+                        codiciLivelliComplessivi.add(0);
+                    } else if (r.getValore() >= 70 && r.getValore() < 80 || r.getValore() > 130 && r.getValore() <= 150) {
+                        codiciLivelliComplessivi.add(-1);
+                    } else if (r.getValore() >= 60 && r.getValore() < 70 || r.getValore() > 150 && r.getValore() <= 180) {
+                        codiciLivelliComplessivi.add(-2);
+                    } else if (r.getValore() >= 50 && r.getValore() < 60 || r.getValore() > 180 && r.getValore() <= 250) {
+                        codiciLivelliComplessivi.add(-3);
+                    } else {
+                        codiciLivelliComplessivi.add(-4);
+                    }
                 } else {
-                    codiciLivelli.add(4);
+                    if (r.getValore() >= 90 && r.getValore() < 180) {
+                        codiciLivelliComplessivi.add(0);
+                    } else if (r.getValore() >= 80 && r.getValore() < 90 || r.getValore() >= 180 && r.getValore() < 200) {
+                        codiciLivelliComplessivi.add(1);
+                    } else if (r.getValore() >= 70 && r.getValore() < 80 || r.getValore() >= 200 && r.getValore() < 250) {
+                        codiciLivelliComplessivi.add(2);
+                    } else if (r.getValore() >= 60 && r.getValore() < 70 || r.getValore() >= 250 && r.getValore() < 300) {
+                        codiciLivelliComplessivi.add(3);
+                    } else {
+                        codiciLivelliComplessivi.add(4);
+                    }
                 }
             }
         }
 
-        return codiciLivelli;
+        return odierne ? codiciLivelliOdierni.reversed() : codiciLivelliComplessivi.reversed();
     }
 
-    // Task in background per monitorare i livelli glicemici dei pazienti e inviare alert ai medici
+    // Task in background per monitorare i livelli glicemici dei pazienti (su base giornaliera) e inviare alert ai medici
     public void monitoraLivelliGlicemici() {
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 for (int i = 0; i < listaPazienti.size(); i++) {
-                    if (verificaLivelliGlicemici(listaPazienti.get(i)) != null) {
-                        int livelloGlicemico = verificaLivelliGlicemici(listaPazienti.get(i)).get(i);
+                    if (verificaLivelliGlicemici(listaPazienti.get(i), true) != null) {
+                        int livelloGlicemico = verificaLivelliGlicemici(listaPazienti.get(i), true).get(i);
                         if (livelloGlicemico != 0) {
                             int index = i;
                             Platform.runLater(() -> {
