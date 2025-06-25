@@ -42,17 +42,17 @@ public class FinestraTerapiePazienteController {
     private GridPane indicazioniFarmacoGP;
 
     @FXML
-    private HBox loadingPage, mainPage;
+    private HBox loadingPage, mainPage, aggiungiEliminaHB;
 
     @FXML
     private ProgressIndicator progressIndicator;
 
     @FXML
-    private Button aggiungiTerapiaButton;
+    private Button aggiungiTerapiaButton, salvaInfoFarmaciB;
 
     private PortaleMedicoController pmc = null;
     private PortalePazienteController ppc = null;
-    private Paziente pazienteSelezionato;
+    private Paziente paziente;
     UtilityPortali upp;
 
     @FXML
@@ -96,7 +96,7 @@ public class FinestraTerapiePazienteController {
     }
 
     public void resetListViewTerapie(){
-        UtilityPortali newUpp = new UtilityPortali(pazienteSelezionato);
+        UtilityPortali newUpp = new UtilityPortali(paziente);
         ObservableList<String> newTerapie = FXCollections.observableArrayList();
         newTerapie.addAll(newUpp.getListaTerapiePaziente());
         terapiePazienteLV.setItems(newTerapie);
@@ -116,7 +116,7 @@ public class FinestraTerapiePazienteController {
                 ruoloAccesso = "paziente";
             }
 
-            intc.setInstance(this, ruoloAccesso, pazienteSelezionato);
+            intc.setInstance(this, ruoloAccesso, paziente);
 
             Stage terapiePaziente = new Stage();
             terapiePaziente.setTitle("Aggiungi terapia");
@@ -129,6 +129,8 @@ public class FinestraTerapiePazienteController {
     }
 
     private void mostraFarmaciTerapia() {
+        salvaInfoFarmaciB.setVisible(false);
+
         FadeTransition fadeOutIndicazioniFarmaci = new FadeTransition(javafx.util.Duration.millis(150), indicazioniFarmacoGP);
         fadeOutIndicazioniFarmaci.setFromValue(1.0);
         fadeOutIndicazioniFarmaci.setToValue(0.0);
@@ -147,7 +149,7 @@ public class FinestraTerapiePazienteController {
 
             @Override
             protected Void call() {
-                upp = new UtilityPortali(pazienteSelezionato);
+                upp = new UtilityPortali(paziente);
                 Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapia);
                 String dataTerapia = upp.getIndicazioniTemporaliTerapia(terapia);
 
@@ -163,6 +165,10 @@ public class FinestraTerapiePazienteController {
                     nomeTerapiaTF.setText(nomeTerapia);
                     dateTerapiaTF.setText(dataTerapia);
                     farmaciTerapiaLV.setItems(farmaci);
+
+                    if (pmc != null) {
+                        aggiungiEliminaHB.setVisible(true);
+                    }
                 });
 
                 return null;
@@ -191,7 +197,7 @@ public class FinestraTerapiePazienteController {
     private void mostraIndicazinoiFarmaciTerapia() {
         Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
 
-        Task<Void> loadingTask = new Task<>() {
+        Task<Void> loadIndicazioniFarmaciTerapie = new Task<>() {
             @Override
             protected Void call() {
                 String dosaggioTerapia = terapia.getDosaggioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()) + " " +
@@ -215,6 +221,14 @@ public class FinestraTerapiePazienteController {
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
                 fadeIn.play();
+
+                if (pmc != null) {
+                    salvaInfoFarmaciB.setVisible(true);
+                    FadeTransition salvaBFadeIn = new FadeTransition(javafx.util.Duration.millis(100), salvaInfoFarmaciB);
+                    salvaBFadeIn.setFromValue(0.0);
+                    salvaBFadeIn.setToValue(1.0);
+                    salvaBFadeIn.play();
+                }
             }
 
             @Override
@@ -224,7 +238,7 @@ public class FinestraTerapiePazienteController {
             }
         };
 
-        new Thread(loadingTask).start();
+        new Thread(loadIndicazioniFarmaciTerapie).start();
     }
 
     public void setInstance(Portale controller, Paziente pazienteSelezionato) {
@@ -236,7 +250,7 @@ public class FinestraTerapiePazienteController {
             throw new IllegalArgumentException("Nessun controller valido selezionato");
         }
 
-        this.pazienteSelezionato = pazienteSelezionato;
+        this.paziente = pazienteSelezionato;
         upp = new UtilityPortali(pazienteSelezionato);
 
         Platform.runLater(this::caricaTerapiePaziente);
