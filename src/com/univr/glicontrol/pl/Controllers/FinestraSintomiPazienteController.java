@@ -28,9 +28,9 @@ public class FinestraSintomiPazienteController {
     @FXML
     private ListView<String> sintomiPazienteLV, sintomiPazientePortaleMedicoLV;
     @FXML
-    private HBox mainPage;
+    private HBox mainPage, pageSintomiPerMedico;
     @FXML
-    private VBox detailPage, pageSintomiPerMedico;
+    private VBox detailPage;
 
     @FXML
     private void initialize() {
