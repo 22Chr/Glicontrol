@@ -16,7 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
-public class FinestraSintomiPazienteController {
+public class FinestraSintomiPazienteController implements Controller {
     UtilityPortali upp;
     Paziente paziente;
     GestioneSintomi gs;

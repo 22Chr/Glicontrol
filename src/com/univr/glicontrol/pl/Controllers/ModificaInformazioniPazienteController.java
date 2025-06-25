@@ -17,7 +17,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 
-public class ModificaInformazioniPazienteController implements InserimentoPastiController {
+public class ModificaInformazioniPazienteController implements InserimentoPastiController, Controller {
 
     @FXML
     private CheckBox fumatoreCB, alcolismoCB, familiaritaCB, sedentarietaCB, alimentazioneCB, obesitaCB;

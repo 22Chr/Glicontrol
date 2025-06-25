@@ -15,7 +15,7 @@ import javafx.stage.Window;
 import java.sql.Time;
 
 
-public class ModificaPastoController {
+public class ModificaPastoController implements Controller {
     private final UtilityPortali upp = new UtilityPortali();
     private final Paziente paziente = upp.getPazienteSessione();
     private final GestionePasti gp = new GestionePasti(paziente);

@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-public class ModificaMedicoController {
+public class ModificaMedicoController implements Controller {
     private Medico m;
 
     @FXML

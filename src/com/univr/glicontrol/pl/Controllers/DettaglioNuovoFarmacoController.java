@@ -2,9 +2,11 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -13,59 +15,83 @@ import javafx.stage.Window;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DettaglioNuovoFarmacoController {
+public class DettaglioNuovoFarmacoController implements Controller {
 
-    private InserisciNuovaTerapiaController antcpc;
+    private InserisciNuovaTerapiaController antcpc = null;
+    private FinestraTerapiePazienteController ftpc = null;
     private GestioneTerapie gt;
-    private final UtilityPortali upp = new UtilityPortali();
+    private UtilityPortali upp;
 
     @FXML
     private ComboBox<String> listaFarmaciCompletaCB;
     @FXML
     private TextArea dosaggioTA, frequenzaTA, orariTA;
 
-    public void setInstance(InserisciNuovaTerapiaController antcpc) {
-        this.antcpc = antcpc;
-    }
-
-    public void setGestioneTerapie(GestioneTerapie gt) {
+    public void setInstance(Controller controller, Paziente paziente, GestioneTerapie gt) {
+        this.upp = new UtilityPortali(paziente);
         this.gt = gt;
-    }
 
-    @FXML
-    private void initialize() {
-        ObservableList<String> farmaci = FXCollections.observableArrayList(upp.getListaFarmaciFormattatiCompleta());
-        listaFarmaciCompletaCB.setItems(farmaci);
-
-
-        Map<String, String> nomePrincipioMap = new HashMap<>();
-        for (String nome : farmaci) {
-            Farmaco f = GestioneFarmaci.getInstance().getFarmacoByName(nome);
-            nomePrincipioMap.put(nome, f.getPrincipioAttivo());
+        if (controller instanceof InserisciNuovaTerapiaController) {
+            this.antcpc = (InserisciNuovaTerapiaController) controller;
+        }  else {
+            this.ftpc = (FinestraTerapiePazienteController) controller;
         }
 
-        // Filtro dinamico ottimizzato
-        FilteredList<String> filteredItems = new FilteredList<>(farmaci, p -> true);
-        listaFarmaciCompletaCB.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-            final TextField editor = listaFarmaciCompletaCB.getEditor();
-            final String nomeSelezionato = listaFarmaciCompletaCB.getSelectionModel().getSelectedItem();
-            final String principioAttivoSelezionato = nomePrincipioMap.getOrDefault(nomeSelezionato, "");
+        Platform.runLater(this::caricaListaFarmaci);
+    }
 
-            listaFarmaciCompletaCB.show();
+    private void caricaListaFarmaci() {
+        Task<Void> loadListaFarmaci = new Task<>() {
+            @Override
+            protected Void call() {
+                ObservableList<String> farmaci = FXCollections.observableArrayList(upp.getListaFarmaciFormattatiCompleta());
 
-            if (nomeSelezionato == null || !nomeSelezionato.equals(editor.getText()) || !principioAttivoSelezionato.equalsIgnoreCase(editor.getText())) {
-                filteredItems.setPredicate(item -> {
-                    if (newValue == null || newValue.isEmpty()) return true;
+                Map<String, String> nomePrincipioMap = new HashMap<>();
+                for (String nome : farmaci) {
+                    Farmaco f = GestioneFarmaci.getInstance().getFarmacoByName(nome);
+                    nomePrincipioMap.put(nome, f.getPrincipioAttivo());
+                }
 
-                    String filtro = newValue.toLowerCase();
-                    String nome = item.toLowerCase();
-                    String principio = nomePrincipioMap.getOrDefault(item, "").toLowerCase();
+                // Filtro dinamico ottimizzato
+                FilteredList<String> filteredItems = new FilteredList<>(farmaci, p -> true);
+                listaFarmaciCompletaCB.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+                    final TextField editor = listaFarmaciCompletaCB.getEditor();
+                    final String nomeSelezionato = listaFarmaciCompletaCB.getSelectionModel().getSelectedItem();
+                    final String principioAttivoSelezionato = nomePrincipioMap.getOrDefault(nomeSelezionato, "");
 
-                    return nome.contains(filtro) || principio.contains(filtro);
+                    listaFarmaciCompletaCB.show();
+
+                    if (nomeSelezionato == null || !nomeSelezionato.equals(editor.getText()) || !principioAttivoSelezionato.equalsIgnoreCase(editor.getText())) {
+                        filteredItems.setPredicate(item -> {
+                            if (newValue == null || newValue.isEmpty()) return true;
+
+                            String filtro = newValue.toLowerCase();
+                            String nome = item.toLowerCase();
+                            String principio = nomePrincipioMap.getOrDefault(item, "").toLowerCase();
+
+                            return nome.contains(filtro) || principio.contains(filtro);
+                        });
+                        listaFarmaciCompletaCB.setItems(filteredItems);
+                    }
                 });
-                listaFarmaciCompletaCB.setItems(filteredItems);
+
+                Platform.runLater(() -> {
+                    listaFarmaciCompletaCB.setItems(farmaci);
+                    listaFarmaciCompletaCB.setItems(filteredItems);
+                });
+
+                return null;
             }
-        });
+
+            @Override
+            protected void failed() {
+                System.err.println("Si è verificato un erorre durante il caricamto dei dati");
+
+
+            }
+        };
+
+        new  Thread(loadListaFarmaci).start();
     }
 
     public void aggiungiFarmaco() {

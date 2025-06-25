@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class MainAccessController {
+public class MainAccessController implements Controller {
     private String ruolo;
 
     public void apriLoginMedico(ActionEvent event) throws IOException {

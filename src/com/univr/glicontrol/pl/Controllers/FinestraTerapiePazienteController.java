@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class FinestraTerapiePazienteController {
+public class FinestraTerapiePazienteController implements Controller {
     //all'inizio mostra pageStorico e pageButton: si schiaccia su PageStorico si nasconde pageButton e si apre pageTerapia
     //se si schiacca pageButton si apre la schermata per aggiungere una nuova terapia
     //inizializzare la list View
@@ -54,6 +54,8 @@ public class FinestraTerapiePazienteController {
     private PortalePazienteController ppc = null;
     private Paziente paziente;
     UtilityPortali upp;
+    private Terapia terapia = null;
+    private GestioneTerapie gt = null;
 
     @FXML
     private void initialize() {
@@ -69,7 +71,11 @@ public class FinestraTerapiePazienteController {
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
-                    mostraFarmaciTerapia();
+                    clearScreen();
+                    Platform.runLater(() -> {
+                        terapia = upp.getTerapiaPerNomeFormattata(terapiePazienteLV.getSelectionModel().getSelectedItem());
+                        mostraFarmaciTerapia();
+                    });
                 }
             });
 
@@ -128,29 +134,28 @@ public class FinestraTerapiePazienteController {
         }
     }
 
+    private void clearScreen() {
+        if (indicazioniFarmacoGP.isVisible()) {
+            FadeTransition fadeOutIndicazioniFarmaci = new FadeTransition(javafx.util.Duration.millis(300), indicazioniFarmacoGP);
+            fadeOutIndicazioniFarmaci.setFromValue(1.0);
+            fadeOutIndicazioniFarmaci.setToValue(0.0);
+            fadeOutIndicazioniFarmaci.play();
+            indicazioniFarmacoGP.setVisible(false);
+        }
+
+        infoTerapiaVB.setVisible(false);
+    }
+
     private void mostraFarmaciTerapia() {
         salvaInfoFarmaciB.setVisible(false);
 
-        FadeTransition fadeOutIndicazioniFarmaci = new FadeTransition(javafx.util.Duration.millis(150), indicazioniFarmacoGP);
-        fadeOutIndicazioniFarmaci.setFromValue(1.0);
-        fadeOutIndicazioniFarmaci.setToValue(0.0);
-        fadeOutIndicazioniFarmaci.play();
-        indicazioniFarmacoGP.setVisible(false);
-
-        FadeTransition fadeOutInfoTerapia = new FadeTransition(javafx.util.Duration.millis(150), infoTerapiaVB);
-        fadeOutInfoTerapia.setFromValue(1.0);
-        fadeOutInfoTerapia.setToValue(0.0);
-        fadeOutInfoTerapia.play();
-        infoTerapiaVB.setVisible(false);
-
-        String nomeTerapia = terapiePazienteLV.getSelectionModel().getSelectedItem();
+        //String nomeTerapia = terapiePazienteLV.getSelectionModel().getSelectedItem();
 
         Task<Void> loadingTask = new Task<>() {
 
             @Override
             protected Void call() {
                 upp = new UtilityPortali(paziente);
-                Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapia);
                 String dataTerapia = upp.getIndicazioniTemporaliTerapia(terapia);
 
                 // Popola la lista dei farmaci associati alla terapia visualizzata
@@ -162,7 +167,7 @@ public class FinestraTerapiePazienteController {
                 }
 
                 Platform.runLater(() -> {
-                    nomeTerapiaTF.setText(nomeTerapia);
+                    nomeTerapiaTF.setText(terapia.getNome());
                     dateTerapiaTF.setText(dataTerapia);
                     farmaciTerapiaLV.setItems(farmaci);
 
@@ -177,10 +182,10 @@ public class FinestraTerapiePazienteController {
             @Override
             protected void succeeded() {
                 infoTerapiaVB.setVisible(true);
-                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(100), infoTerapiaVB);
-                fadeIn.setFromValue(0.0);
-                fadeIn.setToValue(1.0);
-                fadeIn.play();
+//                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(50), infoTerapiaVB);
+//                fadeIn.setFromValue(0.0);
+//                fadeIn.setToValue(1.0);
+//                fadeIn.play();
             }
 
             @Override
@@ -195,7 +200,12 @@ public class FinestraTerapiePazienteController {
     }
 
     private void mostraIndicazinoiFarmaciTerapia() {
-        Terapia terapia = upp.getTerapiaPerNomeFormattata(nomeTerapiaTF.getText());
+
+        if (pmc != null) {
+            dosaggiTerapiaTA.setEditable(true);
+            frequenzaTerapiaTA.setEditable(true);
+            orariTerapiaTA.setEditable(true);
+        }
 
         Task<Void> loadIndicazioniFarmaciTerapie = new Task<>() {
             @Override
@@ -251,7 +261,8 @@ public class FinestraTerapiePazienteController {
         }
 
         this.paziente = pazienteSelezionato;
-        upp = new UtilityPortali(pazienteSelezionato);
+        upp = new UtilityPortali(paziente);
+        gt = new GestioneTerapie(paziente);
 
         Platform.runLater(this::caricaTerapiePaziente);
     }
@@ -303,5 +314,35 @@ public class FinestraTerapiePazienteController {
         };
 
         new Thread(loadingTerapieTask).start();
+    }
+
+
+    public void aggiungiFarmaciAllaTerapia() {
+        try {
+            FXMLLoader aggiungiFarmaciLoader = new FXMLLoader(getClass().getResource("../uiElements/DettaglioNuovoFarmaco.fxml"));
+            Parent root = aggiungiFarmaciLoader.load();
+
+            DettaglioNuovoFarmacoController dnfc = aggiungiFarmaciLoader.getController();
+            dnfc.setInstance(this, paziente, gt);
+
+            Stage stage = new Stage();
+            stage.setTitle("Inserisci Farmaci");
+            stage.setScene(new Scene(root));
+
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            System.err.println("Si è verificato un erorre durante il caricamto del controller");
+        }
+
+        List<FarmacoTerapia> farmaciAttualiTerapia = terapia.getListaFarmaciTerapia();
+        farmaciAttualiTerapia.addAll(gt.getFarmaciSingolaTerapia());
+        terapia.setListaFarmaciTerapia(farmaciAttualiTerapia);
+
+        mostraFarmaciTerapia();
+    }
+
+    public void salvaModificheTerapia() {
+
     }
 }

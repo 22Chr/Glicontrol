@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InserisciNuovaTerapiaController {
+public class InserisciNuovaTerapiaController implements Controller {
     UtilityPortali upp;
     private Paziente paziente;
     GestioneTerapie gt;
@@ -115,8 +115,7 @@ public class InserisciNuovaTerapiaController {
                 Parent root = loader.load();
 
                 DettaglioNuovoFarmacoController dettaglioNuovoFarmacoController = loader.getController();
-                dettaglioNuovoFarmacoController.setInstance(this);
-                dettaglioNuovoFarmacoController.setGestioneTerapie(gt);
+                dettaglioNuovoFarmacoController.setInstance(this, paziente, gt);
 
                 Stage dettaglio = new Stage();
                 dettaglio.setTitle("Aggiungi farmaco");
@@ -164,7 +163,7 @@ public class InserisciNuovaTerapiaController {
         }
         List<FarmacoTerapia> farmaciConIndicazioni = gt.getFarmaciSingolaTerapia();
 
-        int status = 0;
+        int status;
         if (terapiaSelezionata == 0) {
             //status dovrà corrispondere a gt.inserisciTerapiaDiabete
             status = gt.inserisciTerapiaDiabete(medicoUltimaModifica.getIdUtente(), dataInizio, dataFine, farmaciConIndicazioni);

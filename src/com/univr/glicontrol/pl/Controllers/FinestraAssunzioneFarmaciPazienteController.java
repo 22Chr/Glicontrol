@@ -17,7 +17,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 
-public class FinestraAssunzioneFarmaciPazienteController {
+public class FinestraAssunzioneFarmaciPazienteController implements Controller {
     private UtilityPortali upp;
     private Paziente paziente;
     private GestioneAssunzioneFarmaci gaf;

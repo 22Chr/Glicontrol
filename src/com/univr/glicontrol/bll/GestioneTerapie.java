@@ -70,13 +70,14 @@ public class GestioneTerapie {
     }
 
     public boolean aggiornaTerapia(Terapia terapia) {
+        boolean status = false;
         if (terapia instanceof TerapiaDiabete) {
-            return accessoTerapie.updateTerapiaDiabete((TerapiaDiabete) terapia);
+            status = aggiornaTerapiaDiabete((TerapiaDiabete) terapia);
         } else if (terapia instanceof TerapiaConcomitante) {
-            return accessoTerapie.updateTerapiaConcomitante((TerapiaConcomitante) terapia);
-        } else {
-            return false;
+            status = aggiornaTerapiaConcomitante((TerapiaConcomitante) terapia);
         }
+
+        return status;
     }
 
     public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
@@ -115,11 +116,11 @@ public class GestioneTerapie {
         return accessoTerapie.insertTerapiaConcomitante(pazienteSessione.getIdUtente(), idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, farmaci) ? 1 : 0;
     }
 
-    public boolean aggiornaTerapiaDiabete(TerapiaDiabete terapia) {
+    private boolean aggiornaTerapiaDiabete(TerapiaDiabete terapia) {
         return accessoTerapie.updateTerapiaDiabete(terapia);
     }
 
-    public boolean aggiornaTerapiaConcomitante(TerapiaConcomitante terapia) {
+    private boolean aggiornaTerapiaConcomitante(TerapiaConcomitante terapia) {
         return accessoTerapie.updateTerapiaConcomitante(terapia);
     }
 

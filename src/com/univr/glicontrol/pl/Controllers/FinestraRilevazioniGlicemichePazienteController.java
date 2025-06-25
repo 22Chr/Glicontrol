@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
-public class FinestraRilevazioniGlicemichePazienteController {
+public class FinestraRilevazioniGlicemichePazienteController implements Controller {
 
     UtilityPortali upp;
     Paziente paziente;

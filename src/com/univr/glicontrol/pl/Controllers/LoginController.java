@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class LoginController {
+public class LoginController implements Controller {
     @FXML
     private Label insertLabel;
     @FXML

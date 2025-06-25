@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class PortaleMedicoController implements Portale {
+public class PortaleMedicoController implements Portale, Controller {
 
     private final UtilityPortali upm = new UtilityPortali();
     private final Medico medico = upm.getMedicoSessione();

@@ -14,7 +14,7 @@ import javafx.util.Duration;
 import java.sql.Date;
 import java.util.List;
 
-public class InserisciPazienteController {
+public class InserisciPazienteController implements Controller {
     private Paziente pa;
 
     @FXML

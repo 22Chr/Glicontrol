@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.*;
 
-public class PortalePazienteController implements Portale {
+public class PortalePazienteController implements Portale, Controller {
     //ultimeRilevazioniLW dovrà contenere il sunto delle ultime rilevazioni
     //andamentoGlicemia dovrà mostrare una rappresentazione grafica -> cercare come fare
     //l'avatar deve mostrare le iniziali dell'utente

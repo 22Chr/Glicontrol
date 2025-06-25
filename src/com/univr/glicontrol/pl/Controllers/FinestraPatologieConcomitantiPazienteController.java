@@ -13,10 +13,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.awt.image.renderable.ContextualRenderedImageFactory;
 import java.sql.Date;
 import java.time.LocalDate;
 
-public class FinestraPatologieConcomitantiPazienteController {
+public class FinestraPatologieConcomitantiPazienteController implements Controller {
 
     UtilityPortali upp;
     Paziente paziente;

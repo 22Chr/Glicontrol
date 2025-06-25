@@ -12,7 +12,7 @@ import javafx.stage.Window;
 
 import java.sql.Time;
 
-public class InserisciPastoController {
+public class InserisciPastoController implements Controller {
     @FXML
     private ComboBox<String> pastoCB,oraCB, minutiCB; //ora e minuti verranno convertiti in int per DB
 

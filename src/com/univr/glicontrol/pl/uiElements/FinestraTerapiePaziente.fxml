@@ -94,7 +94,7 @@
                               <ListView fx:id="farmaciTerapiaLV" maxHeight="348.0" prefHeight="315.0" prefWidth="206.0" style="-fx-border-color: #22577a;" />
                               <HBox fx:id="aggiungiEliminaHB" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" visible="false">
                                  <children>
-                                    <Button mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi" textFill="WHITE">
+                                    <Button mnemonicParsing="false" onAction="#aggiungiFarmaciAllaTerapia" prefWidth="90.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -175,7 +175,7 @@
                                     </TextArea>
                                  </children>
                               </GridPane>
-                              <Button fx:id="salvaInfoFarmaciB" mnemonicParsing="false" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Salva " textFill="WHITE" visible="false">
+                              <Button fx:id="salvaInfoFarmaciB" mnemonicParsing="false" onAction="#salvaModificheTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Salva " textFill="WHITE" visible="false">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>

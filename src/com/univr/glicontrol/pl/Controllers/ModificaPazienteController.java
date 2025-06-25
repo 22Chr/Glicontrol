@@ -13,7 +13,7 @@ import javafx.util.Duration;
 import java.sql.Date;
 import java.util.List;
 
-public class ModificaPazienteController {
+public class ModificaPazienteController implements Controller {
     private Paziente p;
 
     @FXML

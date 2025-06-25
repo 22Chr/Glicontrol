@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-public class InserisciMedicoController {
+public class InserisciMedicoController implements Controller {
 
     @FXML
     private TextField CFNuovoMedicoTF;

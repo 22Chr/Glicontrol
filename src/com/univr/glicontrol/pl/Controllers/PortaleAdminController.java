@@ -17,7 +17,7 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.util.List;
 
-public class PortaleAdminController {
+public class PortaleAdminController implements Controller {
 
     @FXML
     private Button logoutB;
