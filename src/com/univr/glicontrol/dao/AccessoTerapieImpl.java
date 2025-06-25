@@ -374,15 +374,15 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             }
 
             // Verifica aggiornamento su indicazioni che si trovano già nel DB ma sono state aggiornate
-            for (IndicazioniFarmaciTerapia indicazioniLocali : indicazioniDiabeteLocale) {
-                IndicazioniFarmaciTerapia indicazioniDB = mappaIndicazioniDB.get(indicazioniLocali.getIdIndicazioniFarmaci());
-                if (indicazioniDB != null && !indicazioniLocali.equals(indicazioniDB)) {
-                    if (!accessoIndicazioniFarmaciTerapia.updateIndicazioniFarmaci(conn, indicazioniLocali)) {
-                        conn.rollback();
-                        throw new SQLException("Impossibile aggiornare una delle indicazioni della terapia");
-                    }
-                }
-            }
+//            for (IndicazioniFarmaciTerapia indicazioniLocali : indicazioniDiabeteLocale) {
+//                IndicazioniFarmaciTerapia indicazioniDB = mappaIndicazioniDB.get(indicazioniLocali.getIdIndicazioniFarmaci());
+//                if (indicazioniDB != null && !indicazioniLocali.equals(indicazioniDB)) {
+//                    if (!accessoIndicazioniFarmaciTerapia.updateIndicazioniFarmaci(conn, indicazioniLocali)) {
+//                        conn.rollback();
+//                        throw new SQLException("Impossibile aggiornare una delle indicazioni della terapia");
+//                    }
+//                }
+//            }
 
             conn.commit();
             success = true;
@@ -516,17 +516,6 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                         conn,
                         indicazioniFarmaciTerapia.getIdIndicazioniFarmaci())) {
                     conn.rollback();
-                }
-            }
-
-            // Verifica aggiornamento su indicazioni che si trovano già nel DB ma sono state aggiornate
-            for (IndicazioniFarmaciTerapia indicazioniLocali : indicazioniConcomitanteLocale) {
-                IndicazioniFarmaciTerapia indicazioniDB = mappaIndicazioniDB.get(indicazioniLocali.getIdIndicazioniFarmaci());
-                if (indicazioniDB != null && !indicazioniLocali.equals(indicazioniDB)) {
-                    if (!accessoIndicazioniFarmaciTerapia.updateIndicazioniFarmaci(conn, indicazioniLocali)) {
-                        conn.rollback();
-                        throw new SQLException("Impossibile aggiornare una delle indicazioni della terapia");
-                    }
                 }
             }
 

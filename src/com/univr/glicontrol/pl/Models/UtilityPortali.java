@@ -551,7 +551,7 @@ public class UtilityPortali {
     public float convertiDosaggio(String dosaggio) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < dosaggio.length(); i++) {
-            if (Character.isDigit(dosaggio.charAt(i))) {
+            if (Character.isDigit(dosaggio.charAt(i)) || dosaggio.charAt(i) == '.') {
                 result.append(dosaggio.charAt(i));
             }
         }
