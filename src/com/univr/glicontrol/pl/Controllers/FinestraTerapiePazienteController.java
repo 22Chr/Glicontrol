@@ -341,9 +341,15 @@ public class FinestraTerapiePazienteController implements Controller {
         terapia.setListaFarmaciTerapia(farmaciAttualiTerapia);
 
         mostraFarmaciTerapia();
+        salvaInfoFarmaciB.setVisible(true);
     }
 
     public void salvaModificheTerapia() {
+
+        // modificare in modo tale che si possa salvare anche senza aprire la descrizione sui farmaci
+
+        // modificare in modo tale che si possa inserire un array di farmaci
+
         Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
         int index = -1;
         for(int i = 0; i < terapia.getListaFarmaciTerapia().size(); i++) {

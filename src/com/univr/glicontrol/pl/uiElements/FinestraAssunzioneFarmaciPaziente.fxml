@@ -175,7 +175,7 @@
                 </HBox>
             </children>
         </VBox>
-      <HBox fx:id="mainPagePortaleMedico" alignment="CENTER" prefHeight="400.0" prefWidth="627.0">
+      <HBox fx:id="mainPagePortaleMedico" alignment="CENTER" prefHeight="400.0" prefWidth="627.0" visible="false">
          <children>
             <VBox alignment="CENTER" prefHeight="389.0" prefWidth="669.0" spacing="15.0">
                <children>
