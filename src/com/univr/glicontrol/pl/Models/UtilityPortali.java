@@ -547,4 +547,14 @@ public class UtilityPortali {
         }
         return null;
     }
+
+    public float convertiDosaggio(String dosaggio) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < dosaggio.length(); i++) {
+            if (Character.isDigit(dosaggio.charAt(i))) {
+                result.append(dosaggio.charAt(i));
+            }
+        }
+        return Float.parseFloat(result.toString());
+    }
 }

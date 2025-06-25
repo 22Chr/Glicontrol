@@ -96,7 +96,7 @@ public class DettaglioNuovoFarmacoController implements Controller {
 
     public void aggiungiFarmaco() {
         Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciCompletaCB.getSelectionModel().getSelectedItem());
-        IndicazioniFarmaciTerapia indicazioni = new IndicazioniFarmaciTerapia(0, farmaco.getIdFarmaco(), convertiDosaggio(dosaggioTA.getText()), frequenzaTA.getText(), orariTA.getText());
+        IndicazioniFarmaciTerapia indicazioni = new IndicazioniFarmaciTerapia(0, farmaco.getIdFarmaco(), upp.convertiDosaggio(dosaggioTA.getText()), frequenzaTA.getText(), orariTA.getText());
 
         if (gt.generaFarmaciTerapia(farmaco, indicazioni)) {
             Alert successoInserimentoFarmacoAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -119,13 +119,4 @@ public class DettaglioNuovoFarmacoController implements Controller {
         }
     }
 
-    private float convertiDosaggio(String dosaggio) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < dosaggio.length(); i++) {
-            if (Character.isDigit(dosaggio.charAt(i))) {
-                result.append(dosaggio.charAt(i));
-            }
-        }
-        return Float.parseFloat(result.toString());
-    }
 }

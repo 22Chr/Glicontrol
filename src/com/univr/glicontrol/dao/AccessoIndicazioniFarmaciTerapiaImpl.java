@@ -86,8 +86,8 @@ public class AccessoIndicazioniFarmaciTerapiaImpl implements AccessoIndicazioniF
             }
 
             deleteIndicazioniFarmaciStmt.close();
-            conn.setAutoCommit(true);
-            conn.close();
+            //conn.setAutoCommit(true);
+            //conn.close();
 
         } catch (SQLException e) {
             System.out.println("[ERRORE DELETE INDICAZIONI FARMACI]: " + e.getMessage());
@@ -114,8 +114,8 @@ public class AccessoIndicazioniFarmaciTerapiaImpl implements AccessoIndicazioniF
             }
 
             updateIndicazioniFarmaciStmt.close();
-            conn.setAutoCommit(true);
-            conn.close();
+            //conn.setAutoCommit(true);
+            //conn.close();
 
         } catch (SQLException e) {
             System.out.println("[ERRORE UPDATE INDICAZIONI FARMACI]: " + e.getMessage());

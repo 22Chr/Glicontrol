@@ -418,7 +418,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
 
             conn.setAutoCommit(false);
 
-            updateTerapiaConcomitanteStmt.setInt(1, terapia.getIdTerapiaConcomitante());
+            updateTerapiaConcomitanteStmt.setInt(1, terapia.getIdPatologiaConcomitante());
             updateTerapiaConcomitanteStmt.setInt(2, terapia.getIdMedicoUltimaModifica());
             updateTerapiaConcomitanteStmt.setDate(3, terapia.getDataFine());
             updateTerapiaConcomitanteStmt.setInt(4, terapia.getIdTerapiaConcomitante());
@@ -531,6 +531,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             }
 
             conn.commit();
+            conn.close();
             success = true;
 
         } catch (SQLException e) {

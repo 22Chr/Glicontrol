@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.List;
@@ -136,7 +137,7 @@ public class FinestraTerapiePazienteController implements Controller {
 
     private void clearScreen() {
         if (indicazioniFarmacoGP.isVisible()) {
-            FadeTransition fadeOutIndicazioniFarmaci = new FadeTransition(javafx.util.Duration.millis(300), indicazioniFarmacoGP);
+            FadeTransition fadeOutIndicazioniFarmaci = new FadeTransition(Duration.millis(300), indicazioniFarmacoGP);
             fadeOutIndicazioniFarmaci.setFromValue(1.0);
             fadeOutIndicazioniFarmaci.setToValue(0.0);
             fadeOutIndicazioniFarmaci.play();
@@ -227,14 +228,14 @@ public class FinestraTerapiePazienteController implements Controller {
             @Override
             protected void succeeded() {
                 indicazioniFarmacoGP.setVisible(true);
-                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(100), indicazioniFarmacoGP);
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(100), indicazioniFarmacoGP);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
                 fadeIn.play();
 
                 if (pmc != null) {
                     salvaInfoFarmaciB.setVisible(true);
-                    FadeTransition salvaBFadeIn = new FadeTransition(javafx.util.Duration.millis(100), salvaInfoFarmaciB);
+                    FadeTransition salvaBFadeIn = new FadeTransition(Duration.millis(100), salvaInfoFarmaciB);
                     salvaBFadeIn.setFromValue(0.0);
                     salvaBFadeIn.setToValue(1.0);
                     salvaBFadeIn.play();
@@ -293,7 +294,7 @@ public class FinestraTerapiePazienteController implements Controller {
                 progressIndicator.setVisible(false);
                 loadingPage.setVisible(false);
                 mainPage.setVisible(true);
-                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(100), mainPage);
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(100), mainPage);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
                 fadeIn.play();
@@ -343,6 +344,34 @@ public class FinestraTerapiePazienteController implements Controller {
     }
 
     public void salvaModificheTerapia() {
+        Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
+        int index = -1;
+        for(int i = 0; i < terapia.getListaFarmaciTerapia().size(); i++) {
+            if(terapia.getListaFarmaciTerapia().get(i).getFarmaco().equals(farmaco)) {
+                index = i;
+                break;
+            }
+        }
 
+        IndicazioniFarmaciTerapia ift = terapia.getListaFarmaciTerapia().get(index).getIndicazioni();
+        ift.setDosaggio(upp.convertiDosaggio(dosaggiTerapiaTA.getText()));
+        ift.setOrariAssunzione(orariTerapiaTA.getText());
+        ift.setFrequenzaAssunzione(frequenzaTerapiaTA.getText());
+
+        if(gt.aggiornaTerapia(terapia)){
+            Alert successoAggiornamentoTerapiaAlert = new Alert(Alert.AlertType.INFORMATION);
+            successoAggiornamentoTerapiaAlert.setTitle("System Notification Service");
+            successoAggiornamentoTerapiaAlert.setHeaderText("Aggiornamento avvenuto con successo");
+            successoAggiornamentoTerapiaAlert.setContentText("La terapia è stata aggiornata correttamente");
+            successoAggiornamentoTerapiaAlert.showAndWait();
+
+            //TODO: inserire log modifiche terapia
+        }else{
+            Alert erroreAggiornamentoTerapiaAlert = new Alert(Alert.AlertType.ERROR);
+            erroreAggiornamentoTerapiaAlert.setTitle("System Notification Service");
+            erroreAggiornamentoTerapiaAlert.setHeaderText("Errore durante l'aggiornamento");
+            erroreAggiornamentoTerapiaAlert.setContentText("Si è verificato un errore durante l'aggiornamento della terapia.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
+            erroreAggiornamentoTerapiaAlert.showAndWait();
+        }
     }
 }
