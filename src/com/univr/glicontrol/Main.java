@@ -31,20 +31,21 @@ public class Main extends Application {
     }
 
     private void setMacDockIcon() {
-        // Esegui solo su macOS
         if (!System.getProperty("os.name").toLowerCase().contains("mac")) return;
 
         try {
-            // Carica l'immagine dal classpath
             Image image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("./pl/uiElements/glicontrol.png")));
 
-            // Imposta l'icona del Dock usando l’API Apple proprietaria
-            com.apple.eawt.Application.getApplication().setDockIconImage(image);
+            // Usa la reflection per evitare l'import diretto di com.apple.eawt.Application
+            Class<?> appClass = Class.forName("com.apple.eawt.Application");
+            Object application = appClass.getMethod("getApplication").invoke(null);
+            appClass.getMethod("setDockIconImage", java.awt.Image.class).invoke(application, image);
 
-        } catch (IOException | NullPointerException e) {
+        } catch (Exception e) {
             System.err.println("Impossibile impostare l'icona Dock: " + e.getMessage());
         }
     }
+
 
 
     public static void main(String[] args) throws MessagingException {
