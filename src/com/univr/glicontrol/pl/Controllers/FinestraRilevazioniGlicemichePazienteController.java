@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 public class FinestraRilevazioniGlicemichePazienteController {
 
@@ -84,6 +85,7 @@ public class FinestraRilevazioniGlicemichePazienteController {
 
             return cell;
         });
+
     }
 
     public void cambiaPagina(){
@@ -166,11 +168,13 @@ public class FinestraRilevazioniGlicemichePazienteController {
     }
 
     private void resetListViewRilevazioniGlicemiche(){
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUpp = new UtilityPortali(paziente);
         ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
         newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemichePazienti());
         glicemiaPazienteLV.setItems(newRilevazioni);
+
     }
+
 
     public void eliminaRilevazione() {
         String rilevazioneFormattata = glicemiaPazienteLV.getSelectionModel().getSelectedItem();
@@ -225,6 +229,7 @@ public class FinestraRilevazioniGlicemichePazienteController {
                     Platform.runLater(() -> glicemiaPazienteLV.setItems(rilevazioni));
                 } else {
                     Platform.runLater(() -> rilevazioniGlicemichePortaleMedicoLV.setItems(rilevazioni));
+                    Platform.runLater(() -> coloraAnomalieRilevazioniGlicemiche());
                 }
 
                 return null;
@@ -244,4 +249,41 @@ public class FinestraRilevazioniGlicemichePazienteController {
 
         new Thread(loadRilevazioniGlicemiche).start();
     }
+
+    // colora i campi nella listview vista dal medico per rilevazioni glicemiche
+    private void coloraAnomalieRilevazioniGlicemiche(){
+        UtilityPortali newUpp = new UtilityPortali(paziente);
+        ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
+        newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemichePazienti());
+        rilevazioniGlicemichePortaleMedicoLV.getItems().setAll(newRilevazioni);
+
+        List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente);
+        rilevazioniGlicemichePortaleMedicoLV.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+
+                int index = getIndex();
+                if (index >= 0 && index < codiciRilevazioni.size()) {
+                    int severity = codiciRilevazioni.get(index);
+                    String style;
+
+                    switch (Math.abs(severity)) {
+                        case 0 -> style = "";
+                        case 1 -> style = "-fx-background-color: #ffdd00; -fx-text-fill: black;";
+                        case 2 -> style = "-fx-background-color: #ff9900; -fx-text-fill: black;";
+                        case 3 -> style = "-fx-background-color: #ff0000; -fx-text-fill: white;";
+                        case 4 -> style = "-fx-background-color: #6b0c8a; -fx-text-fill: white;";
+                        default -> style = "";
+                    }
+
+                    setStyle(style);
+                } else {
+                    setStyle("");
+                }
+            }
+        });
+    }
+
 }

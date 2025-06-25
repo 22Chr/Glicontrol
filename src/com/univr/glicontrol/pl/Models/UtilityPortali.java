@@ -239,7 +239,7 @@ public class UtilityPortali {
             mappaRilevazioniGlicemia.put(rilevazioneGlicemicaFormattata, rg);
         }
 
-        return listaRilevazioniGlicemiche;
+        return listaRilevazioniGlicemiche.reversed();
     }
 
     public List<String> getListaRilevazioniGlicemicheOdierne(){
@@ -250,7 +250,7 @@ public class UtilityPortali {
             }
         }
 
-        return listaRilevazioniGlicemiche;
+        return listaRilevazioniGlicemiche.reversed();
     }
 
     // Aggiorna la lista delle rilevazioni glicemiche

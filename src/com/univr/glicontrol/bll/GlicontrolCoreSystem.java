@@ -339,12 +339,12 @@ public class GlicontrolCoreSystem {
         //  4: emergenza medica post-prandiale
 
         gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
-        List<RilevazioneGlicemica> rilevazioniOdierne = gestioneRilevazioniGlicemia.getRilevazioniPerData(LocalDate.now());
+        List<RilevazioneGlicemica> rilevazioni = gestioneRilevazioniGlicemia.getRilevazioni();
         List<Integer> codiciLivelli = new ArrayList<>();
 
-        if (rilevazioniOdierne.isEmpty()) return null;
+        if (rilevazioni.isEmpty()) return null;
 
-        for (RilevazioneGlicemica r : rilevazioniOdierne) {
+        for (RilevazioneGlicemica r : rilevazioni) {
             if (r.getIndicazioniTemporali().equals("prima")) {
                 if (r.getValore() >= 80 && r.getValore() <= 130) {
                     codiciLivelli.add(0);
