@@ -1,6 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.GestioneSintomi;
+import com.univr.glicontrol.bll.InputChecker;
 import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.application.Platform;
@@ -72,6 +73,14 @@ public class FinestraSintomiPazienteController implements Controller {
 
             return cell;
         });
+
+        descrizioneTA.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(InputChecker.getInstance().campoVuoto(descrizioneTA.getText()) && descrizioneTA.getText() != null){
+                descrizioneTA.setStyle("-fx-background-color: #43a047;");
+            }else{
+                descrizioneTA.setStyle("-fx-background-color: #ff0000; -fx-border-width: 3px");
+            }
+        });
     }
 
     public void resetListViewSintomi() {
@@ -89,11 +98,11 @@ public class FinestraSintomiPazienteController implements Controller {
 
     public void inserisciNuovoSintomo() {
 
-        if (descrizioneTA.getText().isEmpty()) {
+        if (descrizioneTA.getText().isEmpty() || !InputChecker.getInstance().campoVuoto(descrizioneTA.getText())) {
             Alert campoVuotoAlert = new  Alert(Alert.AlertType.ERROR);
             campoVuotoAlert.setTitle("System Information Service");
             campoVuotoAlert.setHeaderText("Dati mancanti");
-            campoVuotoAlert.setContentText("Per inserire un sintomo è necessario fornirne una descrizione");
+            campoVuotoAlert.setContentText("Per inserire un sintomo è necessario fornirne una descrizione valida");
             campoVuotoAlert.showAndWait();
 
         } else {
