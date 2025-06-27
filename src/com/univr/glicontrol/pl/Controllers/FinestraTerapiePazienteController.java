@@ -49,7 +49,7 @@ public class FinestraTerapiePazienteController implements Controller {
     private ProgressIndicator progressIndicator;
 
     @FXML
-    private Button aggiungiTerapiaButton, salvaInfoFarmaciB;
+    private Button aggiungiTerapiaButton, salvaModificheTerapiaB;
 
     private PortaleMedicoController pmc = null;
     private PortalePazienteController ppc = null;
@@ -94,7 +94,8 @@ public class FinestraTerapiePazienteController implements Controller {
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
-                    mostraIndicazinoiFarmaciTerapia();
+                    salvaModificheTerapiaB.setVisible(false);
+                    mostraIndicazioniFarmaciTerapia();
                 }
             });
 
@@ -148,9 +149,6 @@ public class FinestraTerapiePazienteController implements Controller {
     }
 
     private void mostraFarmaciTerapia() {
-        salvaInfoFarmaciB.setVisible(false);
-
-        //String nomeTerapia = terapiePazienteLV.getSelectionModel().getSelectedItem();
 
         Task<Void> loadingTask = new Task<>() {
 
@@ -183,10 +181,6 @@ public class FinestraTerapiePazienteController implements Controller {
             @Override
             protected void succeeded() {
                 infoTerapiaVB.setVisible(true);
-//                FadeTransition fadeIn = new FadeTransition(javafx.util.Duration.millis(50), infoTerapiaVB);
-//                fadeIn.setFromValue(0.0);
-//                fadeIn.setToValue(1.0);
-//                fadeIn.play();
             }
 
             @Override
@@ -200,7 +194,7 @@ public class FinestraTerapiePazienteController implements Controller {
 
     }
 
-    private void mostraIndicazinoiFarmaciTerapia() {
+    private void mostraIndicazioniFarmaciTerapia() {
 
         if (pmc != null) {
             dosaggiTerapiaTA.setEditable(true);
@@ -233,13 +227,15 @@ public class FinestraTerapiePazienteController implements Controller {
                 fadeIn.setToValue(1.0);
                 fadeIn.play();
 
-                if (pmc != null) {
-                    salvaInfoFarmaciB.setVisible(true);
-                    FadeTransition salvaBFadeIn = new FadeTransition(Duration.millis(100), salvaInfoFarmaciB);
-                    salvaBFadeIn.setFromValue(0.0);
-                    salvaBFadeIn.setToValue(1.0);
-                    salvaBFadeIn.play();
-                }
+                dosaggiTerapiaTA.textProperty().addListener((observable, oldValue, newValue) -> {
+                    mostraBottoneSalvataggio(newValue);
+                });
+                frequenzaTerapiaTA.textProperty().addListener((observable, oldValue, newValue) -> {
+                    mostraBottoneSalvataggio(newValue);
+                });
+                orariTerapiaTA.textProperty().addListener((observable, oldValue, newValue) -> {
+                    mostraBottoneSalvataggio(newValue);
+                });
             }
 
             @Override
@@ -250,6 +246,19 @@ public class FinestraTerapiePazienteController implements Controller {
         };
 
         new Thread(loadIndicazioniFarmaciTerapie).start();
+    }
+
+    private void mostraBottoneSalvataggio(String newValue) {
+        if (pmc != null) {
+            boolean shouldBeVisible = !newValue.trim().isEmpty();
+            if (salvaModificheTerapiaB.isVisible() != shouldBeVisible) {
+                salvaModificheTerapiaB.setVisible(true);
+                FadeTransition salvaBFadeIn = new FadeTransition(Duration.millis(100), salvaModificheTerapiaB);
+                salvaBFadeIn.setFromValue(0.0);
+                salvaBFadeIn.setToValue(1.0);
+                salvaBFadeIn.play();
+            }
+        }
     }
 
     public void setInstance(Portale controller, Paziente pazienteSelezionato) {
@@ -341,28 +350,29 @@ public class FinestraTerapiePazienteController implements Controller {
         terapia.setListaFarmaciTerapia(farmaciAttualiTerapia);
 
         mostraFarmaciTerapia();
-        salvaInfoFarmaciB.setVisible(true);
+        salvaModificheTerapiaB.setVisible(true);
     }
 
     public void salvaModificheTerapia() {
-
-        // modificare in modo tale che si possa salvare anche senza aprire la descrizione sui farmaci
-
         // modificare in modo tale che si possa inserire un array di farmaci
 
-        Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
-        int index = -1;
-        for(int i = 0; i < terapia.getListaFarmaciTerapia().size(); i++) {
-            if(terapia.getListaFarmaciTerapia().get(i).getFarmaco().equals(farmaco)) {
-                index = i;
-                break;
+        if (indicazioniFarmacoGP.isVisible()) {
+            Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
+            int index = -1;
+            for (int i = 0; i < terapia.getListaFarmaciTerapia().size(); i++) {
+                if (terapia.getListaFarmaciTerapia().get(i).getFarmaco().equals(farmaco)) {
+                    index = i;
+                    break;
+                }
             }
-        }
 
-        IndicazioniFarmaciTerapia ift = terapia.getListaFarmaciTerapia().get(index).getIndicazioni();
-        ift.setDosaggio(upp.convertiDosaggio(dosaggiTerapiaTA.getText()));
-        ift.setOrariAssunzione(orariTerapiaTA.getText());
-        ift.setFrequenzaAssunzione(frequenzaTerapiaTA.getText());
+            IndicazioniFarmaciTerapia ift = terapia.getListaFarmaciTerapia().get(index).getIndicazioni();
+            ift.setDosaggio(upp.convertiDosaggio(dosaggiTerapiaTA.getText()));
+            ift.setOrariAssunzione(orariTerapiaTA.getText());
+            ift.setFrequenzaAssunzione(frequenzaTerapiaTA.getText());
+
+            terapia.getListaFarmaciTerapia().get(index).setIndicazioni(ift);
+        }
 
         if(gt.aggiornaTerapia(terapia)){
             Alert successoAggiornamentoTerapiaAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -372,6 +382,7 @@ public class FinestraTerapiePazienteController implements Controller {
             successoAggiornamentoTerapiaAlert.showAndWait();
 
             //TODO: inserire log modifiche terapia
+
         }else{
             Alert erroreAggiornamentoTerapiaAlert = new Alert(Alert.AlertType.ERROR);
             erroreAggiornamentoTerapiaAlert.setTitle("System Notification Service");

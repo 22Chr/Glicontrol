@@ -175,7 +175,7 @@
                                     </TextArea>
                                  </children>
                               </GridPane>
-                              <Button fx:id="salvaInfoFarmaciB" mnemonicParsing="false" onAction="#salvaModificheTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Salva " textFill="WHITE" visible="false">
+                              <Button fx:id="salvaModificheTerapiaB" mnemonicParsing="false" onAction="#salvaModificheTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Salva " textFill="WHITE" visible="false">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
