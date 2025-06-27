@@ -39,10 +39,6 @@ public class InputChecker {
         return pesoFloat > 0.0 && pesoFloat <= 700.0;
     }
 
-    public boolean verificaSesso(String sesso) {
-        return sesso.equals("M") || sesso.equals("F") || sesso.equals("m") || sesso.equals("f") ;
-    }
-
     public boolean verificaMedico(int idMedico) {
         return idMedico > 0;
     }
@@ -81,5 +77,26 @@ public class InputChecker {
 
     public boolean verificaDataInizioTerapiaConcomitante(Date dataInizioTerapia, Date dataInizioPatologia) {
         return dataInizioTerapia.after(dataInizioPatologia);
+    }
+
+    public boolean verificaDosaggioFarmaco(String dosaggio, String nomeFarmaco) {
+        int limit = -1;
+        for (int i = 0; i < dosaggio.length(); i++) {
+            if (dosaggio.charAt(i) == ' ') {
+                limit = i + 1;
+                break;
+            }
+        }
+        if (limit == -1) {
+            return false;
+        }
+
+        Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco);
+
+        return dosaggio.substring(0, limit).matches("^[0-9]\\d*(\\.\\d{1,2})?\\s$") && dosaggio.substring(limit).equals(farmaco.getUnitaMisura());
+    }
+
+    public boolean verificaOrariTerapia(String orari) {
+        return orari.matches("^(0\\d|1\\d|2[0-3]):[0-5]\\d(, (0\\d|1\\d|2[0-3]):[0-5]\\d)*$");
     }
 }

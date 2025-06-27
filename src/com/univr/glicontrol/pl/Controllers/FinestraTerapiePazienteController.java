@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,36 +21,17 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.List;
-
+import java.util.Optional;
 
 public class FinestraTerapiePazienteController implements Controller {
-    //all'inizio mostra pageStorico e pageButton: si schiaccia su PageStorico si nasconde pageButton e si apre pageTerapia
-    //se si schiacca pageButton si apre la schermata per aggiungere una nuova terapia
-    //inizializzare la list View
-    //inizializzare i campi in pageTerapia
-    @FXML
-    private ListView<String> terapiePazienteLV, farmaciTerapiaLV;
-
-    @FXML
-    private VBox infoTerapiaVB;
-
-    @FXML
-    private TextField nomeTerapiaTF, dateTerapiaTF;
-
-    @FXML
-    private TextArea dosaggiTerapiaTA, frequenzaTerapiaTA, orariTerapiaTA;
-
-    @FXML
-    private GridPane indicazioniFarmacoGP;
-
-    @FXML
-    private HBox loadingPage, mainPage, aggiungiEliminaHB;
-
-    @FXML
-    private ProgressIndicator progressIndicator;
-
-    @FXML
-    private Button aggiungiTerapiaButton, salvaModificheTerapiaB;
+    @FXML private ListView<String> terapiePazienteLV, farmaciTerapiaLV;
+    @FXML private VBox infoTerapiaVB;
+    @FXML private TextField nomeTerapiaTF, dateTerapiaTF;
+    @FXML private TextArea dosaggiTerapiaTA, frequenzaTerapiaTA, orariTerapiaTA;
+    @FXML private GridPane indicazioniFarmacoGP;
+    @FXML private HBox loadingPage, mainPage, aggiungiEliminaHB;
+    @FXML private ProgressIndicator progressIndicator;
+    @FXML private Button aggiungiTerapiaButton, salvaModificheTerapiaB;
 
     private PortaleMedicoController pmc = null;
     private PortalePazienteController ppc = null;
@@ -57,19 +39,17 @@ public class FinestraTerapiePazienteController implements Controller {
     UtilityPortali upp;
     private Terapia terapia = null;
     private GestioneTerapie gt = null;
+    private boolean aggiornamentoProgrammatico = false;
 
     @FXML
     private void initialize() {
-
         terapiePazienteLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
+                @Override protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
                     setText(empty ? null : item);
                 }
             };
-
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
                     clearScreen();
@@ -79,27 +59,46 @@ public class FinestraTerapiePazienteController implements Controller {
                     });
                 }
             });
-
             return cell;
         });
 
         farmaciTerapiaLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
+                @Override protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
                     setText(empty ? null : item);
                 }
             };
-
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
-                    salvaModificheTerapiaB.setVisible(false);
                     mostraIndicazioniFarmaciTerapia();
                 }
             });
-
             return cell;
+        });
+
+        dosaggiTerapiaTA.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (InputChecker.getInstance().verificaDosaggioFarmaco(newVal, farmaciTerapiaLV.getSelectionModel().getSelectedItem()) && dosaggiTerapiaTA != null) {
+                dosaggiTerapiaTA.setStyle("-fx-border-color: #43a047;");
+            } else {
+                dosaggiTerapiaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+
+            if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
+        });
+
+        frequenzaTerapiaTA.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
+        });
+
+        orariTerapiaTA.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (InputChecker.getInstance().verificaOrariTerapia(newVal) && orariTerapiaTA != null) {
+                orariTerapiaTA.setStyle("-fx-border-color: #43a047;");
+            } else {
+                orariTerapiaTA.setStyle("-fx-border-color: #ff0000;");
+            }
+
+            if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
         });
     }
 
@@ -108,6 +107,7 @@ public class FinestraTerapiePazienteController implements Controller {
         ObservableList<String> newTerapie = FXCollections.observableArrayList();
         newTerapie.addAll(newUpp.getListaTerapiePaziente());
         terapiePazienteLV.setItems(newTerapie);
+        salvaModificheTerapiaB.setVisible(false);
     }
 
     public void aggiungiTerapia() {
@@ -130,7 +130,7 @@ public class FinestraTerapiePazienteController implements Controller {
             terapiePaziente.setTitle("Aggiungi terapia");
             terapiePaziente.setScene(new Scene(root));
 
-            terapiePaziente.show();
+            terapiePaziente.showAndWait();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -138,63 +138,41 @@ public class FinestraTerapiePazienteController implements Controller {
 
     private void clearScreen() {
         if (indicazioniFarmacoGP.isVisible()) {
-            FadeTransition fadeOutIndicazioniFarmaci = new FadeTransition(Duration.millis(300), indicazioniFarmacoGP);
-            fadeOutIndicazioniFarmaci.setFromValue(1.0);
-            fadeOutIndicazioniFarmaci.setToValue(0.0);
-            fadeOutIndicazioniFarmaci.play();
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), indicazioniFarmacoGP);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.play();
             indicazioniFarmacoGP.setVisible(false);
+            salvaModificheTerapiaB.setVisible(false);
         }
-
         infoTerapiaVB.setVisible(false);
     }
 
     private void mostraFarmaciTerapia() {
-
-        Task<Void> loadingTask = new Task<>() {
-
-            @Override
-            protected Void call() {
+        Task<Void> task = new Task<>() {
+            @Override protected Void call() {
                 upp = new UtilityPortali(paziente);
-                String dataTerapia = upp.getIndicazioniTemporaliTerapia(terapia);
-
-                // Popola la lista dei farmaci associati alla terapia visualizzata
+                String data = upp.getIndicazioniTemporaliTerapia(terapia);
                 ObservableList<String> farmaci = FXCollections.observableArrayList();
-                List<FarmacoTerapia> listaFarmaci = terapia.getListaFarmaciTerapia();
-
-                for (FarmacoTerapia farmaco : listaFarmaci) {
-                    farmaci.add(farmaco.getFarmaco().getNome());
-                }
+                for (FarmacoTerapia ft : terapia.getListaFarmaciTerapia()) farmaci.add(ft.getFarmaco().getNome());
 
                 Platform.runLater(() -> {
                     nomeTerapiaTF.setText(terapia.getNome());
-                    dateTerapiaTF.setText(dataTerapia);
+                    dateTerapiaTF.setText(data);
                     farmaciTerapiaLV.setItems(farmaci);
-
-                    if (pmc != null) {
-                        aggiungiEliminaHB.setVisible(true);
-                    }
+                    if (pmc != null) aggiungiEliminaHB.setVisible(true);
                 });
-
                 return null;
             }
-
-            @Override
-            protected void succeeded() {
+            @Override protected void succeeded() {
                 infoTerapiaVB.setVisible(true);
             }
-
-            @Override
-            protected void failed() {
-                infoTerapiaVB.setVisible(false);
-                System.err.println("Errore durante il caricamento dei dati della terapia selezionata");
-            }
         };
-
-        new Thread(loadingTask).start();
-
+        new Thread(task).start();
     }
 
     private void mostraIndicazioniFarmaciTerapia() {
+        salvaModificheTerapiaB.setVisible(false);
 
         if (pmc != null) {
             dosaggiTerapiaTA.setEditable(true);
@@ -202,62 +180,41 @@ public class FinestraTerapiePazienteController implements Controller {
             orariTerapiaTA.setEditable(true);
         }
 
-        Task<Void> loadIndicazioniFarmaciTerapie = new Task<>() {
-            @Override
-            protected Void call() {
-                String dosaggioTerapia = terapia.getDosaggioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem()) + " " +
-                        GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem()).getUnitaMisura();
-                String frequenzaTerapia = terapia.getFrequenzaPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
-                String orariTerapia = terapia.getOrarioPerFarmaco(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
+        Task<Void> task = new Task<>() {
+            @Override protected Void call() {
+                String nome = farmaciTerapiaLV.getSelectionModel().getSelectedItem();
+                String dosaggio = terapia.getDosaggioPerFarmaco(nome) + " " + GestioneFarmaci.getInstance().getFarmacoByName(nome).getUnitaMisura();
+                String frequenza = terapia.getFrequenzaPerFarmaco(nome);
+                String orari = terapia.getOrarioPerFarmaco(nome);
 
                 Platform.runLater(() -> {
-                    dosaggiTerapiaTA.setText(dosaggioTerapia);
-                    frequenzaTerapiaTA.setText(frequenzaTerapia);
-                    orariTerapiaTA.setText(orariTerapia);
+                    aggiornamentoProgrammatico = true;
+                    dosaggiTerapiaTA.setText(dosaggio);
+                    frequenzaTerapiaTA.setText(frequenza);
+                    orariTerapiaTA.setText(orari);
+                    aggiornamentoProgrammatico = false;
+                    salvaModificheTerapiaB.setVisible(false);
                 });
-
                 return null;
             }
-
-            @Override
-            protected void succeeded() {
+            @Override protected void succeeded() {
                 indicazioniFarmacoGP.setVisible(true);
                 FadeTransition fadeIn = new FadeTransition(Duration.millis(100), indicazioniFarmacoGP);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
                 fadeIn.play();
-
-                dosaggiTerapiaTA.textProperty().addListener((observable, oldValue, newValue) -> {
-                    mostraBottoneSalvataggio(newValue);
-                });
-                frequenzaTerapiaTA.textProperty().addListener((observable, oldValue, newValue) -> {
-                    mostraBottoneSalvataggio(newValue);
-                });
-                orariTerapiaTA.textProperty().addListener((observable, oldValue, newValue) -> {
-                    mostraBottoneSalvataggio(newValue);
-                });
-            }
-
-            @Override
-            protected void failed() {
-                indicazioniFarmacoGP.setVisible(false);
-                System.err.println("Errore durante il caricamento dei dati.");
             }
         };
-
-        new Thread(loadIndicazioniFarmaciTerapie).start();
+        new Thread(task).start();
     }
 
-    private void mostraBottoneSalvataggio(String newValue) {
-        if (pmc != null) {
-            boolean shouldBeVisible = !newValue.trim().isEmpty();
-            if (salvaModificheTerapiaB.isVisible() != shouldBeVisible) {
-                salvaModificheTerapiaB.setVisible(true);
-                FadeTransition salvaBFadeIn = new FadeTransition(Duration.millis(100), salvaModificheTerapiaB);
-                salvaBFadeIn.setFromValue(0.0);
-                salvaBFadeIn.setToValue(1.0);
-                salvaBFadeIn.play();
-            }
+    private void mostraBottoneSalvataggio(String newVal) {
+        if (pmc != null && !newVal.trim().isEmpty() && !salvaModificheTerapiaB.isVisible()) {
+            salvaModificheTerapiaB.setVisible(true);
+            FadeTransition fade = new FadeTransition(Duration.millis(100), salvaModificheTerapiaB);
+            fade.setFromValue(0.0);
+            fade.setToValue(1.0);
+            fade.play();
         }
     }
 
@@ -289,17 +246,14 @@ public class FinestraTerapiePazienteController implements Controller {
         progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
         Task<Void> loadingTerapieTask = new Task<>() {
-            @Override
-            protected Void call() {
+            @Override protected Void call() {
                 ObservableList<String> terapie = FXCollections.observableArrayList();
                 terapie.addAll(upp.getListaTerapiePaziente());
                 Platform.runLater(() -> terapiePazienteLV.setItems(terapie));
-
                 return null;
             }
 
-            @Override
-            protected void succeeded() {
+            @Override protected void succeeded() {
                 progressIndicator.setVisible(false);
                 loadingPage.setVisible(false);
                 mainPage.setVisible(true);
@@ -308,26 +262,15 @@ public class FinestraTerapiePazienteController implements Controller {
                 fadeIn.setToValue(1.0);
                 fadeIn.play();
             }
-
-            @Override
-            protected void failed() {
-                progressIndicator.setVisible(false);
-                loadingPage.setVisible(false);
-                System.err.println("Errore durante il caricamento dei dati.");
-
-                Alert erroreCaricamentoTerapie = new Alert(Alert.AlertType.ERROR);
-                erroreCaricamentoTerapie.setTitle("System Notification Service");
-                erroreCaricamentoTerapie.setHeaderText("Errore durante il caricamento dei dati");
-                erroreCaricamentoTerapie.setContentText("Si è verificato un errore durante il caricamento delle terapie.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
-                erroreCaricamentoTerapie.showAndWait();
-            }
         };
-
         new Thread(loadingTerapieTask).start();
     }
 
-
     public void aggiungiFarmaciAllaTerapia() {
+        if (indicazioniFarmacoGP.isVisible()) {
+            indicazioniFarmacoGP.setVisible(false);
+        }
+
         try {
             FXMLLoader aggiungiFarmaciLoader = new FXMLLoader(getClass().getResource("../uiElements/DettaglioNuovoFarmaco.fxml"));
             Parent root = aggiungiFarmaciLoader.load();
@@ -346,18 +289,37 @@ public class FinestraTerapiePazienteController implements Controller {
         }
 
         List<FarmacoTerapia> farmaciAttualiTerapia = terapia.getListaFarmaciTerapia();
-        farmaciAttualiTerapia.addAll(gt.getFarmaciSingolaTerapia());
+        int quantitaFarmaci = farmaciAttualiTerapia.size();
+        for (FarmacoTerapia ft : gt.getFarmaciSingolaTerapia()) {
+            if (!farmaciAttualiTerapia.contains(ft)) {
+                farmaciAttualiTerapia.add(ft);
+            }
+        }
         terapia.setListaFarmaciTerapia(farmaciAttualiTerapia);
 
+        if (farmaciAttualiTerapia.size() != quantitaFarmaci) {
+            salvaModificheTerapiaB.setVisible(true);
+        }
         mostraFarmaciTerapia();
-        salvaModificheTerapiaB.setVisible(true);
     }
 
     public void salvaModificheTerapia() {
-        // modificare in modo tale che si possa inserire un array di farmaci
-
         if (indicazioniFarmacoGP.isVisible()) {
-            Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
+
+            String nomeFarmaco = farmaciTerapiaLV.getSelectionModel().getSelectedItem();
+
+            // verifica che i dati siano corretti
+            if (!InputChecker.getInstance().verificaOrariTerapia(orariTerapiaTA.getText()) || !InputChecker.getInstance().verificaDosaggioFarmaco(dosaggiTerapiaTA.getText(), nomeFarmaco)) {
+                Alert campiNonValidi = new Alert(Alert.AlertType.ERROR);
+                campiNonValidi.setTitle("System Notification Service");
+                campiNonValidi.setHeaderText("Dati non validi");
+                campiNonValidi.setContentText("I dati che hai fornito non sono validi.\nAssicurati che orari e dosaggio siano corretti e riprova");
+                campiNonValidi.showAndWait();
+
+                return;
+            }
+
+            Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco);
             int index = -1;
             for (int i = 0; i < terapia.getListaFarmaciTerapia().size(); i++) {
                 if (terapia.getListaFarmaciTerapia().get(i).getFarmaco().equals(farmaco)) {
@@ -381,7 +343,7 @@ public class FinestraTerapiePazienteController implements Controller {
             successoAggiornamentoTerapiaAlert.setContentText("La terapia è stata aggiornata correttamente");
             successoAggiornamentoTerapiaAlert.showAndWait();
 
-            //TODO: inserire log modifiche terapia
+            salvaModificheTerapiaB.setVisible(false);
 
         }else{
             Alert erroreAggiornamentoTerapiaAlert = new Alert(Alert.AlertType.ERROR);
@@ -389,6 +351,53 @@ public class FinestraTerapiePazienteController implements Controller {
             erroreAggiornamentoTerapiaAlert.setHeaderText("Errore durante l'aggiornamento");
             erroreAggiornamentoTerapiaAlert.setContentText("Si è verificato un errore durante l'aggiornamento della terapia.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
             erroreAggiornamentoTerapiaAlert.showAndWait();
+        }
+    }
+
+    public void eliminaFarmacoTerapia() {
+
+        Alert confermaOperazione = new Alert(Alert.AlertType.CONFIRMATION);
+        confermaOperazione.setTitle("System Notification Service");
+        confermaOperazione.setHeaderText("Sei sicuro di voler eliminare il farmaco selezionato?");
+        confermaOperazione.setContentText("L'operazione è irreversibile");
+
+        Optional<ButtonType> result = confermaOperazione.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
+            int index = -1;
+            for (int i = 0; i < terapia.getListaFarmaciTerapia().size(); i++) {
+                if (terapia.getListaFarmaciTerapia().get(i).getFarmaco().equals(farmaco)) {
+                    index = i;
+                    break;
+                }
+            }
+
+            boolean status = false;
+
+            if (index != -1) {
+                terapia.getListaFarmaciTerapia().remove(index);
+                status = gt.aggiornaTerapia(terapia);
+            }
+
+            if (status) {
+                Alert farmacoRimossoCorrettamenteAlert = new Alert(Alert.AlertType.INFORMATION);
+                farmacoRimossoCorrettamenteAlert.setTitle("System Notification Service");
+                farmacoRimossoCorrettamenteAlert.setHeaderText("Eliminazione avvenuta con successo");
+                farmacoRimossoCorrettamenteAlert.setContentText("Il farmaco selezionato è stato rimosso correttamente dalla terapia");
+                farmacoRimossoCorrettamenteAlert.showAndWait();
+
+                salvaModificheTerapiaB.setVisible(false);
+                indicazioniFarmacoGP.setVisible(false);
+                mostraFarmaciTerapia();
+
+            } else {
+                Alert erroreRimozioneFarmacoTerapia = new Alert(Alert.AlertType.ERROR);
+                erroreRimozioneFarmacoTerapia.setTitle("System Notification Service");
+                erroreRimozioneFarmacoTerapia.setHeaderText("Errore durante la rimozione");
+                erroreRimozioneFarmacoTerapia.setContentText("Si è verificato un errore durante la rimozione del farmaco.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
+                erroreRimozioneFarmacoTerapia.showAndWait();
+            }
         }
     }
 }

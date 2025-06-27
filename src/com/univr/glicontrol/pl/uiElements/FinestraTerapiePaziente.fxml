@@ -102,7 +102,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <Button mnemonicParsing="false" prefWidth="90.0" style="-fx-background-color: #ff0404; -fx-background-radius: 7;" text="Elimina" textFill="WHITE">
+                                    <Button mnemonicParsing="false" onAction="#eliminaFarmacoTerapia" prefWidth="90.0" style="-fx-background-color: #ff0404; -fx-background-radius: 7;" text="Elimina" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
