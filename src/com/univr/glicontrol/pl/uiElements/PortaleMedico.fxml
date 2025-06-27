@@ -104,115 +104,119 @@
             </VBox>
          </left>
          <center>
-            <VBox fx:id="centerVB" alignment="CENTER" prefHeight="506.0" prefWidth="378.0" spacing="30.0" visible="false" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefWidth="275.0" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="pazienteSelezionatoTF" alignment="CENTER" editable="false" maxWidth="400.0" style="-fx-background-color: transparent; -fx-border-color: #22577a; -fx-border-radius: 5;" VBox.vgrow="ALWAYS">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </TextField>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" VBox.vgrow="ALWAYS">
+                  <VBox fx:id="centerVB" alignment="CENTER" prefHeight="428.0" prefWidth="268.0" spacing="20.0" visible="false">
                      <children>
-                        <Button fx:id="terapieB" mnemonicParsing="false" onAction="#openGestoreTerapie" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Terapie" textFill="WHITE" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
-                                 <color>
-                                    <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Button>
-                        <Button fx:id="patologieB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openPatologiePaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie &#10;concomitanti" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
-                                 <color>
-                                    <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Button>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Button fx:id="terapieB" mnemonicParsing="false" onAction="#openGestoreTerapie" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Terapie" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                                       <color>
+                                          <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Button>
+                              <Button fx:id="patologieB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#openPatologiePaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Patologie &#10;concomitanti" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                                       <color>
+                                          <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Button fx:id="sintomiB" mnemonicParsing="false" onAction="#openSintomiPaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Sintomi" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                                       <color>
+                                          <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Button>
+                              <Button fx:id="rilevazioniGlicemicheB" alignment="CENTER" mnemonicParsing="false" onAction="#visualizzaRilevazioniGlicemiche" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Rilevazioni&#10;glicemiche&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                                       <color>
+                                          <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                           <children>
+                              <Button fx:id="farmaciB" mnemonicParsing="false" onAction="#visualizzaAssunzioneFarmaciPaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Farmaci&#10;assunti&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                                       <color>
+                                          <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Button>
+                              <Button fx:id="informazioniB" alignment="CENTER" mnemonicParsing="false" onAction="#visualizzaInfoPaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Informazioni &#10;del paziente&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
+                                       <color>
+                                          <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button fx:id="sintomiB" mnemonicParsing="false" onAction="#openSintomiPaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Sintomi" textFill="WHITE" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
-                                 <color>
-                                    <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Button>
-                        <Button fx:id="rilevazioniGlicemicheB" alignment="CENTER" mnemonicParsing="false" onAction="#visualizzaRilevazioniGlicemiche" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Rilevazioni&#10;glicemiche&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
-                                 <color>
-                                    <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button fx:id="farmaciB" mnemonicParsing="false" onAction="#visualizzaAssunzioneFarmaciPaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Farmaci&#10;assunti&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
-                                 <color>
-                                    <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Button>
-                        <Button fx:id="informazioniB" alignment="CENTER" mnemonicParsing="false" onAction="#visualizzaInfoPaziente" prefHeight="55.0" prefWidth="117.0" style="-fx-background-color: #22577a; -fx-background-radius: 10;" text="Informazioni &#10;del paziente&#10;" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <effect>
-                              <DropShadow height="19.0" offsetX="5.0" offsetY="5.0" radius="9.0" width="19.0">
-                                 <color>
-                                    <Color red="0.066600002348423" green="0.2941499948501587" blue="0.3700000047683716" opacity="0.25" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Button>
-                     </children>
-                  </HBox>
+                  </VBox>
                </children>
                <BorderPane.margin>
                   <Insets bottom="20.0" top="40.0" />

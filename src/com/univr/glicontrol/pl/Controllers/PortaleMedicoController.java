@@ -2,7 +2,9 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -53,6 +55,7 @@ public class PortaleMedicoController implements Portale, Controller {
 
     @FXML
     private void initialize(){
+        pazienteSelezionatoTF.setText("Seleziona un paziente per iniziare");
 
         // Inizializza l'avatar con le iniziali del medico
         badgeC.setFill(new ImagePattern(upm.getBadge()));
@@ -68,7 +71,7 @@ public class PortaleMedicoController implements Portale, Controller {
         pazientiGenerici.addAll(upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente()));
         pazientiGenericiLV.setItems(pazientiGenerici);
 
-        //Se si schiaccia due volte su un paziente succedono cose
+        // popola la UI con le informazioni del paziente
         pazientiReferenteLV.setCellFactory(lv -> {
             ListCell<String> cell = new ListCell<>() {
                 @Override
@@ -80,14 +83,18 @@ public class PortaleMedicoController implements Portale, Controller {
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
-                    centerVB.setVisible(true);
-                    rightVB.setVisible(true);
-                    pazienteSelezionatoTF.setText(cell.getItem()); //carica il nome al centro
-                    pazienteSelezionato = upm.getPazienteAssociatoDaNomeFormattato(pazientiReferenteLV.getSelectionModel().getSelectedItem());
-                    gestione = new GestioneRilevazioniGlicemia(pazienteSelezionato);
-                    aggiornaGraficoGlicemiaOdierna();
-                    aggiornaGraficoGlicemiaSettimanale();
-                    aggiornaGraficoGlicemiaMensile();
+                    PauseTransition mostraUI = new PauseTransition(Duration.millis(300));
+                    mostraUI.setOnFinished(e -> {
+                        centerVB.setVisible(true);
+                        rightVB.setVisible(true);
+                        pazienteSelezionatoTF.setText(cell.getItem()); //carica il nome al centro
+                        pazienteSelezionato = upm.getPazienteAssociatoDaNomeFormattato(pazientiReferenteLV.getSelectionModel().getSelectedItem());
+                        gestione = new GestioneRilevazioniGlicemia(pazienteSelezionato);
+                        aggiornaGraficoGlicemiaOdierna();
+                        aggiornaGraficoGlicemiaSettimanale();
+                        aggiornaGraficoGlicemiaMensile();
+                    });
+                    mostraUI.play();
                 }
             });
 
