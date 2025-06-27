@@ -78,7 +78,7 @@ public class FinestraTerapiePazienteController implements Controller {
         });
 
         dosaggiTerapiaTA.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (InputChecker.getInstance().verificaDosaggioFarmaco(newVal, farmaciTerapiaLV.getSelectionModel().getSelectedItem()) && dosaggiTerapiaTA != null) {
+            if (InputChecker.getInstance().verificaDosaggioFarmaco(newVal, farmaciTerapiaLV.getSelectionModel().getSelectedItem(), false) && dosaggiTerapiaTA != null) {
                 dosaggiTerapiaTA.setStyle("-fx-border-color: #43a047;");
             } else {
                 dosaggiTerapiaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
@@ -88,6 +88,12 @@ public class FinestraTerapiePazienteController implements Controller {
         });
 
         frequenzaTerapiaTA.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (InputChecker.getInstance().campoVuoto(newVal)) {
+                frequenzaTerapiaTA.setStyle("-fx-border-color: #43a047;");
+            } else {
+                frequenzaTerapiaTA.setStyle("-fx-border-color: #ff0000;  -fx-border-width: 3px;");
+            }
+
             if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
         });
 
@@ -95,7 +101,7 @@ public class FinestraTerapiePazienteController implements Controller {
             if (InputChecker.getInstance().verificaOrariTerapia(newVal) && orariTerapiaTA != null) {
                 orariTerapiaTA.setStyle("-fx-border-color: #43a047;");
             } else {
-                orariTerapiaTA.setStyle("-fx-border-color: #ff0000;");
+                orariTerapiaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
 
             if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
@@ -309,7 +315,7 @@ public class FinestraTerapiePazienteController implements Controller {
             String nomeFarmaco = farmaciTerapiaLV.getSelectionModel().getSelectedItem();
 
             // verifica che i dati siano corretti
-            if (!InputChecker.getInstance().verificaOrariTerapia(orariTerapiaTA.getText()) || !InputChecker.getInstance().verificaDosaggioFarmaco(dosaggiTerapiaTA.getText(), nomeFarmaco)) {
+            if (!InputChecker.getInstance().verificaOrariTerapia(orariTerapiaTA.getText()) || !InputChecker.getInstance().verificaDosaggioFarmaco(dosaggiTerapiaTA.getText(), nomeFarmaco, false)) {
                 Alert campiNonValidi = new Alert(Alert.AlertType.ERROR);
                 campiNonValidi.setTitle("System Notification Service");
                 campiNonValidi.setHeaderText("Dati non validi");

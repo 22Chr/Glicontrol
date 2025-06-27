@@ -13,7 +13,7 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraSintomiPazienteController">
    <children>
-      <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0" visible="false">
+      <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                <children>
@@ -99,7 +99,7 @@
             </HBox>
          </children>
       </VBox>
-      <HBox fx:id="pageSintomiPerMedico" alignment="CENTER">
+      <HBox fx:id="pageSintomiPerMedico" alignment="CENTER" visible="false">
          <children>
             <VBox alignment="CENTER" prefHeight="390.0" prefWidth="389.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                <children>

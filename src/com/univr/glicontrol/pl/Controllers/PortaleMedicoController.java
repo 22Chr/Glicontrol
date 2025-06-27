@@ -344,5 +344,6 @@ public class PortaleMedicoController implements Portale, Controller {
         transizione.play();
     }
 
-
+    // Don't worry, everything is gonna be allright
+    // Don't stop believin'
 }

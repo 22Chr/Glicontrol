@@ -79,24 +79,33 @@ public class InputChecker {
         return dataInizioTerapia.after(dataInizioPatologia);
     }
 
-    public boolean verificaDosaggioFarmaco(String dosaggio, String nomeFarmaco) {
-        int limit = -1;
-        for (int i = 0; i < dosaggio.length(); i++) {
-            if (dosaggio.charAt(i) == ' ') {
-                limit = i + 1;
-                break;
+    public boolean verificaDosaggioFarmaco(String dosaggio, String nomeFarmaco, boolean inserimento) {
+
+        if (inserimento) {
+            return dosaggio.matches("^[0-9]\\d*(\\.\\d{1,2})?$");
+        } else {
+            int limit = -1;
+            for (int i = 0; i < dosaggio.length(); i++) {
+                if (dosaggio.charAt(i) == ' ') {
+                    limit = i + 1;
+                    break;
+                }
             }
-        }
-        if (limit == -1) {
-            return false;
-        }
+            if (limit == -1) {
+                return false;
+            }
 
-        Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco);
+            Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco);
 
-        return dosaggio.substring(0, limit).matches("^[0-9]\\d*(\\.\\d{1,2})?\\s$") && dosaggio.substring(limit).equals(farmaco.getUnitaMisura());
+            return dosaggio.substring(0, limit).matches("^[0-9]\\d*(\\.\\d{1,2})?\\s$") && dosaggio.substring(limit).equals(farmaco.getUnitaMisura());
+        }
     }
 
     public boolean verificaOrariTerapia(String orari) {
         return orari.matches("^(0\\d|1\\d|2[0-3]):[0-5]\\d(, (0\\d|1\\d|2[0-3]):[0-5]\\d)*$");
+    }
+
+    public boolean campoVuoto(String campo) {
+        return campo.matches("^[A-Za-z0-9].*");
     }
 }

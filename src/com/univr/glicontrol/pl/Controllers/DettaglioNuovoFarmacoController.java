@@ -95,28 +95,70 @@ public class DettaglioNuovoFarmacoController implements Controller {
     }
 
     public void aggiungiFarmaco() {
-        Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciCompletaCB.getSelectionModel().getSelectedItem());
-        IndicazioniFarmaciTerapia indicazioni = new IndicazioniFarmaciTerapia(0, farmaco.getIdFarmaco(), upp.convertiDosaggio(dosaggioTA.getText()), frequenzaTA.getText(), orariTA.getText());
+        String nomeFarmaco = listaFarmaciCompletaCB.getSelectionModel().getSelectedItem();
 
-        if (gt.generaFarmaciTerapia(farmaco, indicazioni)) {
-            Alert successoInserimentoFarmacoAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoFarmacoAlert.setTitle("System Information Service");
-            successoInserimentoFarmacoAlert.setHeaderText("Farmaco inserito con successo");
-            successoInserimentoFarmacoAlert.setContentText("Il farmaco è stato inserito con successo");
-            successoInserimentoFarmacoAlert.showAndWait();
-
-            Window currentWindow = dosaggioTA.getScene().getWindow();
-            if (currentWindow instanceof Stage) {
-                ((Stage) currentWindow).close();
-            }
+        if (!InputChecker.getInstance().campoVuoto(frequenzaTA.getText()) || !InputChecker.getInstance().verificaDosaggioFarmaco(dosaggioTA.getText(), nomeFarmaco, true) || !InputChecker.getInstance().verificaOrariTerapia(orariTA.getText())) {
+            Alert datiMancantiAlert =  new Alert(Alert.AlertType.ERROR);
+            datiMancantiAlert.setTitle("System Notification Service");
+            datiMancantiAlert.setHeaderText("Dati mancanti");
+            datiMancantiAlert.setContentText("Per inserire un farmaco è necessario specificarne le modalità d'assunzione");
+            datiMancantiAlert.showAndWait();
 
         } else {
-            Alert erroreInserimentoFarmacoAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoFarmacoAlert.setTitle("System Information Service");
-            erroreInserimentoFarmacoAlert.setHeaderText("Errore durante l'inserimento del farmaco");
-            erroreInserimentoFarmacoAlert.setContentText("Non è stato possibile inserire il farmaco, riprova");
-            erroreInserimentoFarmacoAlert.showAndWait();
+
+            Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco);
+            IndicazioniFarmaciTerapia indicazioni = new IndicazioniFarmaciTerapia(0, farmaco.getIdFarmaco(), upp.convertiDosaggio(dosaggioTA.getText()), frequenzaTA.getText(), orariTA.getText());
+
+            dosaggioTA.setText(dosaggioTA.getText() + " " + farmaco.getUnitaMisura());
+
+            if (gt.generaFarmaciTerapia(farmaco, indicazioni)) {
+                Alert successoInserimentoFarmacoAlert = new Alert(Alert.AlertType.INFORMATION);
+                successoInserimentoFarmacoAlert.setTitle("System Information Service");
+                successoInserimentoFarmacoAlert.setHeaderText("Farmaco inserito con successo");
+                successoInserimentoFarmacoAlert.setContentText("Il farmaco è stato inserito con successo");
+                successoInserimentoFarmacoAlert.showAndWait();
+
+                Window currentWindow = dosaggioTA.getScene().getWindow();
+                if (currentWindow instanceof Stage) {
+                    ((Stage) currentWindow).close();
+                }
+
+            } else {
+                Alert erroreInserimentoFarmacoAlert = new Alert(Alert.AlertType.ERROR);
+                erroreInserimentoFarmacoAlert.setTitle("System Information Service");
+                erroreInserimentoFarmacoAlert.setHeaderText("Errore durante l'inserimento del farmaco");
+                erroreInserimentoFarmacoAlert.setContentText("Non è stato possibile inserire il farmaco, riprova");
+                erroreInserimentoFarmacoAlert.showAndWait();
+            }
         }
+    }
+
+    @FXML
+    private void initialize() {
+        dosaggioTA.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (InputChecker.getInstance().verificaDosaggioFarmaco(newVal, listaFarmaciCompletaCB.getSelectionModel().getSelectedItem(), true) && dosaggioTA != null) {
+                dosaggioTA.setStyle("-fx-border-color: #43a047;");
+            } else {
+                dosaggioTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
+
+        frequenzaTA.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (InputChecker.getInstance().campoVuoto(newVal)) {
+                frequenzaTA.setStyle("-fx-border-color: #43a047;");
+            } else {
+                frequenzaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
+
+        orariTA.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (InputChecker.getInstance().verificaOrariTerapia(newVal) && orariTA != null) {
+                orariTA.setStyle("-fx-border-color: #43a047;");
+            } else {
+                orariTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+
+        });
     }
 
 }
