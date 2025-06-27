@@ -88,20 +88,31 @@ public class FinestraSintomiPazienteController implements Controller {
     }
 
     public void inserisciNuovoSintomo() {
-        if(gs.inserisciSintomo(descrizioneTA.getText())) {
-            Alert successoInserimentoSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoSintomoAlert.setTitle("System Information Service");
-            successoInserimentoSintomoAlert.setHeaderText("Sintomo inserito con successo");
-            successoInserimentoSintomoAlert.setContentText("Il nuovo sintomo è stato inserito con successo");
-            successoInserimentoSintomoAlert.showAndWait();
 
-            resetListViewSintomi();
+        if (descrizioneTA.getText().isEmpty()) {
+            Alert campoVuotoAlert = new  Alert(Alert.AlertType.ERROR);
+            campoVuotoAlert.setTitle("System Information Service");
+            campoVuotoAlert.setHeaderText("Dati mancanti");
+            campoVuotoAlert.setContentText("Per inserire un sintomo è necessario fornirne una descrizione");
+            campoVuotoAlert.showAndWait();
+
         } else {
-            Alert erroreInserimentoSintomoAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoSintomoAlert.setTitle("System Information Service");
-            erroreInserimentoSintomoAlert.setHeaderText("Errore durante l'inserimento del nuovo sintomo");
-            erroreInserimentoSintomoAlert.setContentText("Non è stato possibile inserire il nuovo sintomo, riprova");
-            erroreInserimentoSintomoAlert.showAndWait();
+
+            if (gs.inserisciSintomo(descrizioneTA.getText())) {
+                Alert successoInserimentoSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
+                successoInserimentoSintomoAlert.setTitle("System Information Service");
+                successoInserimentoSintomoAlert.setHeaderText("Sintomo inserito con successo");
+                successoInserimentoSintomoAlert.setContentText("Il nuovo sintomo è stato inserito con successo");
+                successoInserimentoSintomoAlert.showAndWait();
+
+                resetListViewSintomi();
+            } else {
+                Alert erroreInserimentoSintomoAlert = new Alert(Alert.AlertType.ERROR);
+                erroreInserimentoSintomoAlert.setTitle("System Information Service");
+                erroreInserimentoSintomoAlert.setHeaderText("Errore durante l'inserimento del nuovo sintomo");
+                erroreInserimentoSintomoAlert.setContentText("Non è stato possibile inserire il nuovo sintomo, riprova");
+                erroreInserimentoSintomoAlert.showAndWait();
+            }
         }
     }
 
@@ -143,12 +154,10 @@ public class FinestraSintomiPazienteController implements Controller {
         if(portale instanceof PortaleMedicoController){
             this.pmc = (PortaleMedicoController) portale;
             mainPage.setVisible(false);
-            detailPage.setVisible(false);
             pageSintomiPerMedico.setVisible(true);
         } else {
             this.ppc = (PortalePazienteController) portale;
             mainPage.setVisible(true);
-            detailPage.setVisible(true);
             pageSintomiPerMedico.setVisible(false);
         }
 
@@ -159,6 +168,7 @@ public class FinestraSintomiPazienteController implements Controller {
     }
 
     private void caricaSintomi() {
+
         Task<Void> loadSintomiTask = new Task<>() {
             @Override
             protected Void call(){
