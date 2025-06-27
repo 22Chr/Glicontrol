@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.awt.image.renderable.ContextualRenderedImageFactory;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -47,6 +46,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
             this.ppc = (PortalePazienteController) portale;
         } else {
             this.pmc = (PortaleMedicoController) portale;
+            descriviPatologiaLabel.setText("Descrivi la patologia del paziente");
         }
 
         this.paziente = paziente;
@@ -86,9 +86,6 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
         if(detailPage.isVisible()) {
             detailPage.setVisible(false);
             mainPage.setVisible(true);
-            if (pmc != null) {
-                descriviPatologiaLabel.setText("Descrivi la patologia del paziente");
-            }
         } else {
             detailPage.setVisible(true);
             mainPage.setVisible(false);
