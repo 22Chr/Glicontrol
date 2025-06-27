@@ -340,6 +340,8 @@ public class FinestraTerapiePazienteController implements Controller {
             ift.setFrequenzaAssunzione(frequenzaTerapiaTA.getText());
 
             terapia.getListaFarmaciTerapia().get(index).setIndicazioni(ift);
+
+            terapia.setIdMedicoUltimaModifica(upp.getMedicoSessione().getIdUtente());
         }
 
         if(gt.aggiornaTerapia(terapia)){
