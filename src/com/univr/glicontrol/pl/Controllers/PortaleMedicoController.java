@@ -2,6 +2,7 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -44,7 +46,10 @@ public class PortaleMedicoController implements Portale, Controller {
     private LineChart<String, Number> rilevazioniGiornaliereLC, rilevazioniSettimanaliLC, rilevazioniMensiliLC;
 
     @FXML
-    private VBox centerVB, rightVB;
+    private VBox centerVB, rightVB, centroNotificheVB;
+
+    @FXML
+    private Button centroNotificheB;
 
     @FXML
     private void initialize(){
@@ -308,5 +313,36 @@ public class PortaleMedicoController implements Portale, Controller {
             System.err.println(e.getMessage());
         }
     }
+
+    //GESTIONE DEL CENTRO NOTIFICHE
+
+    public void apriCentroNotifiche(){
+        centroNotificheVB.setTranslateX(300);
+        centroNotificheVB.setVisible(true);
+        centroNotificheB.setVisible(false);
+        badgeC.setVisible(false);
+        rightVB.setVisible(false);
+
+        TranslateTransition transizione = new TranslateTransition(Duration.millis(200), centroNotificheVB);
+        transizione.setToX(0);
+        transizione.play();
+
+    }
+
+    public void chiudiCentroNotifiche(){
+        TranslateTransition transizione = new TranslateTransition(Duration.millis(200), centroNotificheVB);
+        transizione.setToX(300);
+        transizione.setOnFinished(e -> {
+            centroNotificheVB.setVisible(false);
+            centroNotificheVB.setTranslateX(0);
+            centroNotificheB.setVisible(true);
+            badgeC.setVisible(true);
+            if(pazienteSelezionato!=null) {
+                rightVB.setVisible(true);
+            }
+        });
+        transizione.play();
+    }
+
 
 }
