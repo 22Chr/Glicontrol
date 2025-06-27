@@ -259,7 +259,7 @@
             </VBox>
          </right>
       </BorderPane>
-      <VBox fx:id="centroNotificheVB" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="320.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 5;" StackPane.alignment="CENTER_RIGHT">
+      <VBox fx:id="centroNotificheVB" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="320.0" style="-fx-background-color: rgba(255, 255, 255, 0.5); -fx-background-radius: 5;" visible="false" StackPane.alignment="CENTER_RIGHT">
          <children>
             <HBox alignment="CENTER" prefHeight="70.0" prefWidth="309.0">
                <children>
@@ -281,7 +281,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <ListView fx:id="notificheLV" prefHeight="445.0" prefWidth="320.0" VBox.vgrow="ALWAYS">
+            <ListView fx:id="notificheLV" prefHeight="445.0" prefWidth="320.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
