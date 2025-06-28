@@ -75,7 +75,7 @@ public class ServizioNotifiche {
         livelliGlicemiciAlert.setTitle("System Notification Service");
 
         if (indiceGlicemico < 0) {
-            livelliGlicemiciAlert.setHeaderText("Anomalia nei livelli glicemici a digiuno");
+            livelliGlicemiciAlert.setHeaderText("Anomalia nei livelli glicemici preprandiali");
         } else {
             livelliGlicemiciAlert.setHeaderText("Anomalia nei livelli glicemici postprandiali");
         }

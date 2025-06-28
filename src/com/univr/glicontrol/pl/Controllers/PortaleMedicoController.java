@@ -128,9 +128,11 @@ public class PortaleMedicoController implements Portale, Controller {
         });
 
 
-        // Task automatici sempre attivi in background
+        // Avvia il core system
+        GlicontrolCoreSystem.getInstance().setPortaleMedicoInstance(this);
         GlicontrolCoreSystem.getInstance().setConnessoComeMedico();
         GlicontrolCoreSystem.getInstance().monitoraLivelliGlicemici();
+        GlicontrolCoreSystem.getInstance().monitoraSospensioneFarmaci();
     }
 
     //3 metodi, uno per ogni grafico, che vanno chiamati nel momento in cui si schiaccia sul paziente
@@ -330,7 +332,7 @@ public class PortaleMedicoController implements Portale, Controller {
     //GESTIONE DEL CENTRO NOTIFICHE
     public void openCentroNotifiche(){
 
-        UtilityPortali upCentroNotifiche = new UtilityPortali(pazienteSelezionato);
+        UtilityPortali upCentroNotifiche = new UtilityPortali();
 
         Task<Void> loadNotificheTask = new Task<>() {
             @Override
@@ -360,6 +362,17 @@ public class PortaleMedicoController implements Portale, Controller {
 
         new Thread(loadNotificheTask).start();
     }
+
+
+    public void resetListaNotifiche() {
+        UtilityPortali upCentroNotifiche = new UtilityPortali();
+        ObservableList<String> notifiche = FXCollections.observableArrayList();
+        notifiche.addAll(upCentroNotifiche.getNotificheFormattate().reversed());
+        Platform.runLater(()->{
+            notificheLV.setItems(notifiche);
+        });
+    }
+
 
     public void closeCentroNotifiche(){
         TranslateTransition transizione = new TranslateTransition(Duration.millis(200), centroNotificheVB);

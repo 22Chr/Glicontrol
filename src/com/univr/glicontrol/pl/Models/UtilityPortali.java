@@ -562,26 +562,30 @@ public class UtilityPortali {
 
     // Restituisce la notifica (per il portale del medico) formattata
     public List<String> getNotificheFormattate() {
+        ListaPazienti listaPazienti = new ListaPazienti();
         List<String> notificheFormattate = new ArrayList<>();
-        GestioneNotifiche gn = new GestioneNotifiche(paziente);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 
-        for (Notifica n : gn.getNotificheNonVisualizzate()) {
-            String notifica =
-                    "[" +
-                    n.getTitolo() +
-                    "]\n" +
-                    "(" +
-                    n.getPazienteAssociato().getCodiceFiscale() +
-                    ")\n" +
-                    n.getMessaggio() +
-                    "\n" +
-                    "(" +
-                    n.getDataNotifica().format(formatter) +
-                    ")\n\n\n";
+        for (Paziente p : listaPazienti.getListaCompletaPazienti()) {
+            GestioneNotifiche gn = new GestioneNotifiche(p);
 
-            notificheFormattate.add(notifica);
-            mappaNotifiche.put(notifica, n);
+            for (Notifica n : gn.getNotificheNonVisualizzate()) {
+                String notifica =
+                        "[" +
+                        n.getTitolo() +
+                        "]\n" +
+                        "(" +
+                        n.getPazienteAssociato().getCodiceFiscale() +
+                        ")\n" +
+                        n.getMessaggio() +
+                        "\n" +
+                        "(" +
+                        n.getDataNotifica().format(formatter) +
+                        ")\n\n\n";
+
+                notificheFormattate.add(notifica);
+                mappaNotifiche.put(notifica, n);
+            }
         }
 
         return notificheFormattate;

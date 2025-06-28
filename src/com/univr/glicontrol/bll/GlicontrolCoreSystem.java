@@ -1,5 +1,6 @@
 package com.univr.glicontrol.bll;
 
+import com.univr.glicontrol.pl.Controllers.PortaleMedicoController;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -31,6 +32,7 @@ public class GlicontrolCoreSystem {
     private GestioneRilevazioniGlicemia gestioneRilevazioniGlicemia = null;
     private GestioneNotifiche gestioneNotifiche = null;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    PortaleMedicoController pmc  = new PortaleMedicoController();
     private boolean connessoComeMedico = false;
 
     private GlicontrolCoreSystem() {
@@ -237,7 +239,6 @@ public class GlicontrolCoreSystem {
     public void stopScheduler() {
         scheduler.shutdownNow();
         schedulerLivelliGlicemici.shutdownNow();
-        pazienteExecutor.shutdownNow();
     }
 
 
@@ -251,12 +252,21 @@ public class GlicontrolCoreSystem {
         for (Terapia t : gestioneTerapie.getTerapiePaziente()) {
             farmaciTerapie.add(t.getListaFarmaciTerapia());
         }
+
+        if (farmaciPrescritti.isEmpty()) {
+            return false;
+        }
+
         for (List<FarmacoTerapia> l : farmaciTerapie) {
             for (FarmacoTerapia f : l) {
                 if (!farmaciPrescritti.contains(f.getFarmaco())) {
                     farmaciPrescritti.add(f.getFarmaco());
                 }
             }
+        }
+
+        if (farmaciPrescritti.isEmpty()) {
+            return false;
         }
 
         for (Farmaco farmaco : farmaciPrescritti) {
@@ -421,7 +431,6 @@ public class GlicontrolCoreSystem {
 
     // Task in background per monitorare i livelli glicemici dei pazienti (su base giornaliera) e inviare alert ai medici
     private final ScheduledExecutorService schedulerLivelliGlicemici = Executors.newScheduledThreadPool(1); // esegue il task ogni X secondi
-    private final ExecutorService pazienteExecutor = Executors.newFixedThreadPool(4); // gestisce fino a 4 pazienti in parallelo
 
     public void monitoraLivelliGlicemici() {
         schedulerLivelliGlicemici.scheduleAtFixedRate(() -> {
@@ -451,14 +460,7 @@ public class GlicontrolCoreSystem {
                                     ServizioNotifiche notificheLivelliGlicemici = new ServizioNotifiche();
                                     notificheLivelliGlicemici.notificaLivelliGlicemici(paziente, severityCode);
                                     GeneratoreNotifiche.getInstance().generaNotificaLivelliGlicemiciAlterati(paziente, severityCode, rilevazioniNonGestite.getFirst().getValore());
-
-                                    if (!grg.updateStatoRilevazioneGlicemica(rilevazioniNonGestite.getFirst())) {
-                                        Alert erroreAggiornamentoStatoRilevazione = new Alert(Alert.AlertType.ERROR);
-                                        erroreAggiornamentoStatoRilevazione.setTitle("System Notification Service");
-                                        erroreAggiornamentoStatoRilevazione.setHeaderText("Errore aggiornamento dati");
-                                        erroreAggiornamentoStatoRilevazione.setContentText("Si è verificato un errore durante l'aggiornamento dello stato della rilevazione glicemica");
-                                        erroreAggiornamentoStatoRilevazione.showAndWait();
-                                    }
+                                    pmc.resetListaNotifiche();
 
                                     giaNotificato.set(index, true);
 
@@ -472,6 +474,14 @@ public class GlicontrolCoreSystem {
                                 }
                             }
 
+                            if (!grg.updateStatoRilevazioneGlicemica(rilevazioniNonGestite.getFirst())) {
+                                Alert erroreAggiornamentoStatoRilevazione = new Alert(Alert.AlertType.ERROR);
+                                erroreAggiornamentoStatoRilevazione.setTitle("System Notification Service");
+                                erroreAggiornamentoStatoRilevazione.setHeaderText("Errore aggiornamento dati");
+                                erroreAggiornamentoStatoRilevazione.setContentText("Si è verificato un errore durante l'aggiornamento dello stato della rilevazione glicemica");
+                                erroreAggiornamentoStatoRilevazione.showAndWait();
+                            }
+
                             rilevazioniNonGestite.removeFirst();
                             codici.removeFirst();
                         }
@@ -483,11 +493,13 @@ public class GlicontrolCoreSystem {
         }, 0, 30, TimeUnit.SECONDS);
     }
 
-
     public void setConnessoComeMedico() {
         connessoComeMedico = true;
     }
 
+    public void setPortaleMedicoInstance(PortaleMedicoController pmc) {
+        this.pmc = pmc;
+    }
 
     // Verifica l'obesità come fattore di rischio per il paziente passato in input
     public boolean isObeso(Paziente paziente) {
