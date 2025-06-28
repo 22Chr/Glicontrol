@@ -3,17 +3,18 @@ package com.univr.glicontrol.bll;
 import java.time.LocalDateTime;
 
 public class Notifica {
+
     private final String titolo;
     private final String messaggio;
     private final LocalDateTime dataNotifica;
     private final String tipoNotifica;
     private boolean visualizzato;
 
-    public Notifica(String titolo, String messaggio) {
+    public Notifica(String titolo, String messaggio, TipologiaNotifica tipologiaNotifica) {
         this.titolo = titolo;
         this.messaggio = messaggio;
         this.dataNotifica = LocalDateTime.now();
-        this.tipoNotifica = "WARNING";
+        this.tipoNotifica = tipologiaNotifica.toString();
         visualizzato = false;
     }
 
