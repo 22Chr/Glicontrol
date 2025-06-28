@@ -126,6 +126,9 @@ public class PortaleMedicoController implements Portale, Controller {
             return cell;
         });
 
+
+        // Task automatici sempre attivi in background
+        GlicontrolCoreSystem.getInstance().monitoraLivelliGlicemici();
     }
 
     //3 metodi, uno per ogni grafico, che vanno chiamati nel momento in cui si schiaccia sul paziente
@@ -198,6 +201,7 @@ public class PortaleMedicoController implements Portale, Controller {
             alert.setHeaderText("Sei sicuro di voler uscire?");
 
             if (alert.showAndWait().get() == ButtonType.OK) {
+                GlicontrolCoreSystem.getInstance().stopScheduler();
                 stage.close();
             }
         });

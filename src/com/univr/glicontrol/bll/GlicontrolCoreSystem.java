@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.SubmissionPublisher;
 import java.util.concurrent.TimeUnit;
 
 public class GlicontrolCoreSystem {
@@ -26,7 +27,7 @@ public class GlicontrolCoreSystem {
     private final List<Paziente> listaPazienti;
     private GestioneTerapie gestioneTerapie = null;
     private GestioneAssunzioneFarmaci gestioneAssunzioneFarmaci = null;
-    private final UtilityPortali utilityPortali = new UtilityPortali();
+    private final UtilityPortali up = new UtilityPortali();
     private GestionePasti gestionePasti = null;
     private GestioneRilevazioniGlicemia gestioneRilevazioniGlicemia = null;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -201,7 +202,6 @@ public class GlicontrolCoreSystem {
         // Ottieni tutta la lista di farmaci per il paziente
         for (Terapia t : gestioneTerapie.getTerapiePaziente()) {
             for (FarmacoTerapia f : t.getListaFarmaciTerapia()) {
-                System.out.println(f.getFarmaco().getNome());
                 farmaciPaziente.add(f.getFarmaco());
             }
         }
@@ -316,7 +316,7 @@ public class GlicontrolCoreSystem {
                 }
 
             } catch (Exception e) {
-                System.err.println("Errore nel promemoria glicemia: " + e.getMessage());
+                System.err.println("Errore nel caricamento del promemoria per la registrazione della glicemia: " + e.getMessage());
             }
         };
 
@@ -411,16 +411,22 @@ public class GlicontrolCoreSystem {
 
     // Task in background per monitorare i livelli glicemici dei pazienti (su base giornaliera) e inviare alert ai medici
     public void monitoraLivelliGlicemici() {
+        List<Boolean> giaNotificato = new ArrayList<>();
+        for (int i = 0; i < listaPazienti.size(); i++) {
+            giaNotificato.add(false);
+        }
+
         scheduler.scheduleAtFixedRate(() -> {
             try {
                 for (int i = 0; i < listaPazienti.size(); i++) {
-                    if (verificaLivelliGlicemici(listaPazienti.get(i), true) != null) {
+                    if (verificaLivelliGlicemici(listaPazienti.get(i), true) != null && !giaNotificato.get(i)) {
                         int livelloGlicemico = verificaLivelliGlicemici(listaPazienti.get(i), true).get(i);
                         if (livelloGlicemico != 0) {
                             int index = i;
                             Platform.runLater(() -> {
                                 ServizioNotifiche notificheLivelli = new ServizioNotifiche();
                                 notificheLivelli.notificaLivelliGlicemici(listaPazienti.get(index), livelloGlicemico);
+                                giaNotificato.set(index, true);
                             });
                         }
                     }

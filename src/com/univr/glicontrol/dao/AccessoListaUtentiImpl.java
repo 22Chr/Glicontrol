@@ -242,7 +242,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                         throw new SQLException("[ERRORE INSERIMENTO NUOVO MEDICO]: Impossibile recuperare l'ID generato");
                     } else {
                         int idPaziente = id.getInt(1);
-                        String inserimentoPazienteInPazienteSql = "insert into Paziente (id_paziente, medico_riferimento, data_nascita, sesso, email, allergie, peso, primo_accesso) values (?, ?, ?, ?, ?, ?, ?, ?)";
+                        String inserimentoPazienteInPazienteSql = "insert into Paziente (id_paziente, medico_riferimento, data_nascita, sesso, email, allergie, altezza, peso, primo_accesso) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                         PreparedStatement stmt2 = conn.prepareStatement(inserimentoPazienteInPazienteSql);
                         stmt2.setInt(1, idPaziente);
                         stmt2.setInt(2, medico);
@@ -250,7 +250,9 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                         stmt2.setString(4, sesso);
                         stmt2.setString(5, email);
                         stmt2.setString(6, allergie);
-                        stmt2.setInt(8, primoAccesso);
+                        stmt2.setInt(7, 1);
+                        stmt2.setFloat(8, 1);
+                        stmt2.setInt(9, primoAccesso);
 
                         success = stmt2.executeUpdate() != 0;
                         stmt2.close();
