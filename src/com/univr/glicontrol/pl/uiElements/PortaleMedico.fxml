@@ -41,7 +41,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Circle>
-                  <Button fx:id="centroNotificheB" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#apriCentroNotifiche" prefHeight="27.0" prefWidth="42.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                  <Button fx:id="centroNotificheB" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#openCentroNotifiche" prefHeight="27.0" prefWidth="42.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets right="20.0" top="5.0" />
                      </HBox.margin>
@@ -272,7 +272,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="chiudiCentroNotificheB" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#chiudiCentroNotifiche" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #ff0404;" text="✕" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="chiudiCentroNotificheB" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#closeCentroNotifiche" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #ff0404;" text="✕" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

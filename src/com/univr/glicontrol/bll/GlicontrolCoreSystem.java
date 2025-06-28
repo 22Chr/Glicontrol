@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.SubmissionPublisher;
 import java.util.concurrent.TimeUnit;
 
 public class GlicontrolCoreSystem {
@@ -30,6 +29,7 @@ public class GlicontrolCoreSystem {
     private final UtilityPortali up = new UtilityPortali();
     private GestionePasti gestionePasti = null;
     private GestioneRilevazioniGlicemia gestioneRilevazioniGlicemia = null;
+    private GestioneNotifiche gestioneNotifiche = null;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     private GlicontrolCoreSystem() {
@@ -420,12 +420,14 @@ public class GlicontrolCoreSystem {
             try {
                 for (int i = 0; i < listaPazienti.size(); i++) {
                     if (verificaLivelliGlicemici(listaPazienti.get(i), true) != null && !giaNotificato.get(i)) {
-                        int livelloGlicemico = verificaLivelliGlicemici(listaPazienti.get(i), true).get(i);
-                        if (livelloGlicemico != 0) {
+                        int indiceSeverity = verificaLivelliGlicemici(listaPazienti.get(i), true).get(i);
+                        if (indiceSeverity != 0) {
                             int index = i;
+                            GestioneRilevazioniGlicemia grg = new GestioneRilevazioniGlicemia(listaPazienti.get(index));
                             Platform.runLater(() -> {
                                 ServizioNotifiche notificheLivelli = new ServizioNotifiche();
-                                notificheLivelli.notificaLivelliGlicemici(listaPazienti.get(index), livelloGlicemico);
+                                notificheLivelli.notificaLivelliGlicemici(listaPazienti.get(index), indiceSeverity);
+                                GeneratoreNotifiche.getInstance().generaNotificaLivelliGlicemiciAlterati(listaPazienti.get(index), indiceSeverity, grg.getRilevazioni().get(index).getValore());
                                 giaNotificato.set(index, true);
                             });
                         }

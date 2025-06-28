@@ -3,11 +3,8 @@ package com.univr.glicontrol.dao;
 import com.univr.glicontrol.bll.ListaPazienti;
 import com.univr.glicontrol.bll.Notifica;
 import com.univr.glicontrol.bll.Paziente;
-import com.univr.glicontrol.bll.TipologiaNotifica;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +35,6 @@ public class AccessoNotificheImpl implements AccessoNotifiche {
                             rs.getString("messaggio"),
                             listaPazienti.getPazientePerId(rs.getInt("paziente_associato")),
                             rs.getTimestamp("data_notifica").toLocalDateTime(),
-                            TipologiaNotifica.valueOf(rs.getString("tipo")),
                             rs.getBoolean("visualizzato")
                     );
 
@@ -59,7 +55,7 @@ public class AccessoNotificheImpl implements AccessoNotifiche {
 
     @Override
     public boolean insertNuovaNotifica(Notifica nuovaNotifica) {
-        String insertNuovaNotificaSql = "insert into Notifiche (titolo, messaggio, paziente_associato, data_notifica, tipo, visualizzato) values (?, ?, ?, ?, ?, ?)";
+        String insertNuovaNotificaSql = "insert into Notifiche (titolo, messaggio, paziente_associato, data_notifica, visualizzato) values (?, ?, ?, ?, ?)";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -68,8 +64,7 @@ public class AccessoNotificheImpl implements AccessoNotifiche {
             insertNuovaNotificaStmt.setString(2, nuovaNotifica.getMessaggio());
             insertNuovaNotificaStmt.setInt(3, nuovaNotifica.getPazienteAssociato().getIdUtente());
             insertNuovaNotificaStmt.setTimestamp(4, Timestamp.valueOf(nuovaNotifica.getDataNotifica()));
-            insertNuovaNotificaStmt.setString(5, nuovaNotifica.getTipoNotifica());
-            insertNuovaNotificaStmt.setBoolean(6, nuovaNotifica.isVisualizzato());
+            insertNuovaNotificaStmt.setBoolean(5, nuovaNotifica.isVisualizzato());
 
             if (insertNuovaNotificaStmt.executeUpdate() != 0) {
                 return true;

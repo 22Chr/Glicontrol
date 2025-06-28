@@ -9,15 +9,13 @@ public class Notifica {
     private final String messaggio;
     private final Paziente pazienteAssociato;
     private final LocalDateTime dataNotifica;
-    private final String tipoNotifica;
     private boolean visualizzato;
 
-    public Notifica(String titolo, String messaggio, Paziente pazienteAssociato, LocalDateTime data, TipologiaNotifica tipologiaNotifica, boolean visualizzato) {
+    public Notifica(String titolo, String messaggio, Paziente pazienteAssociato, LocalDateTime data, boolean visualizzato) {
         this.titolo = titolo;
         this.messaggio = messaggio;
         this.pazienteAssociato = pazienteAssociato;
-        this.dataNotifica = LocalDateTime.now();
-        this.tipoNotifica = tipologiaNotifica.toString();
+        this.dataNotifica = data;
         this.visualizzato = visualizzato;
     }
 
@@ -42,10 +40,6 @@ public class Notifica {
 
     public LocalDateTime getDataNotifica() {
         return dataNotifica;
-    }
-
-    public String getTipoNotifica() {
-        return tipoNotifica;
     }
 
     public boolean isVisualizzato() {

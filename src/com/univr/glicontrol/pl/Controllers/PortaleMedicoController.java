@@ -7,6 +7,7 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,7 +40,7 @@ public class PortaleMedicoController implements Portale, Controller {
     private Circle badgeC;
 
     @FXML
-    private ListView<String> pazientiReferenteLV, pazientiGenericiLV;
+    private ListView<String> pazientiReferenteLV, pazientiGenericiLV, notificheLV;
 
     @FXML
     private TextField pazienteSelezionatoTF;
@@ -326,21 +327,40 @@ public class PortaleMedicoController implements Portale, Controller {
     }
 
     //GESTIONE DEL CENTRO NOTIFICHE
+    public void openCentroNotifiche(){
 
-    public void apriCentroNotifiche(){
-        centroNotificheVB.setTranslateX(300);
-        centroNotificheVB.setVisible(true);
-        centroNotificheB.setVisible(false);
-        badgeC.setVisible(false);
-        rightVB.setVisible(false);
+        UtilityPortali upCentroNotifiche = new UtilityPortali(pazienteSelezionato);
 
-        TranslateTransition transizione = new TranslateTransition(Duration.millis(200), centroNotificheVB);
-        transizione.setToX(0);
-        transizione.play();
+        Task<Void> loadNotificheTask = new Task<>() {
+            @Override
+            protected Void call() {
+                ObservableList<String> notifiche = FXCollections.observableArrayList();
+                notifiche.addAll(upCentroNotifiche.getNotificheFormattate());
+                Platform.runLater(()->{
+                    notificheLV.setItems(notifiche);
+                });
 
+                return  null;
+            }
+
+            @Override
+            protected void succeeded() {
+                centroNotificheVB.setTranslateX(300);
+                centroNotificheVB.setVisible(true);
+                centroNotificheB.setVisible(false);
+                badgeC.setVisible(false);
+                rightVB.setVisible(false);
+
+                TranslateTransition transizione = new TranslateTransition(Duration.millis(200), centroNotificheVB);
+                transizione.setToX(0);
+                transizione.play();
+            }
+        };
+
+        new Thread(loadNotificheTask).start();
     }
 
-    public void chiudiCentroNotifiche(){
+    public void closeCentroNotifiche(){
         TranslateTransition transizione = new TranslateTransition(Duration.millis(200), centroNotificheVB);
         transizione.setToX(300);
         transizione.setOnFinished(e -> {
@@ -354,7 +374,4 @@ public class PortaleMedicoController implements Portale, Controller {
         });
         transizione.play();
     }
-
-    // Don't worry, everything is gonna be allright
-    // Don't stop believin'
 }

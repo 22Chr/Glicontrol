@@ -30,6 +30,7 @@ public class UtilityPortali {
     private final Map<String, LogTerapia> mappaLogTerapia = new HashMap<>();
     private final Map<String, Paziente> mappaPazientiAssociatiAlReferente = new HashMap<>();
     private final Map<String, Paziente> mappaPazientiNonAssociatiAlReferente = new HashMap<>();
+    private final Map<String, Notifica> mappaNotifiche = new HashMap<>();
 
     public UtilityPortali(Paziente paziente) {
         this.paziente = paziente;
@@ -556,5 +557,64 @@ public class UtilityPortali {
             }
         }
         return Float.parseFloat(result.toString());
+    }
+
+
+    // Restituisce la notifica (per il portale del medico) formattata
+    public List<String> getNotificheFormattate() {
+        List<String> notificheFormattate = new ArrayList<>();
+        GestioneNotifiche gn = new GestioneNotifiche(paziente);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+
+        for (Notifica n : gn.getNotificheNonVisualizzate()) {
+            String notifica =
+                    "[" +
+                    n.getTitolo() +
+                    "]\n" +
+                    "(" +
+                    n.getPazienteAssociato().getCodiceFiscale() +
+                    ")\n" +
+                    n.getMessaggio() +
+                    "\n" +
+                    "(" +
+                    n.getDataNotifica().format(formatter) +
+                    ")\n\n";
+
+            notificheFormattate.add(notifica);
+            mappaNotifiche.put(notifica, n);
+        }
+
+        return notificheFormattate;
+    }
+
+    public Notifica getNotificaNonVisualizzateDaNomeFormattato(String notificaFormattata) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+
+        aggiornaListaNotificheNonVisualizzateFormattate();
+
+        for (Notifica n: mappaNotifiche.values()){
+            String notificaComparazione =
+                    "[" +
+                    n.getTitolo() +
+                    "]\n" +
+                    "(" +
+                    n.getPazienteAssociato().getCodiceFiscale() +
+                    ")\n" +
+                    n.getMessaggio() +
+                    "\n" +
+                    "(" +
+                    n.getDataNotifica().format(formatter) +
+                    ")\n\n";
+
+            if (notificaComparazione.equals(notificaFormattata)) {
+                return n;
+            }
+        }
+
+        return null;
+    }
+
+    private void aggiornaListaNotificheNonVisualizzateFormattate() {
+        getNotificheFormattate();
     }
 }
