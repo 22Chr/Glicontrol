@@ -129,6 +129,7 @@ public class PortaleMedicoController implements Portale, Controller {
 
 
         // Task automatici sempre attivi in background
+        GlicontrolCoreSystem.getInstance().setConnessoComeMedico();
         GlicontrolCoreSystem.getInstance().monitoraLivelliGlicemici();
     }
 
@@ -335,7 +336,7 @@ public class PortaleMedicoController implements Portale, Controller {
             @Override
             protected Void call() {
                 ObservableList<String> notifiche = FXCollections.observableArrayList();
-                notifiche.addAll(upCentroNotifiche.getNotificheFormattate());
+                notifiche.addAll(upCentroNotifiche.getNotificheFormattate().reversed());
                 Platform.runLater(()->{
                     notificheLV.setItems(notifiche);
                 });

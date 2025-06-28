@@ -54,4 +54,16 @@ public class GestioneRilevazioniGlicemia {
         AccessoRilevazioniGlicemiaImpl dao = new AccessoRilevazioniGlicemiaImpl();
         return dao.recuperaRilevazioniPerData(paziente.getIdUtente(), data);
     }
+
+    public List<RilevazioneGlicemica> getRilevazioniGlicemicheNonGestitePaziente() {
+        return accessoRilevazioniGlicemia.recuperaRilevazioniPazienteNonGestite(paziente.getIdUtente());
+    }
+
+    public List<RilevazioneGlicemica> getRilevazioniGlicemicheNonGestitePerData(LocalDate date) {
+        return accessoRilevazioniGlicemia.recuperaRilevazioniPerDataNonGestite(paziente.getIdUtente(), date);
+    }
+
+    public boolean updateStatoRilevazioneGlicemica(RilevazioneGlicemica rilevazione) {
+        return accessoRilevazioniGlicemia.updateStatoRilevazioneGlicemica(rilevazione.getIdRilevazione());
+    }
 }

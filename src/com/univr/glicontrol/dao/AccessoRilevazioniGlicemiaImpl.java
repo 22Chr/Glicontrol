@@ -33,7 +33,8 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                             rs.getTime("ora"),
                             rs.getFloat("valore"),
                             rs.getString("pasto"),
-                            rs.getString("indicazioni_temporali")
+                            rs.getString("indicazioni_temporali"),
+                            rs.getBoolean("gestito")
                     ));
                 }
             }
@@ -79,9 +80,78 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
     }
 
     @Override
+    public List<RilevazioneGlicemica> recuperaRilevazioniPazienteNonGestite(int idPaziente) {
+        List<RilevazioneGlicemica> rilevazioniNonGestite = new ArrayList<>();
+
+        String recuperaRilevazioniNonGestiteSql = "select * from LivelloGlicemia where id_paziente_glicemico = ? and gestito = false";
+        try {
+            java.sql.Connection conn = DriverManager.getConnection(url, user, pwd);
+            PreparedStatement recuperaRilevazioniStmt = conn.prepareStatement(recuperaRilevazioniNonGestiteSql);
+            recuperaRilevazioniStmt.setInt(1, idPaziente);
+
+            try (ResultSet rs = recuperaRilevazioniStmt.executeQuery()) {
+                while (rs.next()) {
+                    rilevazioniNonGestite.add(new RilevazioneGlicemica(
+                            rs.getInt("id_glicemia"),
+                            rs.getInt("id_paziente_glicemico"),
+                            rs.getDate("data"),
+                            rs.getTime("ora"),
+                            rs.getFloat("valore"),
+                            rs.getString("pasto"),
+                            rs.getString("indicazioni_temporali"),
+                            rs.getBoolean("gestito")
+                    ));
+                }
+            }
+
+            recuperaRilevazioniStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("[ERRORE RECUPERO RILEVAZIONI]: " + e.getMessage());
+        }
+
+        return rilevazioniNonGestite;
+    }
+
+    @Override
+    public List<RilevazioneGlicemica> recuperaRilevazioniPerDataNonGestite(int idPaziente, LocalDate data) {
+        List<RilevazioneGlicemica> rilevazioniNonGestite = new ArrayList<>();
+
+        String RecuperaRilevazioniGlicemicheNonGestitePerDatasql = "select * from livelloglicemia where id_paziente_glicemico = ? and data = ? and  gestito = false";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pwd);
+             PreparedStatement ps = conn.prepareStatement(RecuperaRilevazioniGlicemicheNonGestitePerDatasql)) {
+
+            ps.setInt(1, idPaziente);
+            ps.setDate(2, Date.valueOf(data));
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                RilevazioneGlicemica r = new RilevazioneGlicemica(
+                        rs.getInt("id_glicemia"),
+                        rs.getInt("id_paziente_glicemico"),
+                        rs.getDate("data"),
+                        rs.getTime("ora"),
+                        rs.getFloat("valore"),
+                        rs.getString("pasto"),
+                        rs.getString("indicazioni_temporali"),
+                        rs.getBoolean("gestito")
+                );
+                rilevazioniNonGestite.add(r);
+            }
+        } catch (SQLException e) {
+            System.out.println("[ERRORE RILEVAZIONI GIORNALIERE]: " + e.getMessage());
+
+        }
+
+        return rilevazioniNonGestite;
+    }
+
+    @Override
     public boolean insertRilevazioneGlicemica(int idPaziente, Date data, Time ora, float valore, String pasto, String indicazioniTemporali) {
         boolean success = false;
-        String insertRilevazioneSql = "insert into LivelloGlicemia (id_paziente_glicemico, data, ora, valore, pasto, indicazioni_temporali) value (?, ?, ?, ?, ?, ?)";
+        String insertRilevazioneSql = "insert into LivelloGlicemia (id_paziente_glicemico, data, ora, valore, pasto, indicazioni_temporali, gestito) value (?, ?, ?, ?, ?, ?, ?)";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);
@@ -93,6 +163,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
             insertRilevazioneStmt.setFloat(4, valore);
             insertRilevazioneStmt.setString(5, pasto);
             insertRilevazioneStmt.setString(6, indicazioniTemporali);
+            insertRilevazioneStmt.setBoolean(7, false);
 
             if (insertRilevazioneStmt.executeUpdate() != 0) {
                 conn.commit();
@@ -164,12 +235,38 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
         return mediaMensile;
     }
 
+    @Override
+    public boolean updateStatoRilevazioneGlicemica(int idRilevazioneGlicemica) {
+        boolean success = false;
+        String updateRilevazioneSql = "update LivelloGlicemia set gestito = true where id_glicemia = ?";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            PreparedStatement updateStatoRilevazioneStmt = conn.prepareStatement(updateRilevazioneSql);
+            updateStatoRilevazioneStmt.setInt(1, idRilevazioneGlicemica);
+
+            if (updateStatoRilevazioneStmt.executeUpdate() != 0) {
+                success = true;
+            } else {
+                System.err.println("[ERRORE UPDATE STATO RILEVAZIONE]: Non è stato possibile aggiornare la rilevazione selezionata");
+            }
+
+            updateStatoRilevazioneStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERRORE UPDATE STATO RILEVAZIONE]: " + e.getMessage());
+        }
+
+        return success;
+    }
+
     public List<RilevazioneGlicemica> recuperaRilevazioniPerData(int idPaziente, LocalDate data) {
         List<RilevazioneGlicemica> lista = new ArrayList<>();
-        String sql = "SELECT * FROM livelloglicemia WHERE id_paziente_glicemico = ? AND data = ?";
+        String recuperRilevazioniPerDatasql = "SELECT * FROM livelloglicemia WHERE id_paziente_glicemico = ? AND data = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, pwd);
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(recuperRilevazioniPerDatasql)) {
 
             ps.setInt(1, idPaziente);
             ps.setDate(2, Date.valueOf(data));
@@ -183,7 +280,8 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                         rs.getTime("ora"),
                         rs.getFloat("valore"),
                         rs.getString("pasto"),
-                        rs.getString("indicazioni_temporali")
+                        rs.getString("indicazioni_temporali"),
+                        rs.getBoolean("gestito")
                 );
                 lista.add(r);
             }
@@ -194,10 +292,4 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
 
         return lista;
     }
-
-
-
-
-
-
 }

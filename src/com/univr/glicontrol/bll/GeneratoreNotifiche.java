@@ -23,14 +23,14 @@ public class GeneratoreNotifiche {
 
         String messaggio = "Il paziente presenta ";
         switch(indiceSeverity) {
-            case -1 -> messaggio += "una lieve anomalia nei livelli glicemici precedenti al pasto: " + livelloGlicemico + " mg/dL";
-            case 1 -> messaggio += "una lieve anomalia nei livelli glicemici post-prandiali: " + livelloGlicemico + " mg/dL";
-            case -2 -> messaggio += "un livello glicemico precedene al pasto moderatamente critico: " + livelloGlicemico + " mg/dL.\nSi consiglia di tenere monitorato l'andamento";
-            case 2 -> messaggio += "un livello glicemico post-prandiale moderatamente critico: " + livelloGlicemico + " mg/dL.\nSi consiglia di tenere monitorato l'andamento";
-            case -3 -> messaggio += " un livello glicemico critico precedente al pasto: " +  livelloGlicemico + " mg/dL.\nSi consigla di rivedere la dieta e/o la terapia farmacologica";
-            case 3 -> messaggio += " un livello glicemico post-prandiale critico: " +  livelloGlicemico + " mg/dL.\nSi consigla di rivedere la dieta e/o la terapia farmacologica";
-            case -4 -> messaggio += " un livello glicemico estremamente critico precedente al pasto: " + livelloGlicemico + " mg/dL.\nÈ necessario un intervento medico immediato";
-            case 4 -> messaggio += " un livello glicemico post-prandiale estremamente critico: " + livelloGlicemico + " mg/dL.\nÈ necessario un intervento medico immediato";
+            case -1 -> messaggio += "una lieve anomalia nei livell\nglicemici precedenti al pasto: " + livelloGlicemico + " mg/dL";
+            case 1 -> messaggio += "una lieve anomalia nei livelli\nglicemici post-prandiali: " + livelloGlicemico + " mg/dL";
+            case -2 -> messaggio += "un livello glicemico precedene\nal pasto moderatamente critico: " + livelloGlicemico + " mg/dL.\nSi consiglia di tenere\nmonitorato l'andamento";
+            case 2 -> messaggio += "un livello glicemico\npost-prandialemoderatamente critico: " + livelloGlicemico + " mg/dL.\nSi consiglia di tenere\nmonitorato l'andamento";
+            case -3 -> messaggio += " un livello glicemico critico\nprecedente al pasto: " +  livelloGlicemico + " mg/dL.\nSi consigla di rivedere la\ndieta e/o la terapia farmacologica";
+            case 3 -> messaggio += " un livello glicemico\npost-prandiale critico: " +  livelloGlicemico + " mg/dL.\nSi consigla di rivedere la\ndieta e/o la terapia farmacologica";
+            case -4 -> messaggio += " un livello glicemico\nestremamente critico precedente al pasto: " + livelloGlicemico + " mg/dL.\nÈ necessario un intervento\nmedico immediato";
+            case 4 -> messaggio += " un livello glicemico\npost-prandialeestremamente critico: " + livelloGlicemico + " mg/dL.\nÈ necessario un intervento\nmedico immediato";
         }
 
         LocalDateTime dataNotifica = LocalDateTime.now();

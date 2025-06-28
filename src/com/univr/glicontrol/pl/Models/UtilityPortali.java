@@ -578,7 +578,7 @@ public class UtilityPortali {
                     "\n" +
                     "(" +
                     n.getDataNotifica().format(formatter) +
-                    ")\n\n";
+                    ")\n\n\n";
 
             notificheFormattate.add(notifica);
             mappaNotifiche.put(notifica, n);
@@ -604,7 +604,7 @@ public class UtilityPortali {
                     "\n" +
                     "(" +
                     n.getDataNotifica().format(formatter) +
-                    ")\n\n";
+                    ")\n\n\n";
 
             if (notificaComparazione.equals(notificaFormattata)) {
                 return n;
