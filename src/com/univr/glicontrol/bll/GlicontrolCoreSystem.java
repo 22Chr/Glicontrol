@@ -12,10 +12,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class GlicontrolCoreSystem {
 //    TODO
@@ -427,46 +424,61 @@ public class GlicontrolCoreSystem {
     private final ExecutorService pazienteExecutor = Executors.newFixedThreadPool(4); // gestisce fino a 4 pazienti in parallelo
 
     public void monitoraLivelliGlicemici() {
-        List<Boolean> giaNotificato = new ArrayList<>(Collections.nCopies(listaPazienti.size(), false));
-
         schedulerLivelliGlicemici.scheduleAtFixedRate(() -> {
-            for (int i = 0; i < listaPazienti.size(); i++) {
-                int index = i;
-                pazienteExecutor.submit(() -> {
-                    try {
-                        Paziente paziente = listaPazienti.get(index);
-                        List<Integer> codici = verificaLivelliGlicemici(paziente, true);
-                        if (codici != null && !codici.isEmpty() && !giaNotificato.get(index)) {
-                            int severityCode = codici.getFirst(); // si prende il primo valore significativo
-                            if (severityCode != 0) {
-                                Platform.runLater(() -> {
-                                    GestioneRilevazioniGlicemia gestione = new GestioneRilevazioniGlicemia(paziente);
-                                    ServizioNotifiche notifiche = new ServizioNotifiche();
-                                    notifiche.notificaLivelliGlicemici(paziente, severityCode);
-                                    GeneratoreNotifiche.getInstance().generaNotificaLivelliGlicemiciAlterati(
-                                            paziente,
-                                            severityCode,
-                                            gestione.getRilevazioniGlicemicheNonGestitePerData(LocalDate.now()).getFirst().getValore()
-                                    );
+            List<Boolean> giaNotificato = new ArrayList<>(Collections.nCopies(listaPazienti.size(), false));
 
-                                    if (!gestione.updateStatoRilevazioneGlicemica(
-                                            gestione.getRilevazioniGlicemicheNonGestitePerData(LocalDate.now()).getFirst()
-                                    )) {
-                                        Alert errore = new Alert(Alert.AlertType.ERROR);
-                                        errore.setTitle("System Notification Service");
-                                        errore.setHeaderText("Errore aggiornamento dati");
-                                        errore.setContentText("Errore durante l'aggiornamento dello stato della rilevazione glicemica");
-                                        errore.showAndWait();
+            for (int i = 0; i < listaPazienti.size(); i++) {
+                try {
+                    Paziente paziente = listaPazienti.get(i);
+                    List<Integer> codici = verificaLivelliGlicemici(paziente, true); // Assuming this method exists and is accessible
+
+                    if (codici != null && !codici.isEmpty() && !giaNotificato.get(i)) {
+                        while (!codici.isEmpty()) {
+                            GestioneRilevazioniGlicemia grg = new GestioneRilevazioniGlicemia(paziente);
+                            List<RilevazioneGlicemica> rilevazioniNonGestite = grg.getRilevazioniGlicemicheNonGestitePerData(LocalDate.now());
+
+                            if (rilevazioniNonGestite.isEmpty()) {
+                                codici.removeFirst();
+                                continue;
+                            }
+
+                            int severityCode = codici.getFirst();
+
+                            if (severityCode != 0) {
+                                CountDownLatch latch = new CountDownLatch(1);
+                                final int index = i;
+                                Platform.runLater(() -> {
+                                    ServizioNotifiche notificheLivelliGlicemici = new ServizioNotifiche();
+                                    notificheLivelliGlicemici.notificaLivelliGlicemici(paziente, severityCode);
+                                    GeneratoreNotifiche.getInstance().generaNotificaLivelliGlicemiciAlterati(paziente, severityCode, rilevazioniNonGestite.getFirst().getValore());
+
+                                    if (!grg.updateStatoRilevazioneGlicemica(rilevazioniNonGestite.getFirst())) {
+                                        Alert erroreAggiornamentoStatoRilevazione = new Alert(Alert.AlertType.ERROR);
+                                        erroreAggiornamentoStatoRilevazione.setTitle("System Notification Service");
+                                        erroreAggiornamentoStatoRilevazione.setHeaderText("Errore aggiornamento dati");
+                                        erroreAggiornamentoStatoRilevazione.setContentText("Si è verificato un errore durante l'aggiornamento dello stato della rilevazione glicemica");
+                                        erroreAggiornamentoStatoRilevazione.showAndWait();
                                     }
 
                                     giaNotificato.set(index, true);
+
+                                    latch.countDown();
                                 });
+                                try {
+                                    latch.await();
+                                } catch (InterruptedException e) {
+                                    Thread.currentThread().interrupt();
+                                    System.err.println("Interrupted while waiting for UI update: " + e.getMessage());
+                                }
                             }
+
+                            rilevazioniNonGestite.removeFirst();
+                            codici.removeFirst();
                         }
-                    } catch (Exception e) {
-                        System.err.println("Errore nel controllo della glicemia del paziente " + listaPazienti.get(index).getCodiceFiscale() + ": " + e.getMessage());
                     }
-                });
+                } catch (Exception e) {
+                    System.err.println("Errore nel controllo della glicemia del paziente " + listaPazienti.get(i).getCodiceFiscale() + ": " + e.getMessage());
+                }
             }
         }, 0, 30, TimeUnit.SECONDS);
     }
