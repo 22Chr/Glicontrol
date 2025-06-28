@@ -25,8 +25,8 @@ public class GestioneNotifiche {
         notificheNonVisualizzate = accessoNotifiche.getNotificheNonVisualizzate(paziente);
     }
 
-    public boolean inserisciNuovaNotifica(Notifica nuovaNotifica) {
-        return accessoNotifiche.insertNuovaNotifica(nuovaNotifica);
+    public void inserisciNuovaNotifica(Notifica nuovaNotifica) {
+        accessoNotifiche.insertNuovaNotifica(nuovaNotifica);
     }
 
     public boolean aggiornaStatoNotifica(Notifica notifica) {

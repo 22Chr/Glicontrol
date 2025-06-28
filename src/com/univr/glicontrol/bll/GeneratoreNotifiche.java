@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public class GeneratoreNotifiche {
     AccessoNotifiche accessoNotifiche = new AccessoNotificheImpl();
+    LocalDateTime dataNotifica = LocalDateTime.now();
 
     private GeneratoreNotifiche() {}
 
@@ -18,7 +19,7 @@ public class GeneratoreNotifiche {
         return Holder.INSTANCE;
     }
 
-    public void generaNotificaLivelliGlicemiciAlterati(Paziente pazienteAssociato, int indiceSeverity, float livelloGlicemico) {
+    public Notifica generaNotificaLivelliGlicemiciAlterati(Paziente pazienteAssociato, int indiceSeverity, float livelloGlicemico) {
         String titolo = "ANOMALIA LIVELLI GLICEMICI";
 
         String messaggio = "Il paziente presenta ";
@@ -33,18 +34,12 @@ public class GeneratoreNotifiche {
             case 4 -> messaggio += " un livello glicemico\npost-prandialeestremamente critico: " + livelloGlicemico + " mg/dL.\nÈ necessario un intervento\nmedico immediato";
         }
 
-        LocalDateTime dataNotifica = LocalDateTime.now();
+        return new Notifica(titolo, messaggio, pazienteAssociato, dataNotifica, false);
+    }
 
-        accessoNotifiche.insertNuovaNotifica(new Notifica(titolo, messaggio, pazienteAssociato, dataNotifica, false));
+    public Notifica generaNotificaAssunzioneSovradosaggioFarmaci(Paziente paziente, float doseAssunta, float dosePrescritta, Farmaco farmaco) {
+        String titolo = "ASSUNZIONE SOVRADOSAGGIO FARMACO";
+        String messaggio = "Il paziente ha assunto una dose eccessiva\ndel farmaco " + farmaco.getNome() + ".\nHa assunto " + (doseAssunta - dosePrescritta) + " " + farmaco.getUnitaMisura() + " in eccesso.\nSi consiglia di tener monitorato il paziente";
+        return new Notifica(titolo, messaggio, paziente, dataNotifica, false);
     }
 }
-
-
-// -1: lieve anomalia a digiuno
-//  1: lieve anomalia post-prandiale
-// -2: moderata criticità a digiuno
-//  2: moderata criticità post-prandiale
-// -3: alta criticità a digiuno
-//  3: alta criticità post-prandiale
-// -4: emergenza medica a digiuno
-//  4: emergenza medica post-prandiale

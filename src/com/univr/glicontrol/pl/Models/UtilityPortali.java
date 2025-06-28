@@ -573,15 +573,15 @@ public class UtilityPortali {
                 String notifica =
                         "[" +
                         n.getTitolo() +
-                        "]\n" +
+                        "]\n\n" +
                         "(" +
                         n.getPazienteAssociato().getCodiceFiscale() +
-                        ")\n" +
+                        ")\n\n" +
                         n.getMessaggio() +
-                        "\n" +
+                        "\n\n" +
                         "(" +
                         n.getDataNotifica().format(formatter) +
-                        ")\n\n\n";
+                        ")\n\n\n\n";
 
                 notificheFormattate.add(notifica);
                 mappaNotifiche.put(notifica, n);
@@ -600,15 +600,15 @@ public class UtilityPortali {
             String notificaComparazione =
                     "[" +
                     n.getTitolo() +
-                    "]\n" +
+                    "]\n\n" +
                     "(" +
                     n.getPazienteAssociato().getCodiceFiscale() +
-                    ")\n" +
+                    ")\n\n" +
                     n.getMessaggio() +
-                    "\n" +
+                    "\n\n" +
                     "(" +
                     n.getDataNotifica().format(formatter) +
-                    ")\n\n\n";
+                    ")\n\n\n\n";
 
             if (notificaComparazione.equals(notificaFormattata)) {
                 return n;

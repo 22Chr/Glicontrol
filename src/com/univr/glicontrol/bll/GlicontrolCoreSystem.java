@@ -32,7 +32,7 @@ public class GlicontrolCoreSystem {
     private GestioneRilevazioniGlicemia gestioneRilevazioniGlicemia = null;
     private GestioneNotifiche gestioneNotifiche = null;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    PortaleMedicoController pmc  = new PortaleMedicoController();
+    PortaleMedicoController pmc  = null;
     private boolean connessoComeMedico = false;
 
     private GlicontrolCoreSystem() {
@@ -52,22 +52,38 @@ public class GlicontrolCoreSystem {
 
     // VERIFICA IL RISPETTO DEI DOSAGGI DEI FARMACI RISPETTO AL SINGOLO UTENTE (LIVELLO PORTALE PAZIENTE)
     public boolean verificaCoerenzaDosaggioFarmaci(Paziente paziente, String nomeFarmaco, float dosaggio) {
+        gestioneNotifiche = new GestioneNotifiche(paziente);
 
         // Recupera il dosaggio già assunto per quel farmaco nel corso della giornata
         gestioneAssunzioneFarmaci = new GestioneAssunzioneFarmaci(paziente);
         float doseGiaAssunta = 0;
         List<AssunzioneFarmaco> farmaciAssunti = gestioneAssunzioneFarmaci.getListaAssunzioneFarmaci();
+        Farmaco farmaco = null;
         for (AssunzioneFarmaco af : farmaciAssunti) {
             if (GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco()).getNome().equals(nomeFarmaco) && af.getData().equals(Date.valueOf(LocalDate.now()))) {
                 doseGiaAssunta += af.getDose();
+                if (farmaco == null) {
+                    farmaco = GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco());
+                }
             }
+        }
+
+        if (farmaco == null) {
+            return false;
         }
 
         // Sommiamo la dose complessiva già assunta per questo farmaco nell'arco della giornata
         dosaggio += doseGiaAssunta;
 
         // Verifichiamo che il dosaggio sia minore o uguale al dosaggio complessivo quotidiano per quel farmaco
-        return dosaggio <= getDosaggioComplessivoQuotidianoPerFarmaco(paziente, nomeFarmaco);
+        float doseComplessivaQuotidianaPrescritta = getDosaggioComplessivoQuotidianoPerFarmaco(paziente, nomeFarmaco);
+        boolean check = dosaggio <= doseComplessivaQuotidianaPrescritta;
+        if(!check) {
+            // verificare: non funziona
+            gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaAssunzioneSovradosaggioFarmaci(paziente, dosaggio, doseComplessivaQuotidianaPrescritta, farmaco));
+        }
+
+        return check;
     }
 
 
@@ -439,6 +455,7 @@ public class GlicontrolCoreSystem {
             for (int i = 0; i < listaPazienti.size(); i++) {
                 try {
                     Paziente paziente = listaPazienti.get(i);
+                    gestioneNotifiche = new GestioneNotifiche(paziente);
                     List<Integer> codici = verificaLivelliGlicemici(paziente, true); // Assuming this method exists and is accessible
 
                     if (codici != null && !codici.isEmpty() && !giaNotificato.get(i)) {
@@ -459,7 +476,7 @@ public class GlicontrolCoreSystem {
                                 Platform.runLater(() -> {
                                     ServizioNotifiche notificheLivelliGlicemici = new ServizioNotifiche();
                                     notificheLivelliGlicemici.notificaLivelliGlicemici(paziente, severityCode);
-                                    GeneratoreNotifiche.getInstance().generaNotificaLivelliGlicemiciAlterati(paziente, severityCode, rilevazioniNonGestite.getFirst().getValore());
+                                    gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaLivelliGlicemiciAlterati(paziente, severityCode, rilevazioniNonGestite.getFirst().getValore()));
                                     pmc.resetListaNotifiche();
 
                                     giaNotificato.set(index, true);
