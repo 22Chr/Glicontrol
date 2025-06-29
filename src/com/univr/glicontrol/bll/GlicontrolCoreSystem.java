@@ -34,6 +34,7 @@ public class GlicontrolCoreSystem {
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     PortaleMedicoController pmc  = null;
     private boolean connessoComeMedico = false;
+    private boolean statoCentroNotifiche = false; //true = aperto, false = chiuso
 
     private GlicontrolCoreSystem() {
         ListaPazienti utilityListaPazienti = new ListaPazienti();
@@ -75,7 +76,6 @@ public class GlicontrolCoreSystem {
         float doseComplessivaQuotidianaPrescritta = getDosaggioComplessivoQuotidianoPerFarmaco(paziente, nomeFarmaco);
         boolean check = (dosaggio <= doseComplessivaQuotidianaPrescritta);
         if(!check) {
-            // verificare: non funziona
             gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaAssunzioneSovradosaggioFarmaci(paziente, dosaggio, doseComplessivaQuotidianaPrescritta, farmaco));
         }
 
@@ -441,7 +441,7 @@ public class GlicontrolCoreSystem {
     }
 
     // Task in background per monitorare i livelli glicemici dei pazienti (su base giornaliera) e inviare alert ai medici
-    private final ScheduledExecutorService schedulerLivelliGlicemici = Executors.newScheduledThreadPool(1); // esegue il task ogni X secondi
+    private final ScheduledExecutorService schedulerLivelliGlicemici = Executors.newScheduledThreadPool(1);
 
     public void monitoraLivelliGlicemici() {
         schedulerLivelliGlicemici.scheduleAtFixedRate(() -> {
@@ -502,20 +502,49 @@ public class GlicontrolCoreSystem {
                     System.err.println("Errore nel controllo della glicemia del paziente " + listaPazienti.get(i).getCodiceFiscale() + ": " + e.getMessage());
                 }
             }
-        }, 0, 30, TimeUnit.SECONDS);
+        }, 0, 10, TimeUnit.SECONDS);
     }
+
 
     public void setConnessoComeMedico() {
         connessoComeMedico = true;
     }
 
+
     public void setPortaleMedicoInstance(PortaleMedicoController pmc) {
         this.pmc = pmc;
     }
+
 
     // Verifica l'obesità come fattore di rischio per il paziente passato in input
     public boolean isObeso(Paziente paziente) {
         float altezzaInMetri = (float)paziente.getAltezza() / 100;
         return (paziente.getPeso() / (altezzaInMetri * altezzaInMetri)) >= 30;
+    }
+
+
+    // VERIFICA LA PRESENZA DI NOTIFICHE NON LETTE E SEGNALA L'EVENTUALE PRESENZA AL MEDICO OGNI 5 MINUTI, NEL CASO IN CUI IL CENTRO NOTIFICHE FOSSE CHIUSO
+    public void centroNotificheIsOpened() {
+        statoCentroNotifiche = true;
+    }
+
+    public void centroNotificheIsClosed() {
+        statoCentroNotifiche = false;
+    }
+
+    public void monitoraPresenzaNotificheNonVisualizzate() {
+        ListaPazienti listaPazienti = new ListaPazienti();
+        ServizioNotifiche mostraPresenzaNotifiche = new ServizioNotifiche();
+
+        scheduler.scheduleAtFixedRate(() -> {
+            if (!statoCentroNotifiche) {
+                for (Paziente paziente : listaPazienti.getListaCompletaPazienti()) {
+                    GestioneNotifiche gestioneNotificheMonitor = new GestioneNotifiche(paziente);
+                    if (!gestioneNotificheMonitor.getNotificheNonVisualizzate().isEmpty()) {
+                        Platform.runLater(mostraPresenzaNotifiche::notificaPresenzaNotificheNonVisualizzate);
+                    }
+                }
+            }
+        }, 0, 5, TimeUnit.MINUTES);
     }
 }

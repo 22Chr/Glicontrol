@@ -104,4 +104,12 @@ public class ServizioNotifiche {
 
         livelliGlicemiciAlert.showAndWait();
     }
+
+    public void notificaPresenzaNotificheNonVisualizzate() {
+        Alert presenzaNotificheNonVisualizzateAlert = new Alert(Alert.AlertType.INFORMATION);
+        presenzaNotificheNonVisualizzateAlert.setTitle("System Notification Service");
+        presenzaNotificheNonVisualizzateAlert.setHeaderText("Sono presenti delle notifiche non ancora visualizzate");
+        presenzaNotificheNonVisualizzateAlert.setContentText("Apri il centro notifiche per visionarne il contenuto");
+        presenzaNotificheNonVisualizzateAlert.showAndWait();
+    }
 }

@@ -133,6 +133,7 @@ public class PortaleMedicoController implements Portale, Controller {
         GlicontrolCoreSystem.getInstance().setConnessoComeMedico();
         GlicontrolCoreSystem.getInstance().monitoraLivelliGlicemici();
         GlicontrolCoreSystem.getInstance().monitoraSospensioneFarmaci();
+        GlicontrolCoreSystem.getInstance().monitoraPresenzaNotificheNonVisualizzate();
     }
 
     //3 metodi, uno per ogni grafico, che vanno chiamati nel momento in cui si schiaccia sul paziente
@@ -332,6 +333,8 @@ public class PortaleMedicoController implements Portale, Controller {
     //GESTIONE DEL CENTRO NOTIFICHE
     public void openCentroNotifiche(){
 
+        GlicontrolCoreSystem.getInstance().centroNotificheIsOpened();
+
         UtilityPortali upCentroNotifiche = new UtilityPortali();
 
         Task<Void> loadNotificheTask = new Task<>() {
@@ -387,5 +390,7 @@ public class PortaleMedicoController implements Portale, Controller {
             }
         });
         transizione.play();
+
+        GlicontrolCoreSystem.getInstance().centroNotificheIsClosed();
     }
 }
