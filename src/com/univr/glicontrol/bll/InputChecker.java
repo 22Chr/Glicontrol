@@ -108,4 +108,8 @@ public class InputChecker {
     public boolean campoVuoto(String campo) {
         return campo.matches("^[A-Za-z0-9].*");
     }
+
+    public boolean verificaAltezza(String altezza) {
+        return altezza.matches("^\\d{2,3}\\scm$");
+    }
 }

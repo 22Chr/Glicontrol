@@ -127,7 +127,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
     }
 
     @Override
-    public boolean updatePaziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, float peso, int primoAccesso) {
+    public boolean updatePaziente(int idPaziente, String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie, float altezza, float peso, int primoAccesso) {
         boolean success = false;
         String updatePazienteInUtenteSql = "update Utente set utente.codice_fiscale = ?, nome = ?, cognome = ?, ruolo = ?, password = ? where id = ?";
         try {
@@ -142,16 +142,17 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
             stmt.setInt(6, idPaziente);
 
             if (stmt.executeUpdate() != 0) {
-                String updatePazienteInPazienteSql = "update Paziente set medico_riferimento = ?, data_nascita = ?, sesso = ?, email = ?, allergie = ?, peso = ?, primo_accesso = ? where id_paziente = ?";
+                String updatePazienteInPazienteSql = "update Paziente set medico_riferimento = ?, data_nascita = ?, sesso = ?, email = ?, allergie = ?, altezza = ?, peso = ?, primo_accesso = ? where id_paziente = ?";
                 PreparedStatement stmt2 = conn.prepareStatement(updatePazienteInPazienteSql);
                 stmt2.setInt(1, medico);
                 stmt2.setDate(2, nascita);
                 stmt2.setString(3, sesso);
                 stmt2.setString(4, email);
                 stmt2.setString(5, allergie);
-                stmt2.setFloat(6, peso);
-                stmt2.setInt(7, primoAccesso);
-                stmt2.setInt(8, idPaziente);
+                stmt2.setFloat(6, altezza);
+                stmt2.setFloat(7, peso);
+                stmt2.setInt(8, primoAccesso);
+                stmt2.setInt(9, idPaziente);
 
                 success = stmt2.executeUpdate() != 0;
                 stmt2.close();

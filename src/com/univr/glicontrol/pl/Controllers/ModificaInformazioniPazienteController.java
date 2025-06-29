@@ -67,6 +67,15 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
                 pesoTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
         });
+
+        altezzaTF.textProperty().addListener((observable, oldValue, newValue) -> {
+           if (InputChecker.getInstance().verificaAltezza(newValue)) {
+               altezzaTF.setStyle("-fx-border-color: #43a047;");
+           }  else {
+               assert altezzaTF != null;
+               altezzaTF.setStyle("-fx-border-color: #ff0000;  -fx-border-width: 3px;");
+           }
+        });
     }
 
     private void modificaPasto(String pastoDaModificare) {

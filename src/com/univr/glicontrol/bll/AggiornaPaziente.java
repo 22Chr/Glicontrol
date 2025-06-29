@@ -12,7 +12,7 @@ public class AggiornaPaziente {
 
     public boolean aggiornaPaziente() {
         AccessoListaUtenti modificaPaziente = new AccessoListaUtentiImpl();
-        return modificaPaziente.updatePaziente(paziente.getIdUtente(), paziente.getCodiceFiscale(), paziente.getNome(), paziente.getCognome(), paziente.getPassword(), paziente.getMedicoRiferimento(), paziente.getDataNascita(), paziente.getSesso(), paziente.getEmail(), paziente.getAllergie(), paziente.getPeso(), paziente.getPrimoAccesso());
+        return modificaPaziente.updatePaziente(paziente.getIdUtente(), paziente.getCodiceFiscale(), paziente.getNome(), paziente.getCognome(), paziente.getPassword(), paziente.getMedicoRiferimento(), paziente.getDataNascita(), paziente.getSesso(), paziente.getEmail(), paziente.getAllergie(), paziente.getAltezza(), paziente.getPeso(), paziente.getPrimoAccesso());
     }
 
     public boolean inviaCredenzialiAggiornatePaziente(String email, String pwd) {

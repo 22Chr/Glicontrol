@@ -58,18 +58,14 @@ public class GlicontrolCoreSystem {
         gestioneAssunzioneFarmaci = new GestioneAssunzioneFarmaci(paziente);
         float doseGiaAssunta = 0;
         List<AssunzioneFarmaco> farmaciAssunti = gestioneAssunzioneFarmaci.getListaAssunzioneFarmaci();
-        Farmaco farmaco = null;
-        for (AssunzioneFarmaco af : farmaciAssunti) {
-            if (GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco()).getNome().equals(nomeFarmaco) && af.getData().equals(Date.valueOf(LocalDate.now()))) {
-                doseGiaAssunta += af.getDose();
-                if (farmaco == null) {
-                    farmaco = GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco());
+        Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco);
+
+        if (!farmaciAssunti.isEmpty()) {
+            for (AssunzioneFarmaco af : farmaciAssunti) {
+                if (GestioneFarmaci.getInstance().getFarmacoById(af.getIdFarmaco()).getNome().equals(nomeFarmaco) && af.getData().equals(Date.valueOf(LocalDate.now()))) {
+                    doseGiaAssunta += af.getDose();
                 }
             }
-        }
-
-        if (farmaco == null) {
-            return false;
         }
 
         // Sommiamo la dose complessiva già assunta per questo farmaco nell'arco della giornata
@@ -77,7 +73,7 @@ public class GlicontrolCoreSystem {
 
         // Verifichiamo che il dosaggio sia minore o uguale al dosaggio complessivo quotidiano per quel farmaco
         float doseComplessivaQuotidianaPrescritta = getDosaggioComplessivoQuotidianoPerFarmaco(paziente, nomeFarmaco);
-        boolean check = dosaggio <= doseComplessivaQuotidianaPrescritta;
+        boolean check = (dosaggio <= doseComplessivaQuotidianaPrescritta);
         if(!check) {
             // verificare: non funziona
             gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaAssunzioneSovradosaggioFarmaci(paziente, dosaggio, doseComplessivaQuotidianaPrescritta, farmaco));
@@ -177,8 +173,7 @@ public class GlicontrolCoreSystem {
     // In caso di mancata assunzione, il metodo ritornerà false e verrà utilizzato per segnalare al paziente la necessità di assumere i farmaci
     public boolean verificaAssunzioneRispettoAllOrario(Paziente paziente, String nomeFarmaco) {
         gestioneAssunzioneFarmaci = new GestioneAssunzioneFarmaci(paziente);
-        List<AssunzioneFarmaco> farmaciAssuntiOggi = gestioneAssunzioneFarmaci
-                .getListaFarmaciAssuntiOggi(Date.valueOf(LocalDate.now()), nomeFarmaco);
+        List<AssunzioneFarmaco> farmaciAssuntiOggi = gestioneAssunzioneFarmaci.getListaFarmaciAssuntiOggi(Date.valueOf(LocalDate.now()), nomeFarmaco);
 
         // Recupera gli orari di assunzione previsti per il farmaco
         List<LocalTime> orariPrevisti = getOrariPrevisti(paziente, nomeFarmaco);
@@ -356,7 +351,7 @@ public class GlicontrolCoreSystem {
     }
 
     // Verifica i livelli glicemici in relazione ai pasti e classifica i diversi livelli in base alla gravità
-    public List<Integer> verificaLivelliGlicemici(Paziente paziente, boolean odierne) {
+    public List<Integer> verificaLivelliGlicemici(Paziente paziente, boolean odierne, boolean chiamatoDaMonitoraLivelliGlicemici) {
         // Legenda codici:
         //  0: normale (valido anche in caso di assenza di rilevazioniComplessive per la giornata)
         // -1: lieve anomalia a digiuno
@@ -371,7 +366,7 @@ public class GlicontrolCoreSystem {
         gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
         List<RilevazioneGlicemica> rilevazioniComplessive;
         List<RilevazioneGlicemica> rilevazioniOdierne;
-        if (connessoComeMedico) {
+        if (connessoComeMedico && chiamatoDaMonitoraLivelliGlicemici) {
             rilevazioniComplessive = gestioneRilevazioniGlicemia.getRilevazioniGlicemicheNonGestitePaziente();
             rilevazioniOdierne = gestioneRilevazioniGlicemia.getRilevazioniGlicemicheNonGestitePerData(LocalDate.now());
         } else {
@@ -456,7 +451,7 @@ public class GlicontrolCoreSystem {
                 try {
                     Paziente paziente = listaPazienti.get(i);
                     gestioneNotifiche = new GestioneNotifiche(paziente);
-                    List<Integer> codici = verificaLivelliGlicemici(paziente, true); // Assuming this method exists and is accessible
+                    List<Integer> codici = verificaLivelliGlicemici(paziente, true, true);
 
                     if (codici != null && !codici.isEmpty() && !giaNotificato.get(i)) {
                         while (!codici.isEmpty()) {

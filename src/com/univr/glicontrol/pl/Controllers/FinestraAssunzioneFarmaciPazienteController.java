@@ -122,8 +122,6 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
             eccessoDosaggioFarmacoAlert.setContentText("Il quantitativo che hai assunto per questo farmaco supera quello giornaliero previsto dalla tua terapia.\nLo staff medico ne sarà informato");
             eccessoDosaggioFarmacoAlert.showAndWait();
 
-            // crea notifica per indicazione non conforme
-            //Platform.runLater();
         }
 
         PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(1));
