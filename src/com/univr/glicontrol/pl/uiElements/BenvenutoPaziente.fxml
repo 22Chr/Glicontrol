@@ -229,7 +229,7 @@
                   <Font size="13.0" />
                </font>
             </TextField>
-                <Label text="Inserisci le tue allergie">
+                <Label text="Inserisci le tue allergie a farmaci">
                     <font>
                         <Font size="14.0" />
                     </font>
