@@ -173,6 +173,24 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
         listaPasti.setItems(pasti);
 
         salvaB.requestFocus();
+
+        altezzaTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (InputChecker.getInstance().verificaAltezza(newValue)) {
+                altezzaTF.setStyle("-fx-border-color: #43a047;");
+            }  else {
+                assert altezzaTF != null;
+                altezzaTF.setStyle("-fx-border-color: #ff0000;  -fx-border-width: 3px;");
+            }
+        });
+
+        pesoTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (InputChecker.getInstance().verificaPeso(newValue) && pesoTF != null)
+                pesoTF.setStyle("-fx-border-color: #43a047;");
+            else {
+                assert pesoTF != null;
+                pesoTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
     }
 
     public void resetListViewPasti() {
@@ -187,6 +205,17 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
         paziente.setAltezza(Integer.parseInt(altezzaTF.getText().substring(0, altezzaTF.getText().length() - 3)));
         paziente.setPeso(Integer.parseInt(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
         paziente.setAllergie(allergieTA.getText());
+
+        if (!InputChecker.getInstance().verificaAltezza(altezzaTF.getText()) || !InputChecker.getInstance().verificaPeso(pesoTF.getText())) {
+            Alert pesoEAltezzaNonValidiAlert = new Alert(Alert.AlertType.ERROR);
+            pesoEAltezzaNonValidiAlert.setTitle("System Notification Service");
+            pesoEAltezzaNonValidiAlert.setHeaderText("Dati non validi");
+            pesoEAltezzaNonValidiAlert.setContentText("Assicurati di inserire correttamente peso e altezza.\nIl peso deve essere espresso in kg, mentre l'altezza in cm, ambedue indicando la relativa unità di misura");
+            pesoEAltezzaNonValidiAlert.showAndWait();
+
+            return;
+        }
+
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
         if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert notificaSalvataggioAlert = new Alert(Alert.AlertType.INFORMATION);
