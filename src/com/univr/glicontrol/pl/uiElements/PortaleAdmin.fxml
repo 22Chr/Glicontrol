@@ -120,9 +120,6 @@
                      </cursor>
                   </Button>
                </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
                <effect>
                   <DropShadow>
                      <color>
