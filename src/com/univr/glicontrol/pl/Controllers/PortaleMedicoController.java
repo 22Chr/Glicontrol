@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -35,6 +36,11 @@ public class PortaleMedicoController implements Portale, Controller {
     private final Medico medico = upm.getMedicoSessione();
     private Paziente pazienteSelezionato;
     private GestioneRilevazioniGlicemia gestione;
+    private Paziente p;
+    Map<Paziente, List<Notifica>> mappaPazientiAssociatiNotifiche = new HashMap<>();
+    Map<Paziente, List<Notifica>> mappaPazientiNonAssociatiNotifiche = new HashMap<>();
+
+
 
     @FXML
     private Circle badgeC;
@@ -68,9 +74,18 @@ public class PortaleMedicoController implements Portale, Controller {
         pazientiReferenti.addAll(upm.getPazientiAssociatiAlReferente(medico.getIdUtente()));
         pazientiReferenteLV.setItems(pazientiReferenti);
 
+        for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) { //cicla su tutti i pazienti associati
+            p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente); //dal nome nella listview prendo il paziente
+            GestioneNotifiche gn = new GestioneNotifiche(p);
+            List<Notifica> notifiche = gn.getNotificheNonVisualizzate(); //prende le notifiche non visualizzate del paziente
+            mappaPazientiAssociatiNotifiche.put(p, notifiche); //le associa al paziente
+        }
+
+
         ObservableList<String> pazientiGenerici = FXCollections.observableArrayList();
         pazientiGenerici.addAll(upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente()));
         pazientiGenericiLV.setItems(pazientiGenerici);
+
 
         // popola la UI con le informazioni del paziente
         pazientiReferenteLV.setCellFactory(lv -> {
@@ -78,7 +93,22 @@ public class PortaleMedicoController implements Portale, Controller {
                 @Override
                 protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
-                    setText(empty ? null : item);
+                    if (empty || item == null) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(item);
+
+                        // Ricavo il paziente dal nome formattato
+                        Paziente p = upm.getPazienteAssociatoDaNomeFormattato(item);
+                        List<Notifica> notifiche = mappaPazientiAssociatiNotifiche.get(p);
+
+                        if (notifiche != null && !notifiche.isEmpty()) {
+                            setStyle("-fx-background-color: yellow;");
+                        } else {
+                            setStyle("");
+                        }
+                    }
                 }
             };
 
@@ -107,7 +137,22 @@ public class PortaleMedicoController implements Portale, Controller {
                 @Override
                 protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
-                    setText(empty ? null : item);
+                    if (empty || item == null) {
+                        setText(null);
+                        setStyle("");
+                    } else {
+                        setText(item);
+
+                        // Ricavo il paziente dal nome formattato
+                        Paziente p = upm.getPazienteNonAssociatoDaNomeFormattato(item);
+                        List<Notifica> notifiche = mappaPazientiNonAssociatiNotifiche.get(p);
+
+                        if (notifiche != null && !notifiche.isEmpty()) {
+                            setStyle("-fx-background-color: yellow;");
+                        } else {
+                            setStyle("");
+                        }
+                    }
                 }
             };
 
@@ -168,6 +213,7 @@ public class PortaleMedicoController implements Portale, Controller {
         GlicontrolCoreSystem.getInstance().monitoraSospensioneFarmaci();
         GlicontrolCoreSystem.getInstance().monitoraPresenzaNotificheNonVisualizzate();
     }
+
 
     //3 metodi, uno per ogni grafico, che vanno chiamati nel momento in cui si schiaccia sul paziente
     public void aggiornaGraficoGlicemiaOdierna(){
@@ -364,6 +410,7 @@ public class PortaleMedicoController implements Portale, Controller {
     }
 
     //GESTIONE DEL CENTRO NOTIFICHE
+
     public void openCentroNotifiche(){
 
         GlicontrolCoreSystem.getInstance().centroNotificheIsOpened();
