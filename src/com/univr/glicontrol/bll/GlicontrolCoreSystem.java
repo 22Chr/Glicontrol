@@ -10,9 +10,7 @@ import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class GlicontrolCoreSystem {
@@ -35,6 +33,7 @@ public class GlicontrolCoreSystem {
     PortaleMedicoController pmc  = null;
     private boolean connessoComeMedico = false;
     private boolean statoCentroNotifiche = false; //true = aperto, false = chiuso
+    private Map<Paziente, List<Farmaco>> farmaciNonAssuntiDa3Giorni = new HashMap<>();
 
     private GlicontrolCoreSystem() {
         ListaPazienti utilityListaPazienti = new ListaPazienti();
@@ -253,7 +252,7 @@ public class GlicontrolCoreSystem {
     }
 
 
-    // Verifica se il paziente passato come parametro non sta assumendo la terapia farmacologica prescritta
+    // Verifica se il paziente passato come parametro non stia assumendo la terapia farmacologica prescritta
     private boolean verificaSospensioneFarmaci(Paziente paziente) {
         gestioneTerapie = new GestioneTerapie(paziente);
         gestioneAssunzioneFarmaci = new GestioneAssunzioneFarmaci(paziente);
@@ -280,6 +279,8 @@ public class GlicontrolCoreSystem {
             return false;
         }
 
+        int farmaciNonAssuntiCounter = 0;
+        List<Farmaco> farmaciNonAssunti = new ArrayList<>();
         for (Farmaco farmaco : farmaciPrescritti) {
             List<AssunzioneFarmaco> assunzioniDiQuestoFarmaco = new ArrayList<>();
             for (AssunzioneFarmaco af : gestioneAssunzioneFarmaci.getListaAssunzioneFarmaci()) {
@@ -289,11 +290,14 @@ public class GlicontrolCoreSystem {
             }
             Duration intervallo = Duration.between((assunzioniDiQuestoFarmaco.getLast().getData().toLocalDate()), LocalDate.now()).abs();
             if (intervallo.toDays() > 3) {
-                return true;
+                farmaciNonAssunti.add(farmaco);
+                farmaciNonAssuntiCounter++;
             }
         }
 
-        return false;
+        farmaciNonAssuntiDa3Giorni.put(paziente, farmaciNonAssunti);
+
+        return farmaciNonAssuntiCounter != 0;
     }
 
 
@@ -306,13 +310,17 @@ public class GlicontrolCoreSystem {
                         Platform.runLater(() -> {
                             ServizioNotifiche notificheSospensione = new ServizioNotifiche();
                             notificheSospensione.notificaSospensioneFarmacoTerapia(paziente);
+
+                            for (Farmaco f : farmaciNonAssuntiDa3Giorni.get(paziente)) {
+                                GeneratoreNotifiche.getInstance().generaNotificaSospensioneFarmaci(paziente, f);
+                            }
                         });
                     }
                 }
             } catch (Exception e) {
                 System.err.println("Errore durante il controllo periodico delle sospensioni dei farmaci: " + e.getMessage());
             }
-        }, 0, 1, TimeUnit.HOURS);
+        }, 0, 30, TimeUnit.MINUTES);
     }
 
     // Recupera gli orari dei pasti per il paziente selezionato al fine di inviargli promemoria circa la registrazione dei valori glicemici

@@ -42,4 +42,10 @@ public class GeneratoreNotifiche {
         String messaggio = "Il paziente ha assunto una dose eccessiva\ndel farmaco " + farmaco.getNome() + ".\nHa assunto " + (doseAssunta - dosePrescritta) + " " + farmaco.getUnitaMisura() + " in eccesso.\nSi consiglia di tener monitorato il paziente";
         return new Notifica(titolo, messaggio, paziente, dataNotifica, false);
     }
+
+    public Notifica generaNotificaSospensioneFarmaci(Paziente paziente, Farmaco farmaco) {
+        String titolo = "SOSPENSIONE ASSUNZIONE FARMACI";
+        String messaggio = "Il paziente non assume il farmaco " + farmaco.getNome() + " da 3 giorni.\nSi consiglia di contattare il paziente";
+        return new Notifica(titolo, messaggio, paziente, dataNotifica, false);
+    }
 }
