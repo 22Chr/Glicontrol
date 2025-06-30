@@ -179,7 +179,7 @@ public class InserisciNuovaTerapiaController implements Controller {
             successoInserimentoTerapiaAlert.setContentText("La nuova terapia è stata inserita con successo");
             successoInserimentoTerapiaAlert.showAndWait();
 
-            ftpc.resetListViewTerapie();
+            ftpc.caricaTerapiePaziente();
 
             // rivedere
             if (ruoloAccesso.equals("medico")) {

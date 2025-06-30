@@ -24,8 +24,8 @@ import java.util.Optional;
 
 public class FinestraTerapiePazienteController implements Controller {
     @FXML private ListView<String> terapiePazienteLV, farmaciTerapiaLV;
-    @FXML private VBox infoTerapiaVB;
-    @FXML private TextField nomeTerapiaTF, dateTerapiaTF;
+    @FXML private VBox infoTerapiaVB, boxTerapieVB;
+    @FXML private TextField nomeTerapiaTF, dateTerapiaTF, medicoUltimaModificaTF;
     @FXML private TextArea dosaggiTerapiaTA, frequenzaTerapiaTA, orariTerapiaTA;
     @FXML private GridPane indicazioniFarmacoGP;
     @FXML private HBox loadingPage, mainPage, aggiungiEliminaHB;
@@ -105,14 +105,6 @@ public class FinestraTerapiePazienteController implements Controller {
 
             if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
         });
-    }
-
-    public void resetListViewTerapie(){
-        UtilityPortali newUpp = new UtilityPortali(paziente);
-        ObservableList<String> newTerapie = FXCollections.observableArrayList();
-        newTerapie.addAll(newUpp.getListaTerapiePaziente());
-        terapiePazienteLV.setItems(newTerapie);
-        salvaModificheTerapiaB.setVisible(false);
     }
 
     public void aggiungiTerapia() {
@@ -226,6 +218,11 @@ public class FinestraTerapiePazienteController implements Controller {
     public void setInstance(Portale controller, Paziente pazienteSelezionato) {
         if (controller instanceof PortaleMedicoController) {
             pmc = (PortaleMedicoController) controller;
+
+            medicoUltimaModificaTF.setVisible(true);
+            Medico m = new UtilityPortali().getMedicoSessione();
+            medicoUltimaModificaTF.setText("Modificata l'ultima volta dal medico " + m.getCognome() + " " + m.getNome() + " (" + m.getCodiceFiscale() + ")");
+
         } else if  (controller instanceof PortalePazienteController) {
             ppc = (PortalePazienteController) controller;
         } else {
@@ -233,7 +230,6 @@ public class FinestraTerapiePazienteController implements Controller {
         }
 
         this.paziente = pazienteSelezionato;
-        upp = new UtilityPortali(paziente);
         gt = new GestioneTerapie(paziente);
 
         Platform.runLater(this::caricaTerapiePaziente);
@@ -245,16 +241,17 @@ public class FinestraTerapiePazienteController implements Controller {
         }
     }
 
-    private void caricaTerapiePaziente() {
+    public void caricaTerapiePaziente() {
         loadingPage.setVisible(true);
         progressIndicator.setVisible(true);
         progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
         Task<Void> loadingTerapieTask = new Task<>() {
+            ObservableList<String> terapie = FXCollections.observableArrayList();
+
             @Override protected Void call() {
-                ObservableList<String> terapie = FXCollections.observableArrayList();
+                upp = new UtilityPortali(paziente);
                 terapie.addAll(upp.getListaTerapiePaziente());
-                Platform.runLater(() -> terapiePazienteLV.setItems(terapie));
                 return null;
             }
 
@@ -262,7 +259,11 @@ public class FinestraTerapiePazienteController implements Controller {
                 progressIndicator.setVisible(false);
                 loadingPage.setVisible(false);
                 mainPage.setVisible(true);
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(100), mainPage);
+                boxTerapieVB.setVisible(true);
+
+                terapiePazienteLV.setItems(terapie);
+
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(250), mainPage);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
                 fadeIn.play();

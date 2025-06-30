@@ -1,6 +1,5 @@
 package com.univr.glicontrol.bll;
 
-import com.mysql.cj.log.Log;
 import com.univr.glicontrol.dao.AccessoLogTerapie;
 import com.univr.glicontrol.dao.AccessoLogTerapieImpl;
 
@@ -56,7 +55,7 @@ public class GestioneLogTerapie {
         return success;
     }
 
-    public String generaDescrizioneLogTerapia(Terapia terapia, boolean nuova) {
+    public String generaLogTerapia(Terapia terapia, boolean nuova) {
         ListaMedici lm = new ListaMedici();
         Medico medico = lm.ottieniMedicoPerId(terapia.getIdMedicoUltimaModifica());
         StringBuilder descrizioneLogTerapia = new StringBuilder();

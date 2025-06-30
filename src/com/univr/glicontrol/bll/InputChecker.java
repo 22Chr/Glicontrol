@@ -76,7 +76,7 @@ public class InputChecker {
     }
 
     public boolean verificaDataInizioTerapiaConcomitante(Date dataInizioTerapia, Date dataInizioPatologia) {
-        return dataInizioTerapia.after(dataInizioPatologia);
+        return !dataInizioTerapia.before(dataInizioPatologia);
     }
 
     public boolean verificaDosaggioFarmaco(String dosaggio, String nomeFarmaco, boolean inserimento) {
