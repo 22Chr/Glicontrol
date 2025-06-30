@@ -127,6 +127,39 @@ public class PortaleMedicoController implements Portale, Controller {
             return cell;
         });
 
+        notificheLV.setCellFactory(lv -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && !cell.isEmpty()) {
+                    try {
+                        FXMLLoader dettaglioNotificaLoader = new FXMLLoader(getClass().getResource("../uiElements/DettaglioNotifica.fxml"));
+                        Parent root = dettaglioNotificaLoader.load();
+
+                        DettaglioNotificaController dnc = dettaglioNotificaLoader.getController();
+                        dnc.setInstance(this, cell.getItem());
+
+                        Stage dettaglioNotificaStage = new Stage();
+                        dettaglioNotificaStage.setScene(new Scene(root));
+                        dettaglioNotificaStage.setTitle("System Notification Service");
+
+                        dettaglioNotificaStage.show();
+
+                    } catch (IOException e) {
+                        System.err.println("Si è verificato un errore durante il caricamento del dettaglio della notifica: " + e.getMessage());
+                    }
+                }
+            });
+
+            return cell;
+        });
+
 
         // Avvia il core system
         GlicontrolCoreSystem.getInstance().setPortaleMedicoInstance(this);
