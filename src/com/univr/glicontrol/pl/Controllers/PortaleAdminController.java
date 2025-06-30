@@ -3,6 +3,9 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.ListaMedici;
 import com.univr.glicontrol.bll.ListaPazienti;
 import com.univr.glicontrol.pl.Models.GetListaUtenti;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,8 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,11 +25,15 @@ import java.util.List;
 public class PortaleAdminController implements Controller {
 
     @FXML
-    private Button logoutB;
+    private Button logoutB, logOperazioniB;
+    @FXML
+    private MenuButton inserisciUtenteB;
     @FXML
     private ListView<String> listaPazienti;
     @FXML
     private ListView<String> listaMedici;
+    @FXML
+    private VBox logTerapieVB;
 
     @FXML
     private void initialize() {
@@ -209,5 +218,28 @@ public class PortaleAdminController implements Controller {
                 stage.close(); // chiude davvero la finestra
             }
         });
+    }
+
+    public void openLogTerapie() {
+        logTerapieVB.setTranslateX(300);
+        logTerapieVB.setVisible(true);
+        inserisciUtenteB.setVisible(false);
+        logOperazioniB.setVisible(false);
+        logoutB.setVisible(false);
+        TranslateTransition apriLog = new TranslateTransition(Duration.millis(200), logTerapieVB);
+        apriLog.setToX(0);
+        apriLog.play();
+    }
+
+    public void closeLogTerapie() {
+        TranslateTransition chiudiLog = new TranslateTransition(Duration.millis(200), logTerapieVB);
+        chiudiLog.setToX(300);
+        chiudiLog.setOnFinished(e -> {
+            logTerapieVB.setVisible(false);
+            inserisciUtenteB.setVisible(true);
+            logOperazioniB.setVisible(true);
+            logoutB.setVisible(true);
+        });
+        chiudiLog.play();
     }
 }
