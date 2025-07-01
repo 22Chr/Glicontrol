@@ -35,11 +35,17 @@ public class GestioneLogTerapie {
         return listaLogTerapiaSpecifica;
     }
 
-    public boolean generaLogTerapia(Terapia terapia, int idMedico, String descrizioneModifiche, String notePaziente) {
+    public boolean generaLogTerapia(Terapia terapia, int idMedico, String notePaziente, boolean nuovaTerapia) {
         // Verifica quali modifiche sono state apportate alla terapia rispetto all'ultimo log per quella terapia
         // Se non ci sono modifiche, imposta il campo come stringa vuota
 
-        boolean success = accessoLogTerapie.insertLogTerapia(terapia.getIdTerapia(), idMedico, descrizioneModifiche, notePaziente);
+        LogTerapia ultimoLogPerTerapia = ottieniLogPerTerapiaSpecifica(terapia.getIdTerapia()).getLast();
+        String descrizioneModifiche = generaDescrizioneModifiche(terapia, nuovaTerapia);
+        if (ultimoLogPerTerapia.getDescrizioneModifiche().equals(descrizioneModifiche)) {
+            descrizioneModifiche = "";
+        }
+
+        boolean success = accessoLogTerapie.insertLogTerapia(terapia.getIdTerapia(), idMedico, descrizioneModifiche, terapia.getNoteTerapia());
 
         if (success) {
             aggiornaListaTerapie();
@@ -48,12 +54,12 @@ public class GestioneLogTerapie {
         return success;
     }
 
-    private String generaDescrizioneModifiche(Terapia terapia, boolean nuova) {
+    private String generaDescrizioneModifiche(Terapia terapia, boolean nuovaTerapia) {
         ListaMedici lm = new ListaMedici();
         Medico medico = lm.ottieniMedicoPerId(terapia.getIdMedicoUltimaModifica());
         StringBuilder descrizioneModificheLogTerapia = new StringBuilder();
         descrizioneModificheLogTerapia.append("DESCRIZIONE:\n");
-        if (nuova) {
+        if (nuovaTerapia) {
             descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha inserito la terapia " + terapia.getNome() + "\n");
             descrizioneModificheLogTerapia.append("- Data inizio: ").append(terapia.getDataInizio()).append("\n");
             if (terapia.getDataFine() == null) {
