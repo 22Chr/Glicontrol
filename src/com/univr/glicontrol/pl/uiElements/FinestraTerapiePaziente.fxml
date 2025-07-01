@@ -63,14 +63,29 @@
             </VBox>
                 <VBox fx:id="infoTerapiaVB" alignment="CENTER" maxWidth="636.0" prefHeight="543.0" prefWidth="636.0" spacing="50.0" visible="false">
                <children>
-                  <TextField fx:id="nomeTerapiaTF" alignment="CENTER" editable="false" maxWidth="626.0" prefHeight="51.0" prefWidth="626.0" style="-fx-background-color: transparent;">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Avenir Next Bold" size="24.0" />
-                     </font>
-                  </TextField>
+                  <HBox alignment="CENTER" prefHeight="80.0" prefWidth="636.0" spacing="10.0">
+                     <children>
+                        <TextField fx:id="nomeTerapiaTF" alignment="CENTER" editable="false" prefHeight="58.0" prefWidth="380.0" style="-fx-background-color: transparent;">
+                           <font>
+                              <Font name="Avenir Next Bold" size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mostraNoteTerapia" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Note" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
                   <TextField fx:id="medicoUltimaModificaTF" alignment="CENTER" editable="false" layoutX="228.0" layoutY="179.0" maxWidth="636.0" prefHeight="26.0" prefWidth="636.0" style="-fx-background-color: transparent;" visible="false">
                      <font>
                         <Font name="Avenir Next Italic" size="14.0" />
@@ -87,7 +102,7 @@
                         <Insets top="-30.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button fx:id="terminaTerapiaB" alignment="CENTER" mnemonicParsing="false" onAction="#terminaTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Termina terapia" textFill="WHITE" visible="false">
+                  <Button fx:id="terminaTerapiaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#terminaTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Termina terapia" textFill="WHITE" visible="false">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

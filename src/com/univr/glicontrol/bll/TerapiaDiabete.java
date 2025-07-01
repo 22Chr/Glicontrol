@@ -9,6 +9,7 @@ public class TerapiaDiabete implements Terapia {
     private int idMedicoUltimaModifica;
     private final Date dataInizio;
     private Date dataFine;
+    private String noteTerapia;
     private List<FarmacoTerapia> farmaci;
 
     public TerapiaDiabete(int idPaziente, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
@@ -19,9 +20,20 @@ public class TerapiaDiabete implements Terapia {
         this.farmaci = farmaci;
     }
 
-    public int getIdTerapiaDiabete() {
+    public int getIdTerapia() {
         return idTerapiaDiabete;
     }
+
+    @Override
+    public String getNoteTerapia() {
+        return noteTerapia;
+    }
+
+    @Override
+    public void setNoteTerapia(String noteTerapia) {
+        this.noteTerapia = noteTerapia;
+    }
+
     public void setIdTerapiaDiabete(int idTerapiaDiabete) {
         this.idTerapiaDiabete = idTerapiaDiabete;
     }

@@ -35,18 +35,11 @@ public class GestioneLogTerapie {
         return listaLogTerapiaSpecifica;
     }
 
-    public boolean aggiungiLogTerapia(LogTerapia cache, int idTerapia, int idMedico, String descrizioneModifiche, String notePaziente) {
+    public boolean generaLogTerapia(Terapia terapia, int idMedico, String descrizioneModifiche, String notePaziente) {
         // Verifica quali modifiche sono state apportate alla terapia rispetto all'ultimo log per quella terapia
         // Se non ci sono modifiche, imposta il campo come stringa vuota
-        if (descrizioneModifiche.equals(cache.getDescrizioneModifiche())) {
-            descrizioneModifiche = "";
-        }
 
-        if (notePaziente.equals(cache.getNotePaziente())) {
-            notePaziente = "";
-        }
-
-        boolean success = accessoLogTerapie.insertLogTerapia(idTerapia, idMedico, descrizioneModifiche, notePaziente);
+        boolean success = accessoLogTerapie.insertLogTerapia(terapia.getIdTerapia(), idMedico, descrizioneModifiche, notePaziente);
 
         if (success) {
             aggiornaListaTerapie();
@@ -55,36 +48,36 @@ public class GestioneLogTerapie {
         return success;
     }
 
-    public String generaLogTerapia(Terapia terapia, boolean nuova) {
+    private String generaDescrizioneModifiche(Terapia terapia, boolean nuova) {
         ListaMedici lm = new ListaMedici();
         Medico medico = lm.ottieniMedicoPerId(terapia.getIdMedicoUltimaModifica());
-        StringBuilder descrizioneLogTerapia = new StringBuilder();
-        descrizioneLogTerapia.append("DESCRIZIONE:\n");
+        StringBuilder descrizioneModificheLogTerapia = new StringBuilder();
+        descrizioneModificheLogTerapia.append("DESCRIZIONE:\n");
         if (nuova) {
-            descrizioneLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha inserito la terapia " + terapia.getNome() + "\n");
-            descrizioneLogTerapia.append("- Data inizio: ").append(terapia.getDataInizio()).append("\n");
+            descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha inserito la terapia " + terapia.getNome() + "\n");
+            descrizioneModificheLogTerapia.append("- Data inizio: ").append(terapia.getDataInizio()).append("\n");
             if (terapia.getDataFine() == null) {
-                descrizioneLogTerapia.append("- Data fine: in corso\n");
+                descrizioneModificheLogTerapia.append("- Data fine: in corso\n");
             } else {
-                descrizioneLogTerapia.append("- Data fine: ").append(terapia.getDataFine()).append("\n");
+                descrizioneModificheLogTerapia.append("- Data fine: ").append(terapia.getDataFine()).append("\n");
             }
         } else {
-            descrizioneLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha apportato le seguenti modifiche alla terapia " + terapia.getNome() + "\n");
+            descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha apportato le seguenti modifiche alla terapia " + terapia.getNome() + "\n");
         }
 
         if (terapia.getDataFine() != null) {
-            descrizioneLogTerapia.append("- Data fine: ").append(terapia.getDataFine()).append("\n");
+            descrizioneModificheLogTerapia.append("- Data fine: ").append(terapia.getDataFine()).append("\n");
         }
-        descrizioneLogTerapia.append("\nFarmaci con relative indicazioni:\n");
+        descrizioneModificheLogTerapia.append("\nFarmaci con relative indicazioni:\n");
         List<FarmacoTerapia> ft = terapia.getListaFarmaciTerapia();
         for (FarmacoTerapia f : ft) {
-            descrizioneLogTerapia.append("- ").append(f.getFarmaco().getNome()).append(":\n");
-            descrizioneLogTerapia.append("  - Dosaggio: ").append(f.getIndicazioni().getDosaggio()).append(" ").append(f.getFarmaco().getUnitaMisura()).append("\n");
-            descrizioneLogTerapia.append("  - Frequenza di assunzione: ").append(f.getIndicazioni().getFrequenzaAssunzione()).append("\n");
-            descrizioneLogTerapia.append("  - Orari di assunzione: ").append(f.getIndicazioni().getOrariAssunzione()).append("\n");
+            descrizioneModificheLogTerapia.append("- ").append(f.getFarmaco().getNome()).append(":\n");
+            descrizioneModificheLogTerapia.append("  - Dosaggio: ").append(f.getIndicazioni().getDosaggio()).append(" ").append(f.getFarmaco().getUnitaMisura()).append("\n");
+            descrizioneModificheLogTerapia.append("  - Frequenza di assunzione: ").append(f.getIndicazioni().getFrequenzaAssunzione()).append("\n");
+            descrizioneModificheLogTerapia.append("  - Orari di assunzione: ").append(f.getIndicazioni().getOrariAssunzione()).append("\n");
         }
 
-        return descrizioneLogTerapia.toString();
+        return descrizioneModificheLogTerapia.toString();
     }
 
     public String generaNotePazienteLogTerapia(Medico medico, String note) {

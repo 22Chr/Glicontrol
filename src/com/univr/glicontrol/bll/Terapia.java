@@ -27,4 +27,9 @@ public interface Terapia {
     String getFrequenzaPerFarmaco(String nomeFarmaco);
 
     String getOrarioPerFarmaco(String nomeFarmaco);
+
+    int getIdTerapia();
+
+    String getNoteTerapia();
+    void setNoteTerapia(String noteTerapia);
 }

@@ -26,7 +26,7 @@ public class InserisciNuovaTerapiaController implements Controller {
     GestioneTerapie gt;
     private FinestraTerapiePazienteController ftpc = new FinestraTerapiePazienteController();
     private int terapiaSelezionata;
-    private String ruoloAccesso;
+    private String ruoloAccesso, noteTerapia = null;
 
     @FXML
     private ComboBox<String>  patologiaCB;
@@ -37,7 +37,7 @@ public class InserisciNuovaTerapiaController implements Controller {
     @FXML
     private VBox finestraInserimentoTerapia;
     @FXML
-    private Button selezionaTerapiaDiabeteButton, selezionaTerapiaPatologiaConcomitanteButton;
+    private Button inserisciNoteB;
     @FXML
     private Label patologiaL;
 
@@ -54,7 +54,6 @@ public class InserisciNuovaTerapiaController implements Controller {
 
             patologiaCB.getItems().addAll(listaPatologieInCorso);
         });
-
     }
 
     public void setInstance(FinestraTerapiePazienteController ftpc, String ruoloAccesso, Paziente pazienteSelezionato) {
@@ -71,9 +70,11 @@ public class InserisciNuovaTerapiaController implements Controller {
                finestraSceltaTerapia.setVisible(false);
                // unica opzione valida per il paziente
                terapiaSelezionata = 1;
+               inserisciNoteB.setVisible(false);
            } else {
                finestraSceltaTerapia.setVisible(true);
                finestraInserimentoTerapia.setVisible(false);
+               inserisciNoteB.setVisible(true);
            }
         });
     }
@@ -129,6 +130,30 @@ public class InserisciNuovaTerapiaController implements Controller {
 
     }
 
+    public void inserisciNote() {
+
+        try {
+            FXMLLoader inserisciNoteTerapiaLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraNoteTerapia.fxml"));
+            Parent root = inserisciNoteTerapiaLoader.load();
+
+            FinestraNoteTerapiaController fntc = inserisciNoteTerapiaLoader.getController();
+            fntc.setInstance(this, ruoloAccesso.equals("medico"));
+
+            Stage finestraNoteTerapia = new Stage();
+            finestraNoteTerapia.setTitle("Note terapia");
+            finestraNoteTerapia.setScene(new Scene(root));
+
+            finestraNoteTerapia.show();
+
+        } catch (IOException e) {
+            System.err.println("Si è verificato un errore durante il caricamento della finestra delle note: " + e.getMessage());
+        }
+    }
+
+    public void setNoteTerapia(String noteTerapia) {
+        this.noteTerapia = noteTerapia;
+    }
+
     public void aggiungiNuovaTerapia() throws MessagingException {
         Medico medicoUltimaModifica = upp.getMedicoSessione();
         String nomePatologia = patologiaCB.getSelectionModel().getSelectedItem();
@@ -166,10 +191,10 @@ public class InserisciNuovaTerapiaController implements Controller {
         int status;
         if (terapiaSelezionata == 0) {
             //status dovrà corrispondere a gt.inserisciTerapiaDiabete
-            status = gt.inserisciTerapiaDiabete(medicoUltimaModifica.getIdUtente(), dataInizio, dataFine, farmaciConIndicazioni);
+            status = gt.inserisciTerapiaDiabete(medicoUltimaModifica.getIdUtente(), dataInizio, dataFine, noteTerapia, farmaciConIndicazioni);
         } else {
             int idPatologia = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia();
-            status = gt.inserisciTerapiaConcomitante(idPatologia, paziente.getMedicoRiferimento(), dataInizio, dataFine, farmaciConIndicazioni, nomePatologia);
+            status = gt.inserisciTerapiaConcomitante(idPatologia, paziente.getMedicoRiferimento(), dataInizio, dataFine, noteTerapia, farmaciConIndicazioni, nomePatologia);
         }
         if (status == 1) {
 
@@ -181,7 +206,6 @@ public class InserisciNuovaTerapiaController implements Controller {
 
             ftpc.caricaTerapiePaziente();
 
-            // rivedere
             if (ruoloAccesso.equals("medico")) {
                 Platform.runLater(() -> {
                     try {

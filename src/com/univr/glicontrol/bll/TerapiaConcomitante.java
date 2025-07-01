@@ -1,7 +1,6 @@
 package com.univr.glicontrol.bll;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TerapiaConcomitante implements Terapia {
@@ -11,6 +10,7 @@ public class TerapiaConcomitante implements Terapia {
     private int idMedicoUltimaModifica;
     private final Date dataInizio;
     private Date dataFine;
+    private String noteTerapia;
     private List<FarmacoTerapia> farmaci;
 
     public TerapiaConcomitante(int idPaziente, int idPatologiaConcomitante, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
@@ -22,9 +22,20 @@ public class TerapiaConcomitante implements Terapia {
         this.farmaci = farmaci;
     }
 
-    public int getIdTerapiaConcomitante() {
+    public int getIdTerapia() {
         return idTerapiaConcomitante;
     }
+
+    @Override
+    public String getNoteTerapia() {
+        return noteTerapia;
+    }
+
+    @Override
+    public void setNoteTerapia(String noteTerapia) {
+        this.noteTerapia = noteTerapia;
+    }
+
     public void setIdTerapiaConcomitante(int idTerapiaConcomitante) {
         this.idTerapiaConcomitante = idTerapiaConcomitante;
     }

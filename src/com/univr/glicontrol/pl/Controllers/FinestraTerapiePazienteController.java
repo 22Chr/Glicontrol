@@ -41,6 +41,7 @@ public class FinestraTerapiePazienteController implements Controller {
     private Terapia terapia = null;
     private GestioneTerapie gt = null;
     private boolean aggiornamentoProgrammatico = false;
+    private String noteTerapia;
 
     @FXML
     private void initialize() {
@@ -56,6 +57,7 @@ public class FinestraTerapiePazienteController implements Controller {
                     clearScreen();
                     Platform.runLater(() -> {
                         terapia = upp.getTerapiaPerNomeFormattata(terapiePazienteLV.getSelectionModel().getSelectedItem());
+                        noteTerapia = terapia.getNoteTerapia();
                         mostraFarmaciTerapia();
                     });
                 }
@@ -318,6 +320,36 @@ public class FinestraTerapiePazienteController implements Controller {
         mostraFarmaciTerapia();
     }
 
+    public void setNoteTerapia(String noteTerapia) {
+        this.noteTerapia = noteTerapia;
+    }
+
+    public void mostraNoteTerapia() {
+        String noteTerapiaCache = noteTerapia;
+        try {
+            FXMLLoader finestraNoteTerapiaLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraNoteTerapia.fxml"));
+            Parent root = finestraNoteTerapiaLoader.load();
+
+            FinestraNoteTerapiaController fntc = finestraNoteTerapiaLoader.getController();
+            fntc.setTerapia(terapia);
+            fntc.setInstance(this, pmc != null);
+
+            Stage finestraNoteTerapiaStage = new Stage();
+            finestraNoteTerapiaStage.setScene(new Scene(root));
+            finestraNoteTerapiaStage.setTitle("Note terapia");
+
+            finestraNoteTerapiaStage.showAndWait();
+
+            if (!noteTerapiaCache.equals(noteTerapia)) {
+                salvaModificheTerapiaB.setVisible(true);
+            }
+
+        } catch(IOException e) {
+            System.err.println("Si è verificato un errore durante il caricamento della finestra relativa alle note della terapia: " + e.getMessage());
+        }
+
+    }
+
     public void salvaModificheTerapia() {
         if (indicazioniFarmacoGP.isVisible()) {
 
@@ -352,6 +384,8 @@ public class FinestraTerapiePazienteController implements Controller {
 
             terapia.setIdMedicoUltimaModifica(upp.getMedicoSessione().getIdUtente());
         }
+
+        terapia.setNoteTerapia(noteTerapia);
 
         if(gt.aggiornaTerapia(terapia)){
             Alert successoAggiornamentoTerapiaAlert = new Alert(Alert.AlertType.INFORMATION);

@@ -80,7 +80,7 @@ public class GestioneTerapie {
         return status;
     }
 
-    public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci) {
+    public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String noteTerapia, List<FarmacoTerapia> farmaci) {
         aggiornaListaTerapiePaziente();
         List<TerapiaDiabete> terapieDelPaziente = new ArrayList<>();
         for (TerapiaDiabete terapia : terapiaDiabete) {
@@ -93,10 +93,10 @@ public class GestioneTerapie {
             return -1;
         }
 
-        return accessoTerapie.insertTerapiaDiabete(pazienteSessione.getIdUtente(), idMedicoUltimaModifica, dataInizio, dataFine, farmaci) ? 1 : 0;
+        return accessoTerapie.insertTerapiaDiabete(pazienteSessione.getIdUtente(), idMedicoUltimaModifica, dataInizio, dataFine, noteTerapia, farmaci) ? 1 : 0;
     }
 
-    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, List<FarmacoTerapia> farmaci, String nomePatologia) {
+    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String noteTerapia, List<FarmacoTerapia> farmaci, String nomePatologia) {
         aggiornaListaTerapiePaziente();
         UtilityPortali upp = new UtilityPortali(pazienteSessione);
 
@@ -113,7 +113,7 @@ public class GestioneTerapie {
             }
         }
 
-        return accessoTerapie.insertTerapiaConcomitante(pazienteSessione.getIdUtente(), idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, farmaci) ? 1 : 0;
+        return accessoTerapie.insertTerapiaConcomitante(pazienteSessione.getIdUtente(), idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, noteTerapia, farmaci) ? 1 : 0;
     }
 
     private boolean aggiornaTerapiaDiabete(TerapiaDiabete terapia) {
@@ -126,7 +126,7 @@ public class GestioneTerapie {
 
     public TerapiaDiabete getTerapiaDiabete(int idTerapia) {
         for (Terapia terapia : terapiePaziente) {
-            if (terapia instanceof TerapiaDiabete td && td.getIdTerapiaDiabete() == idTerapia) {
+            if (terapia instanceof TerapiaDiabete td && td.getIdTerapia() == idTerapia) {
                 return td;
             }
         }
@@ -136,7 +136,7 @@ public class GestioneTerapie {
 
     public TerapiaConcomitante getTerapieConcomitante(int idTerapia) {
         for (Terapia terapia : terapiePaziente) {
-            if (terapia instanceof TerapiaConcomitante tc && tc.getIdTerapiaConcomitante() == idTerapia) {
+            if (terapia instanceof TerapiaConcomitante tc && tc.getIdTerapia() == idTerapia) {
                 return tc;
             }
         }
@@ -146,9 +146,9 @@ public class GestioneTerapie {
 
     public Terapia getTerapiaById(int idTerapia) {
         for (Terapia terapia : listaCompletaTerapie) {
-            if (terapia instanceof TerapiaDiabete td && td.getIdTerapiaDiabete() == idTerapia) {
+            if (terapia instanceof TerapiaDiabete td && td.getIdTerapia() == idTerapia) {
                 return td;
-            } else if (terapia instanceof TerapiaConcomitante tc && tc.getIdTerapiaConcomitante() == idTerapia) {
+            } else if (terapia instanceof TerapiaConcomitante tc && tc.getIdTerapia() == idTerapia) {
                 return tc;
             }
         }
