@@ -74,12 +74,12 @@ public class PortaleMedicoController implements Portale, Controller {
         pazientiReferenti.addAll(upm.getPazientiAssociatiAlReferente(medico.getIdUtente()));
         pazientiReferenteLV.setItems(pazientiReferenti);
 
-        for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) { //cicla su tutti i pazienti associati
-            p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente); //dal nome nella listview prendo il paziente
-            GestioneNotifiche gn = new GestioneNotifiche(p);
-            List<Notifica> notifiche = gn.getNotificheNonVisualizzate(); //prende le notifiche non visualizzate del paziente
-            mappaPazientiAssociatiNotifiche.put(p, notifiche); //le associa al paziente
-        }
+//        for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) { //cicla su tutti i pazienti associati
+//            p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente); //dal nome nella listview prendo il paziente
+//            GestioneNotifiche gn = new GestioneNotifiche(p);
+//            List<Notifica> notifiche = gn.getNotificheNonVisualizzate(); //prende le notifiche non visualizzate del paziente
+//            mappaPazientiAssociatiNotifiche.put(p, notifiche); //le associa al paziente
+//        }
 
 
         ObservableList<String> pazientiGenerici = FXCollections.observableArrayList();
@@ -111,6 +111,8 @@ public class PortaleMedicoController implements Portale, Controller {
                     }
                 }
             };
+
+            aggiornaListaPazientiReferenteNotifiche();
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
@@ -472,5 +474,19 @@ public class PortaleMedicoController implements Portale, Controller {
         transizione.play();
 
         GlicontrolCoreSystem.getInstance().centroNotificheIsClosed();
+    }
+
+    public void aggiornaListaPazientiReferenteNotifiche() {
+        // Ricostruisci la mappa aggiornando le notifiche non lette
+        mappaPazientiAssociatiNotifiche.clear();
+        for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) {
+            Paziente p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente);
+            GestioneNotifiche gn = new GestioneNotifiche(p);
+            List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
+            mappaPazientiAssociatiNotifiche.put(p, notifiche);
+        }
+
+        // Forza il refresh delle celle della listView
+        Platform.runLater(() -> pazientiReferenteLV.refresh());
     }
 }
