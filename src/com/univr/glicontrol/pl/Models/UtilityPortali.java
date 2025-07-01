@@ -365,7 +365,6 @@ public class UtilityPortali {
                 List<FarmacoTerapia> ft = t.getListaFarmaciTerapia();
                 for (FarmacoTerapia f : ft) {
                     listaFarmaciDaAssumere.add(f.getFarmaco().getNome());
-                    System.out.println(f.getFarmaco().getNome());
                 }
             }
         }
