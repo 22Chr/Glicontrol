@@ -104,7 +104,7 @@ public class PortaleMedicoController implements Portale, Controller {
                         List<Notifica> notifiche = mappaPazientiAssociatiNotifiche.get(p);
 
                         if (notifiche != null && !notifiche.isEmpty()) {
-                            setStyle("-fx-background-color: #ffd500;");
+                            setStyle("-fx-background-color: #ffd500; -fx-text-fill: #000000");
                         } else {
                             setStyle("");
                         }
@@ -118,7 +118,7 @@ public class PortaleMedicoController implements Portale, Controller {
                     mostraUI.setOnFinished(e -> {
                         centerVB.setVisible(true);
                         rightVB.setVisible(true);
-                        pazienteSelezionatoTF.setText(cell.getItem()); //carica il nome al centro
+                        pazienteSelezionatoTF.setText(cell.getItem());
                         pazienteSelezionato = upm.getPazienteAssociatoDaNomeFormattato(pazientiReferenteLV.getSelectionModel().getSelectedItem());
                         gestione = new GestioneRilevazioniGlicemia(pazienteSelezionato);
                         aggiornaGraficoGlicemiaOdierna();
