@@ -163,7 +163,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaFarmaco" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
+                        <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaAssunzioneFarmaco" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

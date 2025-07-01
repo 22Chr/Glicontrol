@@ -158,7 +158,7 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
         }
     }
 
-    public void eliminaFarmaco() {
+    public void eliminaAssunzioneFarmaco() {
         int idAssunzione = 0;
         int idFarmaco = upp.getFarmacoPerNomeFormattato(farmaciAssuntiOggiLV.getSelectionModel().getSelectedItem()).getIdFarmaco();
         String orarioAssunzioneFormattato = getOraAssunzioneDaNomeAssunzioneFormattato(farmaciAssuntiOggiLV.getSelectionModel().getSelectedItem());

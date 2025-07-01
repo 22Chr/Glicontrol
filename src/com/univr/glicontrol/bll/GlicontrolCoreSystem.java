@@ -214,8 +214,10 @@ public class GlicontrolCoreSystem {
 
         // Ottieni tutta la lista di farmaci per il paziente
         for (Terapia t : gestioneTerapie.getTerapiePaziente()) {
-            for (FarmacoTerapia f : t.getListaFarmaciTerapia()) {
-                farmaciPaziente.add(f.getFarmaco());
+            if (t.getDataFine() == null) {
+                for (FarmacoTerapia f : t.getListaFarmaciTerapia()) {
+                    farmaciPaziente.add(f.getFarmaco());
+                }
             }
         }
 

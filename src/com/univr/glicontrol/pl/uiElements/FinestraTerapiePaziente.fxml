@@ -31,7 +31,7 @@
                   <Insets bottom="15.0" left="-10.0" top="10.0" />
                </HBox.margin>
                <children>
-                      <VBox fx:id="pageStorico" alignment="TOP_CENTER" prefHeight="577.0" prefWidth="313.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+                      <VBox fx:id="pageStorico" alignment="TOP_CENTER" prefHeight="602.0" prefWidth="313.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                           <children>
                               <Label alignment="CENTER" prefHeight="39.0" prefWidth="379.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE TERAPIE&#10;" textAlignment="CENTER" textFill="WHITE">
                                   <font>
@@ -84,9 +84,20 @@
                         <Font size="14.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="40.0" top="-30.0" />
+                        <Insets top="-30.0" />
                      </VBox.margin>
                   </TextField>
+                  <Button fx:id="terminaTerapiaB" alignment="CENTER" mnemonicParsing="false" onAction="#terminaTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Termina terapia" textFill="WHITE" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets bottom="25.0" top="-20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                   <HBox prefHeight="378.0" prefWidth="601.0" spacing="15.0">
                      <children>
                         <VBox alignment="CENTER" spacing="8.0">
@@ -105,7 +116,7 @@
                               <ListView fx:id="farmaciTerapiaLV" maxHeight="348.0" prefHeight="315.0" prefWidth="206.0" style="-fx-border-color: #22577a;" />
                               <HBox fx:id="aggiungiEliminaHB" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" visible="false">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#aggiungiFarmaciAllaTerapia" prefWidth="90.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi" textFill="WHITE">
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiFarmaciAllaTerapia" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi&#10;farmaci" textAlignment="CENTER" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -113,7 +124,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <Button mnemonicParsing="false" onAction="#eliminaFarmacoTerapia" prefWidth="90.0" style="-fx-background-color: #ff0404; -fx-background-radius: 7;" text="Elimina" textFill="WHITE">
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eliminaFarmacoTerapia" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #ff0404; -fx-background-radius: 7;" text="Elimina" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>

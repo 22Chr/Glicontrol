@@ -359,27 +359,14 @@ public class UtilityPortali {
     public List<String> getListaFarmaciDaAssumere() {
         List<String> listaFarmaciDaAssumere = new ArrayList<>();
         GestioneTerapie gt = new GestioneTerapie(paziente);
-        List<TerapiaDiabete> listaTd = new ArrayList<>();
-        List<TerapiaConcomitante> listaTc = new ArrayList<>();
 
         for (Terapia t : gt.getTerapiePaziente()) {
-            if (t instanceof TerapiaDiabete td) {
-                listaTd.add(td);
-            } else if (t instanceof TerapiaConcomitante tc) {
-                listaTc.add(tc);
-            }
-        }
-
-        for (TerapiaDiabete td : listaTd) {
-            List<FarmacoTerapia> ft = td.getListaFarmaciTerapia();
-            for (FarmacoTerapia f : ft) {
-                listaFarmaciDaAssumere.add(f.getFarmaco().getNome());
-            }
-        }
-        for (TerapiaConcomitante tc : listaTc) {
-            List<FarmacoTerapia> ft = tc.getListaFarmaciTerapia();
-            for (FarmacoTerapia f : ft) {
-                listaFarmaciDaAssumere.add(f.getFarmaco().getNome());
+            if (t.getDataFine() == null) {
+                List<FarmacoTerapia> ft = t.getListaFarmaciTerapia();
+                for (FarmacoTerapia f : ft) {
+                    listaFarmaciDaAssumere.add(f.getFarmaco().getNome());
+                    System.out.println(f.getFarmaco().getNome());
+                }
             }
         }
 

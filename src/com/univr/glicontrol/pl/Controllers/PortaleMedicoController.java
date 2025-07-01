@@ -104,7 +104,7 @@ public class PortaleMedicoController implements Portale, Controller {
                         List<Notifica> notifiche = mappaPazientiAssociatiNotifiche.get(p);
 
                         if (notifiche != null && !notifiche.isEmpty()) {
-                            setStyle("-fx-background-color: yellow;");
+                            setStyle("-fx-background-color: #ffd500;");
                         } else {
                             setStyle("");
                         }
@@ -148,7 +148,7 @@ public class PortaleMedicoController implements Portale, Controller {
                         List<Notifica> notifiche = mappaPazientiNonAssociatiNotifiche.get(p);
 
                         if (notifiche != null && !notifiche.isEmpty()) {
-                            setStyle("-fx-background-color: yellow;");
+                            setStyle("-fx-background-color: #ffd500;");
                         } else {
                             setStyle("");
                         }

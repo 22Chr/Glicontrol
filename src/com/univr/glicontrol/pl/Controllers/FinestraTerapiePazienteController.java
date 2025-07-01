@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +32,7 @@ public class FinestraTerapiePazienteController implements Controller {
     @FXML private GridPane indicazioniFarmacoGP;
     @FXML private HBox loadingPage, mainPage, aggiungiEliminaHB;
     @FXML private ProgressIndicator progressIndicator;
-    @FXML private Button aggiungiTerapiaButton, salvaModificheTerapiaB;
+    @FXML private Button aggiungiTerapiaButton, salvaModificheTerapiaB, terminaTerapiaB;
 
     private PortaleMedicoController pmc = null;
     private PortalePazienteController ppc = null;
@@ -83,7 +85,7 @@ public class FinestraTerapiePazienteController implements Controller {
                 dosaggiTerapiaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
 
-            if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
+            if (!aggiornamentoProgrammatico && terapia.getDataFine() == null) mostraBottoneSalvataggio(newVal);
         });
 
         frequenzaTerapiaTA.textProperty().addListener((obs, oldVal, newVal) -> {
@@ -93,7 +95,7 @@ public class FinestraTerapiePazienteController implements Controller {
                 frequenzaTerapiaTA.setStyle("-fx-border-color: #ff0000;  -fx-border-width: 3px;");
             }
 
-            if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
+            if (!aggiornamentoProgrammatico && terapia.getDataFine() == null) mostraBottoneSalvataggio(newVal);
         });
 
         orariTerapiaTA.textProperty().addListener((obs, oldVal, newVal) -> {
@@ -103,7 +105,7 @@ public class FinestraTerapiePazienteController implements Controller {
                 orariTerapiaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
 
-            if (!aggiornamentoProgrammatico) mostraBottoneSalvataggio(newVal);
+            if (!aggiornamentoProgrammatico && terapia.getDataFine() == null) mostraBottoneSalvataggio(newVal);
         });
     }
 
@@ -157,7 +159,13 @@ public class FinestraTerapiePazienteController implements Controller {
                     nomeTerapiaTF.setText(terapia.getNome());
                     dateTerapiaTF.setText(data);
                     farmaciTerapiaLV.setItems(farmaci);
-                    if (pmc != null) aggiungiEliminaHB.setVisible(true);
+                    if (pmc != null && terapia.getDataFine() == null) {
+                        terminaTerapiaB.setVisible(true);
+                        aggiungiEliminaHB.setVisible(true);
+                    } else {
+                        terminaTerapiaB.setVisible(false);
+                        aggiungiEliminaHB.setVisible(false);
+                    }
                 });
                 return null;
             }
@@ -171,7 +179,7 @@ public class FinestraTerapiePazienteController implements Controller {
     private void mostraIndicazioniFarmaciTerapia() {
         salvaModificheTerapiaB.setVisible(false);
 
-        if (pmc != null) {
+        if (pmc != null && terapia.getDataFine() == null) {
             dosaggiTerapiaTA.setEditable(true);
             frequenzaTerapiaTA.setEditable(true);
             orariTerapiaTA.setEditable(true);
@@ -242,6 +250,7 @@ public class FinestraTerapiePazienteController implements Controller {
     }
 
     public void caricaTerapiePaziente() {
+        mainPage.setVisible(false);
         loadingPage.setVisible(true);
         progressIndicator.setVisible(true);
         progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
@@ -405,6 +414,40 @@ public class FinestraTerapiePazienteController implements Controller {
                 erroreRimozioneFarmacoTerapia.setHeaderText("Errore durante la rimozione");
                 erroreRimozioneFarmacoTerapia.setContentText("Si è verificato un errore durante la rimozione del farmaco.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
                 erroreRimozioneFarmacoTerapia.showAndWait();
+            }
+        }
+    }
+
+    public void terminaTerapia() {
+        Alert confermaChiusuraTerapiaAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confermaChiusuraTerapiaAlert.setTitle("System Notification Service");
+        confermaChiusuraTerapiaAlert.setHeaderText("Confermi di voler concludere la terapia?");
+        confermaChiusuraTerapiaAlert.setContentText("L'operazione è irreversibile");
+        Optional<ButtonType> result = confermaChiusuraTerapiaAlert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            gt = new GestioneTerapie(paziente);
+            terapia.setDataFine(Date.valueOf(LocalDate.now()));
+
+            if (gt.aggiornaTerapia(terapia)) {
+                Alert esitoPositivoConclusioneTerapiaAlert = new Alert(Alert.AlertType.INFORMATION);
+                esitoPositivoConclusioneTerapiaAlert.setTitle("System Notification Service");
+                esitoPositivoConclusioneTerapiaAlert.setHeaderText("Terminazione avvenuta con successo");
+                esitoPositivoConclusioneTerapiaAlert.setContentText("La terapia selezionata è stata correttamente chiusa in data odierna.\nSi ricorda di segnalare come conclusa anche l'eventuale patologia concomitante cui la terapia faceva riferimento");
+                esitoPositivoConclusioneTerapiaAlert.showAndWait();
+
+                Platform.runLater(() -> {
+                    caricaTerapiePaziente();
+                    mostraFarmaciTerapia();
+                    aggiungiEliminaHB.setVisible(false);
+                });
+
+            } else {
+                Alert erroreConclusioneTerapia = new Alert(Alert.AlertType.ERROR);
+                erroreConclusioneTerapia.setTitle("System Notification Service");
+                erroreConclusioneTerapia.setHeaderText("Errore");
+                erroreConclusioneTerapia.setContentText("Si è verificato un errore durante il tentativo di chiusura della terapia selezionata.\nSe il problema dovesse persistere, riavvia l'applicazione e riprova");
+                erroreConclusioneTerapia.showAndWait();
             }
         }
     }
