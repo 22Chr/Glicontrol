@@ -477,7 +477,6 @@ public class PortaleMedicoController implements Portale, Controller {
     }
 
     public void aggiornaListaPazientiReferenteNotifiche() {
-        // Ricostruisci la mappa aggiornando le notifiche non lette
         mappaPazientiAssociatiNotifiche.clear();
         for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) {
             Paziente p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente);
@@ -485,8 +484,6 @@ public class PortaleMedicoController implements Portale, Controller {
             List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
             mappaPazientiAssociatiNotifiche.put(p, notifiche);
         }
-
-        // Forza il refresh delle celle della listView
         Platform.runLater(() -> pazientiReferenteLV.refresh());
     }
 }
