@@ -22,6 +22,7 @@ public class GestionePasti {
     }
 
     private void aggiornaListaPasti() {
+        pasti.clear();
         pasti = accessoPasti.recuperaPastiPerUtente(paziente.getIdUtente());
     }
 
