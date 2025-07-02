@@ -112,7 +112,8 @@ public class PortaleMedicoController implements Portale, Controller {
                 }
             };
 
-            aggiornaListaPazientiReferenteNotifiche();
+            // Introduce una latenza eccessiva
+            //aggiornaListaPazientiReferenteNotifiche();
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {

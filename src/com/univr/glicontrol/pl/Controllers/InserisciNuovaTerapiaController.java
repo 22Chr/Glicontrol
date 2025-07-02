@@ -4,6 +4,7 @@ import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import jakarta.mail.MessagingException;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -206,7 +207,9 @@ public class InserisciNuovaTerapiaController implements Controller {
 
             ftpc.caricaTerapiePaziente();
 
+            boolean inseritaDalMedico;
             if (ruoloAccesso.equals("medico")) {
+                inseritaDalMedico = true;
                 Platform.runLater(() -> {
                     try {
                         informaPazienteInserimentoTerapia();
@@ -214,12 +217,17 @@ public class InserisciNuovaTerapiaController implements Controller {
                         throw new RuntimeException(e);
                     }
                 });
+            } else {
+                inseritaDalMedico = false;
             }
+
+            creaLogTerapia(paziente, inseritaDalMedico);
 
             Window currentWindow = dataInizioDP.getScene().getWindow();
             if (currentWindow instanceof Stage) {
                 ((Stage) currentWindow).close();
             }
+
 
         } else if (status == 0) {
 
@@ -238,6 +246,19 @@ public class InserisciNuovaTerapiaController implements Controller {
             dataInizioDP.setValue(null);
             dataFineDP.setValue(null);
         }
+    }
+
+    private void creaLogTerapia(Paziente paziente, boolean inseritaDalMedico) {
+        Task<Void> creaLogTerapia = new Task<>() {
+            @Override
+            protected Void call() {
+                GlicontrolCoreSystem.getInstance().creaLogTerapie(paziente, true, inseritaDalMedico);
+
+                return null;
+            }
+        };
+
+        new Thread(creaLogTerapia).start();
     }
 
     private Date ottieniDataInizioTerapia() {
