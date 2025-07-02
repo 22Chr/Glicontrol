@@ -445,10 +445,9 @@ public class UtilityPortali {
         ListaPazienti lp = new ListaPazienti();
         ListaMedici lm = new ListaMedici();
         List<String> listaLogTerapieFormattata = new ArrayList<>();
-        GestioneLogTerapie glt = new GestioneLogTerapie();
         GestioneTerapie gt = new GestioneTerapie();
 
-        for (LogTerapia lt : glt.getListaLogTerapia()) {
+        for (LogTerapia lt : GestioneLogTerapie.getInstance().getListaLogTerapia()) {
             Terapia t = gt.getTerapiaById(lt.getIdTerapia());
             LocalDate data = lt.getTimestamp().toLocalDateTime().toLocalDate();
             LocalTime ora = lt.getTimestamp().toLocalDateTime().toLocalTime();

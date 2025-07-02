@@ -3,6 +3,7 @@ package com.univr.glicontrol.bll;
 import com.univr.glicontrol.pl.Controllers.PortaleMedicoController;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
 
 import java.sql.Date;
@@ -558,4 +559,28 @@ public class GlicontrolCoreSystem {
         }, 0, 5, TimeUnit.MINUTES);
     }
 
+
+    // CREA I LOG PER LE TERAPIE
+    public void creaLogTerapie(Paziente paziente, boolean nuovaTerapia, boolean inseritaDalMedico) {
+
+        GestioneTerapie gt = new GestioneTerapie(paziente);
+        Terapia terapiaSelezionata = gt.getTerapiePaziente().getLast();
+
+        if (terapiaSelezionata != null) {
+            Task<Void> creaLogTerapieTask = new Task<>() {
+
+                @Override
+                protected Void call() {
+                    boolean success = GestioneLogTerapie.getInstance().generaLogTerapia(terapiaSelezionata, terapiaSelezionata.getIdMedicoUltimaModifica(), nuovaTerapia, inseritaDalMedico);
+                    if (!success) {
+                        System.err.println("Si è verificato un errore durante la generazione del log per la terapia selezionata");
+                    }
+
+                    return null;
+                }
+            };
+
+            new Thread(creaLogTerapieTask).start();
+        }
+    }
 }

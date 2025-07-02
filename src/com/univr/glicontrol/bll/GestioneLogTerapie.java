@@ -5,13 +5,22 @@ import com.univr.glicontrol.dao.AccessoLogTerapieImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class GestioneLogTerapie {
     private List<LogTerapia> listaLogTerapia = new ArrayList<>();
     private final AccessoLogTerapie accessoLogTerapie = new AccessoLogTerapieImpl();
 
-    public GestioneLogTerapie() {
+    private GestioneLogTerapie() {
         aggiornaListaTerapie();
+    }
+
+    private static class Holder {
+        private static final GestioneLogTerapie INSTANCE = new GestioneLogTerapie();
+    }
+
+    public static GestioneLogTerapie getInstance() {
+        return Holder.INSTANCE;
     }
 
     private void aggiornaListaTerapie() {
@@ -35,13 +44,19 @@ public class GestioneLogTerapie {
         return listaLogTerapiaSpecifica;
     }
 
-    public boolean generaLogTerapia(Terapia terapia, int idMedico, String notePaziente, boolean nuovaTerapia) {
+    public boolean generaLogTerapia(Terapia terapia, int idMedico, boolean nuovaTerapia, boolean inseritaDalMedico) {
         // Verifica quali modifiche sono state apportate alla terapia rispetto all'ultimo log per quella terapia
         // Se non ci sono modifiche, imposta il campo come stringa vuota
 
-        LogTerapia ultimoLogPerTerapia = ottieniLogPerTerapiaSpecifica(terapia.getIdTerapia()).getLast();
-        String descrizioneModifiche = generaDescrizioneModifiche(terapia, nuovaTerapia);
-        if (ultimoLogPerTerapia.getDescrizioneModifiche().equals(descrizioneModifiche)) {
+        LogTerapia ultimoLogPerTerapia = null;
+        try {
+             ultimoLogPerTerapia = ottieniLogPerTerapiaSpecifica(terapia.getIdTerapia()).getLast();
+        } catch (NoSuchElementException e) {
+            System.out.println("Non è ancora presente alcun log per la terapia selezionata");
+        }
+
+        String descrizioneModifiche = generaDescrizioneModifiche(terapia, nuovaTerapia, inseritaDalMedico);
+        if (ultimoLogPerTerapia != null && ultimoLogPerTerapia.getDescrizioneModifiche().equals(descrizioneModifiche)) {
             descrizioneModifiche = "";
         }
 
@@ -54,13 +69,19 @@ public class GestioneLogTerapie {
         return success;
     }
 
-    private String generaDescrizioneModifiche(Terapia terapia, boolean nuovaTerapia) {
+    private String generaDescrizioneModifiche(Terapia terapia, boolean nuovaTerapia, boolean inseritaDalMedico) {
         ListaMedici lm = new ListaMedici();
+        ListaPazienti lp = new ListaPazienti();
         Medico medico = lm.ottieniMedicoPerId(terapia.getIdMedicoUltimaModifica());
         StringBuilder descrizioneModificheLogTerapia = new StringBuilder();
         descrizioneModificheLogTerapia.append("DESCRIZIONE:\n");
         if (nuovaTerapia) {
-            descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha inserito la terapia " + terapia.getNome() + "\n");
+            if (inseritaDalMedico) {
+                descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha inserito la terapia " + terapia.getNome() + "\n");
+            } else {
+                Paziente paziente = lp.getPazientePerId(terapia.getIdPaziente());
+                descrizioneModificheLogTerapia = new StringBuilder("Il paziente " + paziente.getNome() + " " + paziente.getCognome() + " (" + paziente.getCodiceFiscale() + ") ha inserito la terapia " + terapia.getNome() + "\n");
+            }
             descrizioneModificheLogTerapia.append("- Data inizio: ").append(terapia.getDataInizio()).append("\n");
             if (terapia.getDataFine() == null) {
                 descrizioneModificheLogTerapia.append("- Data fine: in corso\n");
@@ -83,12 +104,8 @@ public class GestioneLogTerapie {
             descrizioneModificheLogTerapia.append("  - Orari di assunzione: ").append(f.getIndicazioni().getOrariAssunzione()).append("\n");
         }
 
-        return descrizioneModificheLogTerapia.toString();
-    }
+        descrizioneModificheLogTerapia.append("NOTE: ").append(terapia.getNoteTerapia()).append("\n\n");
 
-    public String generaNotePazienteLogTerapia(Medico medico, String note) {
-        return "NOTE:\n" +
-                "- Medico: " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ")\n" +
-                "- Note: \n" + note + "\n";
+        return descrizioneModificheLogTerapia.toString();
     }
 }
