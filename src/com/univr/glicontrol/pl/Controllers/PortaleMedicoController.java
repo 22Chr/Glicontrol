@@ -81,7 +81,6 @@ public class PortaleMedicoController implements Portale, Controller {
 //            mappaPazientiAssociatiNotifiche.put(p, notifiche); //le associa al paziente
 //        }
 
-
         ObservableList<String> pazientiGenerici = FXCollections.observableArrayList();
         pazientiGenerici.addAll(upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente()));
         pazientiGenericiLV.setItems(pazientiGenerici);
@@ -478,13 +477,30 @@ public class PortaleMedicoController implements Portale, Controller {
     }
 
     public void aggiornaListaPazientiReferenteNotifiche() {
-        mappaPazientiAssociatiNotifiche.clear();
-        for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) {
-            Paziente p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente);
-            GestioneNotifiche gn = new GestioneNotifiche(p);
-            List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
-            mappaPazientiAssociatiNotifiche.put(p, notifiche);
-        }
-        Platform.runLater(() -> pazientiReferenteLV.refresh());
+        Task<Void> taskAggiornaNotifiche = new Task<>() {
+            @Override
+            protected Void call() {
+                Map<Paziente, List<Notifica>> nuovaMappa = new HashMap<>();
+
+                for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) {
+                    Paziente p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente);
+                    GestioneNotifiche gn = new GestioneNotifiche(p);
+                    List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
+                    nuovaMappa.put(p, notifiche);
+                }
+
+                // Aggiorna la mappa originale sul thread JavaFX
+                Platform.runLater(() -> {
+                    mappaPazientiAssociatiNotifiche.clear();
+                    mappaPazientiAssociatiNotifiche.putAll(nuovaMappa);
+                    pazientiReferenteLV.refresh();
+                });
+
+                return null;
+            }
+        };
+
+        new Thread(taskAggiornaNotifiche).start();
     }
+
 }
