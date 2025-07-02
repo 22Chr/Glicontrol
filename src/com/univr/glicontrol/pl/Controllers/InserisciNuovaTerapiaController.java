@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 
 public class InserisciNuovaTerapiaController implements Controller {
@@ -197,7 +198,9 @@ public class InserisciNuovaTerapiaController implements Controller {
             int idPatologia = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia();
             status = gt.inserisciTerapiaConcomitante(idPatologia, paziente.getMedicoRiferimento(), dataInizio, dataFine, noteTerapia, farmaciConIndicazioni, nomePatologia);
         }
+
         if (status == 1) {
+
 
             Alert successoInserimentoTerapiaAlert = new Alert(Alert.AlertType.INFORMATION);
             successoInserimentoTerapiaAlert.setTitle("System Information Service");
@@ -205,29 +208,30 @@ public class InserisciNuovaTerapiaController implements Controller {
             successoInserimentoTerapiaAlert.setContentText("La nuova terapia è stata inserita con successo");
             successoInserimentoTerapiaAlert.showAndWait();
 
-            ftpc.caricaTerapiePaziente();
+            new Thread(() -> ftpc.resetListaTerapie()).start();
 
             boolean inseritaDalMedico;
             if (ruoloAccesso.equals("medico")) {
                 inseritaDalMedico = true;
-                Platform.runLater(() -> {
+
+                new Thread(() -> {
                     try {
                         informaPazienteInserimentoTerapia();
                     } catch (MessagingException e) {
                         throw new RuntimeException(e);
                     }
-                });
+                }).start();
+
             } else {
                 inseritaDalMedico = false;
             }
 
-            creaLogTerapia(paziente, inseritaDalMedico);
+            GlicontrolCoreSystem.getInstance().creaLogTerapie(paziente, medicoUltimaModifica, true, inseritaDalMedico);
 
             Window currentWindow = dataInizioDP.getScene().getWindow();
             if (currentWindow instanceof Stage) {
                 ((Stage) currentWindow).close();
             }
-
 
         } else if (status == 0) {
 
@@ -246,19 +250,6 @@ public class InserisciNuovaTerapiaController implements Controller {
             dataInizioDP.setValue(null);
             dataFineDP.setValue(null);
         }
-    }
-
-    private void creaLogTerapia(Paziente paziente, boolean inseritaDalMedico) {
-        Task<Void> creaLogTerapia = new Task<>() {
-            @Override
-            protected Void call() {
-                GlicontrolCoreSystem.getInstance().creaLogTerapie(paziente, true, inseritaDalMedico);
-
-                return null;
-            }
-        };
-
-        new Thread(creaLogTerapia).start();
     }
 
     private Date ottieniDataInizioTerapia() {

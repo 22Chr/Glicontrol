@@ -283,6 +283,14 @@ public class FinestraTerapiePazienteController implements Controller {
         new Thread(loadingTerapieTask).start();
     }
 
+    public void resetListaTerapie() {
+        ObservableList<String> terapie = FXCollections.observableArrayList();
+        UtilityPortali newUp =  new UtilityPortali(paziente);
+        terapie.addAll(newUp.getListaTerapiePaziente());
+
+        Platform.runLater(() -> terapiePazienteLV.setItems(terapie));
+    }
+
     public void aggiungiFarmaciAllaTerapia() {
         if (indicazioniFarmacoGP.isVisible()) {
             indicazioniFarmacoGP.setVisible(false);
@@ -485,4 +493,5 @@ public class FinestraTerapiePazienteController implements Controller {
             }
         }
     }
+
 }

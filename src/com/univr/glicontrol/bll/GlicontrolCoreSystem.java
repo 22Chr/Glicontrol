@@ -561,26 +561,24 @@ public class GlicontrolCoreSystem {
 
 
     // CREA I LOG PER LE TERAPIE
-    public void creaLogTerapie(Paziente paziente, boolean nuovaTerapia, boolean inseritaDalMedico) {
+    public void creaLogTerapie(Paziente paziente, Medico medico, boolean nuovaTerapia, boolean inseritaDalMedico) {
 
         GestioneTerapie gt = new GestioneTerapie(paziente);
         Terapia terapiaSelezionata = gt.getTerapiePaziente().getLast();
 
-        if (terapiaSelezionata != null) {
-            Task<Void> creaLogTerapieTask = new Task<>() {
+        Task<Void> creaLogTerapieTask = new Task<>() {
 
-                @Override
-                protected Void call() {
-                    boolean success = GestioneLogTerapie.getInstance().generaLogTerapia(terapiaSelezionata, terapiaSelezionata.getIdMedicoUltimaModifica(), nuovaTerapia, inseritaDalMedico);
-                    if (!success) {
-                        System.err.println("Si è verificato un errore durante la generazione del log per la terapia selezionata");
-                    }
-
-                    return null;
+            @Override
+            protected Void call() {
+                boolean success = GestioneLogTerapie.getInstance().generaLogTerapia(terapiaSelezionata, medico, paziente, nuovaTerapia, inseritaDalMedico);
+                if (!success) {
+                    System.err.println("Si è verificato un errore durante la generazione del log per la terapia selezionata");
                 }
-            };
 
-            new Thread(creaLogTerapieTask).start();
-        }
+                return null;
+            }
+        };
+
+        new Thread(creaLogTerapieTask).start();
     }
 }
