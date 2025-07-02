@@ -67,7 +67,7 @@ public class PortalePazienteController implements Portale, Controller {
         badgeCircle.setStyle("-fx-border-color: #ff0404;");
 
         //Gestione del bottone visulizzazione per switchare tra i vari grafici
-        visualizzazioneT.setOnAction(e -> aggiornaGrafico());
+        visualizzazioneT.setOnAction(e -> cambiaModalitàGrafico());
 
         // Gestione colorazione livelli glicemici per il paziente su base odierna
         gestione = new GestioneRilevazioniGlicemia(paziente);
@@ -271,11 +271,17 @@ public class PortalePazienteController implements Portale, Controller {
 
         andamentoGlicemiaLC.getData().add(serie);
 
+    }
+
+    public void cambiaModalitàGrafico(){
+
         visualizzazioneAttuale = switch (visualizzazioneAttuale) {
-            case MENSILE -> ModalitaVisualizzazione.SETTIMANALE;
-            case SETTIMANALE -> ModalitaVisualizzazione.GIORNALIERA;
-            case GIORNALIERA -> ModalitaVisualizzazione.MENSILE;
+            case MENSILE -> ModalitaVisualizzazione.GIORNALIERA;
+            case GIORNALIERA -> ModalitaVisualizzazione.SETTIMANALE;
+            case SETTIMANALE -> ModalitaVisualizzazione.MENSILE;
         };
+
+        aggiornaGrafico();
     }
 
     public void openAssunzioneFarmaci() {
