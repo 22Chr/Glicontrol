@@ -1,34 +1,34 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoLogTerapie;
-import com.univr.glicontrol.dao.AccessoLogTerapieImpl;
+import com.univr.glicontrol.dao.AccessoLog;
+import com.univr.glicontrol.dao.AccessoLogImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class GestioneLogTerapie {
+public class GestioneLog {
     private List<LogTerapia> listaLogTerapia = new ArrayList<>();
-    private final AccessoLogTerapie accessoLogTerapie = new AccessoLogTerapieImpl();
+    private final AccessoLog accessoLog = new AccessoLogImpl();
 
-    private GestioneLogTerapie() {
-        aggiornaListaTerapie();
+    private GestioneLog() {
+        aggiornaListaLogTerapie();
     }
 
     private static class Holder {
-        private static final GestioneLogTerapie INSTANCE = new GestioneLogTerapie();
+        private static final GestioneLog INSTANCE = new GestioneLog();
     }
 
-    public static GestioneLogTerapie getInstance() {
+    public static GestioneLog getInstance() {
         return Holder.INSTANCE;
     }
 
-    private void aggiornaListaTerapie() {
-        this.listaLogTerapia = accessoLogTerapie.getListaLogTerapie();
+    private void aggiornaListaLogTerapie() {
+        this.listaLogTerapia = accessoLog.getListaLogTerapie();
     }
 
    public List<LogTerapia> getListaLogTerapia() {
-        aggiornaListaTerapie();
+        aggiornaListaLogTerapie();
         return listaLogTerapia;
    }
 
@@ -42,29 +42,6 @@ public class GestioneLogTerapie {
         }
 
         return listaLogTerapiaSpecifica;
-    }
-
-    public boolean generaLogTerapia(Terapia terapia, Medico medico, Paziente paziente, boolean nuovaTerapia, boolean inseritaDalMedico) {
-        // Verifica quali modifiche sono state apportate alla terapia rispetto all'ultimo log per quella terapia
-        // Se non ci sono modifiche, imposta il campo come stringa vuota
-
-        LogTerapia ultimoLogPerTerapia = null;
-        try {
-             ultimoLogPerTerapia = ottieniLogPerTerapiaSpecifica(terapia.getIdTerapia()).getLast();
-        } catch (NoSuchElementException _) {}
-
-        String descrizioneModifiche = generaDescrizioneModifiche(terapia, medico, paziente, nuovaTerapia, inseritaDalMedico);
-        if (ultimoLogPerTerapia != null && ultimoLogPerTerapia.getDescrizioneModifiche().equals(descrizioneModifiche)) {
-            descrizioneModifiche = "";
-        }
-
-        boolean success = accessoLogTerapie.insertLogTerapia(terapia.getIdTerapia(), terapia.getIdMedicoUltimaModifica(), descrizioneModifiche, terapia.getNoteTerapia());
-
-        if (success) {
-            aggiornaListaTerapie();
-        }
-
-        return success;
     }
 
     private String generaDescrizioneModifiche(Terapia terapia, Medico medico, Paziente paziente, boolean nuovaTerapia, boolean inseritaDalMedico) {
@@ -83,7 +60,7 @@ public class GestioneLogTerapie {
                 descrizioneModificheLogTerapia.append("- Data fine: ").append(terapia.getDataFine()).append("\n");
             }
         } else {
-            descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha apportato le seguenti modifiche alla terapia " + terapia.getNome() + "\n");
+            descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha apportato le seguenti modifiche alla terapia " + terapia.getNome() + ":\n");
         }
 
         if (terapia.getDataFine() != null) {
@@ -102,4 +79,29 @@ public class GestioneLogTerapie {
 
         return descrizioneModificheLogTerapia.toString();
     }
+
+    public boolean generaLogTerapia(Terapia terapia, Medico medico, Paziente paziente, boolean nuovaTerapia, boolean inseritaDalMedico) {
+        // Verifica quali modifiche sono state apportate alla terapia rispetto all'ultimo log per quella terapia
+        // Se non ci sono modifiche, imposta il campo come stringa vuota
+
+        LogTerapia ultimoLogPerTerapia = null;
+        try {
+             ultimoLogPerTerapia = ottieniLogPerTerapiaSpecifica(terapia.getIdTerapia()).getFirst();
+        } catch (NoSuchElementException _) {}
+
+        String descrizioneModifiche = generaDescrizioneModifiche(terapia, medico, paziente, nuovaTerapia, inseritaDalMedico);
+        if (ultimoLogPerTerapia != null && ultimoLogPerTerapia.getDescrizione().equals(descrizioneModifiche)) {
+            descrizioneModifiche = "Non è stata apportata alcuna modifica rispetto all'ultimo log";
+        }
+
+        boolean success = accessoLog.insertLogTerapia(terapia.getIdTerapia(), terapia.getIdMedicoUltimaModifica(), descrizioneModifiche, terapia.getNoteTerapia());
+
+        if (success) {
+            aggiornaListaLogTerapie();
+        }
+
+        return success;
+    }
+
+
 }

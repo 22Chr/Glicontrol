@@ -560,25 +560,38 @@ public class GlicontrolCoreSystem {
     }
 
 
-    // CREA I LOG PER LE TERAPIE
-    public void creaLogTerapie(Paziente paziente, Medico medico, boolean nuovaTerapia, boolean inseritaDalMedico) {
+    // GENERA I LOG DI SISTEMA PER TENER TRACCIA DI QUALE MEDICO ABBIA MODIFICATO COSA
+    public void generaLog(Log tipoLog, Paziente paziente, Medico medico, boolean nuovaTerapia, boolean inseritaDalMedico) {
 
-        GestioneTerapie gt = new GestioneTerapie(paziente);
-        Terapia terapiaSelezionata = gt.getTerapiePaziente().getLast();
+        switch (tipoLog) {
+            case TERAPIA -> {
+                GestioneTerapie gt = new GestioneTerapie(paziente);
+                Terapia terapiaSelezionata = gt.getTerapiePaziente().getLast();
 
-        Task<Void> creaLogTerapieTask = new Task<>() {
+                Task<Void> creaLogTerapieTask = new Task<>() {
 
-            @Override
-            protected Void call() {
-                boolean success = GestioneLogTerapie.getInstance().generaLogTerapia(terapiaSelezionata, medico, paziente, nuovaTerapia, inseritaDalMedico);
-                if (!success) {
-                    System.err.println("Si è verificato un errore durante la generazione del log per la terapia selezionata");
-                }
+                    @Override
+                    protected Void call() {
+                        boolean success = GestioneLog.getInstance().generaLogTerapia(terapiaSelezionata, medico, paziente, nuovaTerapia, inseritaDalMedico);
+                        if (!success) {
+                            System.err.println("Si è verificato un errore durante la generazione del log per la terapia selezionata");
+                        }
 
-                return null;
+                        return null;
+                    }
+                };
+                new Thread(creaLogTerapieTask).start();
             }
-        };
 
-        new Thread(creaLogTerapieTask).start();
+
+            case PATOLOGIA_CONCOMITANTE -> {
+
+            }
+
+
+            case INFO_PAZIENTE -> {
+
+            }
+        }
     }
 }

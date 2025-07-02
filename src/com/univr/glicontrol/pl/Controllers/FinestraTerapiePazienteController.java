@@ -37,6 +37,7 @@ public class FinestraTerapiePazienteController implements Controller {
     private PortaleMedicoController pmc = null;
     private PortalePazienteController ppc = null;
     private Paziente paziente;
+    private Medico medicoSessione;
     UtilityPortali upp;
     private Terapia terapia = null;
     private GestioneTerapie gt = null;
@@ -230,8 +231,8 @@ public class FinestraTerapiePazienteController implements Controller {
             pmc = (PortaleMedicoController) controller;
 
             medicoUltimaModificaTF.setVisible(true);
-            Medico m = new UtilityPortali().getMedicoSessione();
-            medicoUltimaModificaTF.setText("Modificata l'ultima volta dal medico " + m.getCognome() + " " + m.getNome() + " (" + m.getCodiceFiscale() + ")");
+            medicoSessione = new UtilityPortali().getMedicoSessione();
+            medicoUltimaModificaTF.setText("Modificata l'ultima volta dal medico " + medicoSessione.getCognome() + " " + medicoSessione.getNome() + " (" + medicoSessione.getCodiceFiscale() + ")");
 
         } else if  (controller instanceof PortalePazienteController) {
             ppc = (PortalePazienteController) controller;
@@ -401,6 +402,8 @@ public class FinestraTerapiePazienteController implements Controller {
             successoAggiornamentoTerapiaAlert.setHeaderText("Aggiornamento avvenuto con successo");
             successoAggiornamentoTerapiaAlert.setContentText("La terapia è stata aggiornata correttamente");
             successoAggiornamentoTerapiaAlert.showAndWait();
+
+            GlicontrolCoreSystem.getInstance().generaLog(Log.TERAPIA, paziente, medicoSessione, false, false);
 
             salvaModificheTerapiaB.setVisible(false);
 

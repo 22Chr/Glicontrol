@@ -4,7 +4,6 @@ import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import jakarta.mail.MessagingException;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 
 public class InserisciNuovaTerapiaController implements Controller {
@@ -226,7 +224,7 @@ public class InserisciNuovaTerapiaController implements Controller {
                 inseritaDalMedico = false;
             }
 
-            GlicontrolCoreSystem.getInstance().creaLogTerapie(paziente, medicoUltimaModifica, true, inseritaDalMedico);
+            GlicontrolCoreSystem.getInstance().generaLog(Log.TERAPIA, paziente, medicoUltimaModifica, true, inseritaDalMedico);
 
             Window currentWindow = dataInizioDP.getScene().getWindow();
             if (currentWindow instanceof Stage) {

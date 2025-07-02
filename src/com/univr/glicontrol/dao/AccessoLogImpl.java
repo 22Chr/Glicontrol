@@ -1,5 +1,7 @@
 package com.univr.glicontrol.dao;
 
+import com.univr.glicontrol.bll.LogInfoPaziente;
+import com.univr.glicontrol.bll.LogPatologie;
 import com.univr.glicontrol.bll.LogTerapia;
 
 import java.sql.*;
@@ -7,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccessoLogTerapieImpl implements AccessoLogTerapie {
+public class AccessoLogImpl implements AccessoLog {
     private final String url = "jdbc:mysql://localhost:3306/glicontrol";
     private final String user = "root";
     private final String pwd = "Sitecom12";
@@ -39,7 +41,7 @@ public class AccessoLogTerapieImpl implements AccessoLogTerapie {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO TABELLA LOG TERAPIE]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO TABELLA LOG TERAPIE]: " + e.getMessage());
         }
 
         // ritorna la lista capovolta, quindi con i log più recenti in cima
@@ -74,6 +76,55 @@ public class AccessoLogTerapieImpl implements AccessoLogTerapie {
         }
 
         return success;
+    }
+
+    @Override
+    public List<LogInfoPaziente> getListaLogInfoPaziente() {
+        List<LogInfoPaziente> listaLogInfoPaziente = new ArrayList<>();
+        String getListaLogInfoPazienteSql = "select * from LogInfoPaziente";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            PreparedStatement recuperaLogInfoPazientiStmt = conn.prepareStatement(getListaLogInfoPazienteSql);
+
+            try (ResultSet rs = recuperaLogInfoPazientiStmt.executeQuery()) {
+                while (rs.next()) {
+                    listaLogInfoPaziente.add(new LogInfoPaziente(
+                            rs.getInt("id_log_info"),
+                            rs.getInt("id_medico"),
+                            rs.getInt("id_paziente"),
+                            rs.getString("descrizione_modifiche_info"),
+                            rs.getTimestamp("timestamp")
+                    ));
+                }
+            }
+
+            recuperaLogInfoPazientiStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERRORE RECUPERO TABELLA LOG INFO PAZIENTI]: " + e.getMessage());
+        }
+
+        return listaLogInfoPaziente.reversed();
+    }
+
+    @Override
+    public boolean insertLogInfoPaziente(int idMedico, int idPaziente, String descrizione) {
+        // TODO
+        return false;
+    }
+
+    @Override
+    public List<LogPatologie> getListaLogPatologie() {
+        // TODO
+        return List.of();
+    }
+
+    @Override
+    public boolean insertLogPatologie(int idPatologia, int idMedico, String descrizione) {
+        // TODO
+        return false;
     }
 
 }
