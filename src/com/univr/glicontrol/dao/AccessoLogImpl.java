@@ -72,7 +72,7 @@ public class AccessoLogImpl implements AccessoLog {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT]: " + e.getMessage());
+            System.out.println("[ERRORE INSERT LOG TERAPIA]: " + e.getMessage());
         }
 
         return success;
@@ -132,7 +132,7 @@ public class AccessoLogImpl implements AccessoLog {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT]: " + e.getMessage());
+            System.out.println("[ERRORE INSERT LOG INFO PAZIENTE]: " + e.getMessage());
         }
 
         return success;
@@ -193,7 +193,7 @@ public class AccessoLogImpl implements AccessoLog {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT]: " + e.getMessage());
+            System.out.println("[ERRORE INSERT LOG PATOLOGIA]: " + e.getMessage());
         }
 
         return success;

@@ -3,6 +3,9 @@ package com.univr.glicontrol.bll;
 import com.univr.glicontrol.dao.AccessoLog;
 import com.univr.glicontrol.dao.AccessoLogImpl;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,7 +36,7 @@ public class GestioneLog {
 
    public List<LogTerapia> getListaLogTerapia() {
         aggiornaListaLogTerapie();
-        return listaLogTerapia;
+        return listaLogTerapia.reversed();
    }
 
     public List<LogTerapia> ottieniLogPerTerapiaSpecifica(int idTerapia) {
@@ -45,17 +48,17 @@ public class GestioneLog {
             }
         }
 
-        return listaLogTerapiaSpecifica;
+        return listaLogTerapiaSpecifica.reversed();
     }
 
-    private String generaDescrizioneModifiche(Terapia terapia, Medico medico, Paziente paziente, boolean nuovaTerapia, boolean inseritaDalMedico) {
-        StringBuilder descrizioneModificheLogTerapia = new StringBuilder();
-        descrizioneModificheLogTerapia.append("DESCRIZIONE:\n");
+    private String generaDescrizioneTerapia(Terapia terapia, Medico medico, Paziente paziente, boolean nuovaTerapia, boolean inseritaDalMedico) {
+        StringBuilder descrizioneModificheLogTerapia = new StringBuilder("DESCRIZIONE:\n");
+
         if (nuovaTerapia) {
             if (inseritaDalMedico) {
-                descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha inserito la terapia " + terapia.getNome() + "\n");
+                descrizioneModificheLogTerapia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha inserito la terapia ").append(terapia.getNome()).append("\n");
             } else {
-                descrizioneModificheLogTerapia = new StringBuilder("Il paziente " + paziente.getNome() + " " + paziente.getCognome() + " (" + paziente.getCodiceFiscale() + ") ha inserito la terapia " + terapia.getNome() + "\n");
+                descrizioneModificheLogTerapia.append("Il paziente ").append(paziente.getNome()).append(" ").append(paziente.getCognome()).append(" (").append(paziente.getCodiceFiscale()).append(") ha inserito la terapia ").append(terapia.getNome()).append("\n");
             }
             descrizioneModificheLogTerapia.append("- Data inizio: ").append(terapia.getDataInizio()).append("\n");
             if (terapia.getDataFine() == null) {
@@ -64,7 +67,7 @@ public class GestioneLog {
                 descrizioneModificheLogTerapia.append("- Data fine: ").append(terapia.getDataFine()).append("\n");
             }
         } else {
-            descrizioneModificheLogTerapia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha apportato le seguenti modifiche alla terapia " + terapia.getNome() + ":\n");
+            descrizioneModificheLogTerapia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha apportato le seguenti modifiche alla terapia ").append(terapia.getNome()).append(":\n");
         }
 
         if (terapia.getDataFine() != null) {
@@ -93,7 +96,7 @@ public class GestioneLog {
              ultimoLogPerTerapia = ottieniLogPerTerapiaSpecifica(terapia.getIdTerapia()).getFirst();
         } catch (NoSuchElementException _) {}
 
-        String descrizioneModifiche = generaDescrizioneModifiche(terapia, medico, paziente, nuovaTerapia, inseritaDalMedico);
+        String descrizioneModifiche = generaDescrizioneTerapia(terapia, medico, paziente, nuovaTerapia, inseritaDalMedico);
         if (ultimoLogPerTerapia != null && ultimoLogPerTerapia.getDescrizione().equals(descrizioneModifiche)) {
             descrizioneModifiche = "Non è stata apportata alcuna modifica rispetto all'ultimo log";
         }
@@ -115,7 +118,7 @@ public class GestioneLog {
 
     public List<LogPatologie> getListaLogPatologie() {
         aggiornaListaLogPatologie();
-        return listaLogPatologie;
+        return listaLogPatologie.reversed();
     }
 
     public List<LogPatologie> ottieniLogPerPatologiaSpecifica(int idPatologia) {
@@ -127,33 +130,30 @@ public class GestioneLog {
             }
         }
 
-        return listaLogPatologiaSpecifica;
+        return listaLogPatologiaSpecifica.reversed();
     }
 
-    private String generaDescrizioneCreazione(PatologiaConcomitante patologia, Medico medico, Paziente paziente, boolean nuovaPatologia, boolean inseritaDalMedico) {
-        StringBuilder descrizioneCreazioneLogPatologia = new StringBuilder();
-        descrizioneCreazioneLogPatologia.append("DESCRIZIONE:\n");
-        if (nuovaPatologia) {
+    private String generaDescrizionePatologia(PatologiaConcomitante patologia, Medico medico, Paziente paziente, boolean nuova, boolean inseritaDalMedico) {
+        StringBuilder descrizioneLogPatologia = new StringBuilder("DESCRIZIONE:\n");
+
+        if (nuova) {
             if (inseritaDalMedico) {
-                descrizioneCreazioneLogPatologia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha inserito la patologia " + patologia.getNomePatologia() + "\n");
+                descrizioneLogPatologia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha inserito la patologia ").append(patologia.getNomePatologia()).append(" per il paziente ").append(paziente.getNome()).append(" ").append(paziente.getCognome()).append("( ").append(paziente.getCodiceFiscale()).append(")\n");
             } else {
-                descrizioneCreazioneLogPatologia = new StringBuilder("Il paziente " + paziente.getNome() + " " + paziente.getCognome() + " (" + paziente.getCodiceFiscale() + ") ha inserito la patologia " + patologia.getNomePatologia() + "\n");
+                descrizioneLogPatologia.append("Il paziente ").append(paziente.getNome()).append(" ").append(paziente.getCognome()).append(" (").append(paziente.getCodiceFiscale()).append(") ha inserito la patologia ").append(patologia.getNomePatologia()).append("\n");
             }
-            descrizioneCreazioneLogPatologia.append("- Data inizio: ").append(patologia.getDataInizio()).append("\n");
+            descrizioneLogPatologia.append("- Data inizio: ").append(patologia.getDataInizio()).append("\n");
             if (patologia.getDataFine() == null) {
-                descrizioneCreazioneLogPatologia.append("- Data fine: in corso\n");
+                descrizioneLogPatologia.append("- Data fine: in corso\n");
             } else {
-                descrizioneCreazioneLogPatologia.append("- Data fine: ").append(patologia.getDataFine()).append("\n");
+                descrizioneLogPatologia.append("- Data fine: ").append(patologia.getDataFine()).append("\n");
             }
         } else {
-            descrizioneCreazioneLogPatologia = new StringBuilder("Il medico " + medico.getNome() + " " + medico.getCognome() + " (" + medico.getCodiceFiscale() + ") ha apportato le seguenti modifiche alla patologia " + patologia.getNomePatologia() + ":\n");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            descrizioneLogPatologia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha segnalato la patologia come conclussa in data ").append(Date.valueOf(LocalDate.now().format(formatter))).append("\n");
         }
 
-        if (patologia.getDataFine() != null) {
-            descrizioneCreazioneLogPatologia.append("- Data fine: ").append(patologia.getDataFine()).append("\n");
-        }
-
-        return descrizioneCreazioneLogPatologia.toString();
+        return descrizioneLogPatologia.toString();
     }
 
     public boolean generaLogPatologia(PatologiaConcomitante patologia, Medico medico, Paziente paziente, boolean nuovaPatologia, boolean inseritaDalMedico) {
@@ -165,11 +165,10 @@ public class GestioneLog {
             ultimoLogPerPatologia = ottieniLogPerPatologiaSpecifica(patologia.getIdPatologia()).getFirst();
         } catch (NoSuchElementException _) {}
 
-        String descrizioneModifiche = generaDescrizioneCreazione(patologia, medico, paziente, nuovaPatologia, inseritaDalMedico);
+        String descrizioneModifiche = generaDescrizionePatologia(patologia, medico, paziente, nuovaPatologia, inseritaDalMedico);
         if (ultimoLogPerPatologia != null && ultimoLogPerPatologia.getDescrizione().equals(descrizioneModifiche)) {
             descrizioneModifiche = "Non è stata apportata alcuna modifica rispetto all'ultimo log";
         }
-        //TODO insicura
 
         boolean success = accessoLog.insertLogPatologie(patologia.getIdPatologia(), medico.getIdUtente(), descrizioneModifiche);
 
@@ -188,8 +187,77 @@ public class GestioneLog {
 
     public List<LogInfoPaziente> getListaLogInfoPaziente() {
         aggiornaListaLogInfoPaziente();
-        return listaLogInfoPaziente;
+        return listaLogInfoPaziente.reversed();
     }
 
-    //TODO metodi mancanti
+    public List<LogInfoPaziente> ottieniLogPerInfoPazienteSpecificata(int idPaziente) {
+        List<LogInfoPaziente> listaLogInfoPazienteSpecifica = new ArrayList<>();
+
+        for (LogInfoPaziente logInfoPaziente : listaLogInfoPaziente) {
+            if (logInfoPaziente.getIdPaziente() == idPaziente) {
+                listaLogInfoPazienteSpecifica.add(logInfoPaziente);
+            }
+        }
+
+        return listaLogInfoPazienteSpecifica.reversed();
+    }
+
+    private String generaDescrizioneInfoPaziente(Medico medico, Paziente paziente, boolean inseriteDalMedico) {
+        StringBuilder descrizioneLogInfoPaziente = new StringBuilder("DESCRIZIONE:\n");
+        FattoriRischio fattoriRischio = new GestioneFattoriRischio().getFattoriRischio(paziente.getIdUtente());
+        GestionePasti gp = new GestionePasti(paziente);
+
+        if (inseriteDalMedico) {
+            descrizioneLogInfoPaziente.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ").append("ha modificato le informazioni del paziente:\n");
+        } else {
+            descrizioneLogInfoPaziente.append("Il paziente ").append(paziente.getNome()).append(" ").append(paziente.getCognome()).append(" (").append(paziente.getCodiceFiscale()).append(") ").append("ha modificato le sue informazioni:\n");
+        }
+
+        descrizioneLogInfoPaziente.append("ANAGRAFICA:\n");
+        descrizioneLogInfoPaziente.append("Email: ").append(paziente.getEmail()).append("\n");
+        descrizioneLogInfoPaziente.append("Altezza: ").append(paziente.getAltezza()).append("\n");
+        descrizioneLogInfoPaziente.append("Peso: ").append(paziente.getPeso()).append("\n\n");
+
+        descrizioneLogInfoPaziente.append("FATTORI DI RISCHIO PRINCIPALI:\n");
+        if (fattoriRischio.getFumatore() == 1) descrizioneLogInfoPaziente.append("Fumatore\n");
+        if (fattoriRischio.getProblemiAlcol() == 1) descrizioneLogInfoPaziente.append("Problemi di alcolismo\n");
+        if (fattoriRischio.getFamiliarita() == 1) descrizioneLogInfoPaziente.append("Familiarità con il diabete\n");
+        if (fattoriRischio.getSedentarieta() == 1) descrizioneLogInfoPaziente.append("Vita sedentaria\n");
+        if (fattoriRischio.getAlimentazioneScorretta() == 1) descrizioneLogInfoPaziente.append("Alimentazione scorretta\n");
+        if (fattoriRischio.getObesita()) descrizioneLogInfoPaziente.append("Obesità\n\n");
+
+        if (!paziente.getAllergie().isEmpty()) {
+            descrizioneLogInfoPaziente.append("ALLERGIE A FARMACI:\n");
+            descrizioneLogInfoPaziente.append(paziente.getAllergie()).append("\n\n");
+        }
+
+        descrizioneLogInfoPaziente.append("PASTI:\n");
+        for (Pasto pasto : gp.getPasti()) {
+            descrizioneLogInfoPaziente.append(pasto.getNomePasto()).append(" - ").append(pasto.getOrario()).append("\n");
+        }
+        descrizioneLogInfoPaziente.append("\n");
+
+        return descrizioneLogInfoPaziente.toString();
+    }
+
+    public boolean generaLogInfoPaziente(Medico medico, Paziente paziente, boolean inseriteDalMedico) {
+
+        LogInfoPaziente ultimoLogInfo = null;
+        try {
+            ultimoLogInfo = ottieniLogPerInfoPazienteSpecificata(paziente.getIdUtente()).getFirst();
+        } catch (NoSuchElementException _) {}
+
+        String descrizioneInfoPaziente = generaDescrizioneInfoPaziente(medico, paziente, inseriteDalMedico);
+        if (ultimoLogInfo != null && ultimoLogInfo.getDescrizione().equals(descrizioneInfoPaziente)) {
+            descrizioneInfoPaziente = "Non è stata apportata alcuna modifica rispetto all'ultimo log";
+        }
+
+        boolean success = accessoLog.insertLogInfoPaziente(medico.getIdUtente(), paziente.getIdUtente(), descrizioneInfoPaziente);
+
+        if (success) {
+            aggiornaListaLogInfoPaziente();
+        }
+
+        return success;
+    }
 }

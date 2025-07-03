@@ -9,4 +9,8 @@ public class LogInfoPaziente extends LogSistema {
         super(idLog, idMedico, descrizione, timestamp);
         this.idPaziente = idPaziente;
     }
+
+    public int getIdPaziente() {
+        return idPaziente;
+    }
 }

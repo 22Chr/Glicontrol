@@ -138,6 +138,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
         fattoriRischioAggiornati.setFamiliarita(familiaritaCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setSedentarieta(sedentarietaCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setAlimentazioneScorretta(alimentazioneCB.isSelected() ? 1 : 0);
+        fattoriRischioAggiornati.setObesita(GlicontrolCoreSystem.getInstance().isObeso(paziente));
 
         AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
 

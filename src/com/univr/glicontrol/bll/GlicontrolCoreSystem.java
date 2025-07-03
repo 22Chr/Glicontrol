@@ -564,18 +564,18 @@ public class GlicontrolCoreSystem {
 
 
     // GENERA I LOG DI SISTEMA PER TENER TRACCIA DI QUALE MEDICO ABBIA MODIFICATO COSA
-    public void generaLog(Log tipoLog, Paziente paziente, Medico medico, boolean nuovaTerapia, boolean inseritaDalMedico) {
+    public void generaLog(Log tipoLog, Paziente paziente, Medico medico, boolean nuovo, boolean inseritaDalMedico) {
 
         switch (tipoLog) {
             case TERAPIA -> {
                 GestioneTerapie gt = new GestioneTerapie(paziente);
-                Terapia terapiaSelezionata = gt.getTerapiePaziente().getLast();
+                Terapia terapiaSelezionata = gt.getTerapiePaziente().getFirst();
 
                 Task<Void> creaLogTerapieTask = new Task<>() {
 
                     @Override
                     protected Void call() {
-                        boolean success = GestioneLog.getInstance().generaLogTerapia(terapiaSelezionata, medico, paziente, nuovaTerapia, inseritaDalMedico);
+                        boolean success = GestioneLog.getInstance().generaLogTerapia(terapiaSelezionata, medico, paziente, nuovo, inseritaDalMedico);
                         if (!success) {
                             System.err.println("Si è verificato un errore durante la generazione del log per la terapia selezionata");
                         }
@@ -591,15 +591,35 @@ public class GlicontrolCoreSystem {
                 GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
                 PatologiaConcomitante patologiaSelezionata = gpc.getListaPatologieConcomitanti().getLast();
 
-//                Task<Void> creaLogPatologieTask = new Task<>() {
-//                    //TODO: insicura su come fare in quanto nuovaPatologia non viene passato in input
-//                };
+                Task<Void> creaLogPatologieTask = new Task<>() {
 
+                    @Override
+                    protected Void call() {
+                        boolean success = GestioneLog.getInstance().generaLogPatologia(patologiaSelezionata, medico, paziente, nuovo, inseritaDalMedico);
+                        if (!success) {
+                            System.err.println("Si è verificato un errore durante la generazione del log per la patologia selezionata");
+                        }
+
+                        return null;
+                    }
+                };
+                new Thread(creaLogPatologieTask).start();
             }
 
 
             case INFO_PAZIENTE -> {
+                Task<Void> creaLogPazienteTask = new Task<>() {
+                    @Override
+                    protected Void call() {
+                        boolean success = GestioneLog.getInstance().generaLogInfoPaziente(medico, paziente, inseritaDalMedico);
+                        if (!success) {
+                            System.err.println("Si è verificato un errore durante la generazione del log inerente le info del paziente selezionate");
+                        }
 
+                        return null;
+                    }
+                };
+                new Thread(creaLogPazienteTask).start();
             }
         }
     }
