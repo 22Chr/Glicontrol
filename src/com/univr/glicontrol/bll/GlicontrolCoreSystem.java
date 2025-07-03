@@ -552,7 +552,10 @@ public class GlicontrolCoreSystem {
                 for (Paziente paziente : listaPazienti.getListaCompletaPazienti()) {
                     GestioneNotifiche gestioneNotificheMonitor = new GestioneNotifiche(paziente);
                     if (!gestioneNotificheMonitor.getNotificheNonVisualizzate().isEmpty()) {
-                        Platform.runLater(mostraPresenzaNotifiche::notificaPresenzaNotificheNonVisualizzate);
+                        Platform.runLater(()->{
+                            mostraPresenzaNotifiche.notificaPresenzaNotificheNonVisualizzate();
+                            pmc.aggiornaListaPazientiReferenteNotifiche();
+                        });
                     }
                 }
             }
@@ -585,6 +588,12 @@ public class GlicontrolCoreSystem {
 
 
             case PATOLOGIA_CONCOMITANTE -> {
+                GestionePatologieConcomitanti gpc = new GestionePatologieConcomitanti(paziente);
+                PatologiaConcomitante patologiaSelezionata = gpc.getListaPatologieConcomitanti().getLast();
+
+//                Task<Void> creaLogPatologieTask = new Task<>() {
+//                    //TODO: insicura su come fare in quanto nuovaPatologia non viene passato in input
+//                };
 
             }
 

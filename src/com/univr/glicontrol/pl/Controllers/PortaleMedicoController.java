@@ -81,6 +81,7 @@ public class PortaleMedicoController implements Portale, Controller {
 //            mappaPazientiAssociatiNotifiche.put(p, notifiche); //le associa al paziente
 //        }
 
+
         ObservableList<String> pazientiGenerici = FXCollections.observableArrayList();
         pazientiGenerici.addAll(upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente()));
         pazientiGenericiLV.setItems(pazientiGenerici);

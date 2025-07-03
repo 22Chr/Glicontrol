@@ -111,20 +111,92 @@ public class AccessoLogImpl implements AccessoLog {
 
     @Override
     public boolean insertLogInfoPaziente(int idMedico, int idPaziente, String descrizione) {
-        // TODO
-        return false;
+        boolean success = false;
+        String addLogInfoPazienteSql = "insert into LogInfoPaziente (id_log_info, id_medico, id_paziente, descrizione_modifiche_info, timestamp) values (?, ?, ?, ?, ?)";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            PreparedStatement addLogInfoPazienteStmt = conn.prepareStatement(addLogInfoPazienteSql);
+            addLogInfoPazienteStmt.setInt(1, idMedico);
+            addLogInfoPazienteStmt.setInt(2, idPaziente);
+            addLogInfoPazienteStmt.setString(3, descrizione);
+            addLogInfoPazienteStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+
+            if (addLogInfoPazienteStmt.executeUpdate() != 0) {
+                success = true;
+            } else {
+                System.out.println("[ERRORE INSERT LOG INFO PAZIENTE]: Impossibile inserire i log per questa info paziente");
+            }
+
+            addLogInfoPazienteStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("[ERRORE INSERT]: " + e.getMessage());
+        }
+
+        return success;
     }
 
     @Override
     public List<LogPatologie> getListaLogPatologie() {
-        // TODO
-        return List.of();
+        List<LogPatologie> listaLogPatologie = new ArrayList<>();
+        String getListaLogPatologieSql = "select * from LogPatologie";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            PreparedStatement recuperaLogPatologieStmt = conn.prepareStatement(getListaLogPatologieSql);
+
+            try (ResultSet rs = recuperaLogPatologieStmt.executeQuery()) {
+                while (rs.next()) {
+                    listaLogPatologie.add(new LogPatologie(
+                            rs.getInt("id_log_patologie"),
+                            rs.getInt("id_patologia_inserita"),
+                            rs.getInt("id_medico"),
+                            rs.getString("descrizione_creazione"),
+                            rs.getTimestamp("timestamp")
+                    ));
+                }
+            }
+
+            recuperaLogPatologieStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("[ERRORE RECUPERO TABELLA LOG PATOLOGIE]: " + e.getMessage());
+        }
+
+        // ritorna la lista capovolta, quindi con i log più recenti in cima
+        return listaLogPatologie.reversed();
     }
 
     @Override
     public boolean insertLogPatologie(int idPatologia, int idMedico, String descrizione) {
-        // TODO
-        return false;
+        boolean success = false;
+        String addLogPatologieSql = "insert into LogPatologie (id_patologia_inserita, id_medico, descrizione_creazione, timestamp) values (?, ?, ?, ?)";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pwd);
+            PreparedStatement addLogPatologieStmt = conn.prepareStatement(addLogPatologieSql);
+            addLogPatologieStmt.setInt(1, idPatologia);
+            addLogPatologieStmt.setInt(2, idMedico);
+            addLogPatologieStmt.setString(3, descrizione);
+            addLogPatologieStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+
+            if (addLogPatologieStmt.executeUpdate() != 0) {
+                success = true;
+            } else {
+                System.out.println("[ERRORE INSERT LOG PATOLOGIA]: Impossibile inserire i log per questa patologia");
+            }
+
+            addLogPatologieStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println("[ERRORE INSERT]: " + e.getMessage());
+        }
+
+        return success;
     }
 
 }
