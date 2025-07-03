@@ -2,10 +2,15 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.ListaMedici;
 import com.univr.glicontrol.bll.ListaPazienti;
+import com.univr.glicontrol.bll.LogInfoPaziente;
+import com.univr.glicontrol.bll.LogSistema;
 import com.univr.glicontrol.pl.Models.GetListaUtenti;
+import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +23,7 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PortaleAdminController implements Controller {
@@ -27,9 +33,7 @@ public class PortaleAdminController implements Controller {
     @FXML
     private MenuButton inserisciUtenteB;
     @FXML
-    private ListView<String> listaPazienti;
-    @FXML
-    private ListView<String> listaMedici;
+    private ListView<String> listaPazienti, listaMedici, logLV;
     @FXML
     private VBox logTerapieVB;
 
@@ -219,6 +223,8 @@ public class PortaleAdminController implements Controller {
     }
 
     public void openLogTerapie() {
+        popolaListaLog();
+
         logTerapieVB.setTranslateX(300);
         logTerapieVB.setVisible(true);
         inserisciUtenteB.setVisible(false);
@@ -239,5 +245,21 @@ public class PortaleAdminController implements Controller {
             logoutB.setVisible(true);
         });
         chiudiLog.play();
+    }
+
+    private void popolaListaLog() {
+        Task<Void> loadLogTask = new Task<Void>() {
+            @Override
+            protected Void call() {
+                UtilityPortali up = new UtilityPortali();
+                ObservableList<String> log = FXCollections.observableArrayList();
+                log.addAll(up.getListaLog());
+
+                Platform.runLater(() -> logLV.setItems(log));
+
+                return null;
+            }
+        };
+        new Thread(loadLogTask).start();
     }
 }

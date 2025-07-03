@@ -52,7 +52,7 @@ public class GestioneLog {
     }
 
     private String generaDescrizioneTerapia(Terapia terapia, Medico medico, Paziente paziente, boolean nuovaTerapia, boolean inseritaDalMedico) {
-        StringBuilder descrizioneModificheLogTerapia = new StringBuilder("DESCRIZIONE:\n");
+        StringBuilder descrizioneModificheLogTerapia = new StringBuilder("[LOG TERAPIE] - DESCRIZIONE:\n");
 
         if (nuovaTerapia) {
             if (inseritaDalMedico) {
@@ -73,16 +73,19 @@ public class GestioneLog {
         if (terapia.getDataFine() != null) {
             descrizioneModificheLogTerapia.append("- Data fine: ").append(terapia.getDataFine()).append("\n");
         }
-        descrizioneModificheLogTerapia.append("\nFarmaci con relative indicazioni:\n");
+        descrizioneModificheLogTerapia.append("\nFARMACI CON RELATIVE INDICAZIONI:\n");
         List<FarmacoTerapia> ft = terapia.getListaFarmaciTerapia();
         for (FarmacoTerapia f : ft) {
-            descrizioneModificheLogTerapia.append("- ").append(f.getFarmaco().getNome()).append(":\n");
-            descrizioneModificheLogTerapia.append("  - Dosaggio: ").append(f.getIndicazioni().getDosaggio()).append(" ").append(f.getFarmaco().getUnitaMisura()).append("\n");
+            descrizioneModificheLogTerapia.append(f.getFarmaco().getNome()).append(":\n");
+            descrizioneModificheLogTerapia.append("  - Dosaggio complessivo: ").append(f.getIndicazioni().getDosaggio()).append(" ").append(f.getFarmaco().getUnitaMisura()).append("\n");
             descrizioneModificheLogTerapia.append("  - Frequenza di assunzione: ").append(f.getIndicazioni().getFrequenzaAssunzione()).append("\n");
             descrizioneModificheLogTerapia.append("  - Orari di assunzione: ").append(f.getIndicazioni().getOrariAssunzione()).append("\n");
+            descrizioneModificheLogTerapia.append("\n");
         }
 
-        descrizioneModificheLogTerapia.append("NOTE:\n").append(terapia.getNoteTerapia()).append("\n\n");
+        descrizioneModificheLogTerapia.append("\n");
+
+        descrizioneModificheLogTerapia.append("NOTE:\n").append(terapia.getNoteTerapia()).append("\n\n\n\n");
 
         return descrizioneModificheLogTerapia.toString();
     }
@@ -134,7 +137,7 @@ public class GestioneLog {
     }
 
     private String generaDescrizionePatologia(PatologiaConcomitante patologia, Medico medico, Paziente paziente, boolean nuova, boolean inseritaDalMedico) {
-        StringBuilder descrizioneLogPatologia = new StringBuilder("DESCRIZIONE:\n");
+        StringBuilder descrizioneLogPatologia = new StringBuilder("[LOG PATOLOGIE] - DESCRIZIONE:\n");
 
         if (nuova) {
             if (inseritaDalMedico) {
@@ -155,6 +158,8 @@ public class GestioneLog {
 
             descrizioneLogPatologia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha segnalato la patologia ").append(patologia.getNomePatologia()).append(" come conclusa in data ").append(dataFineFormattata).append("\n\n");
         }
+
+        descrizioneLogPatologia.append("\n\n");
 
         return descrizioneLogPatologia.toString();
     }
@@ -207,7 +212,7 @@ public class GestioneLog {
     }
 
     private String generaDescrizioneInfoPaziente(Medico medico, Paziente paziente, boolean inseriteDalMedico) {
-        StringBuilder descrizioneLogInfoPaziente = new StringBuilder("DESCRIZIONE:\n");
+        StringBuilder descrizioneLogInfoPaziente = new StringBuilder("[LOG INFORMAZIONI PAZIENTI] - DESCRIZIONE:\n");
         FattoriRischio fattoriRischio = new GestioneFattoriRischio().getFattoriRischio(paziente.getIdUtente());
         GestionePasti gp = new GestionePasti(paziente);
 
@@ -218,6 +223,9 @@ public class GestioneLog {
         }
 
         descrizioneLogInfoPaziente.append("ANAGRAFICA:\n");
+        descrizioneLogInfoPaziente.append("Nome: ").append(paziente.getNome()).append("\n");
+        descrizioneLogInfoPaziente.append("Cognome: ").append(paziente.getCognome()).append("\n");
+        descrizioneLogInfoPaziente.append("Codice fiscale: ").append(paziente.getCodiceFiscale()).append("\n");
         descrizioneLogInfoPaziente.append("Email: ").append(paziente.getEmail()).append("\n");
         descrizioneLogInfoPaziente.append("Altezza: ").append(paziente.getAltezza()).append("\n");
         descrizioneLogInfoPaziente.append("Peso: ").append(paziente.getPeso()).append("\n\n");
@@ -231,7 +239,7 @@ public class GestioneLog {
         if (fattoriRischio.getObesita()) descrizioneLogInfoPaziente.append("Obesità\n\n");
 
         if (!paziente.getAllergie().isEmpty()) {
-            descrizioneLogInfoPaziente.append("ALLERGIE A FARMACI:\n");
+            descrizioneLogInfoPaziente.append("\nALLERGIE A FARMACI:\n");
             descrizioneLogInfoPaziente.append(paziente.getAllergie()).append("\n\n");
         }
 
@@ -239,7 +247,7 @@ public class GestioneLog {
         for (Pasto pasto : gp.getPasti()) {
             descrizioneLogInfoPaziente.append(pasto.getNomePasto()).append(" - ").append(pasto.getOrario()).append("\n");
         }
-        descrizioneLogInfoPaziente.append("\n");
+        descrizioneLogInfoPaziente.append("\n\n\n\n");
 
         return descrizioneLogInfoPaziente.toString();
     }

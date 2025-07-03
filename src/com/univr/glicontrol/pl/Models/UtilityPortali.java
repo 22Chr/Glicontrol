@@ -606,4 +606,22 @@ public class UtilityPortali {
     private void aggiornaListaNotificheNonVisualizzateFormattate() {
         getNotificheFormattate();
     }
+
+    public List<String> getListaLog() {
+        List<String> listaLog = new ArrayList<>();
+
+        for (LogTerapia lt : GestioneLog.getInstance().getListaLogTerapia()) {
+            listaLog.add(lt.getDescrizione());
+        }
+
+        for (LogPatologie lp :  GestioneLog.getInstance().getListaLogPatologie()) {
+            listaLog.add(lp.getDescrizione());
+        }
+
+        for (LogInfoPaziente lip :  GestioneLog.getInstance().getListaLogInfoPaziente()) {
+            listaLog.add(lip.getDescrizione());
+        }
+
+        return listaLog;
+    }
 }
