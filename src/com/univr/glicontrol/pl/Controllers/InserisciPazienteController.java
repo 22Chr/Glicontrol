@@ -183,7 +183,7 @@ public class InserisciPazienteController implements Controller {
                 pause.setOnFinished(event -> {
                     // Avvisa il medico di riferimento circa la presa in carico di un nuovo paziente
                     ListaMedici medicoRiferimento = new ListaMedici();
-                    String emailMedicoRiferimento = medicoRiferimento.ottieniMedicoPerId(id).getEmail();
+                    String emailMedicoRiferimento = medicoRiferimento.getMedicoPerId(id).getEmail();
                     String identificativoPaziente = cognome + " " + nome + " - " + CF;
                     inserisciPaziente.informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);
                 });

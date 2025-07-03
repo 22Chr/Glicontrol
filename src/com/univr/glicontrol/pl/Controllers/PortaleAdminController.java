@@ -3,8 +3,6 @@ package com.univr.glicontrol.pl.Controllers;
 import com.univr.glicontrol.bll.ListaMedici;
 import com.univr.glicontrol.bll.ListaPazienti;
 import com.univr.glicontrol.pl.Models.GetListaUtenti;
-import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -123,7 +121,7 @@ public class PortaleAdminController implements Controller {
                     ModificaMedicoController modificaMedicoController = loader.getController();
                     modificaMedicoController.setInstance(this);
                     ListaMedici getMedico = new ListaMedici();
-                    modificaMedicoController.setMedico(getMedico.ottieniMedicoPerId(id));
+                    modificaMedicoController.setMedico(getMedico.getMedicoPerId(id));
                 } else {
                     ModificaPazienteController modificaPazienteController = loader.getController();
                     modificaPazienteController.setInstance(this);

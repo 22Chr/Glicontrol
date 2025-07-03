@@ -14,7 +14,7 @@ public class ListaMedici {
         listaMedici = listaMediciRecuperati;
     }
 
-    public Medico ottieniMedicoPerId(int idMedico) {
+    public Medico getMedicoPerId(int idMedico) {
         for (Medico m : listaMedici) {
             if (m.getIdUtente() == idMedico) {
                 return m;
@@ -23,7 +23,7 @@ public class ListaMedici {
         return null;
     }
 
-    public int ottieniIdPerMedico(Medico med) {
+    public int getIdPerMedico(Medico med) {
         for (Medico m : listaMedici) {
             if (m.getIdUtente() == med.getIdUtente()) {
                 return m.getIdUtente();

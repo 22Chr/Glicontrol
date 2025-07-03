@@ -569,7 +569,7 @@ public class GlicontrolCoreSystem {
         switch (tipoLog) {
             case TERAPIA -> {
                 GestioneTerapie gt = new GestioneTerapie(paziente);
-                Terapia terapiaSelezionata = gt.getTerapiePaziente().getFirst();
+                Terapia terapiaSelezionata = gt.getTerapiePaziente().getLast();
 
                 Task<Void> creaLogTerapieTask = new Task<>() {
 

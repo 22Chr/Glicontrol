@@ -112,7 +112,7 @@ public class AccessoLogImpl implements AccessoLog {
     @Override
     public boolean insertLogInfoPaziente(int idMedico, int idPaziente, String descrizione) {
         boolean success = false;
-        String addLogInfoPazienteSql = "insert into LogInfoPaziente (id_log_info, id_medico, id_paziente, descrizione_modifiche_info, timestamp) values (?, ?, ?, ?, ?)";
+        String addLogInfoPazienteSql = "insert into LogInfoPaziente (id_medico, id_paziente, descrizione_modifiche_info, timestamp) values (?, ?, ?, ?)";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pwd);

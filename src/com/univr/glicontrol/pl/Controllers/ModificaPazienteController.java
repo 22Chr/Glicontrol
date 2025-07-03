@@ -122,9 +122,9 @@ public class ModificaPazienteController implements Controller {
         passwordPazienteTF.setText(p.getPassword());
         defaultPassword = p.getPassword();
         defaultMed = p.getMedicoRiferimento();
-        medicoRifCB.setValue(listaMedici.ottieniMedicoPerId(p.getMedicoRiferimento()).getCognome() +
-                " " + listaMedici.ottieniMedicoPerId(p.getMedicoRiferimento()).getNome() +
-                " - " + listaMedici.ottieniMedicoPerId(p.getMedicoRiferimento()).getCodiceFiscale());
+        medicoRifCB.setValue(listaMedici.getMedicoPerId(p.getMedicoRiferimento()).getCognome() +
+                " " + listaMedici.getMedicoPerId(p.getMedicoRiferimento()).getNome() +
+                " - " + listaMedici.getMedicoPerId(p.getMedicoRiferimento()).getCodiceFiscale());
 
     }
 
@@ -185,7 +185,7 @@ public class ModificaPazienteController implements Controller {
                 if (defaultMed != p.getMedicoRiferimento()) {
                     pause.setOnFinished(event -> {
                         ListaMedici medicoRiferimento = new ListaMedici();
-                        String emailMedicoRiferimento = medicoRiferimento.ottieniMedicoPerId(p.getMedicoRiferimento()).getEmail();
+                        String emailMedicoRiferimento = medicoRiferimento.getMedicoPerId(p.getMedicoRiferimento()).getEmail();
                         String identificativoPaziente = p.getCognome() + " " + p.getNome() + " - " + p.getCodiceFiscale();
                         InserisciPaziente inserisciPaziente = new InserisciPaziente();
                         inserisciPaziente.informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);

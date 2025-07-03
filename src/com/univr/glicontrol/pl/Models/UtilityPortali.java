@@ -452,7 +452,7 @@ public class UtilityPortali {
             LocalDate data = lt.getTimestamp().toLocalDateTime().toLocalDate();
             LocalTime ora = lt.getTimestamp().toLocalDateTime().toLocalTime();
             String logFormattato = t.getNome() + " (" + lp.getPazientePerId(t.getIdPaziente()).getCodiceFiscale() + ") modificata dal medico " +
-                    lm.ottieniMedicoPerId(lt.getIdMedico()).getCodiceFiscale() +
+                    lm.getMedicoPerId(lt.getIdMedico()).getCodiceFiscale() +
                     " in data " + data + " alle ore " + ora;
             listaLogTerapieFormattata.add(logFormattato);
             mappaLogTerapia.put(logFormattato, lt);

@@ -1,8 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.GestionePatologieConcomitanti;
-import com.univr.glicontrol.bll.PatologiaConcomitante;
-import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -18,11 +16,13 @@ import java.time.LocalDate;
 
 public class FinestraPatologieConcomitantiPazienteController implements Controller {
 
-    UtilityPortali upp;
-    Paziente paziente;
-    GestionePatologieConcomitanti gpc;
-    PortalePazienteController ppc = null;
-    PortaleMedicoController pmc = null;
+    private UtilityPortali upp;
+    private Paziente paziente;
+    private Medico medico = null;
+    private GestionePatologieConcomitanti gpc;
+    private PortalePazienteController ppc = null;
+    private PortaleMedicoController pmc = null;
+    private boolean inseritaDalMedico = false;
 
     @FXML
     private TextField nomePatologiaTF;
@@ -42,16 +42,19 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
     private Label descriviPatologiaLabel;
 
     public void setInstance(Portale portale, Paziente paziente) {
+
+        this.paziente = paziente;
+        gpc = new GestionePatologieConcomitanti(paziente);
+        upp = new UtilityPortali(paziente);
+
         if (portale instanceof PortalePazienteController) {
             this.ppc = (PortalePazienteController) portale;
         } else {
             this.pmc = (PortaleMedicoController) portale;
             descriviPatologiaLabel.setText("Descrivi la patologia del paziente");
+            inseritaDalMedico = true;
+            medico = new UtilityPortali().getMedicoSessione();
         }
-
-        this.paziente = paziente;
-        gpc = new GestionePatologieConcomitanti(paziente);
-        upp = new UtilityPortali(paziente);
 
         Platform.runLater(this::caricaPatologieConcomitanti);
     }
@@ -142,6 +145,8 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
             resetListViewPatologie();
 
+            GlicontrolCoreSystem.getInstance().generaLog(Log.PATOLOGIA_CONCOMITANTE, paziente, medico, true, inseritaDalMedico);
+
             // Ripulisci i campit per l'inserimento di nuove patologie
             nomePatologiaTF.clear();
             descrizionePatologiaTA.clear();
@@ -170,6 +175,17 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
     public void terminaPatologiaConcomitante() {
         PatologiaConcomitante p = upp.getPatologiaConcomitantePerNomeFormattata(patologiePazienteLV.getSelectionModel().getSelectedItem());
+
+        if (p.getDataFine() != null) {
+            Alert patologiaGiaTerminataAlert = new Alert(Alert.AlertType.INFORMATION);
+            patologiaGiaTerminataAlert.setTitle("System Information Service");
+            patologiaGiaTerminataAlert.setHeaderText("La patologia concomitante selezionata risulta già essere conclusa");
+            patologiaGiaTerminataAlert.setContentText("Non è stata apportata alcuna modifica");
+            patologiaGiaTerminataAlert.showAndWait();
+
+            return;
+        }
+
         p.setDataFine(Date.valueOf(LocalDate.now()));
 
         if (gpc.aggiornaPatologiaConcomitante(p)) {
@@ -180,6 +196,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
             conclusionePatologia.showAndWait();
 
             resetListViewPatologie();
+            GlicontrolCoreSystem.getInstance().generaLog(Log.PATOLOGIA_CONCOMITANTE, paziente, medico, false, inseritaDalMedico);
             cambiaPagina();
 
         } else {

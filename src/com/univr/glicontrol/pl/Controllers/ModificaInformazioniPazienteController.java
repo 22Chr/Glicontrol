@@ -38,12 +38,14 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
     private Button aggiungiPastoB;
 
     private Paziente paziente;
+    private Medico medico = null;
     private final GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
     private FattoriRischio fattoriRischioAggiornati;
     private UtilityPortali upp;
     String pastoDaModificare;
     private PortalePazienteController ppc = null;
     private PortaleMedicoController pmc = null;
+    private boolean inseriteDalMedico = false;
 
     @FXML
     private void initialize() {
@@ -144,10 +146,12 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
 
         if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-            aggiornaPazienteAlert.setTitle("System Information Service");
-            aggiornaPazienteAlert.setHeaderText(null);
+            aggiornaPazienteAlert.setTitle("System Notification Service");
+            aggiornaPazienteAlert.setHeaderText("Salvataggio avvenuto con successo");
             aggiornaPazienteAlert.setContentText("I tuoi dati sono stati aggiornati correttamente");
             aggiornaPazienteAlert.showAndWait();
+
+            GlicontrolCoreSystem.getInstance().generaLog(Log.INFO_PAZIENTE, paziente, medico, false, inseriteDalMedico);
 
             Window currentWindow = salvaModifiche.getScene().getWindow();
             if (currentWindow instanceof Stage) {
@@ -176,8 +180,11 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
 
         if (portale instanceof PortalePazienteController) {
             this.ppc = (PortalePazienteController) portale;
+            medico = new ListaMedici().getMedicoPerId(paziente.getMedicoRiferimento());
         } else {
             this.pmc = (PortaleMedicoController)  portale;
+            medico = new UtilityPortali().getMedicoSessione();
+            inseriteDalMedico = true;
         }
 
         Platform.runLater(this::caricaInfoPaziente);

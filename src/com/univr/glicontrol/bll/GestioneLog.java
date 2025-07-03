@@ -67,7 +67,7 @@ public class GestioneLog {
                 descrizioneModificheLogTerapia.append("- Data fine: ").append(terapia.getDataFine()).append("\n");
             }
         } else {
-            descrizioneModificheLogTerapia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha apportato le seguenti modifiche alla terapia ").append(terapia.getNome()).append(":\n");
+            descrizioneModificheLogTerapia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha apportato delle modifiche alla terapia ").append(terapia.getNome()).append(":\n");
         }
 
         if (terapia.getDataFine() != null) {
@@ -82,7 +82,7 @@ public class GestioneLog {
             descrizioneModificheLogTerapia.append("  - Orari di assunzione: ").append(f.getIndicazioni().getOrariAssunzione()).append("\n");
         }
 
-        descrizioneModificheLogTerapia.append("NOTE: ").append(terapia.getNoteTerapia()).append("\n\n");
+        descrizioneModificheLogTerapia.append("NOTE:\n").append(terapia.getNoteTerapia()).append("\n\n");
 
         return descrizioneModificheLogTerapia.toString();
     }
@@ -144,13 +144,16 @@ public class GestioneLog {
             }
             descrizioneLogPatologia.append("- Data inizio: ").append(patologia.getDataInizio()).append("\n");
             if (patologia.getDataFine() == null) {
-                descrizioneLogPatologia.append("- Data fine: in corso\n");
+                descrizioneLogPatologia.append("- Data fine: in corso\n\n");
             } else {
-                descrizioneLogPatologia.append("- Data fine: ").append(patologia.getDataFine()).append("\n");
+                descrizioneLogPatologia.append("- Data fine: ").append(patologia.getDataFine()).append("\n\n");
             }
         } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            descrizioneLogPatologia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha segnalato la patologia come conclussa in data ").append(Date.valueOf(LocalDate.now().format(formatter))).append("\n");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataFine = LocalDate.now();
+            String dataFineFormattata = formatter.format(dataFine);
+
+            descrizioneLogPatologia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha segnalato la patologia ").append(patologia.getNomePatologia()).append(" come conclusa in data ").append(dataFineFormattata).append("\n\n");
         }
 
         return descrizioneLogPatologia.toString();
@@ -166,6 +169,7 @@ public class GestioneLog {
         } catch (NoSuchElementException _) {}
 
         String descrizioneModifiche = generaDescrizionePatologia(patologia, medico, paziente, nuovaPatologia, inseritaDalMedico);
+
         if (ultimoLogPerPatologia != null && ultimoLogPerPatologia.getDescrizione().equals(descrizioneModifiche)) {
             descrizioneModifiche = "Non è stata apportata alcuna modifica rispetto all'ultimo log";
         }
@@ -208,9 +212,9 @@ public class GestioneLog {
         GestionePasti gp = new GestionePasti(paziente);
 
         if (inseriteDalMedico) {
-            descrizioneLogInfoPaziente.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ").append("ha modificato le informazioni del paziente:\n");
+            descrizioneLogInfoPaziente.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ").append("ha modificato le informazioni del paziente:\n\n");
         } else {
-            descrizioneLogInfoPaziente.append("Il paziente ").append(paziente.getNome()).append(" ").append(paziente.getCognome()).append(" (").append(paziente.getCodiceFiscale()).append(") ").append("ha modificato le sue informazioni:\n");
+            descrizioneLogInfoPaziente.append("Il paziente ").append(paziente.getNome()).append(" ").append(paziente.getCognome()).append(" (").append(paziente.getCodiceFiscale()).append(") ").append("ha modificato le proprie informazioni personali:\n\n");
         }
 
         descrizioneLogInfoPaziente.append("ANAGRAFICA:\n");
@@ -248,6 +252,7 @@ public class GestioneLog {
         } catch (NoSuchElementException _) {}
 
         String descrizioneInfoPaziente = generaDescrizioneInfoPaziente(medico, paziente, inseriteDalMedico);
+
         if (ultimoLogInfo != null && ultimoLogInfo.getDescrizione().equals(descrizioneInfoPaziente)) {
             descrizioneInfoPaziente = "Non è stata apportata alcuna modifica rispetto all'ultimo log";
         }
@@ -256,6 +261,7 @@ public class GestioneLog {
 
         if (success) {
             aggiornaListaLogInfoPaziente();
+        } else {
         }
 
         return success;
