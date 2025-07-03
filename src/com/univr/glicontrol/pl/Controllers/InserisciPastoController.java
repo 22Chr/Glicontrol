@@ -44,7 +44,7 @@ public class InserisciPastoController implements Controller {
 
         if (pastoCB.getValue() == null || oraCB.getValue() == null || minutiCB.getValue() == null) {
             Alert datiMancantiAlert = new Alert(Alert.AlertType.ERROR);
-            datiMancantiAlert.setTitle("System Information Service");
+            datiMancantiAlert.setTitle("System Notification Service");
             datiMancantiAlert.setHeaderText("Dati mancanti");
             datiMancantiAlert.setContentText("Per inserire un nuovo pasto è necessario che tutti i campi siano compilati correttamente. Riprova");
             datiMancantiAlert.showAndWait();
@@ -59,7 +59,7 @@ public class InserisciPastoController implements Controller {
 
         if (gp.inserisciPasto(pasto, orario)) {
             Alert successoInserimentoPastoAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoPastoAlert.setTitle("System Information Service");
+            successoInserimentoPastoAlert.setTitle("System Notification Service");
             successoInserimentoPastoAlert.setHeaderText("Pasto inserito con successo");
             successoInserimentoPastoAlert.setContentText("Il pasto è stato inserito con successo");
             successoInserimentoPastoAlert.showAndWait();
@@ -77,7 +77,7 @@ public class InserisciPastoController implements Controller {
             }
         } else {
             Alert erroreInserimentoPastoAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoPastoAlert.setTitle("System Information Service");
+            erroreInserimentoPastoAlert.setTitle("System Notification Service");
             erroreInserimentoPastoAlert.setHeaderText("Errore durante l'inserimento del pasto");
             erroreInserimentoPastoAlert.setContentText("Non è stato possibile inserire il pasto, riprova");
             erroreInserimentoPastoAlert.showAndWait();

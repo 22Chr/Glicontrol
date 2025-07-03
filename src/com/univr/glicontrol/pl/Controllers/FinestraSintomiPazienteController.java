@@ -75,7 +75,9 @@ public class FinestraSintomiPazienteController implements Controller {
         });
 
         descrizioneTA.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(InputChecker.getInstance().campoVuoto(descrizioneTA.getText()) && descrizioneTA.getText() != null){
+            if (newValue.isEmpty()) {
+                descrizioneTA.setStyle("");
+            } else if(InputChecker.getInstance().campoVuoto(descrizioneTA.getText())){
                 descrizioneTA.setStyle("-fx-background-color: #43a047;");
             }else{
                 descrizioneTA.setStyle("-fx-background-color: #ff0000; -fx-border-width: 3px");
@@ -100,7 +102,7 @@ public class FinestraSintomiPazienteController implements Controller {
 
         if (descrizioneTA.getText().isEmpty() || !InputChecker.getInstance().campoVuoto(descrizioneTA.getText())) {
             Alert campoVuotoAlert = new  Alert(Alert.AlertType.ERROR);
-            campoVuotoAlert.setTitle("System Information Service");
+            campoVuotoAlert.setTitle("System Notification Service");
             campoVuotoAlert.setHeaderText("Dati mancanti");
             campoVuotoAlert.setContentText("Per inserire un sintomo è necessario fornirne una descrizione valida");
             campoVuotoAlert.showAndWait();
@@ -109,7 +111,7 @@ public class FinestraSintomiPazienteController implements Controller {
 
             if (gs.inserisciSintomo(descrizioneTA.getText())) {
                 Alert successoInserimentoSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
-                successoInserimentoSintomoAlert.setTitle("System Information Service");
+                successoInserimentoSintomoAlert.setTitle("System Notification Service");
                 successoInserimentoSintomoAlert.setHeaderText("Sintomo inserito con successo");
                 successoInserimentoSintomoAlert.setContentText("Il nuovo sintomo è stato inserito con successo");
                 successoInserimentoSintomoAlert.showAndWait();
@@ -117,7 +119,7 @@ public class FinestraSintomiPazienteController implements Controller {
                 resetListViewSintomi();
             } else {
                 Alert erroreInserimentoSintomoAlert = new Alert(Alert.AlertType.ERROR);
-                erroreInserimentoSintomoAlert.setTitle("System Information Service");
+                erroreInserimentoSintomoAlert.setTitle("System Notification Service");
                 erroreInserimentoSintomoAlert.setHeaderText("Errore durante l'inserimento del nuovo sintomo");
                 erroreInserimentoSintomoAlert.setContentText("Non è stato possibile inserire il nuovo sintomo, riprova");
                 erroreInserimentoSintomoAlert.showAndWait();

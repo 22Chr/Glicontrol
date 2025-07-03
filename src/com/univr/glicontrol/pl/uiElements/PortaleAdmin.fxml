@@ -164,7 +164,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                <VBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
          </children>

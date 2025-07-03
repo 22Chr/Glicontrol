@@ -175,7 +175,9 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
         salvaB.requestFocus();
 
         altezzaTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaAltezza(newValue)) {
+            if (newValue.isEmpty()) {
+                altezzaTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaAltezza(newValue)) {
                 altezzaTF.setStyle("-fx-border-color: #43a047;");
             }  else {
                 assert altezzaTF != null;
@@ -184,7 +186,9 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
         });
 
         pesoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaPeso(newValue) && pesoTF != null)
+            if (newValue.isEmpty()) {
+                pesoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaPeso(newValue) && pesoTF != null)
                 pesoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert pesoTF != null;

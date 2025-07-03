@@ -349,7 +349,7 @@ public class FinestraTerapiePazienteController implements Controller {
 
             finestraNoteTerapiaStage.showAndWait();
 
-            if (!noteTerapiaCache.equals(noteTerapia)) {
+            if (noteTerapiaCache!= null && noteTerapia != null && !noteTerapiaCache.equals(noteTerapia)) {
                 salvaModificheTerapiaB.setVisible(true);
             }
 

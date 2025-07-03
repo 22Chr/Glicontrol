@@ -83,6 +83,26 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
             return cell;
         });
+
+        descrizionePatologiaTA.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                descrizionePatologiaTA.setStyle("");
+            } else if (InputChecker.getInstance().campoVuoto(newValue)) {
+                descrizionePatologiaTA.setStyle("-fx-border-color: #43a047;");
+            } else {
+                descrizionePatologiaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
+
+        nomePatologiaTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                nomePatologiaTF.setStyle("");
+            } else if (InputChecker.getInstance().campoVuoto(newValue)) {
+                nomePatologiaTF.setStyle("-fx-border-color: #43a047;");
+            } else {
+                nomePatologiaTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
     }
 
     public void cambiaPagina() {
@@ -125,9 +145,14 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
             dataInizio = Date.valueOf(dataInizioDP.getValue());
         }
 
-        if (descrizionePatologiaTA.getText().isEmpty() || nomePatologiaTF.getText().isEmpty() || dataInizio == null) {
+        if (descrizionePatologiaTA.getText().isEmpty() ||
+                nomePatologiaTF.getText().isEmpty() ||
+                dataInizio == null ||
+                !InputChecker.getInstance().campoVuoto(descrizionePatologiaTA.getText()) ||
+                !InputChecker.getInstance().campoVuoto(nomePatologiaTF.getText())) {
+
             Alert datiMancantiAlert = new Alert(Alert.AlertType.ERROR);
-            datiMancantiAlert.setTitle("System Information Service");
+            datiMancantiAlert.setTitle("System Notification Service");
             datiMancantiAlert.setHeaderText("Dati mancanti");
             datiMancantiAlert.setContentText("Per poter inserire una patologia devi precisarne il nome, la data di inizio e fornirne una descrizione.\nInserisci tutti i dati e riprova");
             datiMancantiAlert.showAndWait();
@@ -138,7 +163,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
         if(status == 1){
             Alert successoInserimentoSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoSintomoAlert.setTitle("System Information Service");
+            successoInserimentoSintomoAlert.setTitle("System Notification Service");
             successoInserimentoSintomoAlert.setHeaderText("Patologia concomitante inserita con successo");
             successoInserimentoSintomoAlert.setContentText("La nuova patologia concomitante è stata inserita con successo");
             successoInserimentoSintomoAlert.showAndWait();
@@ -156,13 +181,13 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
         } else if (status == 0) {
             Alert erroreInserimentoSintomoAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoSintomoAlert.setTitle("System Information Service");
+            erroreInserimentoSintomoAlert.setTitle("System Notification Service");
             erroreInserimentoSintomoAlert.setHeaderText("Errore durante l'inserimento della nuova patologia concomitante");
             erroreInserimentoSintomoAlert.setContentText("Non è stato possibile inserire la nuova patologia concomitante.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
             erroreInserimentoSintomoAlert.showAndWait();
         } else {
             Alert erroreDuplicazioneSintomoAlert = new Alert(Alert.AlertType.ERROR);
-            erroreDuplicazioneSintomoAlert.setTitle("System Information Service");
+            erroreDuplicazioneSintomoAlert.setTitle("System Notification Service");
             erroreDuplicazioneSintomoAlert.setHeaderText("Errore durante l'inserimento della nuova patologia concomitante");
             erroreDuplicazioneSintomoAlert.setContentText("La patologia che stai cercando di inserire esiste già nel sistema");
             erroreDuplicazioneSintomoAlert.showAndWait();
@@ -178,7 +203,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
         if (p.getDataFine() != null) {
             Alert patologiaGiaTerminataAlert = new Alert(Alert.AlertType.INFORMATION);
-            patologiaGiaTerminataAlert.setTitle("System Information Service");
+            patologiaGiaTerminataAlert.setTitle("System Notification Service");
             patologiaGiaTerminataAlert.setHeaderText("La patologia concomitante selezionata risulta già essere conclusa");
             patologiaGiaTerminataAlert.setContentText("Non è stata apportata alcuna modifica");
             patologiaGiaTerminataAlert.showAndWait();
@@ -190,7 +215,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
         if (gpc.aggiornaPatologiaConcomitante(p)) {
             Alert conclusionePatologia = new Alert(Alert.AlertType.INFORMATION);
-            conclusionePatologia.setTitle("System Information Service");
+            conclusionePatologia.setTitle("System Notification Service");
             conclusionePatologia.setHeaderText("Patologia concomitante aggiornata con successo");
             conclusionePatologia.setContentText("La patologia è stata segnata come conclusa in data odierna.\n\nRicordati di segnare come conclusa anche l'eventuale terapia associata");
             conclusionePatologia.showAndWait();
@@ -201,7 +226,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
         } else {
             Alert erroreConclusionePatologia = new Alert(Alert.AlertType.ERROR);
-            erroreConclusionePatologia.setTitle("System Information Service");
+            erroreConclusionePatologia.setTitle("System Notification Service");
             erroreConclusionePatologia.setHeaderText("Si è verificato un errore durante l'operazione");
             erroreConclusionePatologia.setContentText("Non è stato possibile segnare la patologia come terminata");
             erroreConclusionePatologia.showAndWait();

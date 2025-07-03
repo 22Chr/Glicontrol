@@ -61,7 +61,9 @@ public class InserisciPazienteController implements Controller {
         sessoNuovoPazienteCB.setItems(FXCollections.observableArrayList("M", "F"));
 
         nomeNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (InputChecker.getInstance().verificaNome(newValue) && nomeNuovoPazienteTF != null) {
+           if (newValue.isEmpty()) {
+               nomeNuovoPazienteTF.setStyle("");
+           } else if (InputChecker.getInstance().verificaNome(newValue)) {
                nomeNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
            }  else {
                assert nomeNuovoPazienteTF != null;
@@ -70,7 +72,9 @@ public class InserisciPazienteController implements Controller {
         });
 
         cognomeNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaCognome(newValue) && cognomeNuovoPazienteTF != null) {
+            if (newValue.isEmpty()) {
+                cognomeNuovoPazienteTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaCognome(newValue)) {
                cognomeNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                 assert cognomeNuovoPazienteTF != null;
@@ -79,7 +83,9 @@ public class InserisciPazienteController implements Controller {
         });
 
         emailNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaEmail(newValue) && emailNuovoPazienteTF != null) {
+            if (newValue.isEmpty()) {
+                emailNuovoPazienteTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaEmail(newValue)) {
                emailNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                 assert emailNuovoPazienteTF != null;
@@ -88,7 +94,9 @@ public class InserisciPazienteController implements Controller {
         });
 
         CFNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaCodiceFiscale(newValue) && CFNuovoPazienteTF != null) {
+            if (newValue.isEmpty()) {
+                CFNuovoPazienteTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaCodiceFiscale(newValue)) {
                CFNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                 assert CFNuovoPazienteTF != null;
@@ -97,7 +105,9 @@ public class InserisciPazienteController implements Controller {
         });
 
         passwordNuovoPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaPassword(newValue) && passwordNuovoPazienteTF != null) {
+            if (newValue.isEmpty()) {
+                passwordNuovoPazienteTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaPassword(newValue) && passwordNuovoPazienteTF != null) {
                passwordNuovoPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                 assert passwordNuovoPazienteTF != null;
@@ -106,7 +116,9 @@ public class InserisciPazienteController implements Controller {
         });
 
         dataNascitaNuovoPazienteDP.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaNascita(Date.valueOf(newValue)) && dataNascitaNuovoPazienteDP != null) {
+            if (newValue == null) {
+                dataNascitaNuovoPazienteDP.setStyle("");
+            } else if (InputChecker.getInstance().verificaNascita(Date.valueOf(newValue))) {
                 dataNascitaNuovoPazienteDP.setStyle("-fx-border-color: #43a047");
             } else {
                 assert dataNascitaNuovoPazienteDP != null;
@@ -131,8 +143,8 @@ public class InserisciPazienteController implements Controller {
 
         if (!InputChecker.getInstance().allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita)) {
             Alert inputPazienteSbagliati = new Alert(Alert.AlertType.ERROR);
-            inputPazienteSbagliati.setTitle("System Information Service");
-            inputPazienteSbagliati.setHeaderText(null);
+            inputPazienteSbagliati.setTitle("System Notification Service");
+            inputPazienteSbagliati.setHeaderText("Dati mancanti");
             inputPazienteSbagliati.setContentText("Per inserire un nuovo paziente è necessario che tutti i campi siano compilati correttamente. Riprova");
             inputPazienteSbagliati.showAndWait();
         } else {
@@ -144,8 +156,8 @@ public class InserisciPazienteController implements Controller {
 
             if (success == 1) {
                 Alert inserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                inserimentoPazienteAlert.setTitle("System Information Service");
-                inserimentoPazienteAlert.setHeaderText(null);
+                inserimentoPazienteAlert.setTitle("System Notification Service");
+                inserimentoPazienteAlert.setHeaderText("Paziente aggiunto");
                 inserimentoPazienteAlert.setContentText("Inserimento effettuato con successo");
                 inserimentoPazienteAlert.showAndWait();
 
@@ -157,16 +169,16 @@ public class InserisciPazienteController implements Controller {
                     if (inserisciPaziente.inviaCredenzialiPaziente(email, password)) {
 
                         Alert notificaInserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                        notificaInserimentoPazienteAlert.setTitle("System Information Service");
-                        notificaInserimentoPazienteAlert.setHeaderText(null);
+                        notificaInserimentoPazienteAlert.setTitle("System Notification Service");
+                        notificaInserimentoPazienteAlert.setHeaderText("Gestore credenziali");
                         notificaInserimentoPazienteAlert.setContentText("Invio delle credenziali al paziente avvenuto con successo");
                         notificaInserimentoPazienteAlert.show();
 
                     } else {
 
                         Alert erroreNotificaInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
-                        erroreNotificaInserimentoPazienteAlert.setTitle("System Information Service");
-                        erroreNotificaInserimentoPazienteAlert.setHeaderText(null);
+                        erroreNotificaInserimentoPazienteAlert.setTitle("System Notification Service");
+                        erroreNotificaInserimentoPazienteAlert.setHeaderText("Errore invio credenziali");
                         erroreNotificaInserimentoPazienteAlert.setContentText("Si è verificato un errore durante l'invio delle credenziali al paziente");
                         erroreNotificaInserimentoPazienteAlert.show();
 
@@ -192,16 +204,16 @@ public class InserisciPazienteController implements Controller {
             } else if (success == 0) {
 
                 Alert erroreInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
-                erroreInserimentoPazienteAlert.setTitle("System Information Service");
-                erroreInserimentoPazienteAlert.setHeaderText(null);
-                erroreInserimentoPazienteAlert.setContentText("Errore durante l'inserimento del paziente");
+                erroreInserimentoPazienteAlert.setTitle("System Notification Service");
+                erroreInserimentoPazienteAlert.setHeaderText("Errore inserimento paziente");
+                erroreInserimentoPazienteAlert.setContentText("Si è verificato un errore durante l'inserimento del nuovo paziente");
                 erroreInserimentoPazienteAlert.showAndWait();
 
             } else {
 
                 Alert pazienteEsistenteAlert = new Alert(Alert.AlertType.ERROR);
-                pazienteEsistenteAlert.setTitle("System Information Service");
-                pazienteEsistenteAlert.setHeaderText(null);
+                pazienteEsistenteAlert.setTitle("System Notification Service");
+                pazienteEsistenteAlert.setHeaderText("Gestore duplicati");
                 pazienteEsistenteAlert.setContentText("Il paziente che stai cercando di inserire è già presente nel sistema");
                 pazienteEsistenteAlert.showAndWait();
 

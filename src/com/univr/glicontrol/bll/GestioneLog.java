@@ -114,7 +114,6 @@ public class GestioneLog {
     }
 
     //METODI PER LE PATOLOGIE
-
     private void aggiornaListaLogPatologie() {
         this.listaLogPatologie = accessoLog.getListaLogPatologie();
     }
@@ -189,7 +188,6 @@ public class GestioneLog {
     }
 
     //METODI PER INFO PAZIENTE
-
     private void aggiornaListaLogInfoPaziente() {
         this.listaLogInfoPaziente = accessoLog.getListaLogInfoPaziente();
     }

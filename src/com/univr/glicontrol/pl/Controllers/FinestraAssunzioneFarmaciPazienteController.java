@@ -76,6 +76,16 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
 
             return cell;
         });
+
+        dosaggioTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                dosaggioTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaInputDosaggioFarmaco(newValue)) {
+                dosaggioTF.setStyle("-fx-border-color: #43a047;");
+            } else {
+                dosaggioTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
     }
 
     public void registraAssunzioneFarmaco() {
@@ -86,9 +96,15 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
             data = Date.valueOf(dataFarmacoPazienteDP.getValue());
         }
 
-        if (listaFarmaciDaAssumereCB.getValue() == null || oraFarmacoCB.getValue() == null || minutiFarmacoCB.getValue() == null || data == null || dosaggioTF.getText().isEmpty()) {
+        if (listaFarmaciDaAssumereCB.getValue() == null ||
+                oraFarmacoCB.getValue() == null ||
+                minutiFarmacoCB.getValue() == null ||
+                data == null ||
+                dosaggioTF.getText().isEmpty() ||
+                !InputChecker.getInstance().verificaInputDosaggioFarmaco(dosaggioTF.getText())) {
+
             Alert datiMancantiAlert = new Alert(Alert.AlertType.ERROR);
-            datiMancantiAlert.setTitle("System Information Service");
+            datiMancantiAlert.setTitle("System Notification Service");
             datiMancantiAlert.setHeaderText("Dati mancanti");
             datiMancantiAlert.setContentText("Per poter registrare l'assunzione di un farmaco devi scegliere un farmaco e precisare il dosaggio, la data e l'ora di assunzione.\nInserisci tutti i dati e riprova");
             datiMancantiAlert.showAndWait();
@@ -101,14 +117,14 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
         int status = gaf.registraAssunzioneFarmaco(farmaco, data, oraAssunzione, Float.parseFloat(dosaggioTF.getText()));
         if (status != 0) {
             Alert successoInserimentoFarmacoAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoFarmacoAlert.setTitle("System Information Service");
+            successoInserimentoFarmacoAlert.setTitle("System Notification Service");
             successoInserimentoFarmacoAlert.setHeaderText("Farmaco registrato con successo");
             successoInserimentoFarmacoAlert.setContentText("L'assunzione del farmaco è stata registrata correttamente");
             successoInserimentoFarmacoAlert.showAndWait();
 
         } else {
             Alert erroreInserimentoFarmacoAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoFarmacoAlert.setTitle("System Information Service");
+            erroreInserimentoFarmacoAlert.setTitle("System Notification Service");
             erroreInserimentoFarmacoAlert.setHeaderText("Errore durante l'inserimento del farmaco");
             erroreInserimentoFarmacoAlert.setContentText("Non è stato possibile registrare l'assunzione del farmaco.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
             erroreInserimentoFarmacoAlert.showAndWait();
@@ -117,7 +133,7 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
 
         if (status == -1) {
             Alert eccessoDosaggioFarmacoAlert = new Alert(Alert.AlertType.WARNING);
-            eccessoDosaggioFarmacoAlert.setTitle("System Information Service");
+            eccessoDosaggioFarmacoAlert.setTitle("System Notification Service");
             eccessoDosaggioFarmacoAlert.setHeaderText("Dosaggio eccessivo");
             eccessoDosaggioFarmacoAlert.setContentText("Il quantitativo che hai assunto per questo farmaco supera quello giornaliero previsto dalla tua terapia.\nLo staff medico ne sarà informato");
             eccessoDosaggioFarmacoAlert.showAndWait();

@@ -31,7 +31,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                             rs.getInt("id_paziente_glicemico"),
                             rs.getDate("data"),
                             rs.getTime("ora"),
-                            rs.getFloat("valore"),
+                            rs.getInt("valore"),
                             rs.getString("pasto"),
                             rs.getString("indicazioni_temporali"),
                             rs.getBoolean("gestito")
@@ -96,7 +96,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                             rs.getInt("id_paziente_glicemico"),
                             rs.getDate("data"),
                             rs.getTime("ora"),
-                            rs.getFloat("valore"),
+                            rs.getInt("valore"),
                             rs.getString("pasto"),
                             rs.getString("indicazioni_temporali"),
                             rs.getBoolean("gestito")
@@ -133,7 +133,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                         rs.getInt("id_paziente_glicemico"),
                         rs.getDate("data"),
                         rs.getTime("ora"),
-                        rs.getFloat("valore"),
+                        rs.getInt("valore"),
                         rs.getString("pasto"),
                         rs.getString("indicazioni_temporali"),
                         rs.getBoolean("gestito")
@@ -278,7 +278,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                         rs.getInt("id_paziente_glicemico"),
                         rs.getDate("data"),
                         rs.getTime("ora"),
-                        rs.getFloat("valore"),
+                        rs.getInt("valore"),
                         rs.getString("pasto"),
                         rs.getString("indicazioni_temporali"),
                         rs.getBoolean("gestito")

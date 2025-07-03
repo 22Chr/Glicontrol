@@ -75,14 +75,14 @@ public class InserisciMedicoController implements Controller {
                 pause.setOnFinished(event -> {
                     if (inserisciMedico.inviaCredenzialiMedico(email, password)) {
                         Alert notificaInserimentoMedicoAlert = new Alert(Alert.AlertType.INFORMATION);
-                        notificaInserimentoMedicoAlert.setTitle("Notification Service - Success");
-                        notificaInserimentoMedicoAlert.setHeaderText(null);
+                        notificaInserimentoMedicoAlert.setTitle("System Notification Service");
+                        notificaInserimentoMedicoAlert.setHeaderText("Gestore credenziali");
                         notificaInserimentoMedicoAlert.setContentText("Le credenziali sono state inviate al nuovo medico");
                         notificaInserimentoMedicoAlert.show();
                     } else {
                         Alert erroreInserimentoMedicoAlert = new Alert(Alert.AlertType.ERROR);
-                        erroreInserimentoMedicoAlert.setTitle("Notification Service - Error");
-                        erroreInserimentoMedicoAlert.setHeaderText(null);
+                        erroreInserimentoMedicoAlert.setTitle("System Notification Service");
+                        erroreInserimentoMedicoAlert.setHeaderText("Errore invio credenziali");
                         erroreInserimentoMedicoAlert.setContentText("Si è verificato un errore durante l'invio delle credenziali al nuovo medico");
                         erroreInserimentoMedicoAlert.show();
                     }
@@ -97,14 +97,14 @@ public class InserisciMedicoController implements Controller {
 
             } else if (success == 0) {
                 Alert erroreInserimentoMedicoAlert = new Alert(Alert.AlertType.ERROR);
-                erroreInserimentoMedicoAlert.setTitle("System Information Service");
-                erroreInserimentoMedicoAlert.setHeaderText(null);
-                erroreInserimentoMedicoAlert.setContentText("Errore durante l'inserimento del medico");
+                erroreInserimentoMedicoAlert.setTitle("System Notification Service");
+                erroreInserimentoMedicoAlert.setHeaderText("Errore inserimento");
+                erroreInserimentoMedicoAlert.setContentText("Si è verificato un errore durante l'inserimento del nuovo medico");
                 erroreInserimentoMedicoAlert.showAndWait();
             } else {
                 Alert medicoEsistenteAlert = new Alert(Alert.AlertType.ERROR);
-                medicoEsistenteAlert.setTitle("System Information Service");
-                medicoEsistenteAlert.setHeaderText(null);
+                medicoEsistenteAlert.setTitle("System Notification Service");
+                medicoEsistenteAlert.setHeaderText("Gestione duplicati");
                 medicoEsistenteAlert.setContentText("Il medico che stai cercando di inserire è già presente nel sistema");
                 medicoEsistenteAlert.showAndWait();
             }
@@ -118,7 +118,9 @@ public class InserisciMedicoController implements Controller {
 
 
         nomeNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaNome(newValue) && nomeNuovoMedicoTF != null)
+            if (newValue.isEmpty()) {
+                nomeNuovoMedicoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaNome(newValue))
                 nomeNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert nomeNuovoMedicoTF != null;
@@ -127,7 +129,9 @@ public class InserisciMedicoController implements Controller {
         });
 
         cognomeNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaCognome(newValue) && cognomeNuovoMedicoTF != null)
+            if  (newValue.isEmpty()) {
+                cognomeNuovoMedicoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaCognome(newValue))
                 cognomeNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert cognomeNuovoMedicoTF != null;
@@ -136,7 +140,9 @@ public class InserisciMedicoController implements Controller {
         });
 
         emailNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaEmail(newValue) && emailNuovoMedicoTF != null)
+            if (newValue.isEmpty()) {
+                emailNuovoMedicoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaEmail(newValue))
                 emailNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert emailNuovoMedicoTF != null;
@@ -145,7 +151,9 @@ public class InserisciMedicoController implements Controller {
         });
 
         CFNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaCodiceFiscale(newValue) && CFNuovoMedicoTF != null)
+            if (newValue.isEmpty()) {
+                CFNuovoMedicoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaCodiceFiscale(newValue))
                 CFNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert CFNuovoMedicoTF != null;
@@ -154,7 +162,9 @@ public class InserisciMedicoController implements Controller {
         });
 
         passwordNuovoMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaPassword(newValue) && passwordNuovoMedicoTF != null)
+            if (newValue.isEmpty()) {
+               passwordNuovoMedicoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaPassword(newValue))
                 passwordNuovoMedicoTF.setStyle("-fx-border-color: #43a047;");
             else {
                 assert passwordNuovoMedicoTF != null;

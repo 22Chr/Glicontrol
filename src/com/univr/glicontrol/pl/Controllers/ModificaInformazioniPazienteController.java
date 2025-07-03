@@ -53,30 +53,33 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
 
         // Verifica attiva dei campi
         emailTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaEmail(newValue) && emailTF != null)
+            if (newValue.isEmpty()) {
+                emailTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaEmail(newValue))
                 emailTF.setStyle("-fx-border-color: #43a047;");
             else {
-                assert emailTF != null;
                 emailTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
         });
 
         pesoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaPeso(newValue) && pesoTF != null)
+            if (newValue.isEmpty()) {
+                pesoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaPeso(newValue))
                 pesoTF.setStyle("-fx-border-color: #43a047;");
             else {
-                assert pesoTF != null;
                 pesoTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
         });
 
         altezzaTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (InputChecker.getInstance().verificaAltezza(newValue)) {
-               altezzaTF.setStyle("-fx-border-color: #43a047;");
-           }  else {
-               assert altezzaTF != null;
-               altezzaTF.setStyle("-fx-border-color: #ff0000;  -fx-border-width: 3px;");
-           }
+            if (newValue.isEmpty()) {
+                altezzaTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaAltezza(newValue)) {
+                altezzaTF.setStyle("-fx-border-color: #43a047;");
+            }  else {
+                altezzaTF.setStyle("-fx-border-color: #ff0000;  -fx-border-width: 3px;");
+            }
         });
     }
 
@@ -127,8 +130,8 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
             paziente.setPeso(Float.parseFloat(pesoTF.getText().substring(0, pesoTF.getText().length() - 3)));
         } else {
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
-            inputSbagliatiAlert.setTitle("System Information Service");
-            inputSbagliatiAlert.setHeaderText(null);
+            inputSbagliatiAlert.setTitle("System Notification Service");
+            inputSbagliatiAlert.setHeaderText("Dati mancanti");
             inputSbagliatiAlert.setContentText("Per modificare le informazioni del paziente è necessario che tutti i campi siano compilati correttamente.\nVerifica peso e email e riprova");
             inputSbagliatiAlert.showAndWait();
             return;
@@ -159,8 +162,8 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
             }
         } else {
             Alert erroreModificaPazienteAlert = new Alert(Alert.AlertType.ERROR);
-            erroreModificaPazienteAlert.setTitle("System Information Service");
-            erroreModificaPazienteAlert.setHeaderText(null);
+            erroreModificaPazienteAlert.setTitle("System Notification Service");
+            erroreModificaPazienteAlert.setHeaderText("Errore salvataggio");
             erroreModificaPazienteAlert.setContentText("Si è verificato un errore durante il salvataggio delle nuove informazioni.\nVerifica che tutti i dati siano corretti e riprova");
             erroreModificaPazienteAlert.showAndWait();
         }

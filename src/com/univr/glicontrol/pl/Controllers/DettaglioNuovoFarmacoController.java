@@ -136,7 +136,9 @@ public class DettaglioNuovoFarmacoController implements Controller {
     @FXML
     private void initialize() {
         dosaggioTA.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (InputChecker.getInstance().verificaDosaggioFarmaco(newVal, listaFarmaciCompletaCB.getSelectionModel().getSelectedItem(), true) && dosaggioTA != null) {
+            if (newVal.isEmpty()) {
+                dosaggioTA.setStyle("");
+            } else if (InputChecker.getInstance().verificaDosaggioFarmaco(newVal, listaFarmaciCompletaCB.getSelectionModel().getSelectedItem(), true)) {
                 dosaggioTA.setStyle("-fx-border-color: #43a047;");
             } else {
                 dosaggioTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
@@ -144,7 +146,9 @@ public class DettaglioNuovoFarmacoController implements Controller {
         });
 
         frequenzaTA.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (InputChecker.getInstance().campoVuoto(newVal)) {
+            if (newVal.isEmpty()) {
+                frequenzaTA.setStyle("");
+            } else if (InputChecker.getInstance().campoVuoto(newVal)) {
                 frequenzaTA.setStyle("-fx-border-color: #43a047;");
             } else {
                 frequenzaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
@@ -152,7 +156,9 @@ public class DettaglioNuovoFarmacoController implements Controller {
         });
 
         orariTA.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (InputChecker.getInstance().verificaOrariTerapia(newVal) && orariTA != null) {
+            if (newVal.isEmpty()) {
+                orariTA.setStyle("");
+            } else if (InputChecker.getInstance().verificaOrariTerapia(newVal)) {
                 orariTA.setStyle("-fx-border-color: #43a047;");
             } else {
                 orariTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");

@@ -61,7 +61,9 @@ public class ModificaPazienteController implements Controller {
         sessoPazienteCB.setItems(FXCollections.observableArrayList("M", "F"));
 
         nomePazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (InputChecker.getInstance().verificaNome(newValue)) {
+           if (newValue.isEmpty()) {
+               nomePazienteTF.setStyle("");
+           } else if (InputChecker.getInstance().verificaNome(newValue)) {
                nomePazienteTF.setStyle("-fx-border-color: #43a047");
            }  else {
                nomePazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -69,7 +71,9 @@ public class ModificaPazienteController implements Controller {
         });
 
         cognomePazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaCognome(newValue)) {
+            if (newValue.isEmpty()) {
+                cognomePazienteTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaCognome(newValue)) {
                cognomePazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                cognomePazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -77,7 +81,9 @@ public class ModificaPazienteController implements Controller {
         });
 
         emailPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaEmail(newValue)) {
+            if (newValue.isEmpty()) {
+                emailPazienteTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaEmail(newValue)) {
                emailPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                emailPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -85,7 +91,9 @@ public class ModificaPazienteController implements Controller {
         });
 
         CFPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaCodiceFiscale(newValue)) {
+            if (newValue.isEmpty()) {
+                CFPazienteTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaCodiceFiscale(newValue)) {
                CFPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                CFPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -93,7 +101,9 @@ public class ModificaPazienteController implements Controller {
         });
 
         passwordPazienteTF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaPassword(newValue)) {
+            if (newValue.isEmpty()) {
+                passwordPazienteTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaPassword(newValue)) {
                passwordPazienteTF.setStyle("-fx-border-color: #43a047");
             } else {
                passwordPazienteTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -101,7 +111,9 @@ public class ModificaPazienteController implements Controller {
         });
 
         dataNascitaPazienteDP.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (InputChecker.getInstance().verificaNascita(Date.valueOf(newValue))) {
+            if (newValue == null) {
+                dataNascitaPazienteDP.setStyle("");
+            } else if (InputChecker.getInstance().verificaNascita(Date.valueOf(newValue))) {
                 dataNascitaPazienteDP.setStyle("-fx-border-color: #43a047");
             } else {
                dataNascitaPazienteDP.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -144,8 +156,8 @@ public class ModificaPazienteController implements Controller {
 
         if (!InputChecker.getInstance().allCheckForPaziente(p.getNome(), p.getCognome(), p.getCodiceFiscale(), p.getPassword(), p.getEmail(), p.getSesso(), p.getDataNascita())) {
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
-            inputSbagliatiAlert.setTitle("System Information Service");
-            inputSbagliatiAlert.setHeaderText(null);
+            inputSbagliatiAlert.setTitle("System Notification Service");
+            inputSbagliatiAlert.setHeaderText("Dati mancanti");
             inputSbagliatiAlert.setContentText("Per modificare i dati di un paziente è necessario che tutti i campi siano compilati correttamente. Riprova");
             inputSbagliatiAlert.showAndWait();
         } else {
@@ -155,9 +167,9 @@ public class ModificaPazienteController implements Controller {
 
             if (aggiornaPaziente.aggiornaPaziente()) {
                 Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                aggiornaPazienteAlert.setTitle("System Information Service");
-                aggiornaPazienteAlert.setHeaderText(null);
-                aggiornaPazienteAlert.setContentText("Modifica effettuata con successo");
+                aggiornaPazienteAlert.setTitle("System Notification Service");
+                aggiornaPazienteAlert.setHeaderText("Modifica eseguita con successo");
+                aggiornaPazienteAlert.setContentText("I dati del paziente sono stati aggiornati correttamente");
                 aggiornaPazienteAlert.showAndWait();
 
                 pac.resetListViewPazienti();
@@ -166,14 +178,14 @@ public class ModificaPazienteController implements Controller {
                     pause.setOnFinished(event -> {
                         if (aggiornaPaziente.inviaCredenzialiAggiornatePaziente(p.getEmail(), passwordPazienteTF.getText())) {
                             Alert notificaModifichePazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                            notificaModifichePazienteAlert.setTitle("System Information Service");
-                            notificaModifichePazienteAlert.setHeaderText(null);
+                            notificaModifichePazienteAlert.setTitle("System Notification Service");
+                            notificaModifichePazienteAlert.setHeaderText("Gestore credenziali");
                             notificaModifichePazienteAlert.setContentText("Le credenziali aggiornate sono state inviate con successo");
                             notificaModifichePazienteAlert.show();
                         } else {
                             Alert erroreNotificaModifichePazienteAlert = new Alert(Alert.AlertType.ERROR);
-                            erroreNotificaModifichePazienteAlert.setTitle("System Information Service");
-                            erroreNotificaModifichePazienteAlert.setHeaderText(null);
+                            erroreNotificaModifichePazienteAlert.setTitle("System Notification Service");
+                            erroreNotificaModifichePazienteAlert.setHeaderText("Errore invio credenziali");
                             erroreNotificaModifichePazienteAlert.setContentText("Si è verificato un errore durante l'invio delle notifiche di aggiornamento delle credenziali");
                             erroreNotificaModifichePazienteAlert.show();
                         }
@@ -199,9 +211,9 @@ public class ModificaPazienteController implements Controller {
                 }
             } else {
                 Alert erroreModificaPazienteAlert = new Alert(Alert.AlertType.ERROR);
-                erroreModificaPazienteAlert.setTitle("System Information Service");
-                erroreModificaPazienteAlert.setHeaderText(null);
-                erroreModificaPazienteAlert.setContentText("Errore durante il salvataggio delle modifiche");
+                erroreModificaPazienteAlert.setTitle("System Notification Service");
+                erroreModificaPazienteAlert.setHeaderText("Errore salvataggio");
+                erroreModificaPazienteAlert.setContentText("Si è verificato un errore durante il salvataggio delle modifiche");
                 erroreModificaPazienteAlert.showAndWait();
             }
         }
@@ -215,18 +227,18 @@ public class ModificaPazienteController implements Controller {
 
     public void eliminaPaziente(){
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmAlert.setTitle("System Information Service");
-        confirmAlert.setHeaderText(null);
-        confirmAlert.setContentText("Sei sicuro di voler eliminare questo paziente?");
+        confirmAlert.setTitle("System Notification Service");
+        confirmAlert.setHeaderText("Confermi di voler eliminare il paziente selezionato");
+        confirmAlert.setContentText("L'operazione è irreversibile");
 
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response.getText().equals("OK")) {
                 EliminaPaziente ep = new EliminaPaziente(p);
                 if (ep.deletePaziente()) {
                     Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                    successAlert.setTitle("System Information Service");
-                    successAlert.setHeaderText(null);
-                    successAlert.setContentText("Paziente eliminato con successo");
+                    successAlert.setTitle("System Notification Service");
+                    successAlert.setHeaderText("Eliminazione avvenuta con successo");
+                    successAlert.setContentText("Il paziente è stato correttamente eliminato dal sistema");
                     successAlert.showAndWait();
 
                     pac.resetListViewPazienti();
@@ -235,14 +247,14 @@ public class ModificaPazienteController implements Controller {
                     pause.setOnFinished(event -> {
                         if (ep.notificaEliminazionePaziente(p.getEmail())) {
                             Alert invioNotificheEliminazioneAlert = new Alert(Alert.AlertType.INFORMATION);
-                            invioNotificheEliminazioneAlert.setTitle("System Information Service");
-                            invioNotificheEliminazioneAlert.setHeaderText(null);
+                            invioNotificheEliminazioneAlert.setTitle("System Notification Service");
+                            invioNotificheEliminazioneAlert.setHeaderText("Notifica inviata con successo");
                             invioNotificheEliminazioneAlert.setContentText("La notifica di eliminazione è stata inviata con successo");
                             invioNotificheEliminazioneAlert.show();
                         } else {
                             Alert erroreInvioNotificheEliminazioneAlert = new Alert(Alert.AlertType.ERROR);
-                            erroreInvioNotificheEliminazioneAlert.setTitle("System Information Service");
-                            erroreInvioNotificheEliminazioneAlert.setHeaderText(null);
+                            erroreInvioNotificheEliminazioneAlert.setTitle("System Notification Service");
+                            erroreInvioNotificheEliminazioneAlert.setHeaderText("Errore invio notifiche");
                             erroreInvioNotificheEliminazioneAlert.setContentText("Si è verificato un errore durante l'invio della notifica di eliminazione");
                             erroreInvioNotificheEliminazioneAlert.show();
                         }
@@ -255,9 +267,9 @@ public class ModificaPazienteController implements Controller {
                     }
                 } else {
                     Alert erroreEliminazionePazienteAlert = new Alert(Alert.AlertType.ERROR);
-                    erroreEliminazionePazienteAlert.setTitle("System Information Service");
-                    erroreEliminazionePazienteAlert.setHeaderText(null);
-                    erroreEliminazionePazienteAlert.setContentText("Errore durante l'eliminazione del paziente");
+                    erroreEliminazionePazienteAlert.setTitle("System Notification Service");
+                    erroreEliminazionePazienteAlert.setHeaderText("Errore eliminazione paziente");
+                    erroreEliminazionePazienteAlert.setContentText("Si è verificato un errore durante l'eliminazione del paziente selezionato");
                     erroreEliminazionePazienteAlert.showAndWait();
                 }
             }

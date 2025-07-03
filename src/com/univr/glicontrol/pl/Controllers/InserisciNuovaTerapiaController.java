@@ -27,6 +27,8 @@ public class InserisciNuovaTerapiaController implements Controller {
     private FinestraTerapiePazienteController ftpc = new FinestraTerapiePazienteController();
     private int terapiaSelezionata;
     private String ruoloAccesso, noteTerapia = null;
+    private Date dataInizio;
+    private Date dataFine;
 
     @FXML
     private ComboBox<String>  patologiaCB;
@@ -85,7 +87,7 @@ public class InserisciNuovaTerapiaController implements Controller {
 
         if (dataInizio == null) {
             Alert erroreDataMancataAlert = new Alert(Alert.AlertType.ERROR);
-            erroreDataMancataAlert.setTitle("System Information Service");
+            erroreDataMancataAlert.setTitle("System Notification Service");
             erroreDataMancataAlert.setHeaderText("Data mancante");
             erroreDataMancataAlert.setContentText("Prima di poter selezionare dei farmaci per la tua terapia è necessario precisarne la data di inizio. Riprova");
             erroreDataMancataAlert.showAndWait();
@@ -96,7 +98,7 @@ public class InserisciNuovaTerapiaController implements Controller {
         PatologiaConcomitante patologia = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
         if (terapiaSelezionata == 1 && dataInizio.before(patologia.getDataInizio())) {
             Alert erroreDiscrepanzaData = new Alert(Alert.AlertType.ERROR);
-            erroreDiscrepanzaData.setTitle("System Information Service");
+            erroreDiscrepanzaData.setTitle("System Notification Service");
             erroreDiscrepanzaData.setHeaderText("Data non valida");
             erroreDiscrepanzaData.setContentText("La data di inizio della terapia non può essere antecedente a quella della patologia.\nInserisci una data compatibile e riprova");
             erroreDiscrepanzaData.showAndWait();
@@ -132,6 +134,18 @@ public class InserisciNuovaTerapiaController implements Controller {
 
     public void inserisciNote() {
 
+        dataInizio = ottieniDataInizioTerapia();
+        
+        if (dataInizio == null) {
+            Alert dataInizioNonDefinitaALert = new Alert(Alert.AlertType.ERROR);
+            dataInizioNonDefinitaALert.setTitle("System Notification Service");
+            dataInizioNonDefinitaALert.setHeaderText("Data inizio mancante");
+            dataInizioNonDefinitaALert.setContentText("Per poter inserire delle note è  necessario precisare una data di inizio per la terapia");
+            dataInizioNonDefinitaALert.showAndWait();
+
+            return;
+        }
+
         try {
             FXMLLoader inserisciNoteTerapiaLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraNoteTerapia.fxml"));
             Parent root = inserisciNoteTerapiaLoader.load();
@@ -160,33 +174,49 @@ public class InserisciNuovaTerapiaController implements Controller {
 
         if (nomePatologia == null && terapiaSelezionata == 1) {
             Alert nomePatologiaAssenteAlert = new Alert(Alert.AlertType.ERROR);
-            nomePatologiaAssenteAlert.setTitle("System Information Service");
+            nomePatologiaAssenteAlert.setTitle("System Notification Service");
             nomePatologiaAssenteAlert.setHeaderText("Nome patologia assente");
             nomePatologiaAssenteAlert.setContentText("Per poter inserire una terapia concomitante è necessario precisare la patologia concomitante cui fa riferimento.\nSeleziona una patologia valida e riprova");
             nomePatologiaAssenteAlert.showAndWait();
+
+            return;
         }
 
-        Date dataInizio = ottieniDataInizioTerapia();
-        Date dataFine = ottieniDataFineTerapia();
+        dataInizio = ottieniDataInizioTerapia();
+        dataFine = ottieniDataFineTerapia();
 
         if (dataInizio == null) {
             Alert dataInizioNonSpecificataAlert = new Alert(Alert.AlertType.ERROR);
-            dataInizioNonSpecificataAlert.setTitle("System Information Service");
+            dataInizioNonSpecificataAlert.setTitle("System Notification Service");
             dataInizioNonSpecificataAlert.setHeaderText("Data inizio mancante");
             dataInizioNonSpecificataAlert.setContentText("Per specificare una terapia è necessario impostare una data di inizio");
             dataInizioNonSpecificataAlert.showAndWait();
+
+            return;
         }
 
         if (terapiaSelezionata == 1 && dataInizio != null) {
             if (!InputChecker.getInstance().verificaDataInizioTerapiaConcomitante(dataInizio, upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getDataInizio())) {
                 Alert dataInizioAntecedenteAllaPatologiaAlert = new Alert(Alert.AlertType.ERROR);
-                dataInizioAntecedenteAllaPatologiaAlert.setTitle("System Information Service");
+                dataInizioAntecedenteAllaPatologiaAlert.setTitle("System Notification Service");
                 dataInizioAntecedenteAllaPatologiaAlert.setHeaderText("Data di inizio non valida");
                 dataInizioAntecedenteAllaPatologiaAlert.setContentText("La data di inizio della terapia non può precedere quella della diagnosi della patologia che va a trattare. Riprova");
                 dataInizioAntecedenteAllaPatologiaAlert.showAndWait();
+
+                return;
             }
         }
+
         List<FarmacoTerapia> farmaciConIndicazioni = gt.getFarmaciSingolaTerapia();
+        if (farmaciConIndicazioni == null || farmaciConIndicazioni.isEmpty()) {
+            Alert farmaciMancantiAlert = new Alert(Alert.AlertType.ERROR);
+            farmaciMancantiAlert.setTitle("System Notification Service");
+            farmaciMancantiAlert.setHeaderText("Nessun farmaco precisato");
+            farmaciMancantiAlert.setContentText("Per creare una terapia è necessario associarvi dei farmaci");
+            farmaciMancantiAlert.showAndWait();
+
+            return;
+        }
 
         int status;
         if (terapiaSelezionata == 0) {
@@ -201,7 +231,7 @@ public class InserisciNuovaTerapiaController implements Controller {
 
 
             Alert successoInserimentoTerapiaAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoTerapiaAlert.setTitle("System Information Service");
+            successoInserimentoTerapiaAlert.setTitle("System Notification Service");
             successoInserimentoTerapiaAlert.setHeaderText("Terapia inserita con successo");
             successoInserimentoTerapiaAlert.setContentText("La nuova terapia è stata inserita con successo");
             successoInserimentoTerapiaAlert.showAndWait();
@@ -234,14 +264,14 @@ public class InserisciNuovaTerapiaController implements Controller {
         } else if (status == 0) {
 
             Alert erroreInserimentoTerapiaAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoTerapiaAlert.setTitle("System Information Service");
+            erroreInserimentoTerapiaAlert.setTitle("System Notification Service");
             erroreInserimentoTerapiaAlert.setHeaderText("Errore durante l'inserimento della nuova terapia");
             erroreInserimentoTerapiaAlert.setContentText("Non è stato possibile inserire la nuova terapia.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
             erroreInserimentoTerapiaAlert.showAndWait();
 
         } else {
             Alert erroreDuplicazioneTerapiaAlert = new Alert(Alert.AlertType.ERROR);
-            erroreDuplicazioneTerapiaAlert.setTitle("System Information Service");
+            erroreDuplicazioneTerapiaAlert.setTitle("System Notification Service");
             erroreDuplicazioneTerapiaAlert.setHeaderText("Errore durante l'inserimento della nuova terapia");
             erroreDuplicazioneTerapiaAlert.setContentText("Esiste già una terapia associata a questa patologia nel sistema");
             erroreDuplicazioneTerapiaAlert.showAndWait();

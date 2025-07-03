@@ -52,7 +52,7 @@ public class ModificaPastoController implements Controller {
     public void eliminaPastoEOrario() {
         if (gp.eliminaPasto(pasto.getIdPasto())) {
             Alert successoInserimentoPastoAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoPastoAlert.setTitle("System Information Service");
+            successoInserimentoPastoAlert.setTitle("System Notification Service");
             successoInserimentoPastoAlert.setHeaderText("Pasto eliminato con successo");
             successoInserimentoPastoAlert.setContentText("Il pasto è stato eliminato con successo");
             successoInserimentoPastoAlert.showAndWait();
@@ -65,7 +65,7 @@ public class ModificaPastoController implements Controller {
             }
         } else {
             Alert erroreInserimentoPastoAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoPastoAlert.setTitle("System Information Service");
+            erroreInserimentoPastoAlert.setTitle("System Notification Service");
             erroreInserimentoPastoAlert.setHeaderText("Errore durante l'eliminazione del pasto");
             erroreInserimentoPastoAlert.setContentText("Non è stato possibile eliminare il pasto, riprova");
             erroreInserimentoPastoAlert.showAndWait();
@@ -83,7 +83,7 @@ public class ModificaPastoController implements Controller {
 
         if (oraCB.getValue() == null || minutiCB.getValue() == null) {
             Alert datiMancantiAlert = new Alert(Alert.AlertType.ERROR);
-            datiMancantiAlert.setTitle("System Information Service");
+            datiMancantiAlert.setTitle("System Notification Service");
             datiMancantiAlert.setHeaderText("Dati mancanti");
             datiMancantiAlert.setContentText("Per inserire un nuovo pasto è necessario che tutti i campi siano compilati correttamente. Riprova");
             datiMancantiAlert.showAndWait();
@@ -97,7 +97,7 @@ public class ModificaPastoController implements Controller {
 
         if (gp.aggiornaPasto(pasto)) {
             Alert successoInserimentoPastoAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoPastoAlert.setTitle("System Information Service");
+            successoInserimentoPastoAlert.setTitle("System Notification Service");
             successoInserimentoPastoAlert.setHeaderText("Pasto modificato con successo");
             successoInserimentoPastoAlert.setContentText("Il pasto è stato modificato con successo");
             successoInserimentoPastoAlert.showAndWait();
@@ -110,7 +110,7 @@ public class ModificaPastoController implements Controller {
             }
         } else {
             Alert erroreInserimentoPastoAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoPastoAlert.setTitle("System Information Service");
+            erroreInserimentoPastoAlert.setTitle("System Notification Service");
             erroreInserimentoPastoAlert.setHeaderText("Errore durante la modifica del pasto");
             erroreInserimentoPastoAlert.setContentText("Non è stato possibile modificare il pasto, riprova");
             erroreInserimentoPastoAlert.showAndWait();

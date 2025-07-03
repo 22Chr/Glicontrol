@@ -86,6 +86,15 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
             return cell;
         });
 
+        valoreGlicemiaTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                valoreGlicemiaTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaInputGlicemia(newValue)) {
+                valoreGlicemiaTF.setStyle("-fx-border-color: #43a047;");
+            } else {
+                valoreGlicemiaTF.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
+            }
+        });
     }
 
     public void cambiaPagina(){
@@ -120,10 +129,21 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
 
         if (valoreGlicemiaTF.getText().isEmpty() || data == null || oraGlicemiaCB.getValue() == null || minutiGlicemiaCB.getValue() == null || primaODopoCB.getValue() == null || pastoGlicemiaCB.getValue() == null) {
             Alert datiMancantiAlert = new Alert(Alert.AlertType.ERROR);
-            datiMancantiAlert.setTitle("System Information Service");
+            datiMancantiAlert.setTitle("System Notification Service");
             datiMancantiAlert.setHeaderText("Dati mancanti");
             datiMancantiAlert.setContentText("Per poter inserire una rilevazione glicemica devi precisarne la data, l'ora, il valore e l'associazione rispetto al pasto di riferimento.\nInserisci tutti i dati e riprova");
             datiMancantiAlert.showAndWait();
+
+            return;
+        }
+
+        if (!InputChecker.getInstance().verificaInputGlicemia(valoreGlicemiaTF.getText())) {
+            Alert tipoNonValidoAlert = new Alert(Alert.AlertType.ERROR);
+            tipoNonValidoAlert.setTitle("System Notification Service");
+            tipoNonValidoAlert.setHeaderText("Input non valido");
+            tipoNonValidoAlert.setContentText("Sono ammessi solamente valori numerici per i valori glicemici.\nRiprova");
+            tipoNonValidoAlert.showAndWait();
+
             return;
         }
 
@@ -135,19 +155,19 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
 
         if (status == -1 ) {
             Alert duplicazioneRilevazioneGlicemiaAlert = new Alert(Alert.AlertType.ERROR);
-            duplicazioneRilevazioneGlicemiaAlert.setTitle("System Information Service");
+            duplicazioneRilevazioneGlicemiaAlert.setTitle("System Notification Service");
             duplicazioneRilevazioneGlicemiaAlert.setHeaderText("Errore durante l'inserimento della rilevazione glicemica");
             duplicazioneRilevazioneGlicemiaAlert.setContentText("La rilevazione glicemica è già stata inserita con successo.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
             duplicazioneRilevazioneGlicemiaAlert.showAndWait();
         } else if (status == 0) {
             Alert erroreInserimentoRilevazioneGlicemicaAlert = new Alert(Alert.AlertType.ERROR);
-            erroreInserimentoRilevazioneGlicemicaAlert.setTitle("System Information Service");
+            erroreInserimentoRilevazioneGlicemicaAlert.setTitle("System Notification Service");
             erroreInserimentoRilevazioneGlicemicaAlert.setHeaderText("Errore durante l'inserimento della rilevazione glicemica");
             erroreInserimentoRilevazioneGlicemicaAlert.setContentText("Non è stato possibile inserire la rilevazione glicemica.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
             erroreInserimentoRilevazioneGlicemicaAlert.showAndWait();
         } else {
             Alert successoInserimentoRilevazioneGlicemicaAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoInserimentoRilevazioneGlicemicaAlert.setTitle("System Information Service");
+            successoInserimentoRilevazioneGlicemicaAlert.setTitle("System Notification Service");
             successoInserimentoRilevazioneGlicemicaAlert.setHeaderText("Rilevazione glicemica inserita con successo");
             successoInserimentoRilevazioneGlicemicaAlert.setContentText("La nuova rilevazione glicemica è stata inserita con successo");
             successoInserimentoRilevazioneGlicemicaAlert.showAndWait();
@@ -182,7 +202,7 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
 
         if (grg.eliminaRilevazione(rilevazione.getIdRilevazione())) {
             Alert successoEliminazioneRilevazioneGlicemicaAlert = new Alert(Alert.AlertType.INFORMATION);
-            successoEliminazioneRilevazioneGlicemicaAlert.setTitle("System Information Service");
+            successoEliminazioneRilevazioneGlicemicaAlert.setTitle("System Notification Service");
             successoEliminazioneRilevazioneGlicemicaAlert.setHeaderText("Rilevazione glicemica eliminata con successo");
             successoEliminazioneRilevazioneGlicemicaAlert.setContentText("La rilevazione glicemica è stata eliminata con successo");
             successoEliminazioneRilevazioneGlicemicaAlert.showAndWait();
@@ -194,7 +214,7 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
 
         } else {
             Alert erroreEliminazioneRilevazioneGlicemicaAlert = new Alert(Alert.AlertType.ERROR);
-            erroreEliminazioneRilevazioneGlicemicaAlert.setTitle("System Information Service");
+            erroreEliminazioneRilevazioneGlicemicaAlert.setTitle("System Notification Service");
             erroreEliminazioneRilevazioneGlicemicaAlert.setHeaderText("Errore nell'eliminazione della rilevazione glicemica");
             erroreEliminazioneRilevazioneGlicemicaAlert.setContentText("Si è verificato un errore durante l'eliminazione della rilevazione glicemica selezionata. Riprova");
             erroreEliminazioneRilevazioneGlicemicaAlert.showAndWait();

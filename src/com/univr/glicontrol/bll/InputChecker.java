@@ -112,4 +112,12 @@ public class InputChecker {
     public boolean verificaAltezza(String altezza) {
         return altezza.matches("^\\d{2,3}\\scm$");
     }
+
+    public boolean verificaInputGlicemia(String glicemia) {
+        return glicemia.matches("^[1-9]\\d{1,2}$");
+    }
+
+    public boolean verificaInputDosaggioFarmaco(String dosaggio) {
+        return dosaggio.matches("^(0\\.[1-9]\\d?|[1-9]\\d*(\\.\\d{1,2})?)$");
+    }
 }

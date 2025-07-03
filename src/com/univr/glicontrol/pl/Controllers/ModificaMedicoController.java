@@ -65,8 +65,8 @@ public class ModificaMedicoController implements Controller {
 
         if (!InputChecker.getInstance().allCheckForMedico(m.getNome(), m.getCognome(), m.getCodiceFiscale(), m.getPassword(), m.getEmail())) {
             Alert inputSbagliatiAlert = new Alert(Alert.AlertType.ERROR);
-            inputSbagliatiAlert.setTitle("System Information Service");
-            inputSbagliatiAlert.setHeaderText(null);
+            inputSbagliatiAlert.setTitle("System Notification Service");
+            inputSbagliatiAlert.setHeaderText("Dati mancanti");
             inputSbagliatiAlert.setContentText("Per modificare i dati di un medico è necessario che tutti i campi siano compilati correttamente. Riprova");
             inputSbagliatiAlert.showAndWait();
         } else {
@@ -75,9 +75,9 @@ public class ModificaMedicoController implements Controller {
 
             if (aggiornaMedico.updateMedico()) {
                 Alert modificaMedicoAlert = new Alert(Alert.AlertType.INFORMATION);
-                modificaMedicoAlert.setTitle("System Information Service");
-                modificaMedicoAlert.setHeaderText(null);
-                modificaMedicoAlert.setContentText("Modifica effettuata con successo");
+                modificaMedicoAlert.setTitle("System Notification Service");
+                modificaMedicoAlert.setHeaderText("Successo modifica");
+                modificaMedicoAlert.setContentText("Le modifiche sono state salvate con successo");
                 modificaMedicoAlert.showAndWait();
 
                 pac.resetListViewMedici();
@@ -87,14 +87,14 @@ public class ModificaMedicoController implements Controller {
                     pause.setOnFinished(event -> {
                         if (aggiornaMedico.inviaCredenzialiAggiornateMedico(m.getEmail(), passwordMedicoTF.getText())) {
                             Alert invioNotificheModificaAlert = new Alert(Alert.AlertType.INFORMATION);
-                            invioNotificheModificaAlert.setTitle("System Information Service");
-                            invioNotificheModificaAlert.setHeaderText(null);
+                            invioNotificheModificaAlert.setTitle("System Notification Service");
+                            invioNotificheModificaAlert.setHeaderText("Gestore credenziali");
                             invioNotificheModificaAlert.setContentText("Le credenziali aggiornate sono state inviate con successo");
                             invioNotificheModificaAlert.show();
                         } else {
                             Alert erroreInvioNotificheModificaAlert = new Alert(Alert.AlertType.ERROR);
-                            erroreInvioNotificheModificaAlert.setTitle("System Information Service");
-                            erroreInvioNotificheModificaAlert.setHeaderText(null);
+                            erroreInvioNotificheModificaAlert.setTitle("System Notification Service");
+                            erroreInvioNotificheModificaAlert.setHeaderText("Errore invio credenziali");
                             erroreInvioNotificheModificaAlert.setContentText("Si è verificato un errore durante l'invio delle notifiche di aggiornamento delle credenziali");
                             erroreInvioNotificheModificaAlert.show();
                         }
@@ -108,9 +108,9 @@ public class ModificaMedicoController implements Controller {
                 }
             } else {
                 Alert erroreModificaMedicoAlert = new Alert(Alert.AlertType.ERROR);
-                erroreModificaMedicoAlert.setTitle("System Information Service");
-                erroreModificaMedicoAlert.setHeaderText(null);
-                erroreModificaMedicoAlert.setContentText("Errore durante il salvataggio delle modifiche");
+                erroreModificaMedicoAlert.setTitle("System Notification Service");
+                erroreModificaMedicoAlert.setHeaderText("Errore salvataggio modifiche");
+                erroreModificaMedicoAlert.setContentText("Si è verificato un errore durante il salvataggio delle modifiche");
                 erroreModificaMedicoAlert.showAndWait();
             }
         }
@@ -118,9 +118,9 @@ public class ModificaMedicoController implements Controller {
 
     public void eliminaMedico(){
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmAlert.setTitle("System Information Service");
-        confirmAlert.setHeaderText(null);
-        confirmAlert.setContentText("Sei sicuro di voler eliminare questo medico?");
+        confirmAlert.setTitle("System Notification Service");
+        confirmAlert.setHeaderText("Sei sicuro di voler eliminare questo medico");
+        confirmAlert.setContentText("L'operazione è irreversibile");
 
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response.getText().equals("OK")) {
@@ -128,9 +128,9 @@ public class ModificaMedicoController implements Controller {
                 int status = em.deleteMedico();
                 if (status == 1) {
                     Alert successEliminazioneAlert = new Alert(Alert.AlertType.INFORMATION);
-                    successEliminazioneAlert.setTitle("System Information Service");
-                    successEliminazioneAlert.setHeaderText(null);
-                    successEliminazioneAlert.setContentText("Medico eliminato con successo");
+                    successEliminazioneAlert.setTitle("System Notification Service");
+                    successEliminazioneAlert.setHeaderText("Successo eliminazione");
+                    successEliminazioneAlert.setContentText("Il medico è stato eliminato con successo");
                     successEliminazioneAlert.showAndWait();
 
                     pac.resetListViewMedici();
@@ -139,15 +139,15 @@ public class ModificaMedicoController implements Controller {
                     pause.setOnFinished(event -> {
                         if(em.notificaEliminazioneMedico(m.getEmail())) {
                             Alert invioNotificheEliminazioneAlert = new Alert(Alert.AlertType.INFORMATION);
-                            invioNotificheEliminazioneAlert.setTitle("System Information Service");
-                            invioNotificheEliminazioneAlert.setHeaderText(null);
-                            invioNotificheEliminazioneAlert.setContentText("La notifica di eliminazione è stata inviata con successo");
+                            invioNotificheEliminazioneAlert.setTitle("System Notification Service");
+                            invioNotificheEliminazioneAlert.setHeaderText("La notifica di eliminazione è stata inviata con successo");
+                            invioNotificheEliminazioneAlert.setContentText("Il medico selezionato non potrà più accedere al sistema");
                             invioNotificheEliminazioneAlert.show();
                         } else {
                             Alert erroreInvioNotificheEliminazioneAlert = new Alert(Alert.AlertType.ERROR);
-                            erroreInvioNotificheEliminazioneAlert.setTitle("System Information Service");
-                            erroreInvioNotificheEliminazioneAlert.setHeaderText(null);
-                            erroreInvioNotificheEliminazioneAlert.setContentText("Si è verificato un errore durante l'invio della notifica di eliminazione");
+                            erroreInvioNotificheEliminazioneAlert.setTitle("System Notification Service");
+                            erroreInvioNotificheEliminazioneAlert.setHeaderText("Errore durante l'invio del messaggio");
+                            erroreInvioNotificheEliminazioneAlert.setContentText("Si è verificato un errore durante l'invio della notifica di eliminazione al medico");
                             erroreInvioNotificheEliminazioneAlert.show();
                         }
                     });
@@ -159,14 +159,14 @@ public class ModificaMedicoController implements Controller {
                     }
                 } else if (status == 0) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                    errorAlert.setTitle("System Information Service");
-                    errorAlert.setHeaderText(null);
-                    errorAlert.setContentText("Errore durante l'eliminazione del medico.");
+                    errorAlert.setTitle("System Notification Service");
+                    errorAlert.setHeaderText("Errore eliminazione medico");
+                    errorAlert.setContentText("Si è verificato un errore durante l'eliminazione del medico selezionato");
                     errorAlert.showAndWait();
                 } else {
                     Alert pazientiAssociatiAlMedicoAlert = new Alert(Alert.AlertType.ERROR);
-                    pazientiAssociatiAlMedicoAlert.setTitle("System Information Service");
-                    pazientiAssociatiAlMedicoAlert.setHeaderText(null);
+                    pazientiAssociatiAlMedicoAlert.setTitle("System Notification Service");
+                    pazientiAssociatiAlMedicoAlert.setHeaderText("Errore associazione referente");
                     pazientiAssociatiAlMedicoAlert.setContentText("Non è possibile eliminare un medico che abbia ancora pazienti associati.\nRimuovi tutti i pazienti associati a questo medico e riprova");
                     pazientiAssociatiAlMedicoAlert.showAndWait();
                 }
@@ -178,23 +178,29 @@ public class ModificaMedicoController implements Controller {
     private void initialize() {
 
         nomeMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (InputChecker.getInstance().verificaNome(newValue)) {
+            if (newValue.isEmpty()) {
+                nomeMedicoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaNome(newValue)) {
                nomeMedicoTF.setStyle("-fx-border-color: #43a047");
-           } else {
-               nomeMedicoTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
-           }
+            } else {
+                nomeMedicoTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
+            }
         });
 
         cognomeMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (InputChecker.getInstance().verificaCognome(newValue)) {
-               cognomeMedicoTF.setStyle("-fx-border-color: #43a047");
-           } else {
-               cognomeMedicoTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
-           }
+            if (newValue.isEmpty()) {
+                cognomeMedicoTF.setStyle("");
+            } else if (InputChecker.getInstance().verificaCognome(newValue)) {
+                cognomeMedicoTF.setStyle("-fx-border-color: #43a047");
+            } else {
+                cognomeMedicoTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
+            }
         });
 
         emailMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (InputChecker.getInstance().verificaEmail(newValue)) {
+           if (newValue.isEmpty()) {
+               emailMedicoTF.setStyle("");
+           } else if (InputChecker.getInstance().verificaEmail(newValue)) {
                emailMedicoTF.setStyle("-fx-border-color: #43a047");
            } else {
                emailMedicoTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -202,7 +208,9 @@ public class ModificaMedicoController implements Controller {
         });
 
         passwordMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (InputChecker.getInstance().verificaPassword(newValue)) {
+           if (newValue.isEmpty()) {
+               passwordMedicoTF.setStyle("");
+           } else if (InputChecker.getInstance().verificaPassword(newValue)) {
                passwordMedicoTF.setStyle("-fx-border-color: #43a047");
            } else {
                passwordMedicoTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");
@@ -210,7 +218,9 @@ public class ModificaMedicoController implements Controller {
         });
 
         CFMedicoTF.textProperty().addListener((observable, oldValue, newValue) -> {
-           if (InputChecker.getInstance().verificaCodiceFiscale(newValue)) {
+           if (newValue.isEmpty()) {
+               CFMedicoTF.setStyle("");
+           } else if (InputChecker.getInstance().verificaCodiceFiscale(newValue)) {
                CFMedicoTF.setStyle("-fx-border-color: #43a047");
            } else {
                CFMedicoTF.setStyle("-fx-border-color: #ff1744; -fx-border-width: 3px");

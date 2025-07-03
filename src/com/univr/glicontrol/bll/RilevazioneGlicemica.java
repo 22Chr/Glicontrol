@@ -8,12 +8,12 @@ public class RilevazioneGlicemica {
     private final int idPaziente;
     private final Date data;
     private final Time ora;
-    private final float valore;
+    private final int valore;
     private final String pasto;
     private final String indicazioniTemporali;
     private boolean gestito;
 
-    public RilevazioneGlicemica(int idRilevazione, int idPaziente, Date data, Time ora, float valore, String pasto, String indicazioniTemporali, boolean gestito) {
+    public RilevazioneGlicemica(int idRilevazione, int idPaziente, Date data, Time ora, int valore, String pasto, String indicazioniTemporali, boolean gestito) {
         this.idRilevazione = idRilevazione;
         this.idPaziente = idPaziente;
         this.data = data;
@@ -40,7 +40,7 @@ public class RilevazioneGlicemica {
         return ora;
     }
 
-    public float getValore() {
+    public int getValore() {
         return valore;
     }
 

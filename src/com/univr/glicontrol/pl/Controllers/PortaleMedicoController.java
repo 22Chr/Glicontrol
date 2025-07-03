@@ -285,6 +285,7 @@ public class PortaleMedicoController implements Portale, Controller {
             event.consume();
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("System Notification Service");
             alert.setHeaderText("Sei sicuro di voler uscire?");
 
             if (alert.showAndWait().get() == ButtonType.OK) {
