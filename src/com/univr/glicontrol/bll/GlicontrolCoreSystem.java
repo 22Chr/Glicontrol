@@ -11,6 +11,7 @@ import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -266,7 +267,7 @@ public class GlicontrolCoreSystem {
             farmaciTerapie.add(t.getListaFarmaciTerapia());
         }
 
-        if (farmaciPrescritti.isEmpty()) {
+        if (farmaciTerapie.isEmpty()) {
             return false;
         }
 
@@ -284,17 +285,24 @@ public class GlicontrolCoreSystem {
 
         int farmaciNonAssuntiCounter = 0;
         List<Farmaco> farmaciNonAssunti = new ArrayList<>();
+
         for (Farmaco farmaco : farmaciPrescritti) {
             List<AssunzioneFarmaco> assunzioniDiQuestoFarmaco = new ArrayList<>();
+
             for (AssunzioneFarmaco af : gestioneAssunzioneFarmaci.getListaAssunzioneFarmaci()) {
                 if (af.getIdFarmaco() == farmaco.getIdFarmaco() && af.getIdPaziente() == paziente.getIdUtente()) {
                     assunzioniDiQuestoFarmaco.add(af);
                 }
             }
-            Duration intervallo = Duration.between((assunzioniDiQuestoFarmaco.getLast().getData().toLocalDate()), LocalDate.now()).abs();
-            if (intervallo.toDays() > 3) {
-                farmaciNonAssunti.add(farmaco);
-                farmaciNonAssuntiCounter++;
+
+            if (!assunzioniDiQuestoFarmaco.isEmpty()) {
+                LocalDate ultimaAssunzione = assunzioniDiQuestoFarmaco.getLast().getData().toLocalDate();
+                long giorni = ChronoUnit.DAYS.between(ultimaAssunzione, LocalDate.now());
+
+                if (giorni > 3) {
+                    farmaciNonAssunti.add(farmaco);
+                    farmaciNonAssuntiCounter++;
+                }
             }
         }
 

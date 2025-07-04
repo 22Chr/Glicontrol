@@ -58,7 +58,7 @@ public class ServizioNotifiche {
         Alert sospensioneFarmacoTerapiaAlert = new Alert(Alert.AlertType.WARNING);
         sospensioneFarmacoTerapiaAlert.setTitle("System Notification Service");
         sospensioneFarmacoTerapiaAlert.setHeaderText("Sospensione farmaci");
-        sospensioneFarmacoTerapiaAlert.setContentText("Il paziente " + paziente.getNome() + " non assume i farmaci prescritti da più di 3 giorni.\nSi consiglia di contattare il paziente per dei chiarimenti");
+        sospensioneFarmacoTerapiaAlert.setContentText("Il paziente " + paziente.getNome() + " " + paziente.getCognome() + " " + "( " + paziente.getCodiceFiscale() + ") non assume i farmaci prescritti da più di 3 giorni.\nSi consiglia di contattare il paziente per dei chiarimenti");
         sospensioneFarmacoTerapiaAlert.showAndWait();
     }
 
