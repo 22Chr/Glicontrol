@@ -4,10 +4,9 @@ import com.univr.glicontrol.dao.AccessoFattoriRischio;
 import com.univr.glicontrol.dao.AccessoFattoriRischioImpl;
 
 public class GestioneFattoriRischio {
-    private final ListaPazienti definisciPaziente = new ListaPazienti();
 
     public boolean inserisciFattoriRischi(String codiceFiscale) {
-        Paziente paziente = definisciPaziente.getPazientePerCodiceFiscale(codiceFiscale);
+        Paziente paziente = GestionePazienti.getInstance().getPazientePerCodiceFiscale(codiceFiscale);
         FattoriRischio fattoreRischioDefault = new FattoriRischio(paziente, 0, GlicontrolCoreSystem.getInstance().isObeso(paziente), 0, 0, 0, 0);
         AccessoFattoriRischio accessoFattori = new AccessoFattoriRischioImpl(paziente);
 
@@ -15,17 +14,17 @@ public class GestioneFattoriRischio {
     }
 
     public boolean eliminaFattoriRischio(int idPaziente) {
-        AccessoFattoriRischio eliminaFattore = new AccessoFattoriRischioImpl(definisciPaziente.ottieniPazientePerId(idPaziente));
+        AccessoFattoriRischio eliminaFattore = new AccessoFattoriRischioImpl(GestionePazienti.getInstance().getPazientePerId(idPaziente));
         return eliminaFattore.deleteFattoreRischio(idPaziente);
     }
 
     public boolean aggiornaFattoriRischio(FattoriRischio fattoreRischio) {
-        AccessoFattoriRischio aggiornaFattore = new AccessoFattoriRischioImpl(definisciPaziente.ottieniPazientePerId(fattoreRischio.getIdPaziente()));
+        AccessoFattoriRischio aggiornaFattore = new AccessoFattoriRischioImpl(GestionePazienti.getInstance().getPazientePerId(fattoreRischio.getIdPaziente()));
         return aggiornaFattore.updateFattoreRischio(fattoreRischio);
     }
 
     public FattoriRischio getFattoriRischio(int idPaziente) {
-        AccessoFattoriRischio recuperaFattore = new AccessoFattoriRischioImpl(definisciPaziente.ottieniPazientePerId(idPaziente));
+        AccessoFattoriRischio recuperaFattore = new AccessoFattoriRischioImpl(GestionePazienti.getInstance().getPazientePerId(idPaziente));
         return recuperaFattore.recuperaFattoreRischio(idPaziente);
     }
 }

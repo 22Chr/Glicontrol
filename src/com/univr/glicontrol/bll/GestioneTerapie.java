@@ -13,7 +13,6 @@ public class GestioneTerapie {
     private List<Terapia> terapiePaziente = new ArrayList<>();
     private List<Terapia> listaCompletaTerapie = new ArrayList<>();
     private final AccessoTerapie accessoTerapie = new AccessoTerapieImpl();
-    private final ListaPazienti listaPazienti = new ListaPazienti();
 
     List<TerapiaDiabete> terapiaDiabete = new ArrayList<>();
     List<TerapiaConcomitante> terapiaConcomitante = new ArrayList<>();
@@ -61,7 +60,7 @@ public class GestioneTerapie {
 
     private void aggiornaListaTerapieCompleta() {
         listaCompletaTerapie.clear();
-        for (Paziente p : listaPazienti.getListaCompletaPazienti()) {
+        for (Paziente p : GestionePazienti.getInstance().getListaPazienti()) {
             aggiornaListaTerapieDiabete(p);
             aggiornaListaTerapieConcomitanti(p);
             listaCompletaTerapie.addAll(accessoTerapie.getTerapieConcomitantiPaziente(p.getIdUtente()));

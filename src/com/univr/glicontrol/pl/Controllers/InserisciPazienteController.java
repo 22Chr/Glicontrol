@@ -149,10 +149,9 @@ public class InserisciPazienteController implements Controller {
             inputPazienteSbagliati.showAndWait();
         } else {
 
-            InserisciPaziente inserisciPaziente = new InserisciPaziente();
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
-            int success = inserisciPaziente.insertPaziente(CF, nome, cognome, password, id, dataNascita, sesso, email, null);
+            int success = GestionePazienti.getInstance().inserisciPaziente(CF, nome, cognome, password, id, dataNascita, sesso, email, null);
 
             if (success == 1) {
                 Alert inserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -166,7 +165,7 @@ public class InserisciPazienteController implements Controller {
                 PauseTransition pauseInvioNotificaPaziente = new PauseTransition(Duration.seconds(1));
 
                 pauseInvioNotificaPaziente.setOnFinished(event -> {
-                    if (inserisciPaziente.inviaCredenzialiPaziente(email, password)) {
+                    if (GestionePazienti.getInstance().inviaCredenzialiPaziente(email, password)) {
 
                         Alert notificaInserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
                         notificaInserimentoPazienteAlert.setTitle("System Notification Service");
@@ -194,10 +193,9 @@ public class InserisciPazienteController implements Controller {
 
                 pause.setOnFinished(event -> {
                     // Avvisa il medico di riferimento circa la presa in carico di un nuovo paziente
-                    ListaMedici medicoRiferimento = new ListaMedici();
-                    String emailMedicoRiferimento = medicoRiferimento.getMedicoPerId(id).getEmail();
+                    String emailMedicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(id).getEmail();
                     String identificativoPaziente = cognome + " " + nome + " - " + CF;
-                    inserisciPaziente.informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);
+                    GestionePazienti.getInstance().informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);
                 });
                 pause.play();
 

@@ -1,9 +1,6 @@
 package com.univr.glicontrol.pl.Models;
 
-import com.univr.glicontrol.bll.ListaMedici;
-import com.univr.glicontrol.bll.ListaPazienti;
-import com.univr.glicontrol.bll.Medico;
-import com.univr.glicontrol.bll.Paziente;
+import com.univr.glicontrol.bll.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,13 +11,12 @@ public class GetListaUtenti {
 
     Map<String, Medico> mappaMedici = new HashMap<>();
     public List<String> getListaMediciPortaleAdmin() {
-        ListaMedici listaMedici = new ListaMedici();
         // Mappa usata per mantenere l'associazione tra referenza del medico ottenuta facendo click sul nome del medico a livello UI
         // e l'oggetto Medico corrispondente, in modo da poter successivamente recuperare l'id
         String nomeMedico;
 
         List<String> referenzeMedici = new ArrayList<>();
-        for (Medico m : listaMedici.getListaCompletaMedici()) {
+        for (Medico m : GestioneMedici.getInstance().getListaMedici()) {
             nomeMedico = m.getCognome() + " " + m.getNome() + " - " + m.getCodiceFiscale();
             referenzeMedici.add(nomeMedico);
             mappaMedici.put(nomeMedico, m);
@@ -35,12 +31,11 @@ public class GetListaUtenti {
 
     Map<String, Paziente> mappaPazienti = new HashMap<>();
     public List<String> getListaPazientiCompleta() {
-        ListaPazienti listaPazienti = new ListaPazienti();
         // Mappa usata analogamente per ottenere l'id del paziente
         String nomePaziente;
 
         List<String> referenzePazienti = new ArrayList<>();
-        for (Paziente p : listaPazienti.getListaCompletaPazienti()) {
+        for (Paziente p : GestionePazienti.getInstance().getListaPazienti()) {
             nomePaziente = p.getCognome() + " " + p.getNome() + " - " + p.getCodiceFiscale();
             referenzePazienti.add(nomePaziente);
             mappaPazienti.put(nomePaziente, p);

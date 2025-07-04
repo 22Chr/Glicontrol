@@ -220,8 +220,7 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
             return;
         }
 
-        AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
-        if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
+        if (GestionePazienti.getInstance().aggiornaPaziente(paziente) && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert notificaSalvataggioAlert = new Alert(Alert.AlertType.INFORMATION);
             notificaSalvataggioAlert.setTitle("System Information Service");
             notificaSalvataggioAlert.setHeaderText("Le tue informazioni sono state salvate con successo");

@@ -18,36 +18,26 @@ public class ModificaPazienteController implements Controller {
 
     @FXML
     private TextField CFPazienteTF;
-
     @FXML
     private TextField nomePazienteTF;
-
     @FXML
     private TextField cognomePazienteTF;
-
     @FXML
     private TextField emailPazienteTF;
-
     @FXML
     private TextField passwordPazienteTF;
-
     @FXML
     private DatePicker dataNascitaPazienteDP;
-
     @FXML
     private ComboBox sessoPazienteCB;
-
     @FXML
     private Button saveButton;
-
     @FXML
     private ComboBox<String> medicoRifCB;
-
     @FXML
     private Button eliminaPazienteB;
 
     private PortaleAdminController pac;
-
     private String defaultPassword;
     private int defaultMed;
 
@@ -122,9 +112,8 @@ public class ModificaPazienteController implements Controller {
     }
 
     public void setPaziente(Paziente paziente) {
-        ListaMedici listaMedici = new ListaMedici();
-
         this.p = paziente;
+        Medico medico = GestioneMedici.getInstance().getMedicoPerId(p.getMedicoRiferimento());
         CFPazienteTF.setText(p.getCodiceFiscale());
         nomePazienteTF.setText(p.getNome());
         cognomePazienteTF.setText(p.getCognome());
@@ -134,9 +123,7 @@ public class ModificaPazienteController implements Controller {
         passwordPazienteTF.setText(p.getPassword());
         defaultPassword = p.getPassword();
         defaultMed = p.getMedicoRiferimento();
-        medicoRifCB.setValue(listaMedici.getMedicoPerId(p.getMedicoRiferimento()).getCognome() +
-                " " + listaMedici.getMedicoPerId(p.getMedicoRiferimento()).getNome() +
-                " - " + listaMedici.getMedicoPerId(p.getMedicoRiferimento()).getCodiceFiscale());
+        medicoRifCB.setValue(medico.getCognome() + " " + medico.getNome() + " - " + medico.getCodiceFiscale());
 
     }
 
@@ -162,10 +149,9 @@ public class ModificaPazienteController implements Controller {
             inputSbagliatiAlert.showAndWait();
         } else {
 
-            AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(p);
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
-            if (aggiornaPaziente.aggiornaPaziente()) {
+            if (GestionePazienti.getInstance().aggiornaPaziente(p)) {
                 Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
                 aggiornaPazienteAlert.setTitle("System Notification Service");
                 aggiornaPazienteAlert.setHeaderText("Modifica eseguita con successo");
@@ -176,7 +162,7 @@ public class ModificaPazienteController implements Controller {
 
                 if (!p.getPassword().equals(defaultPassword)) {
                     pause.setOnFinished(event -> {
-                        if (aggiornaPaziente.inviaCredenzialiAggiornatePaziente(p.getEmail(), passwordPazienteTF.getText())) {
+                        if (GestionePazienti.getInstance().inviaCredenzialiAggiornatePaziente(p.getEmail(), passwordPazienteTF.getText())) {
                             Alert notificaModifichePazienteAlert = new Alert(Alert.AlertType.INFORMATION);
                             notificaModifichePazienteAlert.setTitle("System Notification Service");
                             notificaModifichePazienteAlert.setHeaderText("Gestore credenziali");
@@ -196,11 +182,9 @@ public class ModificaPazienteController implements Controller {
                 // Invia all'eventuale nuovo medico di riferimento una notifica per avvisarlo circa la presa in carico del nuovo paziente
                 if (defaultMed != p.getMedicoRiferimento()) {
                     pause.setOnFinished(event -> {
-                        ListaMedici medicoRiferimento = new ListaMedici();
-                        String emailMedicoRiferimento = medicoRiferimento.getMedicoPerId(p.getMedicoRiferimento()).getEmail();
+                        String emailMedicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(p.getMedicoRiferimento()).getEmail();
                         String identificativoPaziente = p.getCognome() + " " + p.getNome() + " - " + p.getCodiceFiscale();
-                        InserisciPaziente inserisciPaziente = new InserisciPaziente();
-                        inserisciPaziente.informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);
+                        GestionePazienti.getInstance().informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);
                     });
                 }
                 pause.play();
@@ -233,8 +217,7 @@ public class ModificaPazienteController implements Controller {
 
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response.getText().equals("OK")) {
-                EliminaPaziente ep = new EliminaPaziente(p);
-                if (ep.deletePaziente()) {
+                if (GestionePazienti.getInstance().eliminaPaziente(p)) {
                     Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                     successAlert.setTitle("System Notification Service");
                     successAlert.setHeaderText("Eliminazione avvenuta con successo");
@@ -245,7 +228,7 @@ public class ModificaPazienteController implements Controller {
 
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(event -> {
-                        if (ep.notificaEliminazionePaziente(p.getEmail())) {
+                        if (GestionePazienti.getInstance().notificaEliminazionePaziente(p.getEmail())) {
                             Alert invioNotificheEliminazioneAlert = new Alert(Alert.AlertType.INFORMATION);
                             invioNotificheEliminazioneAlert.setTitle("System Notification Service");
                             invioNotificheEliminazioneAlert.setHeaderText("Notifica inviata con successo");

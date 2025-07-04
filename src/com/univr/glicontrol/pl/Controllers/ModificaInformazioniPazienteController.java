@@ -145,9 +145,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
         fattoriRischioAggiornati.setAlimentazioneScorretta(alimentazioneCB.isSelected() ? 1 : 0);
         fattoriRischioAggiornati.setObesita(GlicontrolCoreSystem.getInstance().isObeso(paziente));
 
-        AggiornaPaziente aggiornaPaziente = new AggiornaPaziente(paziente);
-
-        if (aggiornaPaziente.aggiornaPaziente() && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
+        if (GestionePazienti.getInstance().aggiornaPaziente(paziente) && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
             aggiornaPazienteAlert.setTitle("System Notification Service");
             aggiornaPazienteAlert.setHeaderText("Salvataggio avvenuto con successo");
@@ -183,7 +181,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
 
         if (portale instanceof PortalePazienteController) {
             this.ppc = (PortalePazienteController) portale;
-            medico = new ListaMedici().getMedicoPerId(paziente.getMedicoRiferimento());
+            medico = GestioneMedici.getInstance().getMedicoPerId(paziente.getMedicoRiferimento());
         } else {
             this.pmc = (PortaleMedicoController)  portale;
             medico = new UtilityPortali().getMedicoSessione();

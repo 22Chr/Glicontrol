@@ -29,7 +29,7 @@ public class PortalePazienteController implements Portale, Controller {
 
     private final UtilityPortali upp = new UtilityPortali();
     private final Paziente paziente = upp.getPazienteSessione();
-    private final Medico medicoRiferimento = new ListaMedici().getMedicoPerId(paziente.getMedicoRiferimento());
+    private final Medico medicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(paziente.getMedicoRiferimento());
     private GestioneRilevazioniGlicemia gestione;
     private enum ModalitaVisualizzazione { GIORNALIERA, SETTIMANALE, MENSILE }
     private ModalitaVisualizzazione visualizzazioneAttuale = ModalitaVisualizzazione.GIORNALIERA;

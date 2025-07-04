@@ -38,8 +38,7 @@ public class GlicontrolCoreSystem {
     private Map<Paziente, List<Farmaco>> farmaciNonAssuntiDa3Giorni = new HashMap<>();
 
     private GlicontrolCoreSystem() {
-        ListaPazienti utilityListaPazienti = new ListaPazienti();
-        listaPazienti = utilityListaPazienti.getListaCompletaPazienti();
+        listaPazienti = GestionePazienti.getInstance().getListaPazienti();
     }
 
     // Crea l'istanza Singleton
@@ -540,9 +539,8 @@ public class GlicontrolCoreSystem {
     }
 
     public boolean presenzaRilevazioniGlicemicheNonRegistrate(Paziente paziente) {
-        List<RilevazioneGlicemica> rilevazioniGlicemichePaziente = new ArrayList<>();
         gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
-        rilevazioniGlicemichePaziente.addAll(gestioneRilevazioniGlicemia.getRilevazioniPerData(LocalDate.now()));
+        List<RilevazioneGlicemica> rilevazioniGlicemichePaziente = new ArrayList<>(gestioneRilevazioniGlicemia.getRilevazioniPerData(LocalDate.now()));
         gestionePasti = new GestionePasti(paziente);
         //se il numero di rilevazioni di oggi è minore del numero di pasti
         return rilevazioniGlicemichePaziente.size() < gestionePasti.getPasti().size();
@@ -575,12 +573,11 @@ public class GlicontrolCoreSystem {
     }
 
     public void monitoraPresenzaNotificheNonVisualizzate() {
-        ListaPazienti listaPazienti = new ListaPazienti();
         ServizioNotifiche mostraPresenzaNotifiche = new ServizioNotifiche();
 
         scheduler.scheduleAtFixedRate(() -> {
             if (!statoCentroNotifiche) {
-                for (Paziente paziente : listaPazienti.getListaCompletaPazienti()) {
+                for (Paziente paziente : GestionePazienti.getInstance().getListaPazienti()) {
                     GestioneNotifiche gestioneNotificheMonitor = new GestioneNotifiche(paziente);
                     if (!gestioneNotificheMonitor.getNotificheNonVisualizzate().isEmpty()) {
                         Platform.runLater(()->{

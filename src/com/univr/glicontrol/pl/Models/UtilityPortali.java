@@ -442,8 +442,6 @@ public class UtilityPortali {
 
     // genera la lista di tipo String formattata per la visualizzazione dei log in Portale Admin
     public List<String> getListaLogTerapieFormattata() {
-        ListaPazienti lp = new ListaPazienti();
-        ListaMedici lm = new ListaMedici();
         List<String> listaLogTerapieFormattata = new ArrayList<>();
         GestioneTerapie gt = new GestioneTerapie();
 
@@ -451,8 +449,8 @@ public class UtilityPortali {
             Terapia t = gt.getTerapiaById(lt.getIdTerapia());
             LocalDate data = lt.getTimestamp().toLocalDateTime().toLocalDate();
             LocalTime ora = lt.getTimestamp().toLocalDateTime().toLocalTime();
-            String logFormattato = t.getNome() + " (" + lp.getPazientePerId(t.getIdPaziente()).getCodiceFiscale() + ") modificata dal medico " +
-                    lm.getMedicoPerId(lt.getIdMedico()).getCodiceFiscale() +
+            String logFormattato = t.getNome() + " (" + GestionePazienti.getInstance().getPazientePerId(t.getIdPaziente()).getCodiceFiscale() + ") modificata dal medico " +
+                    GestioneMedici.getInstance().getMedicoPerId(lt.getIdMedico()).getCodiceFiscale() +
                     " in data " + data + " alle ore " + ora;
             listaLogTerapieFormattata.add(logFormattato);
             mappaLogTerapia.put(logFormattato, lt);
@@ -467,7 +465,6 @@ public class UtilityPortali {
 
     public LogTerapia getLogTerapiaPerLogFormattato(String logFormattato) {
         aggiornaListaLogTerapieFormattata();
-        ListaMedici lm = new ListaMedici();
 
         for (LogTerapia lt : mappaLogTerapia.values()) {
             String check = " in data " + lt.getTimestamp().toLocalDateTime().toLocalDate()
@@ -489,8 +486,7 @@ public class UtilityPortali {
     private final List<String> pazientiNonAssociatiAlReferente = new ArrayList<>();
 
     public List<String> getPazientiAssociatiAlReferente(int idReferente) {
-        ListaPazienti listaPazienti = new ListaPazienti();
-        for  (Paziente p : listaPazienti.getListaCompletaPazienti()) {
+        for  (Paziente p : GestionePazienti.getInstance().getListaPazienti()) {
             if (p.getMedicoRiferimento() == idReferente) {
                 String pazienteAssociatoFormattato = p.getCognome() + " " + p.getNome() + " (" + p.getCodiceFiscale() + ")";
                 pazientiAssociatiAlReferente.add(pazienteAssociatoFormattato);
@@ -502,8 +498,7 @@ public class UtilityPortali {
     }
 
     public List<String> getPazientiNonAssociatiAlReferente(int idReferente) {
-        ListaPazienti listaPazienti = new ListaPazienti();
-        for(Paziente p : listaPazienti.getListaCompletaPazienti()) {
+        for(Paziente p : GestionePazienti.getInstance().getListaPazienti()) {
             if(p.getMedicoRiferimento() != idReferente) {
                 String pazienteNonAssociatoFormattato = p.getCognome() + " " + p.getNome() + " (" + p.getCodiceFiscale() + ")";
                 pazientiNonAssociatiAlReferente.add(pazienteNonAssociatoFormattato);
@@ -547,11 +542,10 @@ public class UtilityPortali {
 
     // Restituisce la notifica (per il portale del medico) formattata
     public List<String> getNotificheFormattate() {
-        ListaPazienti listaPazienti = new ListaPazienti();
         List<String> notificheFormattate = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 
-        for (Paziente p : listaPazienti.getListaCompletaPazienti()) {
+        for (Paziente p : GestionePazienti.getInstance().getListaPazienti()) {
             GestioneNotifiche gn = new GestioneNotifiche(p);
 
             for (Notifica n : gn.getNotificheNonVisualizzate()) {

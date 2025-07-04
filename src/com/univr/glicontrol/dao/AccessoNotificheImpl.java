@@ -1,6 +1,6 @@
 package com.univr.glicontrol.dao;
 
-import com.univr.glicontrol.bll.ListaPazienti;
+import com.univr.glicontrol.bll.GestionePazienti;
 import com.univr.glicontrol.bll.Notifica;
 import com.univr.glicontrol.bll.Paziente;
 
@@ -17,8 +17,6 @@ public class AccessoNotificheImpl implements AccessoNotifiche {
     @Override
     public List<Notifica> getNotificheNonVisualizzate(Paziente paziente) {
 
-        ListaPazienti listaPazienti = new ListaPazienti();
-
         List<Notifica> notificheNonVisualizzate = new ArrayList<>();
         String getNotificheNonVisualizzateSql = "select * from Notifiche where visualizzato = false and paziente_associato = ?";
 
@@ -33,7 +31,7 @@ public class AccessoNotificheImpl implements AccessoNotifiche {
                     Notifica notifica = new Notifica(
                             rs.getString("titolo"),
                             rs.getString("messaggio"),
-                            listaPazienti.getPazientePerId(rs.getInt("paziente_associato")),
+                            GestionePazienti.getInstance().getPazientePerId(rs.getInt("paziente_associato")),
                             rs.getTimestamp("data_notifica").toLocalDateTime(),
                             rs.getBoolean("visualizzato")
                     );

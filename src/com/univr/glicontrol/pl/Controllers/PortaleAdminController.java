@@ -1,9 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.ListaMedici;
-import com.univr.glicontrol.bll.ListaPazienti;
-import com.univr.glicontrol.bll.LogInfoPaziente;
-import com.univr.glicontrol.bll.LogSistema;
+import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.GetListaUtenti;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.animation.TranslateTransition;
@@ -124,13 +121,11 @@ public class PortaleAdminController implements Controller {
                 if (ruolo.equals("MEDICO")) {
                     ModificaMedicoController modificaMedicoController = loader.getController();
                     modificaMedicoController.setInstance(this);
-                    ListaMedici getMedico = new ListaMedici();
-                    modificaMedicoController.setMedico(getMedico.getMedicoPerId(id));
+                    modificaMedicoController.setMedico(GestioneMedici.getInstance().getMedicoPerId(id));
                 } else {
                     ModificaPazienteController modificaPazienteController = loader.getController();
                     modificaPazienteController.setInstance(this);
-                    ListaPazienti getPaziente = new ListaPazienti();
-                    modificaPazienteController.setPaziente(getPaziente.ottieniPazientePerId(id));
+                    modificaPazienteController.setPaziente(GestionePazienti.getInstance().getPazientePerId(id));
                 }
             } else {
                 throw new IOException("Impossibile caricare la finestra");

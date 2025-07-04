@@ -1,7 +1,7 @@
 package com.univr.glicontrol.pl.Controllers;
 
+import com.univr.glicontrol.bll.GestioneMedici;
 import com.univr.glicontrol.bll.InputChecker;
-import com.univr.glicontrol.bll.InserisciMedico;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -57,9 +57,7 @@ public class InserisciMedicoController implements Controller {
 
         } else {
 
-            InserisciMedico inserisciMedico = new InserisciMedico();
-
-            int success = inserisciMedico.insertMedico(CF, nome, cognome, email, password);
+            int success = GestioneMedici.getInstance().inserisciMedico(CF, nome, cognome, email, password);
 
             if (success == 1) {
                 Alert inserimentoMedicoAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -73,7 +71,7 @@ public class InserisciMedicoController implements Controller {
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(1));
                 pause.setOnFinished(event -> {
-                    if (inserisciMedico.inviaCredenzialiMedico(email, password)) {
+                    if (GestioneMedici.getInstance().inviaCredenzialiMedico(email, password)) {
                         Alert notificaInserimentoMedicoAlert = new Alert(Alert.AlertType.INFORMATION);
                         notificaInserimentoMedicoAlert.setTitle("System Notification Service");
                         notificaInserimentoMedicoAlert.setHeaderText("Gestore credenziali");

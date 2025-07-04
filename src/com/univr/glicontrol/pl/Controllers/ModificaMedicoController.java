@@ -1,9 +1,6 @@
 package com.univr.glicontrol.pl.Controllers;
 
-import com.univr.glicontrol.bll.AggiornaMedico;
-import com.univr.glicontrol.bll.EliminaMedico;
-import com.univr.glicontrol.bll.InputChecker;
-import com.univr.glicontrol.bll.Medico;
+import com.univr.glicontrol.bll.*;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -71,9 +68,7 @@ public class ModificaMedicoController implements Controller {
             inputSbagliatiAlert.showAndWait();
         } else {
 
-            AggiornaMedico aggiornaMedico = new AggiornaMedico(m);
-
-            if (aggiornaMedico.updateMedico()) {
+            if (GestioneMedici.getInstance().aggiornaMedico(m)) {
                 Alert modificaMedicoAlert = new Alert(Alert.AlertType.INFORMATION);
                 modificaMedicoAlert.setTitle("System Notification Service");
                 modificaMedicoAlert.setHeaderText("Successo modifica");
@@ -85,7 +80,7 @@ public class ModificaMedicoController implements Controller {
                 if (!m.getPassword().equals(defaultPassword)) {
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(event -> {
-                        if (aggiornaMedico.inviaCredenzialiAggiornateMedico(m.getEmail(), passwordMedicoTF.getText())) {
+                        if (GestioneMedici.getInstance().inviaCredenzialiAggiornateMedico(m.getEmail(), passwordMedicoTF.getText())) {
                             Alert invioNotificheModificaAlert = new Alert(Alert.AlertType.INFORMATION);
                             invioNotificheModificaAlert.setTitle("System Notification Service");
                             invioNotificheModificaAlert.setHeaderText("Gestore credenziali");
@@ -124,8 +119,7 @@ public class ModificaMedicoController implements Controller {
 
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response.getText().equals("OK")) {
-                EliminaMedico em = new EliminaMedico(m);
-                int status = em.deleteMedico();
+                int status = GestioneMedici.getInstance().eliminaMedico(m);
                 if (status == 1) {
                     Alert successEliminazioneAlert = new Alert(Alert.AlertType.INFORMATION);
                     successEliminazioneAlert.setTitle("System Notification Service");
@@ -137,7 +131,7 @@ public class ModificaMedicoController implements Controller {
 
                     PauseTransition pause = new PauseTransition(Duration.seconds(1));
                     pause.setOnFinished(event -> {
-                        if(em.notificaEliminazioneMedico(m.getEmail())) {
+                        if(GestioneMedici.getInstance().notificaEliminazioneMedico(m.getEmail())) {
                             Alert invioNotificheEliminazioneAlert = new Alert(Alert.AlertType.INFORMATION);
                             invioNotificheEliminazioneAlert.setTitle("System Notification Service");
                             invioNotificheEliminazioneAlert.setHeaderText("La notifica di eliminazione è stata inviata con successo");
