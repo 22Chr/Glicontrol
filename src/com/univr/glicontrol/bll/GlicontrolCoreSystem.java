@@ -535,7 +535,7 @@ public class GlicontrolCoreSystem {
             } catch (Exception e) {
                 System.err.println("Errore durante il controllo periodico dell'inserimento delle rilevazioni glicemiche: " + e.getMessage());
             }
-        }, 0, 15, TimeUnit.MINUTES);
+        }, 0, 5, TimeUnit.MINUTES);
     }
 
     public boolean presenzaRilevazioniGlicemicheNonRegistrate(Paziente paziente) {
