@@ -146,7 +146,7 @@ public class PortaleMedicoController implements Portale, Controller {
                         List<Notifica> notifiche = mappaPazientiNonAssociatiNotifiche.get(p);
 
                         if (notifiche != null && !notifiche.isEmpty()) {
-                            setStyle("-fx-background-color: #ffd500;");
+                            setStyle("-fx-background-color: #ffd500;-fx-text-fill: #000000");
                         } else {
                             setStyle("");
                         }
@@ -491,6 +491,33 @@ public class PortaleMedicoController implements Portale, Controller {
                     mappaPazientiAssociatiNotifiche.clear();
                     mappaPazientiAssociatiNotifiche.putAll(nuovaMappa);
                     pazientiReferenteLV.refresh();
+                });
+
+                return null;
+            }
+        };
+
+        new Thread(taskAggiornaNotifiche).start();
+    }
+
+    public void aggiornaListaPazientiNonAssociatiNotifiche(){
+        Task<Void> taskAggiornaNotifiche = new Task<>() {
+            @Override
+            protected Void call() {
+                Map<Paziente, List<Notifica>> nuovaMappa = new HashMap<>();
+
+                for (String nomePaziente : upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente())) {
+                    Paziente p = upm.getPazienteNonAssociatoDaNomeFormattato(nomePaziente);
+                    GestioneNotifiche gn = new GestioneNotifiche(p);
+                    List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
+                    nuovaMappa.put(p, notifiche);
+                }
+
+                // Aggiorna la mappa originale sul thread JavaFX
+                Platform.runLater(() -> {
+                    mappaPazientiNonAssociatiNotifiche.clear();
+                    mappaPazientiNonAssociatiNotifiche.putAll(nuovaMappa);
+                    pazientiGenericiLV.refresh();
                 });
 
                 return null;
