@@ -323,7 +323,7 @@ public class GlicontrolCoreSystem {
                             notificheSospensione.notificaSospensioneFarmacoTerapia(paziente);
 
                             for (Farmaco f : farmaciNonAssuntiDa3Giorni.get(paziente)) {
-                                GeneratoreNotifiche.getInstance().generaNotificaSospensioneFarmaci(paziente, f);
+                                gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaSospensioneFarmaci(paziente, f));
                             }
                         });
                     }
