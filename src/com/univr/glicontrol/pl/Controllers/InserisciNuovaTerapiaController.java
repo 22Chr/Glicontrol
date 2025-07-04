@@ -195,7 +195,7 @@ public class InserisciNuovaTerapiaController implements Controller {
             return;
         }
 
-        if (terapiaSelezionata == 1 && dataInizio != null) {
+        if (terapiaSelezionata == 1) {
             if (!InputChecker.getInstance().verificaDataInizioTerapiaConcomitante(dataInizio, upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getDataInizio())) {
                 Alert dataInizioAntecedenteAllaPatologiaAlert = new Alert(Alert.AlertType.ERROR);
                 dataInizioAntecedenteAllaPatologiaAlert.setTitle("System Notification Service");
