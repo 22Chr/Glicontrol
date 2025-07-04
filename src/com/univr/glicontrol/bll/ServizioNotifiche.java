@@ -65,7 +65,7 @@ public class ServizioNotifiche {
     public void notificaPromemoriaRegistrazioneGlicemia() {
         Alert promemoriaRegistrazioneGlicemiaAlert = new Alert(Alert.AlertType.INFORMATION);
         promemoriaRegistrazioneGlicemiaAlert.setTitle("System Notification Service");
-        promemoriaRegistrazioneGlicemiaAlert.setHeaderText("Promemoria di registrazione della glicemia");
+        promemoriaRegistrazioneGlicemiaAlert.setHeaderText("Promemoria registrazione glicemia");
         promemoriaRegistrazioneGlicemiaAlert.setContentText("Ricorda di registrare i tuoi valori glicemici");
         promemoriaRegistrazioneGlicemiaAlert.showAndWait();
     }
