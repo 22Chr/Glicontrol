@@ -44,19 +44,14 @@ public class PortaleMedicoController implements Portale, Controller {
 
     @FXML
     private Circle badgeC;
-
     @FXML
     private ListView<String> pazientiReferenteLV, pazientiGenericiLV, notificheLV;
-
     @FXML
     private TextField pazienteSelezionatoTF;
-
     @FXML
     private LineChart<String, Number> rilevazioniGiornaliereLC, rilevazioniSettimanaliLC, rilevazioniMensiliLC;
-
     @FXML
     private VBox centerVB, rightVB, centroNotificheVB;
-
     @FXML
     private Button centroNotificheB;
 
