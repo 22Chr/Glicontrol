@@ -524,6 +524,29 @@ public class GlicontrolCoreSystem {
         }, 0, 10, TimeUnit.SECONDS);
     }
 
+    public void monitoraInserimentoRilevazioniGlicemiche(Paziente paziente) {
+        scheduler.scheduleAtFixedRate(()->{
+            try{
+                if(presenzaRilevazioniGlicemicheNonRegistrate(paziente)){
+                    Platform.runLater(()->{
+                        ServizioNotifiche notificheInserimento = new ServizioNotifiche();
+                        notificheInserimento.notificaPromemoriaRegistrazioneGlicemia();
+                    });
+                }
+            } catch (Exception e) {
+                System.err.println("Errore durante il controllo periodico dell'inserimento delle rilevazioni glicemiche: " + e.getMessage());
+            }
+        }, 0, 15, TimeUnit.MINUTES);
+    }
+
+    public boolean presenzaRilevazioniGlicemicheNonRegistrate(Paziente paziente) {
+        List<RilevazioneGlicemica> rilevazioniGlicemichePaziente = new ArrayList<>();
+        gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
+        rilevazioniGlicemichePaziente.addAll(gestioneRilevazioniGlicemia.getRilevazioniPerData(LocalDate.now()));
+        gestionePasti = new GestionePasti(paziente);
+        //se il numero di rilevazioni di oggi è minore del numero di pasti
+        return rilevazioniGlicemichePaziente.size() < gestionePasti.getPasti().size();
+    }
 
     public void setConnessoComeMedico() {
         connessoComeMedico = true;

@@ -156,17 +156,6 @@
                </children>
             </HBox>
             <ListView fx:id="logLV" prefHeight="445.0" prefWidth="320.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="28.0" prefWidth="77.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Filtri" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin>
-            </Button>
          </children>
       </VBox>
    </children>

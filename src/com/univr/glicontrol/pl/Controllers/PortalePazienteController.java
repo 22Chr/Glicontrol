@@ -112,6 +112,7 @@ public class PortalePazienteController implements Portale, Controller {
         // Task automatici sempre attivi in background
         GlicontrolCoreSystem.getInstance().monitoraAssunzioneFarmaci(paziente);
         GlicontrolCoreSystem.getInstance().promemoriaRegistrazioneGlicemica(paziente);
+        GlicontrolCoreSystem.getInstance().monitoraInserimentoRilevazioniGlicemiche(paziente);
     }
 
     public void openProfile() {

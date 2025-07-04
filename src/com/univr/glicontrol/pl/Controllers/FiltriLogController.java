@@ -15,7 +15,7 @@ import java.util.List;
 public class FiltriLogController {
 
     @FXML
-    private ComboBox<String> tipoNotificaCB, medicoCB, pazienteCB;
+    private ComboBox<String> tipoLogCB, medicoCB, pazienteCB;
 
     private void caricaListaPazienti() {
 
@@ -40,7 +40,7 @@ public class FiltriLogController {
                 tipo.addAll(listaTipi);
 
                 Platform.runLater(() -> {
-                   tipoNotificaCB.setItems(tipo);
+                   tipoLogCB.setItems(tipo);
                    medicoCB.setItems(medici);
                    pazienteCB.setItems(pazienti);
                 });
