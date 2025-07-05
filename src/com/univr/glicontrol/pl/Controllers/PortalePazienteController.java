@@ -2,6 +2,7 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -120,12 +123,20 @@ public class PortalePazienteController implements Portale, Controller {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/ModificaInformazioniPaziente.fxml"));
             Parent root = fxmlLoader.load();
+            root.setOpacity(0);
+            FadeTransition fade = new FadeTransition(Duration.millis(150), root);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
             ModificaInformazioniPazienteController mipc = fxmlLoader.getController();
             mipc.setInstance(this, paziente);
 
             // Crea una nuova finestra (Stage)
             Stage infoPaziente = new Stage();
+            infoPaziente.setWidth(1200);
+            infoPaziente.setHeight(600);
+            infoPaziente.setResizable(false);
             infoPaziente.setTitle("Informazioni personali");
             infoPaziente.setScene(new Scene(root));
 
@@ -140,11 +151,19 @@ public class PortalePazienteController implements Portale, Controller {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraSintomiPaziente.fxml"));
             Parent root = fxmlLoader.load();
+            root.setOpacity(0);
+            FadeTransition fade = new FadeTransition(Duration.millis(300), root);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
             FinestraSintomiPazienteController fspc = fxmlLoader.getController();
             fspc.setInstance(this, paziente);
 
             Stage sintomiPaziente = new Stage();
+            sintomiPaziente.setWidth(600);
+            sintomiPaziente.setHeight(500);
+            sintomiPaziente.setResizable(false);
             sintomiPaziente.setTitle("I miei sintomi");
             sintomiPaziente.setScene(new Scene(root));
 
@@ -173,11 +192,19 @@ public class PortalePazienteController implements Portale, Controller {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraPatologieConcomitantiPaziente.fxml"));
             Parent root = fxmlLoader.load();
+            root.setOpacity(0);
+            FadeTransition fade = new FadeTransition(Duration.millis(300), root);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
             FinestraPatologieConcomitantiPazienteController fpcp = fxmlLoader.getController();
             fpcp.setInstance(this, paziente);
 
             Stage patologiePaziente = new Stage();
+            patologiePaziente.setWidth(700);
+            patologiePaziente.setHeight(500);
+            patologiePaziente.setResizable(false);
             patologiePaziente.setTitle("Le mie patologie");
             patologiePaziente.setScene(new Scene(root));
 
@@ -191,11 +218,18 @@ public class PortalePazienteController implements Portale, Controller {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraRilevazioniGlicemichePaziente.fxml"));
             Parent root = fxmlLoader.load();
+            root.setOpacity(0);
+            FadeTransition fade = new FadeTransition(Duration.millis(150), root);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
             FinestraRilevazioniGlicemichePazienteController frgpc =  fxmlLoader.getController();
             frgpc.setInstance(this, paziente);
 
             Stage rilevazioniGlicemiaPaziente = new Stage();
+            rilevazioniGlicemiaPaziente.setWidth(800);
+            rilevazioniGlicemiaPaziente.setHeight(500);
             rilevazioniGlicemiaPaziente.setTitle("Le mie rilevazioni glicemiche");
             rilevazioniGlicemiaPaziente.setScene(new Scene(root));
 
@@ -295,6 +329,9 @@ public class PortalePazienteController implements Portale, Controller {
             fafpc.setInstance(this, paziente);
 
             Stage assunzioneFarmaciPaziente = new Stage();
+            assunzioneFarmaciPaziente.setHeight(500);
+            assunzioneFarmaciPaziente.setWidth(650);
+            assunzioneFarmaciPaziente.setResizable(false);
             assunzioneFarmaciPaziente.setTitle("Registra i farmaci");
             assunzioneFarmaciPaziente.setScene(new Scene(root));
 
