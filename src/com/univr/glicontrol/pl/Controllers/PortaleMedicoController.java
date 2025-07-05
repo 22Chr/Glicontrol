@@ -2,6 +2,7 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.*;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
+import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -36,7 +37,6 @@ public class PortaleMedicoController implements Portale, Controller {
     private final Medico medico = upm.getMedicoSessione();
     private Paziente pazienteSelezionato;
     private GestioneRilevazioniGlicemia gestione;
-    private Paziente p;
     Map<Paziente, List<Notifica>> mappaPazientiAssociatiNotifiche = new HashMap<>();
     Map<Paziente, List<Notifica>> mappaPazientiNonAssociatiNotifiche = new HashMap<>();
 
@@ -69,14 +69,6 @@ public class PortaleMedicoController implements Portale, Controller {
         pazientiReferenti.addAll(upm.getPazientiAssociatiAlReferente(medico.getIdUtente()));
         pazientiReferenteLV.setItems(pazientiReferenti);
 
-//        for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) { //cicla su tutti i pazienti associati
-//            p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente); //dal nome nella listview prendo il paziente
-//            GestioneNotifiche gn = new GestioneNotifiche(p);
-//            List<Notifica> notifiche = gn.getNotificheNonVisualizzate(); //prende le notifiche non visualizzate del paziente
-//            mappaPazientiAssociatiNotifiche.put(p, notifiche); //le associa al paziente
-//        }
-
-
         ObservableList<String> pazientiGenerici = FXCollections.observableArrayList();
         pazientiGenerici.addAll(upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente()));
         pazientiGenericiLV.setItems(pazientiGenerici);
@@ -107,8 +99,6 @@ public class PortaleMedicoController implements Portale, Controller {
                 }
             };
 
-            // Introduce una latenza eccessiva
-            //aggiornaListaPazientiReferenteNotifiche();
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
@@ -146,7 +136,7 @@ public class PortaleMedicoController implements Portale, Controller {
                         List<Notifica> notifiche = mappaPazientiNonAssociatiNotifiche.get(p);
 
                         if (notifiche != null && !notifiche.isEmpty()) {
-                            setStyle("-fx-background-color: #fdc823;");
+                            setStyle("-fx-background-color: #fdc823;-fx-text-fill: #000000");
                         } else {
                             setStyle("");
                         }
@@ -210,8 +200,8 @@ public class PortaleMedicoController implements Portale, Controller {
         GlicontrolCoreSystem.getInstance().monitoraLivelliGlicemici();
         GlicontrolCoreSystem.getInstance().monitoraSospensioneFarmaci();
         GlicontrolCoreSystem.getInstance().monitoraPresenzaNotificheNonVisualizzate();
-    }
 
+    }
 
     //3 metodi, uno per ogni grafico, che vanno chiamati nel momento in cui si schiaccia sul paziente
     public void aggiornaGraficoGlicemiaOdierna(){
@@ -315,11 +305,19 @@ public class PortaleMedicoController implements Portale, Controller {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraPatologieConcomitantiPaziente.fxml"));
             Parent root = fxmlLoader.load();
+            root.setOpacity(0);
+            FadeTransition fade = new FadeTransition(Duration.millis(300), root);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
             FinestraPatologieConcomitantiPazienteController fpcp = fxmlLoader.getController();
             fpcp.setInstance(this, pazienteSelezionato);
 
             Stage patologiePaziente = new Stage();
+            patologiePaziente.setWidth(700);
+            patologiePaziente.setHeight(500);
+            patologiePaziente.setResizable(false);
             patologiePaziente.setTitle("Patologie concomitanti");
             patologiePaziente.setScene(new Scene(root));
 
@@ -334,11 +332,19 @@ public class PortaleMedicoController implements Portale, Controller {
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraSintomiPaziente.fxml"));
             Parent root = fxmlLoader.load();
+            root.setOpacity(0);
+            FadeTransition fade = new FadeTransition(Duration.millis(300), root);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
             FinestraSintomiPazienteController fspc = fxmlLoader.getController();
             fspc.setInstance(this, pazienteSelezionato);
 
             Stage sintomiPaziente = new Stage();
+            sintomiPaziente.setWidth(600);
+            sintomiPaziente.setHeight(500);
+            sintomiPaziente.setResizable(false);
             sintomiPaziente.setTitle("Sintomi");
             sintomiPaziente.setScene(new Scene(root));
 
@@ -353,11 +359,19 @@ public class PortaleMedicoController implements Portale, Controller {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/ModificaInformazioniPaziente.fxml"));
             Parent root = fxmlLoader.load();
+            root.setOpacity(0);
+            FadeTransition fade = new FadeTransition(Duration.millis(150), root);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
             ModificaInformazioniPazienteController mipc = fxmlLoader.getController();
             mipc.setInstance(this, pazienteSelezionato);
 
             Stage infoPaziente = new Stage();
+            infoPaziente.setWidth(1200);
+            infoPaziente.setHeight(600);
+            infoPaziente.setResizable(false);
             infoPaziente.setTitle("Informazioni personali");
             infoPaziente.setScene(new Scene(root));
 
@@ -372,15 +386,23 @@ public class PortaleMedicoController implements Portale, Controller {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../uiElements/FinestraRilevazioniGlicemichePaziente.fxml"));
             Parent root = fxmlLoader.load();
+            root.setOpacity(0);
+            FadeTransition fade = new FadeTransition(Duration.millis(150), root);
+            fade.setFromValue(0);
+            fade.setToValue(1);
+            fade.play();
 
             FinestraRilevazioniGlicemichePazienteController frgpc = fxmlLoader.getController();
             frgpc.setInstance(this, pazienteSelezionato);
 
-            Stage rirevazioniGlicemiche = new Stage();
-            rirevazioniGlicemiche.setTitle("Rilevazioni glicemiche");
-            rirevazioniGlicemiche.setScene(new Scene(root));
+            Stage rilevazioniGlicemiche = new Stage();
+            rilevazioniGlicemiche.setWidth(650);
+            rilevazioniGlicemiche.setHeight(500);
+            rilevazioniGlicemiche.setResizable(false);
+            rilevazioniGlicemiche.setTitle("Rilevazioni glicemiche");
+            rilevazioniGlicemiche.setScene(new Scene(root));
 
-            rirevazioniGlicemiche.show();
+            rilevazioniGlicemiche.show();
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -400,6 +422,7 @@ public class PortaleMedicoController implements Portale, Controller {
             assunzioneFarmaciPaziente.setScene(new Scene(root));
             assunzioneFarmaciPaziente.setHeight(650);
             assunzioneFarmaciPaziente.setWidth(700);
+            assunzioneFarmaciPaziente.setResizable(false);
 
             assunzioneFarmaciPaziente.show();
 
@@ -491,6 +514,33 @@ public class PortaleMedicoController implements Portale, Controller {
                     mappaPazientiAssociatiNotifiche.clear();
                     mappaPazientiAssociatiNotifiche.putAll(nuovaMappa);
                     pazientiReferenteLV.refresh();
+                });
+
+                return null;
+            }
+        };
+
+        new Thread(taskAggiornaNotifiche).start();
+    }
+
+    public void aggiornaListaPazientiNonAssociatiNotifiche(){
+        Task<Void> taskAggiornaNotifiche = new Task<>() {
+            @Override
+            protected Void call() {
+                Map<Paziente, List<Notifica>> nuovaMappa = new HashMap<>();
+
+                for (String nomePaziente : upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente())) {
+                    Paziente p = upm.getPazienteNonAssociatoDaNomeFormattato(nomePaziente);
+                    GestioneNotifiche gn = new GestioneNotifiche(p);
+                    List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
+                    nuovaMappa.put(p, notifiche);
+                }
+
+                // Aggiorna la mappa originale sul thread JavaFX
+                Platform.runLater(() -> {
+                    mappaPazientiNonAssociatiNotifiche.clear();
+                    mappaPazientiNonAssociatiNotifiche.putAll(nuovaMappa);
+                    pazientiGenericiLV.refresh();
                 });
 
                 return null;
