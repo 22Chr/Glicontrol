@@ -2,6 +2,7 @@ package com.univr.glicontrol.pl.Controllers;
 
 import com.univr.glicontrol.bll.UtenteSessione;
 import com.univr.glicontrol.pl.Models.Login;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -78,6 +80,11 @@ public class LoginController implements Controller {
     private void caricaPortale(ActionEvent event, String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlFile)));
         Parent root = loader.load();
+        root.setOpacity(0);
+        FadeTransition fade = new FadeTransition(Duration.millis(300), root);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.play();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Object controller = loader.getController();
         if (controller instanceof PortaleAdminController pac) {

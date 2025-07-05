@@ -32,4 +32,5 @@ public class GestioneNotifiche {
     public boolean aggiornaStatoNotifica(Notifica notifica) {
         return accessoNotifiche.updateStatoNotifica(notifica);
     }
+
 }

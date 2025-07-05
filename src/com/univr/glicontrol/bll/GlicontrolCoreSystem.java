@@ -583,7 +583,6 @@ public class GlicontrolCoreSystem {
                         Platform.runLater(()->{
                             mostraPresenzaNotifiche.notificaPresenzaNotificheNonVisualizzate();
                             pmc.aggiornaListaPazientiReferenteNotifiche();
-                            pmc.aggiornaListaPazientiNonAssociatiNotifiche();
                         });
                     }
                 }
