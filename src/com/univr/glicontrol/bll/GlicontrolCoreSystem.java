@@ -36,6 +36,7 @@ public class GlicontrolCoreSystem {
     private boolean connessoComeMedico = false;
     private boolean statoCentroNotifiche = false; //true = aperto, false = chiuso
     private Map<Paziente, List<Farmaco>> farmaciNonAssuntiDa3Giorni = new HashMap<>();
+    private boolean finestraRilevazioniGlicemicheAperta = false;
 
     private GlicontrolCoreSystem() {
         listaPazienti = GestionePazienti.getInstance().getListaPazienti();
@@ -337,7 +338,7 @@ public class GlicontrolCoreSystem {
     }
 
     // Recupera gli orari dei pasti per il paziente selezionato al fine di inviargli promemoria circa la registrazione dei valori glicemici
-    public void promemoriaRegistrazioneGlicemica(Paziente paziente) {
+    public void monitoraRegistrazioneGlicemica(Paziente paziente) {
         Runnable task = () -> {
             try {
                 gestionePasti = new GestionePasti(paziente);
@@ -360,6 +361,16 @@ public class GlicontrolCoreSystem {
                     });
                 }
 
+                List<RilevazioneGlicemica> rilevazioniOdierne = new ArrayList<>(new GestioneRilevazioniGlicemia(paziente).getRilevazioniPerData(LocalDate.now()));
+
+                if (!finestraRilevazioniGlicemicheAperta) {
+                    if (rilevazioniOdierne.isEmpty()) {
+                        Platform.runLater(() -> new ServizioNotifiche().notificaPromemoriaRegistrazioneGlicemia());
+                    } else if (rilevazioniOdierne.getLast().getOra().toLocalTime().isBefore(orarioTarget)) {
+                        Platform.runLater(() -> new ServizioNotifiche().notificaPromemoriaRegistrazioneGlicemia());
+                    }
+                }
+
             } catch (Exception e) {
                 System.err.println("Errore nel caricamento del promemoria per la registrazione della glicemia: " + e.getMessage());
             }
@@ -369,6 +380,14 @@ public class GlicontrolCoreSystem {
         long delayMillis = 60000 - (millisNow % 60000); // sincronizzazione al minuto esatto
 
         scheduler.scheduleAtFixedRate(task, delayMillis, 60000, TimeUnit.MILLISECONDS);
+    }
+
+    public void setFinestraRilevazioniGlicemicheIsOpen() {
+        finestraRilevazioniGlicemicheAperta = true;
+    }
+
+    public void setFinestraRilevazioniGlicemicheIsClose() {
+        finestraRilevazioniGlicemicheAperta = false;
     }
 
     // Verifica i livelli glicemici in relazione ai pasti e classifica i diversi livelli in base alla gravità
@@ -397,8 +416,8 @@ public class GlicontrolCoreSystem {
         List<Integer> codiciLivelliOdierni = new ArrayList<>();
         List<Integer> codiciLivelliComplessivi = new ArrayList<>();
 
-        if (rilevazioniComplessive.isEmpty() && !odierne) return null;
-        if (rilevazioniOdierne.isEmpty() && odierne) return null;
+        if (rilevazioniComplessive == null && !odierne) return null;
+        if (rilevazioniOdierne == null && odierne) return null;
 
         if (odierne) {
             for (RilevazioneGlicemica r : rilevazioniOdierne) {
@@ -526,28 +545,6 @@ public class GlicontrolCoreSystem {
         }, 0, 10, TimeUnit.SECONDS);
     }
 
-    public void monitoraInserimentoRilevazioniGlicemiche(Paziente paziente) {
-        scheduler.scheduleAtFixedRate(()->{
-            try{
-                if(presenzaRilevazioniGlicemicheNonRegistrate(paziente)){
-                    Platform.runLater(()->{
-                        ServizioNotifiche notificheInserimento = new ServizioNotifiche();
-                        notificheInserimento.notificaPromemoriaRegistrazioneGlicemia();
-                    });
-                }
-            } catch (Exception e) {
-                System.err.println("Errore durante il controllo periodico dell'inserimento delle rilevazioni glicemiche: " + e.getMessage());
-            }
-        }, 0, 5, TimeUnit.MINUTES);
-    }
-
-    public boolean presenzaRilevazioniGlicemicheNonRegistrate(Paziente paziente) {
-        gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
-        List<RilevazioneGlicemica> rilevazioniGlicemichePaziente = new ArrayList<>(gestioneRilevazioniGlicemia.getRilevazioniPerData(LocalDate.now()));
-        gestionePasti = new GestionePasti(paziente);
-        //se il numero di rilevazioni di oggi è minore del numero di pasti
-        return rilevazioniGlicemichePaziente.size() < gestionePasti.getPasti().size();
-    }
 
     public void setConnessoComeMedico() {
         connessoComeMedico = true;

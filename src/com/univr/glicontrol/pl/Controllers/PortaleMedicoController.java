@@ -180,6 +180,7 @@ public class PortaleMedicoController implements Portale, Controller {
 
                         Stage dettaglioNotificaStage = new Stage();
                         dettaglioNotificaStage.setScene(new Scene(root));
+                        dettaglioNotificaStage.setResizable(false);
                         dettaglioNotificaStage.setTitle("System Notification Service");
 
                         dettaglioNotificaStage.show();

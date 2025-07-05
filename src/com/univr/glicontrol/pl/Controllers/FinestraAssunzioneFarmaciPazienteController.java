@@ -327,7 +327,7 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
                 }
 
                 ObservableList<String> farmaciAssuntiOggi = FXCollections.observableArrayList();
-                farmaciAssuntiOggi.addAll(upp.getListaFarmaciAssuntiOggi());
+                farmaciAssuntiOggi.addAll(upp.getListaFarmaciAssuntiOggi().reversed());
 
                 // Aggiornamento della UI va fatto sul thread dell'interfaccia
                 Platform.runLater(() -> {

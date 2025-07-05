@@ -114,8 +114,7 @@ public class PortalePazienteController implements Portale, Controller {
 
         // Task automatici sempre attivi in background
         GlicontrolCoreSystem.getInstance().monitoraAssunzioneFarmaci(paziente);
-        GlicontrolCoreSystem.getInstance().promemoriaRegistrazioneGlicemica(paziente);
-        GlicontrolCoreSystem.getInstance().monitoraInserimentoRilevazioniGlicemiche(paziente);
+        GlicontrolCoreSystem.getInstance().monitoraRegistrazioneGlicemica(paziente);
     }
 
     public void openProfile() {
@@ -344,7 +343,7 @@ public class PortalePazienteController implements Portale, Controller {
     }
 
     public void aggiornaListaRilevazioniGlicemicheOdierne(){
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUpp = new UtilityPortali(paziente);
         ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
         newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.getItems().setAll(newRilevazioni);

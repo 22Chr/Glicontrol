@@ -29,7 +29,7 @@
             <children>
                 <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
                     <children>
-                        <Label alignment="CENTER" prefHeight="78.0" prefWidth="261.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE ASSUNZIONI &#10;DI FARMACI" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="261.0" style="-fx-background-color: #334EAC; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE ASSUNZIONI &#10;DI FARMACI" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font name="Carlito" size="16.0" />
                             </font>

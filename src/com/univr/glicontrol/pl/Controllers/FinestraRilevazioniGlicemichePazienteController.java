@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -246,7 +247,13 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
                 rilevazioni.addAll(upp.getListaRilevazioniGlicemichePazienti());
 
                 if (ppc != null) {
-                    Platform.runLater(() -> glicemiaPazienteLV.setItems(rilevazioni));
+                    Platform.runLater(() -> {
+                        glicemiaPazienteLV.setItems(rilevazioni);
+
+                        GlicontrolCoreSystem.getInstance().setFinestraRilevazioniGlicemicheIsOpen();
+                        Stage stage = (Stage) glicemiaPazienteLV.getScene().getWindow();
+                        stage.setOnCloseRequest(event -> GlicontrolCoreSystem.getInstance().setFinestraRilevazioniGlicemicheIsClose());
+                    });
                 } else {
                     Platform.runLater(() -> rilevazioniGlicemichePortaleMedicoLV.setItems(rilevazioni));
                     Platform.runLater(() -> coloraAnomalieRilevazioniGlicemiche());
