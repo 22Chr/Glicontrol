@@ -292,6 +292,7 @@ public class PortaleMedicoController implements Portale, Controller {
 
             Stage gestoreTerapiePaziente = new Stage();
             gestoreTerapiePaziente.setTitle("Terapie paziente");
+            gestoreTerapiePaziente.setResizable(false);
             gestoreTerapiePaziente.setScene(new Scene(root, 1200, 720));
 
             gestoreTerapiePaziente.show();

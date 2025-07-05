@@ -96,10 +96,10 @@ public class PortalePazienteController implements Portale, Controller {
 
                     switch (Math.abs(severity)) {
                         case 0 -> style = "";
-                        case 1 -> style = "-fx-background-color: #ffdd00; -fx-text-fill: black;";
-                        case 2 -> style = "-fx-background-color: #ff9900; -fx-text-fill: black;";
-                        case 3 -> style = "-fx-background-color: #ff0000; -fx-text-fill: white;";
-                        case 4 -> style = "-fx-background-color: #6b0c8a; -fx-text-fill: white;";
+                        case 1 -> style = "-fx-background-color: #ffdd00; -fx-text-fill: black; -fx-border-color: whitesmoke;";
+                        case 2 -> style = "-fx-background-color: #ff9900; -fx-text-fill: black; -fx-border-color: whitesmoke;";
+                        case 3 -> style = "-fx-background-color: #ff0000; -fx-text-fill: white; -fx-border-color: whitesmoke;";
+                        case 4 -> style = "-fx-background-color: #6b0c8a; -fx-text-fill: white; -fx-border-color: whitesmoke;";
                         default -> style = "";
                     }
 
@@ -231,6 +231,7 @@ public class PortalePazienteController implements Portale, Controller {
             rilevazioniGlicemiaPaziente.setWidth(800);
             rilevazioniGlicemiaPaziente.setHeight(500);
             rilevazioniGlicemiaPaziente.setTitle("Le mie rilevazioni glicemiche");
+            rilevazioniGlicemiaPaziente.setResizable(false);
             rilevazioniGlicemiaPaziente.setScene(new Scene(root));
 
             rilevazioniGlicemiaPaziente.show();
@@ -249,6 +250,7 @@ public class PortalePazienteController implements Portale, Controller {
 
             Stage gestoreTerapiePaziente = new Stage();
             gestoreTerapiePaziente.setTitle("Le mie terapie");
+            gestoreTerapiePaziente.setResizable(false);
             gestoreTerapiePaziente.setScene(new Scene(root));
 
             gestoreTerapiePaziente.show();
@@ -362,10 +364,10 @@ public class PortalePazienteController implements Portale, Controller {
 
                     switch (Math.abs(severity)) {
                         case 0 -> style = "";
-                        case 1 -> style = "-fx-background-color: #ffdd00; -fx-text-fill: black;";
-                        case 2 -> style = "-fx-background-color: #ff9900; -fx-text-fill: black;";
-                        case 3 -> style = "-fx-background-color: #ff0000; -fx-text-fill: white;";
-                        case 4 -> style = "-fx-background-color: #6b0c8a; -fx-text-fill: white;";
+                        case 1 -> style = "-fx-background-color: #ffdd00; -fx-text-fill: black; -fx-border-color: whitesmoke;";
+                        case 2 -> style = "-fx-background-color: #ff9900; -fx-text-fill: black; -fx-border-color: whitesmoke;";
+                        case 3 -> style = "-fx-background-color: #ff0000; -fx-text-fill: white; -fx-border-color: whitesmoke;";
+                        case 4 -> style = "-fx-background-color: #6b0c8a; -fx-text-fill: white; -fx-border-color: whitesmoke;";
                         default -> style = "";
                     }
 

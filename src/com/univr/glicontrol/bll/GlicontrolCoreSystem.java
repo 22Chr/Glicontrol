@@ -202,6 +202,9 @@ public class GlicontrolCoreSystem {
             return true;
         }
 
+        // Se non è presente alcuna registrazione odierna per questo farmaco, significa che non è stato assunto
+        if (oraUltimaRegistrazione == null) return false;
+
         // Se non è stato assunto, e siamo entro i 15 minuti prima dell’orario o oltre, segnala che deve essere assunto
         return oraAttuale.isBefore(inizioFinestra); // Deve essere assunto (o è in ritardo)
 
