@@ -42,6 +42,7 @@ public class DettaglioNotificaController {
             Platform.runLater(() -> {
                 pmc.resetListaNotifiche();
                 pmc.aggiornaListaPazientiReferenteNotifiche();
+                pmc.aggiornaListaPazientiNonAssociatiNotifiche();
                 chiudiDettaglioNotifica();
             });
         }
