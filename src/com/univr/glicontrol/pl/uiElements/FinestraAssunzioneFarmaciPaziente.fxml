@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="625.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraAssunzioneFarmaciPazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="625.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraAssunzioneFarmaciPazienteController">
     <children>
       <HBox fx:id="loadingPage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -128,7 +128,7 @@
                         </TextField>
                      </children>
                   </GridPane>
-                        <Button mnemonicParsing="false" onAction="#registraAssunzioneFarmaco" style="-fx-background-color: #22577a;" text="Inserisci" textFill="WHITE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registraAssunzioneFarmaco" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Inserisci" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -155,7 +155,7 @@
                 </TextArea>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                     <children>
-                        <Button fx:id="indietroB" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                        <Button fx:id="indietroB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -163,7 +163,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaAssunzioneFarmaco" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
+                        <Button fx:id="eliminaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eliminaAssunzioneFarmaco" style="-fx-background-color: #c1121f; -fx-background-radius: 7;" text="Elimina" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

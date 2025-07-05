@@ -22,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="652.0" style="-fx-background-color:#d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.BenvenutoPazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="652.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.BenvenutoPazienteController">
     <children>
         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
             <image>
@@ -34,7 +34,7 @@
         </ImageView>
         <VBox fx:id="page0" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
             <children>
-                <Text fill="#22577a" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto in Glicontrol&#10;il tuo alleato smart per una vita in equilibrio!" textAlignment="CENTER" wrappingWidth="421.78125">
+                <Text fill="#081f5c" lineSpacing="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto in Glicontrol&#10;il tuo alleato smart per una vita in equilibrio!" textAlignment="CENTER" wrappingWidth="421.78125">
                     <font>
                         <Font name="DIN Alternate Bold" size="21.0" />
                     </font>
@@ -50,9 +50,9 @@
                         <Insets top="30.0" />
                     </VBox.margin>
                 </Text>
-                <Button fx:id="avanti0B" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                <Button fx:id="avanti0B" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Avanti" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font size="14.0" />
+                        <Font size="16.0" />
                     </font>
                     <cursor>
                         <Cursor fx:constant="HAND" />
@@ -89,7 +89,7 @@
                         <Insets left="-4.0" />
                     </VBox.margin>
                 </RadioButton>
-                <Button fx:id="avanti1B" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                <Button fx:id="avanti1B" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Avanti" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -130,7 +130,7 @@
                 </CheckBox>
                 <HBox alignment="CENTER" spacing="60.0">
                     <children>
-                        <Button fx:id="indietro2B" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                        <Button fx:id="indietro2B" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -138,7 +138,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button fx:id="avanti2B" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                        <Button fx:id="avanti2B" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Avanti" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -184,7 +184,7 @@
                 </CheckBox>
                 <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" spacing="60.0">
                     <children>
-                        <Button fx:id="indietro3B" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                        <Button fx:id="indietro3B" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -192,7 +192,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button fx:id="avanti3B" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                        <Button fx:id="avanti3B" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Avanti" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -214,7 +214,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="pesoTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="kg" style="-fx-border-color: #22577a;">
+                <TextField fx:id="pesoTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="kg" style="-fx-border-color: #081F5C;">
                     <font>
                         <Font size="13.0" />
                     </font>
@@ -224,7 +224,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="altezzaTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="cm" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
+            <TextField fx:id="altezzaTF" maxWidth="120.0" prefHeight="25.0" prefWidth="200.0" promptText="cm" style="-fx-background-color: #ffffffff; -fx-border-color: #081F5C;">
                <font>
                   <Font size="13.0" />
                </font>
@@ -234,14 +234,14 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextArea fx:id="allergieTA" maxHeight="80.0" maxWidth="160.0" prefHeight="80.0" prefWidth="160.0" style="-fx-border-color: #22577a;" wrapText="true">
+                <TextArea fx:id="allergieTA" maxHeight="80.0" maxWidth="160.0" prefHeight="80.0" prefWidth="160.0" style="-fx-border-color: #081F5C;" wrapText="true">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </TextArea>
                 <HBox alignment="CENTER" prefHeight="37.0" prefWidth="652.0" spacing="80.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -249,7 +249,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #22577a;" text="Avanti" textFill="WHITE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#nextPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Avanti" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -285,8 +285,8 @@
                                 <Insets bottom="35.0" left="168.0" />
                             </GridPane.margin>
                         </Label>
-                        <ListView fx:id="listaPasti" prefHeight="189.0" prefWidth="261.0" style="-fx-border-color: #22577a;" GridPane.rowIndex="1" />
-                        <Button fx:id="inserisciPastoB" mnemonicParsing="false" onAction="#inserisciNuovoPasto" style="-fx-background-color: #22577a;" text="Inserisci un pasto" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <ListView fx:id="listaPasti" prefHeight="189.0" prefWidth="261.0" style="-fx-border-color: #081F5C;" GridPane.rowIndex="1" />
+                        <Button fx:id="inserisciPastoB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#inserisciNuovoPasto" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Inserisci un pasto" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <GridPane.margin>
                                 <Insets left="30.0" />
                             </GridPane.margin>
@@ -304,7 +304,7 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="109.0" prefWidth="652.0" spacing="60.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <Button fx:id="indietro4B" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                        <Button fx:id="indietro4B" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#previousPage" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -312,7 +312,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                        <Button fx:id="salvaB" mnemonicParsing="false" onAction="#salvaDatiPrimoAccesso" style="-fx-background-color: #22577a;" text="Salva" textFill="WHITE">
+                        <Button fx:id="salvaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salvaDatiPrimoAccesso" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Salva" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>

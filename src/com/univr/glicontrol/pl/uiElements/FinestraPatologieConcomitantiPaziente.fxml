@@ -16,13 +16,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="631.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraPatologieConcomitantiPazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="631.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraPatologieConcomitantiPazienteController">
     <children>
         <HBox fx:id="mainPage" prefHeight="100.0" prefWidth="200.0">
             <children>
-                <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+                <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #081F5C; -fx-border-radius: 10;">
                     <children>
-                        <Label alignment="CENTER" prefHeight="39.0" prefWidth="263.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE PATOLOGIE" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="263.0" style="-fx-background-color: #334EAC; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE PATOLOGIE" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font name="Carlito" size="16.0" />
                             </font>
@@ -102,29 +102,29 @@
                               <Insets right="4.0" />
                            </GridPane.margin>
                         </Label>
-                        <TextField fx:id="nomePatologiaTF" style="-fx-border-color: #22577a;" GridPane.columnIndex="1">
+                        <TextField fx:id="nomePatologiaTF" style="-fx-border-color: #081F5C; -fx-background-color: #ffffff;" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets right="15.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextArea fx:id="descrizionePatologiaTA" maxHeight="100.0" maxWidth="200.0" prefHeight="100.0" prefWidth="100.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextArea fx:id="descrizionePatologiaTA" maxHeight="100.0" maxWidth="200.0" prefHeight="100.0" prefWidth="100.0" style="-fx-border-color: #081F5C; -fx-background-color: #ffffff;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets right="15.0" top="5.0" />
                            </GridPane.margin>
                         </TextArea>
-                        <DatePicker fx:id="dataInizioDP" prefHeight="25.0" prefWidth="229.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <DatePicker fx:id="dataInizioDP" prefHeight="25.0" prefWidth="229.0" style="-fx-border-color: #081F5C; -fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets right="15.0" />
                            </GridPane.margin>
                         </DatePicker>
-                        <DatePicker fx:id="dataFineDP" prefHeight="25.0" prefWidth="225.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <DatePicker fx:id="dataFineDP" prefHeight="25.0" prefWidth="225.0" style="-fx-border-color: #081F5C; -fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets right="15.0" />
                            </GridPane.margin>
                         </DatePicker>
                      </children>
                   </GridPane>
-                        <Button mnemonicParsing="false" onAction="#inserisciNuovaPatologia" style="-fx-background-color: #22577a;" text="Inserisci" textFill="WHITE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#inserisciNuovaPatologia" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Inserisci" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -151,7 +151,7 @@
             </TextArea>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>
-                  <Button fx:id="indietroPortaleMedicoB" mnemonicParsing="false" onAction="#cambiaPagina" prefHeight="28.0" prefWidth="155.0" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                  <Button fx:id="indietroPortaleMedicoB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cambiaPagina" prefHeight="28.0" prefWidth="155.0" style="-fx-background-color: #334eac; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -159,7 +159,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="indietroPortalePazienteB" mnemonicParsing="false" onAction="#cambiaPagina" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                  <Button fx:id="indietroPortalePazienteB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cambiaPagina" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: #334eac; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -167,7 +167,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="terminaPatologiaB" mnemonicParsing="false" onAction="#terminaPatologiaConcomitante" prefHeight="28.0" prefWidth="155.0" style="-fx-background-color: #22577a;" text="Segna come terminata" textFill="WHITE">
+                  <Button fx:id="terminaPatologiaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#terminaPatologiaConcomitante" prefHeight="28.0" prefWidth="155.0" style="-fx-background-color: #334eac; -fx-background-radius: 7;" text="Segna come terminata" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>

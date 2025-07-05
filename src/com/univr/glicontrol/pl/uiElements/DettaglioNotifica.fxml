@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.DettaglioNotificaController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.DettaglioNotificaController">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -23,7 +23,7 @@
             </TextArea>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#chiudiDettaglioNotifica" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5;" text="Chiudi" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#chiudiDettaglioNotifica" style="-fx-background-color: #334EAC; -fx-border-radius: 7; -fx-background-radius: 7;" text="Chiudi" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -31,7 +31,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#segnaNotificaComeVisualizzata" style="-fx-background-color: #44bd32; -fx-border-radius: 5; -fx-background-radius: 5;" text="Segna come visualizzata " textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#segnaNotificaComeVisualizzata" style="-fx-background-color: #334EAC; -fx-border-radius: 7; -fx-background-radius: 7;" text="Segna come visualizzata " textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>

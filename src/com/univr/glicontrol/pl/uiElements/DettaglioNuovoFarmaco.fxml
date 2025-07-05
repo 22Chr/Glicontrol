@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="443.0" prefWidth="383.0" spacing="35.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.DettaglioNuovoFarmacoController">
+<VBox alignment="CENTER" prefHeight="443.0" prefWidth="383.0" spacing="35.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.DettaglioNuovoFarmacoController">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="353.0" prefWidth="383.0">
         <columnConstraints>
@@ -57,15 +57,15 @@
                   <Insets right="4.0" />
                </GridPane.margin>
             </Label>
-            <ComboBox fx:id="listaFarmaciCompletaCB" editable="true" prefWidth="200.0" promptText="Digita per eseguire la ricerca" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" GridPane.columnIndex="1" />
-            <TextArea fx:id="dosaggioTA" maxHeight="50.0" maxWidth="200.0" prefHeight="60.0" prefWidth="200.0" promptText="Es. 80" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextArea fx:id="frequenzaTA" maxHeight="50.0" maxWidth="200.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextArea fx:id="orariTA" maxHeight="50.0" maxWidth="200.0" prefHeight="200.0" prefWidth="200.0" promptText="Es. 07:00, 13:00, 00:00" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="listaFarmaciCompletaCB" editable="true" prefWidth="200.0" promptText="Digita per eseguire la ricerca" style="-fx-background-color: #ffffffff; -fx-border-color: #081F5C;" GridPane.columnIndex="1" />
+            <TextArea fx:id="dosaggioTA" maxHeight="50.0" maxWidth="200.0" prefHeight="60.0" prefWidth="200.0" promptText="Es. 80" style="-fx-border-color: #081F5C;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea fx:id="frequenzaTA" maxHeight="50.0" maxWidth="200.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #081F5C;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextArea fx:id="orariTA" maxHeight="50.0" maxWidth="200.0" prefHeight="200.0" prefWidth="200.0" promptText="Es. 07:00, 13:00, 00:00" style="-fx-border-color: #081F5C;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#aggiungiFarmaco" style="-fx-background-color: #22577a;" text="Aggiungi" textFill="WHITE">
+      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiFarmaco" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Aggiungi" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font size="13.0" />
+            <Font size="14.0" />
          </font>
       </Button>
    </children>

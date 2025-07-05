@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraNoteTerapiaController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraNoteTerapiaController">
    <children>
       <VBox alignment="CENTER" prefHeight="211.0" prefWidth="600.0">
          <children>
@@ -22,7 +22,7 @@
             </TextArea>
             <VBox alignment="CENTER" prefHeight="100.0" prefWidth="600.0">
                <children>
-                  <Button fx:id="salvaNoteTerapiaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salvaNoteTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7; -fx-border-radius: 7;" text="Salva" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="salvaNoteTerapiaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salvaNoteTerapia" style="-fx-background-color: #334EAC; -fx-background-radius: 7; -fx-border-radius: 7;" text="Salva" textAlignment="CENTER" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" />
                      </VBox.margin>

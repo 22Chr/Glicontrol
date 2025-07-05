@@ -6,16 +6,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.LoginController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="600.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.LoginController">
    <children>
-      <VBox alignment="CENTER" fillWidth="false" prefHeight="400.0" prefWidth="529.0" style="-fx-background-color: d8e0e359;">
+      <VBox alignment="CENTER" fillWidth="false" prefHeight="400.0" prefWidth="529.0" style="-fx-background-color: f9fcff;">
          <children>
             <ImageView fitHeight="109.0" fitWidth="239.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -25,7 +24,7 @@
                   <Insets bottom="20.0" top="-30.0" />
                </VBox.margin>
             </ImageView>
-            <Label fx:id="portalLabel" text="ACCEDI AL PORTALE" textAlignment="CENTER" textFill="#22577a">
+            <Label fx:id="portalLabel" text="ACCEDI AL PORTALE" textAlignment="CENTER" textFill="#334eac">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -41,7 +40,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="codiceFiscaleTF" prefHeight="29.0" prefWidth="323.0" promptText="codice fiscale:" style="-fx-border-color: #22577a;">
+            <TextField fx:id="codiceFiscaleTF" prefHeight="29.0" prefWidth="323.0" promptText="codice fiscale:" style="-fx-border-color: #081F5C;">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -49,7 +48,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="passwordPF" prefHeight="29.0" prefWidth="323.0" promptText="password:" style="-fx-border-color: #22577a;">
+            <PasswordField fx:id="passwordPF" prefHeight="29.0" prefWidth="323.0" promptText="password:" style="-fx-border-color: #081F5C;">
                <font>
                   <Font size="14.0" />
                </font>
@@ -57,18 +56,15 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </PasswordField>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #22577a;" text="Login" textFill="WHITE">
+            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #334eac; -fx-background-radius: 7;" text="Login" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
-               <effect>
-                  <Glow level="0.1" />
-               </effect>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="backHomeB" mnemonicParsing="false" onAction="#tornaAllaHome" style="-fx-background-color: transparent; -fx-border-color: grey;" text="Torna alla Home">
+            <Button fx:id="backHomeB" alignment="CENTER" mnemonicParsing="false" onAction="#tornaAllaHome" style="-fx-background-color: transparent; -fx-border-color: #081f5c;" text="Torna alla Home" textFill="#081f5c">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>

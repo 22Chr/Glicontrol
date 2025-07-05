@@ -18,17 +18,17 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortaleAdminController">
+<StackPane style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortaleAdminController">
    <children>
-      <BorderPane prefHeight="494.0" prefWidth="792.0" style="-fx-background-color: #d8e0e359;">
+      <BorderPane prefHeight="494.0" prefWidth="792.0" style="-fx-background-color: #f9fcff;">
          <center>
             <HBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="230.0" prefWidth="250.0" spacing="10" style="-fx-border-color: #22577a; -fx-border-radius: 7;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                  <VBox alignment="TOP_CENTER" prefHeight="230.0" prefWidth="250.0" spacing="10" style="-fx-border-color: #081F5C; -fx-border-radius: 7;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="39.0" prefWidth="320.0" style="-fx-background-color: #22577a; -fx-background-radius: 4;" text="LISTA MEDICI" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="229.0" style="-fx-background-color: #334eac; -fx-background-radius: 4;" text="LISTA MEDICI" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                            <font>
-                              <Font size="14.0" />
+                              <Font size="16.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="5.0" right="5.0" top="5.0" />
@@ -44,11 +44,11 @@
                         <Insets bottom="20.0" left="20.0" top="40.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="230.0" prefWidth="250.0" spacing="10" style="-fx-border-color: #22577a; -fx-border-radius: 7;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                  <VBox alignment="TOP_CENTER" prefHeight="230.0" prefWidth="250.0" spacing="10" style="-fx-border-color: #081F5C; -fx-border-radius: 7;" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="39.0" prefWidth="271.0" style="-fx-background-color: #22577a; -fx-background-radius: 4;" text="LISTA PAZIENTI" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="271.0" style="-fx-background-color: #334eac; -fx-background-radius: 4;" text="LISTA PAZIENTI" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                            <font>
-                              <Font size="14.0" />
+                              <Font size="16.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="5.0" right="5.0" top="5.0" />
@@ -64,7 +64,7 @@
                         <Insets bottom="20.0" right="20.0" top="40.0" />
                      </HBox.margin>
                   </VBox>
-                  <MenuButton fx:id="inserisciUtenteB" alignment="CENTER" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; fx-background-radius: 5;" text="Inserisci" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <MenuButton fx:id="inserisciUtenteB" alignment="CENTER" mnemonicParsing="false" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: #334eac; -fx-border-radius: 7; fx-background-radius: 7;" text="Inserisci" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <items>
                         <MenuItem fx:id="medicoMI" mnemonicParsing="false" onAction="#inserisciNuovoMedico" text="Medico      " />
                         <MenuItem fx:id="pazienteMI" mnemonicParsing="false" onAction="#inserisciNuovoPaziente" text="Paziente" />
@@ -97,7 +97,7 @@
                      </HBox.margin>
                   </ImageView>
                   <Region prefHeight="64.0" prefWidth="340.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="logOperazioniB" mnemonicParsing="false" onAction="#openLogTerapie" style="-fx-background-color: #22577a; -fx-background-radius: 5; -fx-border-radius: 5;" text="Log operazioni" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="logOperazioniB" mnemonicParsing="false" onAction="#openLogTerapie" style="-fx-background-color: #334eac; -fx-background-radius: 7; -fx-border-radius: 7;" text="Log operazioni" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -108,7 +108,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="logoutB" alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5;" text="Logout" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="logoutB" alignment="TOP_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: #334eac; -fx-border-radius: 7; -fx-background-radius: 7;" text="Logout" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
@@ -134,7 +134,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="70.0" prefWidth="309.0">
                <children>
-                  <Label prefHeight="25.0" prefWidth="296.0" text="Log terapie" HBox.hgrow="ALWAYS">
+                  <Label prefHeight="25.0" prefWidth="296.0" text="LOG" textFill="#081f5c" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -142,7 +142,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Button fx:id="chiudiCentroNotificheB" alignment="CENTER" mnemonicParsing="false" onAction="#closeLogTerapie" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #ff0404;" text="✕" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
+                  <Button fx:id="chiudiCentroNotificheB" alignment="CENTER" mnemonicParsing="false" onAction="#closeLogTerapie" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #ff0404; -fx-background-radius: 7;" text="✕" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="ALWAYS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

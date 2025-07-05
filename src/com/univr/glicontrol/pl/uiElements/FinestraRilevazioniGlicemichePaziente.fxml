@@ -17,13 +17,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="799.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="799.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraRilevazioniGlicemichePazienteController">
     <children>
         <HBox fx:id="mainPage" prefHeight="487.0" prefWidth="817.0">
             <children>
-                <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+                <VBox alignment="TOP_CENTER" prefHeight="338.0" prefWidth="273.0" spacing="15.0" style="-fx-border-color: #081F5C; -fx-border-radius: 10;">
                     <children>
-                        <Label alignment="CENTER" prefHeight="78.0" prefWidth="299.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE RILEVAZIONI &#10;GLICEMICHE" textAlignment="CENTER" textFill="WHITE">
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="299.0" style="-fx-background-color: #334EAC; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE RILEVAZIONI &#10;GLICEMICHE" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font name="Carlito" size="16.0" />
                             </font>
@@ -99,14 +99,14 @@
                               <Font name="Carlito" size="14.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="28.0" prefWidth="380.0" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.columnSpan="2">
+                        <DatePicker fx:id="dataGlicemiaDP" prefHeight="28.0" prefWidth="380.0" style="-fx-border-color: #081F5C; -fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.columnSpan="2">
                            <GridPane.margin>
                               <Insets right="100.0" />
                            </GridPane.margin>
                         </DatePicker>
                         <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
                            <children>
-                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="28.0" prefWidth="80.0" promptText="ore" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;">
+                              <ComboBox fx:id="oraGlicemiaCB" prefHeight="28.0" prefWidth="80.0" promptText="ore" style="-fx-background-color: #ffffffff; -fx-border-color: #081F5C;">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin></ComboBox>
@@ -115,18 +115,18 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="28.0" prefWidth="80.0" promptText="min" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
+                              <ComboBox fx:id="minutiGlicemiaCB" prefHeight="28.0" prefWidth="80.0" promptText="min" style="-fx-background-color: #ffffffff; -fx-border-color: #081F5C;" />
                            </children>
                         </HBox>
-                        <TextField fx:id="valoreGlicemiaTF" prefHeight="28.0" prefWidth="311.0" promptText="es. 125.3" style="-fx-border-color: #22577a;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                        <TextField fx:id="valoreGlicemiaTF" prefHeight="28.0" prefWidth="311.0" promptText="es. 125.3" style="-fx-border-color: #081F5C; -fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets right="100.0" />
                            </GridPane.margin>
                         </TextField>
                         <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="234.0" spacing="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
                            <children>
-                              <ComboBox fx:id="primaODopoCB" prefHeight="28.0" prefWidth="195.0" promptText="prima/dopo" style="-fx-background-color: #ffffffff; -fx-border-color: #22577a;" />
-                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="28.0" prefWidth="232.0" promptText="pasto" style="-fx-border-color: #22577a; -fx-background-color: #ffffffff;">
+                              <ComboBox fx:id="primaODopoCB" prefHeight="28.0" prefWidth="195.0" promptText="prima/dopo" style="-fx-background-color: #ffffffff; -fx-border-color: #081F5C;" />
+                              <ComboBox fx:id="pastoGlicemiaCB" prefHeight="28.0" prefWidth="232.0" promptText="pasto" style="-fx-border-color: #081F5C; -fx-background-color: #ffffffff;">
                                  <HBox.margin>
                                     <Insets right="100.0" />
                                  </HBox.margin></ComboBox>
@@ -137,7 +137,7 @@
                         <Insets left="10.0" right="10.0" />
                      </VBox.margin>
                   </GridPane>
-                        <Button mnemonicParsing="false" onAction="#inserisciNuovaRilevazioneGlicemica" style="-fx-background-color: #22577a;" text="Inserisci" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#inserisciNuovaRilevazioneGlicemica" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Inserisci" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -151,7 +151,7 @@
         </HBox>
         <VBox fx:id="detailPage" prefHeight="200.0" prefWidth="100.0" visible="false">
             <children>
-                <TextArea fx:id="descrizioneEstesaTA" prefHeight="273.0" prefWidth="540.0">
+                <TextArea fx:id="descrizioneEstesaTA" prefHeight="357.0" prefWidth="739.0" wrapText="true">
                     <VBox.margin>
                         <Insets left="30.0" right="30.0" top="30.0" />
                     </VBox.margin>
@@ -161,7 +161,7 @@
                 </TextArea>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
                     <children>
-                        <Button fx:id="indietroB" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE">
+                        <Button fx:id="indietroB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -169,7 +169,7 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </Button>
-                  <Button fx:id="indietroPortaleMedicoB" layoutX="297.0" layoutY="47.0" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #22577a;" text="Indietro" textFill="WHITE" visible="false">
+                  <Button fx:id="indietroPortaleMedicoB" alignment="CENTER" contentDisplay="CENTER" layoutX="297.0" layoutY="47.0" mnemonicParsing="false" onAction="#cambiaPagina" style="-fx-background-color: #334eac; -fx-background-radius: 7;" text="Indietro" textAlignment="CENTER" textFill="WHITE" visible="false">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -177,7 +177,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                        <Button fx:id="eliminaB" mnemonicParsing="false" onAction="#eliminaRilevazione" style="-fx-background-color: #ff0404;" text="Elimina" textFill="WHITE">
+                        <Button fx:id="eliminaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eliminaRilevazione" style="-fx-background-color: #c1121f; -fx-background-radius: 7;" text="Elimina" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -191,12 +191,12 @@
         </VBox>
       <HBox fx:id="mainPagePortaleMedico" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
          <children>
-            <VBox alignment="CENTER" prefHeight="490.0" prefWidth="485.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+            <VBox alignment="CENTER" prefHeight="490.0" prefWidth="485.0" style="-fx-border-color: #081F5C; -fx-border-radius: 10;">
                <HBox.margin>
                   <Insets bottom="20.0" top="20.0" />
                </HBox.margin>
                <children>
-                  <Label alignment="CENTER" prefHeight="76.0" prefWidth="519.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE RILEVAZIONI &#10;GLICEMICHE" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="76.0" prefWidth="519.0" style="-fx-background-color: #334EAC; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE RILEVAZIONI &#10;GLICEMICHE" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Carlito" size="16.0" />
                      </font>

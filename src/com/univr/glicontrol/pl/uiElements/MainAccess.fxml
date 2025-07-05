@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -12,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.MainAccessController">
+<StackPane style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.MainAccessController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #d8e0e359;">
+      <VBox alignment="CENTER" prefHeight="376.0" prefWidth="595.0" style="-fx-background-color: #f9fcff;">
          <children>
             <ImageView fitHeight="78.0" fitWidth="253.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -42,38 +41,29 @@
             </Text>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Button fx:id="medicoButton" mnemonicParsing="false" onAction="#apriLoginMedico" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #22577a;" text="MEDICO" textFill="WHITE">
+                  <Button fx:id="medicoButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#apriLoginMedico" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #334eac; -fx-background-radius: 7;" text="MEDICO" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                     <effect>
-                        <Glow level="0.1" />
-                     </effect>
                   </Button>
-                  <Button fx:id="pazienteButton" mnemonicParsing="false" onAction="#apriLoginPaziente" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #22577a;" text="PAZIENTE" textFill="#fbfbfb">
+                  <Button fx:id="pazienteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#apriLoginPaziente" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #334eac; -fx-background-radius: 7;" text="PAZIENTE" textAlignment="CENTER" textFill="#fbfbfb">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                     <effect>
-                        <Glow level="0.1" />
-                     </effect>
                   </Button>
-                  <Button fx:id="adminButton" mnemonicParsing="false" onAction="#apriLoginAdmin" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #22577a;" text="ADMIN" textFill="WHITE">
+                  <Button fx:id="adminButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#apriLoginAdmin" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #334eac; -fx-background-radius: 7;" text="ADMIN" textAlignment="CENTER" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                     <effect>
-                        <Glow level="0.1" />
-                     </effect>
                   </Button>
                </children>
             </HBox>

@@ -16,11 +16,11 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<StackPane style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.InserisciNuovaTerapiaController">
+<StackPane style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.InserisciNuovaTerapiaController">
    <children>
       <HBox fx:id="finestraSceltaTerapia" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
          <children>
-            <Button fx:id="selezionaTerapiaDiabeteButton" mnemonicParsing="false" onAction="#caricaFinestraTerapiaDiabete" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #22577a; -fx-background-radius: 5;" text="Diabete" textFill="WHITE">
+            <Button fx:id="selezionaTerapiaDiabeteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#caricaFinestraTerapiaDiabete" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Diabete" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -31,8 +31,11 @@
                      </color>
                   </DropShadow>
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
-            <Button fx:id="selezionaTerapiaPatologiaConcomitanteButton" mnemonicParsing="false" onAction="#caricaFinestraTerapiaPatologiaConcomitante" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #22577a; -fx-background-radius: 5;" text="Patologia&#10;concomitante" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="selezionaTerapiaPatologiaConcomitanteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#caricaFinestraTerapiaPatologiaConcomitante" prefHeight="70.0" prefWidth="150.0" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Patologia&#10;concomitante" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
@@ -43,6 +46,9 @@
                      </color>
                   </DropShadow>
                </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </HBox>
@@ -67,7 +73,7 @@
                         <Insets right="4.0" />
                      </GridPane.margin>
                   </Label>
-                  <ComboBox fx:id="patologiaCB" prefWidth="180.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="patologiaCB" prefWidth="180.0" style="-fx-border-color: #081F5C;" GridPane.columnIndex="1" />
                   <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="333.0" text="Data di inizio:" GridPane.rowIndex="1">
                      <font>
                         <Font size="14.0" />
@@ -76,7 +82,7 @@
                         <Insets right="4.0" />
                      </GridPane.margin>
                   </Label>
-                  <DatePicker fx:id="dataInizioDP" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="dataInizioDP" prefWidth="180.0" style="-fx-border-color: #081F5C;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="391.0" text="Data di fine:" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
@@ -85,13 +91,13 @@
                         <Insets right="4.0" />
                      </GridPane.margin>
                   </Label>
-                  <DatePicker fx:id="dataFineDP" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <DatePicker fx:id="dataFineDP" prefWidth="180.0" style="-fx-border-color: #081F5C;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>
             </GridPane>
-            <Button fx:id="inserisciFarmacoB" mnemonicParsing="false" onAction="#inserisciFarmaco" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Inserisci un farmaco " textFill="WHITE">
+            <Button fx:id="inserisciFarmacoB" mnemonicParsing="false" onAction="#inserisciFarmaco" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Inserisci un farmaco " textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -99,7 +105,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="inserisciNoteB" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="259.0" mnemonicParsing="false" onAction="#inserisciNote" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi delle note" textFill="WHITE">
+            <Button fx:id="inserisciNoteB" alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="259.0" mnemonicParsing="false" onAction="#inserisciNote" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Aggiungi delle note" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -107,9 +113,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="salvaB" mnemonicParsing="false" onAction="#aggiungiNuovaTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi" textFill="WHITE">
+            <Button fx:id="salvaB" mnemonicParsing="false" onAction="#aggiungiNuovaTerapia" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Aggiungi" textFill="WHITE">
                <font>
-                  <Font size="13.0" />
+                  <Font size="14.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />

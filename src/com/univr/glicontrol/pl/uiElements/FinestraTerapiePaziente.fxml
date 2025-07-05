@@ -17,9 +17,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #d8e0e359;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraTerapiePazienteController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.FinestraTerapiePazienteController">
     <children>
-      <HBox fx:id="loadingPage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox fx:id="loadingPage" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
          <children>
             <ProgressIndicator fx:id="progressIndicator" prefHeight="36.0" prefWidth="36.0" progress="0.0" radius="50.0" />
          </children>
@@ -31,9 +31,9 @@
                   <Insets bottom="15.0" left="-10.0" top="10.0" />
                </HBox.margin>
                <children>
-                      <VBox fx:id="pageStorico" alignment="TOP_CENTER" prefHeight="602.0" prefWidth="313.0" spacing="15.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;">
+                      <VBox fx:id="pageStorico" alignment="TOP_CENTER" prefHeight="602.0" prefWidth="313.0" spacing="15.0" style="-fx-border-color: #081F5C; -fx-border-radius: 10;">
                           <children>
-                              <Label alignment="CENTER" prefHeight="39.0" prefWidth="379.0" style="-fx-background-color: #22577a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE TERAPIE&#10;" textAlignment="CENTER" textFill="WHITE">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="379.0" style="-fx-background-color: #334EAC; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 2;" text="STORICO DELLE TERAPIE&#10;" textAlignment="CENTER" textFill="WHITE">
                                   <font>
                                       <Font name="Carlito" size="16.0" />
                                   </font>
@@ -54,7 +54,7 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                       </VBox>
-                  <Button fx:id="aggiungiTerapiaButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiTerapia" prefHeight="45.0" prefWidth="165.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi una terapia &#10;concomitante" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="aggiungiTerapiaButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiTerapia" prefHeight="45.0" prefWidth="165.0" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Aggiungi una terapia &#10;concomitante" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -73,7 +73,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mostraNoteTerapia" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Note" textAlignment="CENTER" textFill="WHITE">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mostraNoteTerapia" prefHeight="30.0" prefWidth="66.0" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Note" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -102,7 +102,7 @@
                         <Insets top="-30.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button fx:id="terminaTerapiaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#terminaTerapia" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Termina terapia" textFill="WHITE" visible="false">
+                  <Button fx:id="terminaTerapiaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#terminaTerapia" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Termina terapia" textAlignment="CENTER" textFill="WHITE" visible="false">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -128,10 +128,10 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Text>
-                              <ListView fx:id="farmaciTerapiaLV" maxHeight="348.0" prefHeight="315.0" prefWidth="206.0" style="-fx-border-color: #22577a;" />
+                              <ListView fx:id="farmaciTerapiaLV" maxHeight="348.0" prefHeight="315.0" prefWidth="206.0" style="-fx-border-color: #081F5C;" />
                               <HBox fx:id="aggiungiEliminaHB" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" visible="false">
                                  <children>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiFarmaciAllaTerapia" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="Aggiungi&#10;farmaci" textAlignment="CENTER" textFill="WHITE">
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiungiFarmaciAllaTerapia" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Aggiungi&#10;farmaci" textAlignment="CENTER" textFill="WHITE">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -139,7 +139,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eliminaFarmacoTerapia" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #ff0404; -fx-background-radius: 7;" text="Elimina" textFill="WHITE">
+                                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#eliminaFarmacoTerapia" prefHeight="45.0" prefWidth="90.0" style="-fx-background-color: #c1121f; -fx-background-radius: 7;" text="Elimina&#10;farmaco" textAlignment="CENTER" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -195,17 +195,17 @@
                                           <Insets right="4.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <TextArea fx:id="dosaggiTerapiaTA" editable="false" maxHeight="173.0" prefHeight="48.0" prefWidth="260.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
+                                    <TextArea fx:id="dosaggiTerapiaTA" editable="false" maxHeight="173.0" prefHeight="48.0" prefWidth="260.0" style="-fx-border-color: #081F5C;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
                                        <GridPane.margin>
                                           <Insets bottom="20.0" top="20.0" />
                                        </GridPane.margin>
                                     </TextArea>
-                                    <TextArea fx:id="frequenzaTerapiaTA" editable="false" maxHeight="156.0" prefHeight="116.0" prefWidth="155.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+                                    <TextArea fx:id="frequenzaTerapiaTA" editable="false" maxHeight="156.0" prefHeight="116.0" prefWidth="155.0" style="-fx-border-color: #081F5C;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets bottom="20.0" top="20.0" />
                                        </GridPane.margin>
                                     </TextArea>
-                                    <TextArea fx:id="orariTerapiaTA" editable="false" maxHeight="145.0" prefHeight="116.0" prefWidth="161.0" style="-fx-border-color: #22577a;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+                                    <TextArea fx:id="orariTerapiaTA" editable="false" maxHeight="145.0" prefHeight="116.0" prefWidth="161.0" style="-fx-border-color: #081F5C;" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets bottom="20.0" top="20.0" />
                                        </GridPane.margin>

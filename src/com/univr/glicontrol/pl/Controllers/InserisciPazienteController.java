@@ -137,11 +137,15 @@ public class InserisciPazienteController implements Controller {
         String cognome = cognomeNuovoPazienteTF.getText();
         String email = emailNuovoPazienteTF.getText();
         String CF = CFNuovoPazienteTF.getText();
-        Date dataNascita = Date.valueOf(dataNascitaNuovoPazienteDP.getValue());
+        Date dataNascita = null;
+        if (dataNascitaNuovoPazienteDP.getValue() != null) {
+            dataNascita = Date.valueOf(dataNascitaNuovoPazienteDP.getValue());
+        }
+
         String sesso = sessoNuovoPazienteCB.getValue();
         String password = passwordNuovoPazienteTF.getText();
 
-        if (!InputChecker.getInstance().allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita)) {
+        if (dataNascita == null || !InputChecker.getInstance().allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita)) {
             Alert inputPazienteSbagliati = new Alert(Alert.AlertType.ERROR);
             inputPazienteSbagliati.setTitle("System Notification Service");
             inputPazienteSbagliati.setHeaderText("Dati mancanti");
