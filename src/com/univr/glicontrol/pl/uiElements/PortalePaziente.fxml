@@ -21,7 +21,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="905.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortalePazienteController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="905.0" style="-fx-background-color: #f9fcff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortalePazienteController">
    <top>
       <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="70.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, whitesmoke, ghostwhite, whitesmoke);" BorderPane.alignment="CENTER">
          <children>

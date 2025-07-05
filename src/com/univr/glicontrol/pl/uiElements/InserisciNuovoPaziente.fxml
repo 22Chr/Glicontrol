@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="800.0" maxWidth="600.0" prefHeight="443.0" prefWidth="398.0" style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.InserisciPazienteController">
+<StackPane maxHeight="800.0" maxWidth="600.0" prefHeight="443.0" prefWidth="398.0" style="-fx-background-color: #f9fcff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.InserisciPazienteController">
     <children>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="322.0" prefWidth="366.0">
             <columnConstraints>

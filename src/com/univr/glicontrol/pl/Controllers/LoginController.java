@@ -87,7 +87,7 @@ public class LoginController implements Controller {
         } else if (controller instanceof PortaleMedicoController pmc) {
             pmc.logout(stage);
         }
-        stage.setScene(new Scene(root, 1360, 820));
+        stage.setScene(new Scene(root, 1200, 820));
         stage.centerOnScreen();
         stage.show();
     }

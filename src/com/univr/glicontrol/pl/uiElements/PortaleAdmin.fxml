@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<StackPane style="-fx-background-color: #fcf9ff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortaleAdminController">
+<StackPane style="-fx-background-color: #f9fcff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.univr.glicontrol.pl.Controllers.PortaleAdminController">
    <children>
       <BorderPane prefHeight="494.0" prefWidth="792.0" style="-fx-background-color: #f9fcff;">
          <center>
