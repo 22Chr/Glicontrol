@@ -52,6 +52,8 @@ public class GestionePazienti {
     }
 
     public Paziente getPazientePerCodiceFiscale(String codiceFiscale) {
+        aggiornaListaPazienti();
+
         for (Paziente p : pazienti) {
             if (p.getCodiceFiscale().equals(codiceFiscale)) {
                 return p;
@@ -99,7 +101,7 @@ public class GestionePazienti {
     // INSERISCI PAZIENTE
     public int inserisciPaziente(String codiceFiscale, String nome, String cognome, String password, int medico, Date nascita, String sesso, String email, String allergie) {
         int status;
-        if (GestionePazienti.getInstance().pazienteGiaPresente(codiceFiscale)) {
+        if (pazienteGiaPresente(codiceFiscale)) {
             return -1;
         }
 
