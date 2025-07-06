@@ -4,6 +4,7 @@ import com.univr.glicontrol.dal.AccessoLog;
 import com.univr.glicontrol.dal.AccessoLogImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,9 @@ public class GestioneLog {
 
         descrizioneModificheLogTerapia.append("\n");
 
-        descrizioneModificheLogTerapia.append("NOTE:\n").append(terapia.getNoteTerapia()).append("\n\n\n\n");
+        descrizioneModificheLogTerapia.append("NOTE:\n").append(terapia.getNoteTerapia()).append("\n\n");
+
+        descrizioneModificheLogTerapia.append("(").append(LocalDateTime.now()).append(")\n\n\n\n");
 
         return descrizioneModificheLogTerapia.toString();
     }
@@ -158,7 +161,7 @@ public class GestioneLog {
             descrizioneLogPatologia.append("Il medico ").append(medico.getNome()).append(" ").append(medico.getCognome()).append(" (").append(medico.getCodiceFiscale()).append(") ha segnalato la patologia ").append(patologia.getNomePatologia()).append(" come conclusa in data ").append(dataFineFormattata).append("\n\n");
         }
 
-        descrizioneLogPatologia.append("\n\n");
+        descrizioneLogPatologia.append("(").append(LocalDateTime.now()).append(")\n\n\n\n");
 
         return descrizioneLogPatologia.toString();
     }
@@ -244,9 +247,10 @@ public class GestioneLog {
 
         descrizioneLogInfoPaziente.append("PASTI:\n");
         for (Pasto pasto : gp.getPasti()) {
-            descrizioneLogInfoPaziente.append(pasto.getNomePasto()).append(" - ").append(pasto.getOrario()).append("\n");
+            descrizioneLogInfoPaziente.append(pasto.getNomePasto()).append(" - ").append(pasto.getOrario()).append("\n\n");
         }
-        descrizioneLogInfoPaziente.append("\n\n\n\n");
+
+        descrizioneLogInfoPaziente.append("(").append(LocalDateTime.now()).append(")\n\n\n\n");
 
         return descrizioneLogInfoPaziente.toString();
     }

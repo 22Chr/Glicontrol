@@ -1,6 +1,5 @@
 package com.univr.glicontrol.pl.Models;
 
-import com.univr.glicontrol.bll.Paziente;
 import com.univr.glicontrol.bll.UtenteSessione;
 
 // Si interfaccia alla UI mediante Controller e invoca GestioneLogin dalla BLL per creare l'utente e accedere all'app

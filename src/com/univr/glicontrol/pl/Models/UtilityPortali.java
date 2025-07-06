@@ -27,7 +27,6 @@ public class UtilityPortali {
     private final Map<String, PatologiaConcomitante> mappaPatologieConcomitanti = new HashMap<>();
     private final Map<String, RilevazioneGlicemica> mappaRilevazioniGlicemia = new HashMap<>();
     private final Map<String, Terapia> mappaTerapie = new HashMap<>();
-    private final Map<String, LogTerapia> mappaLogTerapia = new HashMap<>();
     private final Map<String, Paziente> mappaPazientiAssociatiAlReferente = new HashMap<>();
     private final Map<String, Paziente> mappaPazientiNonAssociatiAlReferente = new HashMap<>();
     private final Map<String, Notifica> mappaNotifiche = new HashMap<>();
@@ -274,16 +273,6 @@ public class UtilityPortali {
         return null;
     }
 
-    // Chiama la funzione di inserimento della terapia a seconda del tipo passato in input
-//    public int inserisciTerapia(String tipoTerapia, int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String dosaggio, String frequenza, String orari, List<Farmaco> farmaci) {
-//        GestioneTerapie gt = new GestioneTerapie(paziente);
-//        if (tipoTerapia.equals("Terapia Diabete")) {
-//            return gt.inserisciTerapiaDiabete(idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
-//        } else {
-//            return gt.inserisciTerapiaConcomitante(idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, dosaggio, frequenza, orari, farmaci);
-//        }
-//    }
-
     // Restituisce la lista di tipo String formattata per le terapie dei pazienti
     public List<String> getListaTerapiePaziente() {
         List<String> listaTerapie = new ArrayList<>();
@@ -438,48 +427,6 @@ public class UtilityPortali {
 
         return GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmacoFormattato.substring(0, limit));
     }
-
-
-    // genera la lista di tipo String formattata per la visualizzazione dei log in Portale Admin
-    public List<String> getListaLogTerapieFormattata() {
-        List<String> listaLogTerapieFormattata = new ArrayList<>();
-        GestioneTerapie gt = new GestioneTerapie();
-
-        for (LogTerapia lt : GestioneLog.getInstance().getListaLogTerapia()) {
-            Terapia t = gt.getTerapiaById(lt.getIdTerapia());
-            LocalDate data = lt.getTimestamp().toLocalDateTime().toLocalDate();
-            LocalTime ora = lt.getTimestamp().toLocalDateTime().toLocalTime();
-            String logFormattato = t.getNome() + " (" + GestionePazienti.getInstance().getPazientePerId(t.getIdPaziente()).getCodiceFiscale() + ") modificata dal medico " +
-                    GestioneMedici.getInstance().getMedicoPerId(lt.getIdMedico()).getCodiceFiscale() +
-                    " in data " + data + " alle ore " + ora;
-            listaLogTerapieFormattata.add(logFormattato);
-            mappaLogTerapia.put(logFormattato, lt);
-        }
-
-        return listaLogTerapieFormattata;
-    }
-
-    private void aggiornaListaLogTerapieFormattata() {
-        getListaLogTerapieFormattata();
-    }
-
-    public LogTerapia getLogTerapiaPerLogFormattato(String logFormattato) {
-        aggiornaListaLogTerapieFormattata();
-
-        for (LogTerapia lt : mappaLogTerapia.values()) {
-            String check = " in data " + lt.getTimestamp().toLocalDateTime().toLocalDate()
-                    + " alle ore " + lt.getTimestamp().toLocalDateTime().toLocalTime();
-
-            int limit = logFormattato.indexOf(check);
-
-            if (limit != -1 && check.equals(logFormattato.substring(limit))) {
-                return lt;
-            }
-        }
-
-        return null;
-    }
-
 
     // recuperiamo le liste dei pazienti partizionandoli tra pazienti associati ad un dato referente attualmente connesso e gli altri
     private final List<String> pazientiAssociatiAlReferente = new ArrayList<>();
