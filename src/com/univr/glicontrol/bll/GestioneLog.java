@@ -225,8 +225,8 @@ public class GestioneLog {
         descrizioneLogInfoPaziente.append("Cognome: ").append(paziente.getCognome()).append("\n");
         descrizioneLogInfoPaziente.append("Codice fiscale: ").append(paziente.getCodiceFiscale()).append("\n");
         descrizioneLogInfoPaziente.append("Email: ").append(paziente.getEmail()).append("\n");
-        descrizioneLogInfoPaziente.append("Altezza: ").append(paziente.getAltezza()).append("\n");
-        descrizioneLogInfoPaziente.append("Peso: ").append(paziente.getPeso()).append("\n\n");
+        descrizioneLogInfoPaziente.append("Altezza: ").append(paziente.getAltezza()).append(" cm\n");
+        descrizioneLogInfoPaziente.append("Peso: ").append(paziente.getPeso()).append(" kg\n\n");
 
         descrizioneLogInfoPaziente.append("FATTORI DI RISCHIO PRINCIPALI:\n");
         if (fattoriRischio.getFumatore() == 1) descrizioneLogInfoPaziente.append("Fumatore\n");
