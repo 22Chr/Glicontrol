@@ -25,6 +25,7 @@ public abstract class Utente {
     public String getCodiceFiscale() {
         return codiceFiscale;
     }
+
     public String setCodiceFiscale(String newCF) {
         return codiceFiscale = newCF;
     }
@@ -32,6 +33,7 @@ public abstract class Utente {
     public String getNome() {
         return nome;
     }
+
     public String setNome(String newNome) {
         return nome = newNome;
     }
@@ -39,6 +41,7 @@ public abstract class Utente {
     public String getCognome() {
         return cognome;
     }
+
     public String setCognome(String newCognome) {
         return cognome = newCognome;
     }
@@ -46,6 +49,7 @@ public abstract class Utente {
     public String getRuolo() {
         return ruolo;
     }
+
     public String setRuolo(String newRuolo) {
         return ruolo = newRuolo;
     }
@@ -53,6 +57,7 @@ public abstract class Utente {
     public String getPassword() {
         return password;
     }
+
     public String setPassword(String newPassword) {
         return password = newPassword;
     }
