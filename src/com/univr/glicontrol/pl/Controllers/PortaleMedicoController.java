@@ -224,7 +224,7 @@ public class PortaleMedicoController implements Portale, Controller {
 
     public void aggiornaGraficoGlicemiaSettimanale(){
         rilevazioniSettimanaliLC.getData().clear();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
 
         LocalDate oggi = LocalDate.now();
