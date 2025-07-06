@@ -16,7 +16,6 @@ class GestionePazientiTest {
     private static final String cf = "MRTNNA04A62H612F";
     private static final String email = "anna.potterhead107@gmail.com";
     private static final String password = "CarloDiana";
-    private static int idInserito;
 
     @Test
     @Order(1)
@@ -38,7 +37,6 @@ class GestionePazientiTest {
         assertEquals(1, result);
         Paziente p = gp.getPazientePerCodiceFiscale(cf);
         assertNotNull(p);
-        idInserito = p.getIdUtente();
     }
 
     @Test

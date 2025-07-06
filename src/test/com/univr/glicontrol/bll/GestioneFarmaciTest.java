@@ -15,16 +15,16 @@ class GestioneFarmaciTest {
     @BeforeAll
     static void setup() {
         farmacoTest = new Farmaco(
-                0,
-                "farmacoDiTest",
-                "principioAttivoTest",
+                50,
+                "Tachipirina 500 mg",
+                "Paracetamolo",
                 dosaggi,
                 "mg",
-                "casaFarmaceuticaTest",
+                "Angelini",
                 "orale",
-                "mal di testa",
-                "niente",
-                "Antiepilettico"
+                "rash cutanei, rari casi di epatossicità",
+                "alcol, warfarin",
+                "Analgesico"
         );
     }
 
@@ -35,7 +35,7 @@ class GestioneFarmaciTest {
 
         Farmaco trovato = gf.getFarmacoById(farmacoTest.getIdFarmaco());
         assertNotNull(trovato);
-        assertEquals("farmacoDiTest", trovato.getNome());
+        assertEquals("Tachipirina 500 mg", trovato.getNome());
     }
 
     @Test
