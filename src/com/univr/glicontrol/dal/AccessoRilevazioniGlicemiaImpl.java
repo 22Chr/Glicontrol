@@ -224,7 +224,6 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int week = rs.getInt("settimana");
-                int year = rs.getInt("anno");
                 String label = "Settimana " + week;
                 mediaMensile.put(label, rs.getDouble("media"));
             }

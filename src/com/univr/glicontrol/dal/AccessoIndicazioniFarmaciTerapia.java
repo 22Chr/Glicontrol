@@ -9,5 +9,4 @@ public interface AccessoIndicazioniFarmaciTerapia {
     List<IndicazioniFarmaciTerapia> getListaIndicazioniFarmaci(int idTerapiaDiabeteAnnessa);
     boolean insertIndicazioniFarmaci(Connection conn, int idTerapiaDiabeteAnnessa, int idFarmaco, float dosaggio, String frequenza, String orari);
     boolean deleteIndicazioniFarmaci(Connection conn, int idIndicazioniFarmaci);
-    boolean updateIndicazioniFarmaci(Connection conn, IndicazioniFarmaciTerapia indicazioniFarmaciTerapia);
 }

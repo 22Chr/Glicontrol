@@ -86,39 +86,9 @@ public class AccessoIndicazioniFarmaciTerapiaImpl implements AccessoIndicazioniF
             }
 
             deleteIndicazioniFarmaciStmt.close();
-            //conn.setAutoCommit(true);
-            //conn.close();
 
         } catch (SQLException e) {
             System.out.println("[ERRORE DELETE INDICAZIONI FARMACI]: " + e.getMessage());
-            success = false;
-        }
-
-        return success;
-    }
-
-    @Override
-    public boolean updateIndicazioniFarmaci(Connection conn, IndicazioniFarmaciTerapia indicazioniFarmaciTerapia) {
-        boolean success = true;
-        String updateIndicazioniFarmaciSql = "update IndicazioniFarmaciTerapia set dosaggio = ?, frequenza_assunzione = ?, orari_assunzione = ? where id_indicazioni_farmaci = ?";
-
-        try {
-            PreparedStatement updateIndicazioniFarmaciStmt = conn.prepareStatement(updateIndicazioniFarmaciSql);
-            updateIndicazioniFarmaciStmt.setFloat(1, indicazioniFarmaciTerapia.getDosaggio());
-            updateIndicazioniFarmaciStmt.setString(2, indicazioniFarmaciTerapia.getFrequenzaAssunzione());
-            updateIndicazioniFarmaciStmt.setString(3, indicazioniFarmaciTerapia.getOrariAssunzione());
-            updateIndicazioniFarmaciStmt.setInt(4, indicazioniFarmaciTerapia.getIdIndicazioniFarmaci());
-
-            if (updateIndicazioniFarmaciStmt.executeUpdate() == 0) {
-                success = false;
-            }
-
-            updateIndicazioniFarmaciStmt.close();
-            //conn.setAutoCommit(true);
-            //conn.close();
-
-        } catch (SQLException e) {
-            System.out.println("[ERRORE UPDATE INDICAZIONI FARMACI]: " + e.getMessage());
             success = false;
         }
 
