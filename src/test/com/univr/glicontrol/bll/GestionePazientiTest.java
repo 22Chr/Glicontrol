@@ -1,12 +1,16 @@
 package com.univr.glicontrol.bll;
 
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class) //fa rispettare ordine dei test
 
 class GestionePazientiTest {
     private static final String cf = "MRTNNA04A62H612F";
