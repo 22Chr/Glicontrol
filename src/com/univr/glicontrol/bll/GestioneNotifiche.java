@@ -1,7 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoNotifiche;
-import com.univr.glicontrol.dao.AccessoNotificheImpl;
+import com.univr.glicontrol.dal.AccessoNotifiche;
+import com.univr.glicontrol.dal.AccessoNotificheImpl;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import java.sql.Date;
 public class PatologiaConcomitante {
     private final int idPatologia;
     private final int idPaziente;
-    private String nomePatologia;
+    private final String nomePatologia;
     private String descrizione;
     private final Date dataInizio;
     private Date dataFine;
@@ -29,9 +29,6 @@ public class PatologiaConcomitante {
 
     public String getNomePatologia() {
         return nomePatologia;
-    }
-    public void setNomePatologia(String nomePatologia) {
-        this.nomePatologia = nomePatologia;
     }
 
     public String getDescrizione() {

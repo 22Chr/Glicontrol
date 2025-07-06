@@ -1,7 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoListaUtenti;
-import com.univr.glicontrol.dao.AccessoListaUtentiImpl;
+import com.univr.glicontrol.dal.AccessoListaUtenti;
+import com.univr.glicontrol.dal.AccessoListaUtentiImpl;
 import jakarta.mail.MessagingException;
 
 import java.util.List;
@@ -70,10 +70,9 @@ public class GestioneMedici {
     }
 
     public boolean inviaCredenzialiAggiornateMedico(String email, String pwd) {
-        ServizioNotifiche ms = new ServizioNotifiche();
         boolean status;
         try {
-            ms.sendEmail(email, "Modifica accesso Glicontrol", "La tua password di accesso al portale è stata modificata.\n\nUtilizza la nuova password: " + pwd + " per continuare ad utilizzare il tuo miglior alleato contro il diabete.\n\n\nGlicontrol Medical System");
+            ServizioNotifiche.getInstance().sendEmail(email, "Modifica accesso Glicontrol", "La tua password di accesso al portale è stata modificata.\n\nUtilizza la nuova password: " + pwd + " per continuare ad utilizzare il tuo miglior alleato contro il diabete.\n\n\nGlicontrol Medical System");
             status = true;
         } catch (MessagingException e) {
             System.out.println(e.getMessage());
@@ -96,10 +95,9 @@ public class GestioneMedici {
     }
 
     public boolean notificaEliminazioneMedico(String email) {
-        ServizioNotifiche ms = new ServizioNotifiche();
         boolean status;
         try {
-            ms.sendEmail(email, "Revoca accesso Glicontrol", "Il tuo account di accesso al portale medico è stato eliminato e non ti sarà più possibile accedere al sistema. \n\nGlicontrol Medical System");
+            ServizioNotifiche.getInstance().sendEmail(email, "Revoca accesso Glicontrol", "Il tuo account di accesso al portale medico è stato eliminato e non ti sarà più possibile accedere al sistema. \n\nGlicontrol Medical System");
             status = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -124,10 +122,9 @@ public class GestioneMedici {
     }
 
     public boolean inviaCredenzialiMedico(String email, String pwd) {
-        ServizioNotifiche ms = new ServizioNotifiche();
         boolean status;
         try {
-            ms.sendEmail(email, "Benvenuto su Glicontrol", "Benvenuto nel sistema medico Glicontrol, l'alleato numero uno per la gestione del diabete.\n\nPuoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd + ".\n\n\nGlicontrol Medical System");
+            ServizioNotifiche.getInstance().sendEmail(email, "Benvenuto su Glicontrol", "Benvenuto nel sistema medico Glicontrol, l'alleato numero uno per la gestione del diabete.\n\nPuoi ora accedere al portale inserendo il tuo codice fiscale come username e la seguente password: " + pwd + ".\n\n\nGlicontrol Medical System");
             status = true;
         } catch (MessagingException e) {
             System.out.println(e.getMessage());

@@ -1,4 +1,4 @@
-package com.univr.glicontrol.dao;
+package com.univr.glicontrol.dal;
 
 import com.univr.glicontrol.bll.PatologiaConcomitante;
 

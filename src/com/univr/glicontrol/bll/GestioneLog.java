@@ -1,9 +1,8 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoLog;
-import com.univr.glicontrol.dao.AccessoLogImpl;
+import com.univr.glicontrol.dal.AccessoLog;
+import com.univr.glicontrol.dal.AccessoLogImpl;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,8 +27,8 @@ public class GestioneLog {
         return Holder.INSTANCE;
     }
 
-    //METODI PER LE TERAPIE
 
+    //METODI PER LE TERAPIE
     private void aggiornaListaLogTerapie() {
         this.listaLogTerapia = accessoLog.getListaLogTerapie();
     }
@@ -113,6 +112,7 @@ public class GestioneLog {
         return success;
     }
 
+
     //METODI PER LE PATOLOGIE
     private void aggiornaListaLogPatologie() {
         this.listaLogPatologie = accessoLog.getListaLogPatologie();
@@ -186,6 +186,7 @@ public class GestioneLog {
 
         return success;
     }
+
 
     //METODI PER INFO PAZIENTE
     private void aggiornaListaLogInfoPaziente() {
@@ -267,7 +268,6 @@ public class GestioneLog {
 
         if (success) {
             aggiornaListaLogInfoPaziente();
-        } else {
         }
 
         return success;

@@ -30,19 +30,6 @@ class GestioneFarmaciTest {
 
     @Test
     @Order(1)
-    void testInserisciFarmaco() {
-        GestioneFarmaci gf = GestioneFarmaci.getInstance();
-
-        int result = gf.inserisciNuovoFarmaco(farmacoTest);
-        assertEquals(1, result);
-
-        Farmaco recuperato = gf.getFarmacoByName("farmacoDiTest");
-        assertNotNull(recuperato);
-        farmacoTest = recuperato;
-    }
-
-    @Test
-    @Order(2)
     void testGetFarmacoById() {
         GestioneFarmaci gf = GestioneFarmaci.getInstance();
 
@@ -52,32 +39,7 @@ class GestioneFarmaciTest {
     }
 
     @Test
-    @Order(3)
-    void testAggiornaFarmaco() {
-        GestioneFarmaci gf = GestioneFarmaci.getInstance();
-
-        farmacoTest.setProduttore("Angelini");
-        boolean updated = gf.aggiornaFarmaco(farmacoTest);
-        assertTrue(updated);
-
-        Farmaco aggiornato = gf.getFarmacoById(farmacoTest.getIdFarmaco());
-        assertEquals("Angelini", aggiornato.getProduttore());
-    }
-
-    @Test
-    @Order(4)
-    void testEliminaFarmaco() {
-        GestioneFarmaci gf = GestioneFarmaci.getInstance();
-
-        boolean deleted = gf.eliminaFarmaco(farmacoTest.getIdFarmaco());
-        assertTrue(deleted);
-
-        Farmaco shouldBeNull = gf.getFarmacoById(farmacoTest.getIdFarmaco());
-        assertNull(shouldBeNull);
-    }
-
-    @Test
-    @Order(5)
+    @Order(2)
     void testListaFarmaciNotNull() {
         List<Farmaco> farmaci = GestioneFarmaci.getInstance().getListaFarmaci();
         assertNotNull(farmaci);

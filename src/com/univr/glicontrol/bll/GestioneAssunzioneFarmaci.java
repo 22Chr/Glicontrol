@@ -1,7 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoAssunzioneFarmaci;
-import com.univr.glicontrol.dao.AccessoAssunzioneFarmaciImpl;
+import com.univr.glicontrol.dal.AccessoAssunzioneFarmaci;
+import com.univr.glicontrol.dal.AccessoAssunzioneFarmaciImpl;
 
 import java.sql.Date;
 import java.sql.Time;

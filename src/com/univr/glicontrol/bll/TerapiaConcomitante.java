@@ -6,7 +6,7 @@ import java.util.List;
 public class TerapiaConcomitante implements Terapia {
     private int idTerapiaConcomitante;
     private final int idPaziente;
-    private int idPatologiaConcomitante;
+    private final int idPatologiaConcomitante;
     private int idMedicoUltimaModifica;
     private final Date dataInizio;
     private Date dataFine;
@@ -39,11 +39,6 @@ public class TerapiaConcomitante implements Terapia {
     public void setIdTerapiaConcomitante(int idTerapiaConcomitante) {
         this.idTerapiaConcomitante = idTerapiaConcomitante;
     }
-
-    public void setIdPatologiaConcomitante(int idPatologiaConcomitante) {
-        this.idPatologiaConcomitante = idPatologiaConcomitante;
-    }
-
     public int getIdPaziente() {
         return idPaziente;
     }

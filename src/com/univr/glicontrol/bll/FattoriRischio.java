@@ -4,10 +4,9 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class FattoriRischio {
-    private final Paziente paziente;
     private final int idPaziente;
     private int familiarita;
-    private int eta;
+    private final int eta;
     private boolean obesita;
     private int sedentarieta;
     private int alimentazioneScorretta;
@@ -15,7 +14,6 @@ public class FattoriRischio {
     private int problemiAlcol;
 
     public FattoriRischio(Paziente paziente, int familiarita, boolean obesita, int sedentarieta, int alimentazioneScorretta, int fumatore, int problemiAlcol) {
-        this.paziente = paziente;
         this.idPaziente = paziente.getIdUtente();
         this.familiarita = familiarita;
         this.obesita = obesita;

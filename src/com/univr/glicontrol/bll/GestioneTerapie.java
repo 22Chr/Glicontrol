@@ -1,7 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoTerapie;
-import com.univr.glicontrol.dao.AccessoTerapieImpl;
+import com.univr.glicontrol.dal.AccessoTerapie;
+import com.univr.glicontrol.dal.AccessoTerapieImpl;
 import com.univr.glicontrol.pl.Models.UtilityPortali;
 
 import java.sql.Date;
@@ -11,7 +11,6 @@ import java.util.List;
 public class GestioneTerapie {
     private final Paziente pazienteSessione;
     private List<Terapia> terapiePaziente = new ArrayList<>();
-    private List<Terapia> listaCompletaTerapie = new ArrayList<>();
     private final AccessoTerapie accessoTerapie = new AccessoTerapieImpl();
 
     List<TerapiaDiabete> terapiaDiabete = new ArrayList<>();
@@ -30,11 +29,6 @@ public class GestioneTerapie {
         return terapiePaziente;
     }
 
-    public List<Terapia> getListaCompletaTerapie() {
-        aggiornaListaTerapieCompleta();
-        return listaCompletaTerapie;
-    }
-
     private void aggiornaListaTerapieDiabete(Paziente pazienteSelezionato) {
         terapiaDiabete.clear();
         terapiaDiabete = accessoTerapie.getTerapieDiabetePaziente(pazienteSelezionato.getIdUtente());
@@ -48,6 +42,7 @@ public class GestioneTerapie {
     private void aggiornaListaTerapiePaziente() {
 
         terapiePaziente = new ArrayList<>();
+        assert pazienteSessione != null;
         aggiornaListaTerapieDiabete(pazienteSessione);
         aggiornaListaTerapieConcomitanti(pazienteSessione);
         if (terapiaDiabete != null) {
@@ -55,16 +50,6 @@ public class GestioneTerapie {
         }
         if (terapiaConcomitante != null) {
             terapiePaziente.addAll(terapiaConcomitante);
-        }
-    }
-
-    private void aggiornaListaTerapieCompleta() {
-        listaCompletaTerapie.clear();
-        for (Paziente p : GestionePazienti.getInstance().getListaPazienti()) {
-            aggiornaListaTerapieDiabete(p);
-            aggiornaListaTerapieConcomitanti(p);
-            listaCompletaTerapie.addAll(accessoTerapie.getTerapieConcomitantiPaziente(p.getIdUtente()));
-            listaCompletaTerapie.addAll(accessoTerapie.getTerapieDiabetePaziente(p.getIdUtente()));
         }
     }
 
@@ -80,6 +65,7 @@ public class GestioneTerapie {
     }
 
     public int inserisciTerapiaDiabete(int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String noteTerapia, List<FarmacoTerapia> farmaci) {
+        assert pazienteSessione != null;
         aggiornaListaTerapiePaziente();
         List<TerapiaDiabete> terapieDelPaziente = new ArrayList<>();
         for (TerapiaDiabete terapia : terapiaDiabete) {
@@ -96,6 +82,7 @@ public class GestioneTerapie {
     }
 
     public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String noteTerapia, List<FarmacoTerapia> farmaci, String nomePatologia) {
+        assert pazienteSessione != null;
         aggiornaListaTerapiePaziente();
         UtilityPortali upp = new UtilityPortali(pazienteSessione);
 
@@ -123,28 +110,8 @@ public class GestioneTerapie {
         return accessoTerapie.updateTerapiaConcomitante(terapia);
     }
 
-    public TerapiaDiabete getTerapiaDiabete(int idTerapia) {
-        for (Terapia terapia : terapiePaziente) {
-            if (terapia instanceof TerapiaDiabete td && td.getIdTerapia() == idTerapia) {
-                return td;
-            }
-        }
-
-        return null;
-    }
-
-    public TerapiaConcomitante getTerapieConcomitante(int idTerapia) {
-        for (Terapia terapia : terapiePaziente) {
-            if (terapia instanceof TerapiaConcomitante tc && tc.getIdTerapia() == idTerapia) {
-                return tc;
-            }
-        }
-
-        return null;
-    }
-
     public Terapia getTerapiaById(int idTerapia) {
-        for (Terapia terapia : listaCompletaTerapie) {
+        for (Terapia terapia : terapiePaziente) {
             if (terapia instanceof TerapiaDiabete td && td.getIdTerapia() == idTerapia) {
                 return td;
             } else if (terapia instanceof TerapiaConcomitante tc && tc.getIdTerapia() == idTerapia) {
@@ -155,7 +122,7 @@ public class GestioneTerapie {
         return null;
     }
 
-    private List<FarmacoTerapia> ft = new ArrayList<>();
+    private final List<FarmacoTerapia> ft = new ArrayList<>();
 
     public boolean generaFarmaciTerapia(Farmaco farmaco, IndicazioniFarmaciTerapia indicazioni) {
         List<Farmaco> farmaciCaricati = new ArrayList<>();

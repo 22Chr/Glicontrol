@@ -1,7 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoPasti;
-import com.univr.glicontrol.dao.AccessoPastiImpl;
+import com.univr.glicontrol.dal.AccessoPasti;
+import com.univr.glicontrol.dal.AccessoPastiImpl;
 
 import java.sql.Time;
 import java.util.List;

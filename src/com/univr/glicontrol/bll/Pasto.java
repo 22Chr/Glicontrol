@@ -5,7 +5,7 @@ import java.sql.Time;
 public class Pasto {
     private final int idPasto;
     private final int idPaziente;
-    private String nomePasto;
+    private final String nomePasto;
     private Time orario;
 
     public Pasto(int idPasto, int idPaziente, String nomePasto, Time orario) {
@@ -25,9 +25,6 @@ public class Pasto {
 
     public String getNomePasto() {
         return nomePasto;
-    }
-    public void setNomePasto(String nomePasto) {
-        this.nomePasto = nomePasto;
     }
 
     public Time getOrario() {

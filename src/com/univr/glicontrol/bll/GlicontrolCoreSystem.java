@@ -1,7 +1,6 @@
 package com.univr.glicontrol.bll;
 
 import com.univr.glicontrol.pl.Controllers.PortaleMedicoController;
-import com.univr.glicontrol.pl.Models.UtilityPortali;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
@@ -16,26 +15,17 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class GlicontrolCoreSystem {
-//    TODO
-//     Verifica dei dosaggi dell'assunzione dei farmaci rispetto a quanto prescritto nella terapia. Invia alert in caso di assunzione incoerente
-//     Invitare il paziente ad inserire i farmaci sulla base degli orari delle terapie. Definiti 30 minuti come tempo limite oltre cui scetterà l'alert
-//     Verificare che il paziente non abbia sospeso i farmaci per più di tre giorni: in tal caso, inviare mail al referente + alert al paziente e a tutti i medici (quindi in portale medico)
-//     Verifica i livelli di glicemia e:
-//     1) Invia alert ai medici con codici differenti a seconda della gravità
-//     2) Colora con tinte diverse i valori nelle liste delle rilevazioni (sia lato paziente che medico): verde ok, arancione insomma, rosso male
 
     private final List<Paziente> listaPazienti;
     private GestioneTerapie gestioneTerapie = null;
     private GestioneAssunzioneFarmaci gestioneAssunzioneFarmaci = null;
-    private final UtilityPortali up = new UtilityPortali();
     private GestionePasti gestionePasti = null;
-    private GestioneRilevazioniGlicemia gestioneRilevazioniGlicemia = null;
     private GestioneNotifiche gestioneNotifiche = null;
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     PortaleMedicoController pmc  = null;
     private boolean connessoComeMedico = false;
     private boolean statoCentroNotifiche = false; //true = aperto, false = chiuso
-    private Map<Paziente, List<Farmaco>> farmaciNonAssuntiDa3Giorni = new HashMap<>();
+    private final Map<Paziente, List<Farmaco>> farmaciNonAssuntiDa3Giorni = new HashMap<>();
     private boolean finestraRilevazioniGlicemicheAperta = false;
 
     private GlicontrolCoreSystem() {
@@ -243,8 +233,7 @@ public class GlicontrolCoreSystem {
             try {
                 if (presenzaFarmaciNonRegistrati(paziente)) {
                     Platform.runLater(() -> {
-                        ServizioNotifiche notificheAssunzione = new ServizioNotifiche();
-                        notificheAssunzione.mostraNotifichePromemoriaAssunzioneFarmaci();
+                        ServizioNotifiche.getInstance().mostraNotifichePromemoriaAssunzioneFarmaci();
                     });
                 }
             } catch (Exception e) {
@@ -322,8 +311,7 @@ public class GlicontrolCoreSystem {
                 for (Paziente paziente : listaPazienti) {
                     if (verificaSospensioneFarmaci(paziente)) {
                         Platform.runLater(() -> {
-                            ServizioNotifiche notificheSospensione = new ServizioNotifiche();
-                            notificheSospensione.notificaSospensioneFarmacoTerapia(paziente);
+                            ServizioNotifiche.getInstance().notificaSospensioneFarmacoTerapia(paziente);
 
                             for (Farmaco f : farmaciNonAssuntiDa3Giorni.get(paziente)) {
                                 gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaSospensioneFarmaci(paziente, f));
@@ -356,8 +344,7 @@ public class GlicontrolCoreSystem {
 
                 if (orarioTarget.equals(oraAttuale)) {
                     Platform.runLater(() -> {
-                        ServizioNotifiche notifichePasti = new ServizioNotifiche();
-                        notifichePasti.notificaPromemoriaRegistrazioneGlicemia();
+                        ServizioNotifiche.getInstance().notificaPromemoriaRegistrazioneGlicemia();
                     });
                 }
 
@@ -365,9 +352,9 @@ public class GlicontrolCoreSystem {
 
                 if (!finestraRilevazioniGlicemicheAperta) {
                     if (rilevazioniOdierne.isEmpty()) {
-                        Platform.runLater(() -> new ServizioNotifiche().notificaPromemoriaRegistrazioneGlicemia());
+                        Platform.runLater(() -> ServizioNotifiche.getInstance().notificaPromemoriaRegistrazioneGlicemia());
                     } else if (rilevazioniOdierne.getLast().getOra().toLocalTime().isBefore(orarioTarget)) {
-                        Platform.runLater(() -> new ServizioNotifiche().notificaPromemoriaRegistrazioneGlicemia());
+                        Platform.runLater(() -> ServizioNotifiche.getInstance().notificaPromemoriaRegistrazioneGlicemia());
                     }
                 }
 
@@ -403,7 +390,7 @@ public class GlicontrolCoreSystem {
         // -4: emergenza medica a digiuno
         //  4: emergenza medica post-prandiale
 
-        gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
+        GestioneRilevazioniGlicemia gestioneRilevazioniGlicemia = new GestioneRilevazioniGlicemia(paziente);
         List<RilevazioneGlicemica> rilevazioniComplessive;
         List<RilevazioneGlicemica> rilevazioniOdierne;
         if (connessoComeMedico && chiamatoDaMonitoraLivelliGlicemici) {
@@ -509,8 +496,7 @@ public class GlicontrolCoreSystem {
                                 CountDownLatch latch = new CountDownLatch(1);
                                 final int index = i;
                                 Platform.runLater(() -> {
-                                    ServizioNotifiche notificheLivelliGlicemici = new ServizioNotifiche();
-                                    notificheLivelliGlicemici.notificaLivelliGlicemici(paziente, severityCode);
+                                    ServizioNotifiche.getInstance().notificaLivelliGlicemici(paziente, severityCode);
                                     gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaLivelliGlicemiciAlterati(paziente, severityCode, rilevazioniNonGestite.getFirst().getValore()));
                                     pmc.resetListaNotifiche();
 
@@ -573,7 +559,6 @@ public class GlicontrolCoreSystem {
     }
 
     public void monitoraPresenzaNotificheNonVisualizzate() {
-        ServizioNotifiche mostraPresenzaNotifiche = new ServizioNotifiche();
 
         scheduler.scheduleAtFixedRate(() -> {
             if (!statoCentroNotifiche) {
@@ -581,7 +566,7 @@ public class GlicontrolCoreSystem {
                     GestioneNotifiche gestioneNotificheMonitor = new GestioneNotifiche(paziente);
                     if (!gestioneNotificheMonitor.getNotificheNonVisualizzate().isEmpty()) {
                         Platform.runLater(()->{
-                            mostraPresenzaNotifiche.notificaPresenzaNotificheNonVisualizzate();
+                            ServizioNotifiche.getInstance().notificaPresenzaNotificheNonVisualizzate();
                             pmc.aggiornaListaPazientiReferenteNotifiche();
                         });
                     }

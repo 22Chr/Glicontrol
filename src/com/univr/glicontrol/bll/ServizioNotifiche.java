@@ -2,7 +2,6 @@ package com.univr.glicontrol.bll;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 
 import java.util.Properties;
@@ -14,12 +13,20 @@ public class ServizioNotifiche {
 
     final Properties props;
 
-    public ServizioNotifiche() {
+    private ServizioNotifiche() {
         props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
+    }
+
+    private static class HOLDER {
+        final static ServizioNotifiche INSTANCE = new ServizioNotifiche();
+    }
+
+    public static ServizioNotifiche getInstance() {
+        return HOLDER.INSTANCE;
     }
 
     public void sendEmail(String to, String subject, String body) throws MessagingException {

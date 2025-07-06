@@ -309,7 +309,6 @@ public class InserisciNuovaTerapiaController implements Controller {
     }
 
     private void informaPazienteInserimentoTerapia() throws MessagingException {
-        ServizioNotifiche inviaMailInserimentoNuovaTerapia = new ServizioNotifiche();
         String oggetto = "Hai una nuova terapia";
 
         String nomePatologia = "", corpo = "";
@@ -321,6 +320,6 @@ public class InserisciNuovaTerapiaController implements Controller {
             corpo = "Ti è stata registrata una nuova terapia per il diabete.\nAccedi all'applicazione per maggiori dettagli.\n\nGlicontrol Medical System";
         }
 
-        inviaMailInserimentoNuovaTerapia.sendEmail(paziente.getEmail(), oggetto, corpo);
+        ServizioNotifiche.getInstance().sendEmail(paziente.getEmail(), oggetto, corpo);
     }
 }

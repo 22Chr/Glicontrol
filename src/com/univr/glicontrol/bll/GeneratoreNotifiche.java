@@ -1,12 +1,7 @@
 package com.univr.glicontrol.bll;
-
-import com.univr.glicontrol.dao.AccessoNotifiche;
-import com.univr.glicontrol.dao.AccessoNotificheImpl;
-
 import java.time.LocalDateTime;
 
 public class GeneratoreNotifiche {
-    AccessoNotifiche accessoNotifiche = new AccessoNotificheImpl();
     LocalDateTime dataNotifica = LocalDateTime.now();
 
     private GeneratoreNotifiche() {}

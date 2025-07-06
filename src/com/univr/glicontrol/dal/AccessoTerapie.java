@@ -1,6 +1,5 @@
-package com.univr.glicontrol.dao;
+package com.univr.glicontrol.dal;
 
-import com.univr.glicontrol.bll.Farmaco;
 import com.univr.glicontrol.bll.FarmacoTerapia;
 import com.univr.glicontrol.bll.TerapiaConcomitante;
 import com.univr.glicontrol.bll.TerapiaDiabete;

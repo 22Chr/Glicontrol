@@ -11,7 +11,6 @@ public class RilevazioneGlicemica {
     private final int valore;
     private final String pasto;
     private final String indicazioniTemporali;
-    private boolean gestito;
 
     public RilevazioneGlicemica(int idRilevazione, int idPaziente, Date data, Time ora, int valore, String pasto, String indicazioniTemporali, boolean gestito) {
         this.idRilevazione = idRilevazione;
@@ -21,7 +20,6 @@ public class RilevazioneGlicemica {
         this.valore = valore;
         this.pasto = pasto;
         this.indicazioniTemporali = indicazioniTemporali;
-        this.gestito = gestito;
     }
 
     public int getIdRilevazione() {
@@ -50,12 +48,5 @@ public class RilevazioneGlicemica {
 
     public String getIndicazioniTemporali() {
         return indicazioniTemporali;
-    }
-
-    public boolean isGestito() {
-        return gestito;
-    }
-    public void setGestito(boolean gestito) {
-        this.gestito = gestito;
     }
 }

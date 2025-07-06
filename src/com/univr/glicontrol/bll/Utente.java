@@ -26,40 +26,40 @@ public abstract class Utente {
         return codiceFiscale;
     }
 
-    public String setCodiceFiscale(String newCF) {
-        return codiceFiscale = newCF;
+    public void setCodiceFiscale(String newCF) {
+        codiceFiscale = newCF;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public String setNome(String newNome) {
-        return nome = newNome;
+    public void setNome(String newNome) {
+        nome = newNome;
     }
 
     public String getCognome() {
         return cognome;
     }
 
-    public String setCognome(String newCognome) {
-        return cognome = newCognome;
+    public void setCognome(String newCognome) {
+        cognome = newCognome;
     }
 
     public String getRuolo() {
         return ruolo;
     }
 
-    public String setRuolo(String newRuolo) {
-        return ruolo = newRuolo;
+    public void setRuolo(String newRuolo) {
+        ruolo = newRuolo;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public String setPassword(String newPassword) {
-        return password = newPassword;
+    public void setPassword(String newPassword) {
+        password = newPassword;
     }
 
 }

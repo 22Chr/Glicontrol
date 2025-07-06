@@ -9,7 +9,7 @@ public class Notifica {
     private final String messaggio;
     private final Paziente pazienteAssociato;
     private final LocalDateTime dataNotifica;
-    private boolean visualizzato;
+    private final boolean visualizzato;
 
     public Notifica(String titolo, String messaggio, Paziente pazienteAssociato, LocalDateTime data, boolean visualizzato) {
         this.titolo = titolo;
@@ -45,8 +45,4 @@ public class Notifica {
     public boolean isVisualizzato() {
         return visualizzato;
     }
-    public void setVisualizzato() {
-        this.visualizzato = true;
-    }
-
 }

@@ -6,7 +6,7 @@ import java.sql.Time;
 public class Sintomo {
     private final int idSintomo;
     private final int idPaziente;
-    private String descrizione;
+    private final String descrizione;
     private final Date data;
     private final Time ora;
 

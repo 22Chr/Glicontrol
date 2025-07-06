@@ -1,7 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoPatologiaConcomitante;
-import com.univr.glicontrol.dao.AccessoPatologiaConcomitanteImpl;
+import com.univr.glicontrol.dal.AccessoPatologiaConcomitante;
+import com.univr.glicontrol.dal.AccessoPatologiaConcomitanteImpl;
 
 import java.sql.Date;
 import java.util.List;
@@ -31,10 +31,6 @@ public class GestionePatologieConcomitanti {
         }
 
         return apc.insertPatologiaConcomitante(paziente.getIdUtente(), nomePatologia, descrizione, dataInizio, dataFine) ? 1 : 0;
-    }
-
-    public boolean eliminaPatologiaConcomitante(int idPatologiaConcomitante) {
-        return apc.deletePatologiaConcomitante(idPatologiaConcomitante);
     }
 
     public PatologiaConcomitante getPatologiaConcomitante(int idPatologiaConcomitante) {

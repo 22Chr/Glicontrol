@@ -1,7 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoRilevazioniGlicemia;
-import com.univr.glicontrol.dao.AccessoRilevazioniGlicemiaImpl;
+import com.univr.glicontrol.dal.AccessoRilevazioniGlicemia;
+import com.univr.glicontrol.dal.AccessoRilevazioniGlicemiaImpl;
 
 import java.sql.Date;
 import java.sql.Time;

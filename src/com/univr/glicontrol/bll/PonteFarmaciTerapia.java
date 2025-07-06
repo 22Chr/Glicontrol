@@ -11,10 +11,6 @@ public class PonteFarmaciTerapia {
         this.idFarmaco = idFarmaco;
     }
 
-    public int getIdFarmaciTerapia() {
-        return idFarmaciTerapia;
-    }
-
     public int getIdFarmaco() {
         return idFarmaco;
     }

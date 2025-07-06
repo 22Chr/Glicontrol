@@ -1,7 +1,7 @@
 package com.univr.glicontrol.bll;
 
-import com.univr.glicontrol.dao.AccessoFattoriRischio;
-import com.univr.glicontrol.dao.AccessoFattoriRischioImpl;
+import com.univr.glicontrol.dal.AccessoFattoriRischio;
+import com.univr.glicontrol.dal.AccessoFattoriRischioImpl;
 
 public class GestioneFattoriRischio {
 

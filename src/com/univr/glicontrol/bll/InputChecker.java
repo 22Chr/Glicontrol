@@ -39,10 +39,6 @@ public class InputChecker {
         return pesoFloat > 0.0 && pesoFloat <= 700.0;
     }
 
-    public boolean verificaMedico(int idMedico) {
-        return idMedico > 0;
-    }
-
     public boolean verificaNascita(Date dataNascita) {
         Date today = new Date(System.currentTimeMillis());
         boolean dataValida;
