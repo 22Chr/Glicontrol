@@ -1,11 +1,16 @@
 package com.univr.glicontrol.bll;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class) //fa rispettare ordine dei test
 
 class GestionePazientiTest {
     private static final String cf = "MRTNNA04A62H612F";
@@ -14,6 +19,7 @@ class GestionePazientiTest {
     private static int idInserito;
 
     @Test
+    @Order(1)
     void testInserimentoPaziente() {
         GestionePazienti gp = GestionePazienti.getInstance();
 
@@ -36,12 +42,14 @@ class GestionePazientiTest {
     }
 
     @Test
+    @Order(2)
     void testPazienteGiaPresente() {
         boolean presente = GestionePazienti.getInstance().pazienteGiaPresente(cf);
         assertTrue(presente);
     }
 
     @Test
+    @Order(3)
     void testAggiornaPaziente() {
         GestionePazienti gp = GestionePazienti.getInstance();
         Paziente p = gp.getPazientePerCodiceFiscale(cf);
@@ -56,6 +64,7 @@ class GestionePazientiTest {
     }
 
     @Test
+    @Order(4)
     void testEliminaPaziente() {
         GestionePazienti gp = GestionePazienti.getInstance();
         Paziente p = gp.getPazientePerCodiceFiscale(cf);
