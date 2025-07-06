@@ -49,7 +49,7 @@ public class AccessoPonteFarmaciTerapiaImpl implements AccessoPonteFarmaciTerapi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: " + e.getMessage());
         }
 
         return listaPonteFarmaciTerapiaDiabete;
@@ -74,11 +74,11 @@ public class AccessoPonteFarmaciTerapiaImpl implements AccessoPonteFarmaciTerapi
             }
 
             if (!success) {
-                System.out.println("[ERRORE INSERT NUOVA ENTRY NELLA TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: Impossibile inserire la nuova entry nella tabella associativa");
+                System.err.println("[ERRORE INSERT NUOVA ENTRY NELLA TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: Impossibile inserire la nuova entry nella tabella associativa");
             }
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT NUOVA ENTRY NELLA TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT NUOVA ENTRY NELLA TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: " + e.getMessage());
             success = false;
         }
 
@@ -100,11 +100,11 @@ public class AccessoPonteFarmaciTerapiaImpl implements AccessoPonteFarmaciTerapi
             }
 
             if (!success) {
-                System.out.println("[ERRORE RIMOZIONE ENTRY NELLA TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: Impossibile eliminare la entry nella tabella associativa");
+                System.err.println("[ERRORE RIMOZIONE ENTRY NELLA TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: Impossibile eliminare la entry nella tabella associativa");
             }
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RIMOZIONE ENTRY NELLA TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: " + e.getMessage());
+            System.err.println("[ERRORE RIMOZIONE ENTRY NELLA TABELLA ASSOCIATIVA FARMACI-TERAPIA DIABETE]: " + e.getMessage());
             success = false;
         }
 

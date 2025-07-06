@@ -16,11 +16,10 @@ import java.time.LocalDate;
 
 public class FinestraPatologieConcomitantiPazienteController implements Controller {
 
-    private UtilityPortali upp;
+    private UtilityPortali up;
     private Paziente paziente;
     private Medico medico = null;
     private GestionePatologieConcomitanti gpc;
-    private PortalePazienteController ppc = null;
     private PortaleMedicoController pmc = null;
     private boolean inseritaDalMedico = false;
 
@@ -45,11 +44,9 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
         this.paziente = paziente;
         gpc = new GestionePatologieConcomitanti(paziente);
-        upp = new UtilityPortali(paziente);
+        up = new UtilityPortali(paziente);
 
-        if (portale instanceof PortalePazienteController) {
-            this.ppc = (PortalePazienteController) portale;
-        } else {
+        if (portale instanceof PortaleMedicoController) {
             this.pmc = (PortaleMedicoController) portale;
             descriviPatologiaLabel.setText("Descrivi la patologia del paziente");
             inseritaDalMedico = true;
@@ -76,7 +73,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !cell.isEmpty()) {
-                    descrizioneEstesaTA.setText(upp.getPatologiaConcomitantePerNomeFormattata(cell.getText()).getDescrizione());
+                    descrizioneEstesaTA.setText(up.getPatologiaConcomitantePerNomeFormattata(cell.getText()).getDescrizione());
                     cambiaPagina();
                 }
             });
@@ -121,9 +118,9 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
     }
 
     public void resetListViewPatologie(){
-        UtilityPortali newUpp = new UtilityPortali(paziente);
+        UtilityPortali newUp = new UtilityPortali(paziente);
         ObservableList<String> newPatologie = FXCollections.observableArrayList();
-        newPatologie.addAll(newUpp.getListaPatologieConcomitantiPaziente());
+        newPatologie.addAll(newUp.getListaPatologieConcomitantiPaziente());
         patologiePazienteLV.setItems(newPatologie);
         descrizionePatologiaTA.clear();
         descrizionePatologiaTA.requestFocus();
@@ -199,7 +196,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
     }
 
     public void terminaPatologiaConcomitante() {
-        PatologiaConcomitante p = upp.getPatologiaConcomitantePerNomeFormattata(patologiePazienteLV.getSelectionModel().getSelectedItem());
+        PatologiaConcomitante p = up.getPatologiaConcomitantePerNomeFormattata(patologiePazienteLV.getSelectionModel().getSelectedItem());
 
         if (p.getDataFine() != null) {
             Alert patologiaGiaTerminataAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -238,7 +235,7 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
             @Override
             protected Void call() {
                 ObservableList<String> patologie = FXCollections.observableArrayList();
-                patologie.addAll(upp.getListaPatologieConcomitantiPaziente());
+                patologie.addAll(up.getListaPatologieConcomitantiPaziente());
                 Platform.runLater(() -> patologiePazienteLV.setItems(patologie));
 
                 return null;

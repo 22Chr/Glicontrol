@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
 
 
 public class FinestraSintomiPazienteController implements Controller {
-    UtilityPortali upp;
+    UtilityPortali up;
     Paziente paziente;
     GestioneSintomi gs;
     PortaleMedicoController pmc = null;
@@ -149,7 +149,7 @@ public class FinestraSintomiPazienteController implements Controller {
         }else{
             sintomoFormattato = sintomiPazientePortaleMedicoLV.getSelectionModel().getSelectedItem();
         }
-        if (gs.eliminaSintomo(upp.getSintomoPerDescrizioneFormattata(sintomoFormattato).getIdSintomo())) {
+        if (gs.eliminaSintomo(up.getSintomoPerDescrizioneFormattata(sintomoFormattato).getIdSintomo())) {
             Alert successoEliminazioneSintomoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoEliminazioneSintomoAlert.setTitle("System Information Service");
             successoEliminazioneSintomoAlert.setHeaderText("Sintomo eliminato con successo");
@@ -173,7 +173,7 @@ public class FinestraSintomiPazienteController implements Controller {
         }
 
         this.paziente = paziente;
-        upp = new UtilityPortali(paziente);
+        up = new UtilityPortali(paziente);
         gs = new GestioneSintomi(paziente);
         Platform.runLater(this::caricaSintomi);
     }
@@ -184,7 +184,7 @@ public class FinestraSintomiPazienteController implements Controller {
             @Override
             protected Void call(){
                 ObservableList<String> sintomi = FXCollections.observableArrayList();
-                sintomi.addAll(upp.getListaSintomiPazienti());
+                sintomi.addAll(up.getListaSintomiPazienti());
 
                 if(pmc == null) {
                     Platform.runLater(() -> sintomiPazienteLV.setItems(sintomi));

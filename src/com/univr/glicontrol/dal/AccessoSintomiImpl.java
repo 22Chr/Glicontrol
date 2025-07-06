@@ -41,7 +41,7 @@ public class AccessoSintomiImpl implements AccessoSintomi{
                 }
             }
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO SINTOMI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO SINTOMI]: " + e.getMessage());
         }
 
         return sintomi;
@@ -67,7 +67,7 @@ public class AccessoSintomiImpl implements AccessoSintomi{
                 success = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE INSERT SINTOMO]: Impossibile inserire il nuovo sintomo nel database");
+                System.err.println("[ERRORE INSERT SINTOMO]: Impossibile inserire il nuovo sintomo nel database");
             }
 
             insertSintomoStmt.close();
@@ -75,7 +75,7 @@ public class AccessoSintomiImpl implements AccessoSintomi{
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT SINTOMO]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT SINTOMO]: " + e.getMessage());
         }
 
         return success;
@@ -98,7 +98,7 @@ public class AccessoSintomiImpl implements AccessoSintomi{
                 success = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE DELETE SINTOMO]: Impossibile eliminare il sintomo selezionato dal database");
+                System.err.println("[ERRORE DELETE SINTOMO]: Impossibile eliminare il sintomo selezionato dal database");
             }
 
             deleteSintomoStmt.close();
@@ -106,7 +106,7 @@ public class AccessoSintomiImpl implements AccessoSintomi{
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE SINTOMO]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE SINTOMO]: " + e.getMessage());
         }
 
         return success;

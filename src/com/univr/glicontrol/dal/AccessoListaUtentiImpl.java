@@ -39,7 +39,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
             stmt.close();
             conn.close();
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO MEDICI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO MEDICI]: " + e.getMessage());
         }
 
         return Medici;
@@ -78,7 +78,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
             stmt.close();
             conn.close();
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO PAZIENTI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO PAZIENTI]: " + e.getMessage());
         }
 
         return Pazienti;
@@ -113,14 +113,14 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                 conn.commit();
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE UPDATE LISTA MEDICI]: Impossibile aggiornare il medico selezionato nel database");
+                System.err.println("[ERRORE UPDATE LISTA MEDICI]: Impossibile aggiornare il medico selezionato nel database");
             }
 
             stmt.close();
             conn.setAutoCommit(true);
             conn.close();
         } catch (SQLException e) {
-            System.out.println("[ERRORE UPDATE LISTA MEDICI]: " + e.getMessage());
+            System.err.println("[ERRORE UPDATE LISTA MEDICI]: " + e.getMessage());
         }
 
         return success;
@@ -162,14 +162,14 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                 conn.commit();
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE UPDATE LISTA PAZIENTI]: Impossibile aggiornare il paziente selezionato nel database");
+                System.err.println("[ERRORE UPDATE LISTA PAZIENTI]: Impossibile aggiornare il paziente selezionato nel database");
             }
 
             stmt.close();
             conn.setAutoCommit(true);
             conn.close();
         } catch (SQLException e) {
-            System.out.println("[ERRORE UPDATE LISTA PAZIENTI]: " + e.getMessage());
+            System.err.println("[ERRORE UPDATE LISTA PAZIENTI]: " + e.getMessage());
         }
 
         return success;
@@ -210,14 +210,14 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                 conn.commit();
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE INSERIMENTO NUOVO MEDICO]: Impossibile inserire il nuovo medico nel database");
+                System.err.println("[ERRORE INSERIMENTO NUOVO MEDICO]: Impossibile inserire il nuovo medico nel database");
             }
 
             stmt.close();
             conn.setAutoCommit(true);
             conn.close();
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERIMENTO NUOVO MEDICO]: " + e.getMessage());
+            System.err.println("[ERRORE INSERIMENTO NUOVO MEDICO]: " + e.getMessage());
         }
 
         return success;
@@ -265,14 +265,14 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                 conn.commit();
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE INSERIMENTO NUOVO PAZIENTE]: Impossibile inserire il nuovo paziente nel database");
+                System.err.println("[ERRORE INSERIMENTO NUOVO PAZIENTE]: Impossibile inserire il nuovo paziente nel database");
             }
 
             stmt.close();
             conn.setAutoCommit(true);
             conn.close();
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERIMENTO NUOVO PAZIENTE]: " + e.getMessage());
+            System.err.println("[ERRORE INSERIMENTO NUOVO PAZIENTE]: " + e.getMessage());
         }
 
         return success;
@@ -301,14 +301,14 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
                 conn.commit();
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE DELETE MEDICO]: Impossibile eliminare il medico selezionato nel database");
+                System.err.println("[ERRORE DELETE MEDICO]: Impossibile eliminare il medico selezionato nel database");
             }
 
             stmt.close();
             conn.setAutoCommit(true);
             conn.close();
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE MEDICO]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE MEDICO]: " + e.getMessage());
         }
 
         return success;
@@ -343,7 +343,7 @@ public class AccessoListaUtentiImpl implements AccessoListaUtenti {
             conn.setAutoCommit(true);
             conn.close();
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE PAZIENTE]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE PAZIENTE]: " + e.getMessage());
         }
 
         return success;

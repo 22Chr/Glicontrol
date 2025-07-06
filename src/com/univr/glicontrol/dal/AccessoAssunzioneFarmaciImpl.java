@@ -39,7 +39,7 @@ public class AccessoAssunzioneFarmaciImpl implements AccessoAssunzioneFarmaci {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO TABELLA ASSUNZIONE FARMACI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO TABELLA ASSUNZIONE FARMACI]: " + e.getMessage());
         }
 
         return assunzioneFarmaci;
@@ -74,7 +74,7 @@ public class AccessoAssunzioneFarmaciImpl implements AccessoAssunzioneFarmaci {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO TABELLA ASSUNZIONE ODIERNA FARMACI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO TABELLA ASSUNZIONE ODIERNA FARMACI]: " + e.getMessage());
         }
 
         return assunzioneFarmaciOdierna;
@@ -97,14 +97,14 @@ public class AccessoAssunzioneFarmaciImpl implements AccessoAssunzioneFarmaci {
             if (insertAssunzioneFarmaciStmt.executeUpdate() != 0) {
                 success = true;
             } else {
-                System.out.println("[ERRORE INSERT ASSUNZIONE FARMACI]: Impossibile inserire l'assunzione del farmaco nel database");
+                System.err.println("[ERRORE INSERT ASSUNZIONE FARMACI]: Impossibile inserire l'assunzione del farmaco nel database");
             }
 
             insertAssunzioneFarmaciStmt.close();
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT ASSUNZIONE FARMACI]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT ASSUNZIONE FARMACI]: " + e.getMessage());
         }
 
         return success;
@@ -122,14 +122,14 @@ public class AccessoAssunzioneFarmaciImpl implements AccessoAssunzioneFarmaci {
             if (deleteAssunzioneFarmaciStmt.executeUpdate() != 0) {
                 success = true;
             } else {
-                System.out.println("[ERRORE DELETE ASSUNZIONE FARMACI]: Impossibile eliminare l'assunzione del farmaco dal database");
+                System.err.println("[ERRORE DELETE ASSUNZIONE FARMACI]: Impossibile eliminare l'assunzione del farmaco dal database");
             }
 
             deleteAssunzioneFarmaciStmt.close();
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE ASSUNZIONE FARMACI]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE ASSUNZIONE FARMACI]: " + e.getMessage());
         }
 
         return success;

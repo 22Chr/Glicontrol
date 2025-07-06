@@ -18,7 +18,7 @@ import java.util.List;
 
 public class FinestraRilevazioniGlicemichePazienteController implements Controller {
 
-    UtilityPortali upp;
+    UtilityPortali up;
     Paziente paziente;
     GestioneRilevazioniGlicemia grg;
     private PortalePazienteController ppc = null;
@@ -150,7 +150,7 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
 
         int ora = oraGlicemiaCB.getValue().equals("00") ? 0 : Integer.parseInt(oraGlicemiaCB.getValue());
         int minuti = minutiGlicemiaCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiGlicemiaCB.getValue());
-        Time orario = upp.convertiOra(ora, minuti);
+        Time orario = up.convertiOra(ora, minuti);
 
         int status = grg.inserisciRilevazione(data, orario, Float.parseFloat(valoreGlicemiaTF.getText()), pastoGlicemiaCB.getValue(), primaODopoCB.getValue());
 
@@ -189,9 +189,9 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
     }
 
     private void resetListViewRilevazioniGlicemiche(){
-        UtilityPortali newUpp = new UtilityPortali(paziente);
+        UtilityPortali newUp = new UtilityPortali(paziente);
         ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
-        newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemichePazienti());
+        newRilevazioni.addAll(newUp.getListaRilevazioniGlicemichePazienti());
         glicemiaPazienteLV.setItems(newRilevazioni);
 
     }
@@ -199,7 +199,7 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
 
     public void eliminaRilevazione() {
         String rilevazioneFormattata = glicemiaPazienteLV.getSelectionModel().getSelectedItem();
-        RilevazioneGlicemica rilevazione = upp.getRilevazioneGlicemicaPerValoreFormattata(rilevazioneFormattata);
+        RilevazioneGlicemica rilevazione = up.getRilevazioneGlicemicaPerValoreFormattata(rilevazioneFormattata);
 
         if (grg.eliminaRilevazione(rilevazione.getIdRilevazione())) {
             Alert successoEliminazioneRilevazioneGlicemicaAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -224,7 +224,7 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
 
     public void setInstance(Portale portale, Paziente paziente) {
         this.paziente = paziente;
-        upp = new UtilityPortali(paziente);
+        up = new UtilityPortali(paziente);
         grg = new GestioneRilevazioniGlicemia(paziente);
 
         if (portale instanceof PortaleMedicoController) {
@@ -244,7 +244,7 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
             @Override
             protected Void call() {
                 ObservableList<String> rilevazioni = FXCollections.observableArrayList();
-                rilevazioni.addAll(upp.getListaRilevazioniGlicemichePazienti());
+                rilevazioni.addAll(up.getListaRilevazioniGlicemichePazienti());
 
                 if (ppc != null) {
                     Platform.runLater(() -> {
@@ -279,9 +279,9 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
 
     // colora i campi nella listview vista dal medico per rilevazioni glicemiche
     private void coloraAnomalieRilevazioniGlicemiche(){
-        UtilityPortali newUpp = new UtilityPortali(paziente);
+        UtilityPortali newUp = new UtilityPortali(paziente);
         ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
-        newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemichePazienti());
+        newRilevazioni.addAll(newUp.getListaRilevazioniGlicemichePazienti());
         rilevazioniGlicemichePortaleMedicoLV.getItems().setAll(newRilevazioni);
 
         List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente, false, false);

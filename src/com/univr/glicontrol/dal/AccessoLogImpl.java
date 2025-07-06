@@ -65,14 +65,14 @@ public class AccessoLogImpl implements AccessoLog {
             if (addLogTerapiaStmt.executeUpdate() != 0) {
                 success = true;
             } else {
-                System.out.println("[ERRORE INSERT LOG TERAPIA]: Impossibile inserire i log per questa terapia");
+                System.err.println("[ERRORE INSERT LOG TERAPIA]: Impossibile inserire i log per questa terapia");
             }
 
             addLogTerapiaStmt.close();
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT LOG TERAPIA]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT LOG TERAPIA]: " + e.getMessage());
         }
 
         return success;
@@ -125,14 +125,14 @@ public class AccessoLogImpl implements AccessoLog {
             if (addLogInfoPazienteStmt.executeUpdate() != 0) {
                 success = true;
             } else {
-                System.out.println("[ERRORE INSERT LOG INFO PAZIENTE]: Impossibile inserire i log per questa info paziente");
+                System.err.println("[ERRORE INSERT LOG INFO PAZIENTE]: Impossibile inserire i log per questa info paziente");
             }
 
             addLogInfoPazienteStmt.close();
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT LOG INFO PAZIENTE]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT LOG INFO PAZIENTE]: " + e.getMessage());
         }
 
         return success;
@@ -186,14 +186,14 @@ public class AccessoLogImpl implements AccessoLog {
             if (addLogPatologieStmt.executeUpdate() != 0) {
                 success = true;
             } else {
-                System.out.println("[ERRORE INSERT LOG PATOLOGIA]: Impossibile inserire i log per questa patologia");
+                System.err.println("[ERRORE INSERT LOG PATOLOGIA]: Impossibile inserire i log per questa patologia");
             }
 
             addLogPatologieStmt.close();
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT LOG PATOLOGIA]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT LOG PATOLOGIA]: " + e.getMessage());
         }
 
         return success;

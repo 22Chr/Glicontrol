@@ -38,7 +38,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO PATOLOGIE CONCOMITANTI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO PATOLOGIE CONCOMITANTI]: " + e.getMessage());
         }
 
         return listaPatologiePaziente;
@@ -64,7 +64,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
                 success = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE INSERT PATOLOGIA CONCOMITANTE]: Impossibile inserire la nuova patologia concomitante nel database");
+                System.err.println("[ERRORE INSERT PATOLOGIA CONCOMITANTE]: Impossibile inserire la nuova patologia concomitante nel database");
             }
 
             insertPatologiaStmt.close();
@@ -72,7 +72,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT PATOLOGIA CONCOMITANTE]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT PATOLOGIA CONCOMITANTE]: " + e.getMessage());
         }
 
         return success;
@@ -94,7 +94,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
                 success = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE DELETE PATOLOGIA CONCOMITANTE]: Impossibile eliminare la patologia concomitante selezionata dal database");
+                System.err.println("[ERRORE DELETE PATOLOGIA CONCOMITANTE]: Impossibile eliminare la patologia concomitante selezionata dal database");
             }
 
             conn.setAutoCommit(true);
@@ -102,7 +102,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE PATOLOGIA CONCOMITANTE]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE PATOLOGIA CONCOMITANTE]: " + e.getMessage());
         }
 
         return success;
@@ -127,7 +127,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
                 success = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE UPDATE PATOLOGIA CONCOMITANTE]: Impossibile aggiornare la patologia concomitante selezionata nel database");
+                System.err.println("[ERRORE UPDATE PATOLOGIA CONCOMITANTE]: Impossibile aggiornare la patologia concomitante selezionata nel database");
             }
 
             conn.setAutoCommit(true);
@@ -135,7 +135,7 @@ public class AccessoPatologiaConcomitanteImpl implements AccessoPatologiaConcomi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE UPDATE PATOLOGIA CONCOMITANTE]: " + e.getMessage());
+            System.err.println("[ERRORE UPDATE PATOLOGIA CONCOMITANTE]: " + e.getMessage());
         }
 
         return success;

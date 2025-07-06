@@ -37,6 +37,7 @@ public class MainAccessController implements Controller {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root, 800, 520));
+        stage.setResizable(false);
         stage.show();
     }
 }

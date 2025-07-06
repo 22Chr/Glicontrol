@@ -29,7 +29,7 @@ public class ModificaPazienteController implements Controller {
     @FXML
     private DatePicker dataNascitaPazienteDP;
     @FXML
-    private ComboBox sessoPazienteCB;
+    private ComboBox<String> sessoPazienteCB;
     @FXML
     private Button saveButton;
     @FXML

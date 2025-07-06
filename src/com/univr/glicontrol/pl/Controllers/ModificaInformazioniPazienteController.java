@@ -41,7 +41,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
     private Medico medico = null;
     private final GestioneFattoriRischio gestioneFattoriRischio = new GestioneFattoriRischio();
     private FattoriRischio fattoriRischioAggiornati;
-    private UtilityPortali upp;
+    private UtilityPortali up;
     String pastoDaModificare;
     private PortalePazienteController ppc = null;
     private PortaleMedicoController pmc = null;
@@ -168,16 +168,16 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
     }
 
     public void resetListViewPasti() {
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUp = new UtilityPortali();
         ObservableList<String> newPasti = FXCollections.observableArrayList();
-        newPasti.addAll(newUpp.getListaPasti());
+        newPasti.addAll(newUp.getListaPasti());
         pastiLV.setItems(newPasti);
     }
 
     public void setInstance(Portale portale, Paziente paziente) {
         this.paziente = paziente;
         fattoriRischioAggiornati = gestioneFattoriRischio.getFattoriRischio(paziente.getIdUtente());
-        upp = new UtilityPortali(paziente);
+        up = new UtilityPortali(paziente);
 
         if (portale instanceof PortalePazienteController) {
             this.ppc = (PortalePazienteController) portale;
@@ -238,7 +238,7 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
                 altezzaTF.setText(paziente.getAltezza() + " cm");
 
                 ObservableList<String> pasti = FXCollections.observableArrayList();
-                pasti.addAll(upp.getListaPasti());
+                pasti.addAll(up.getListaPasti());
                 pastiLV.setItems(pasti);
 
 

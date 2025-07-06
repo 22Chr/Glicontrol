@@ -18,11 +18,10 @@ import java.sql.Time;
 import java.time.LocalDate;
 
 public class FinestraAssunzioneFarmaciPazienteController implements Controller {
-    private UtilityPortali upp;
+    private UtilityPortali up;
     private Paziente paziente;
     private GestioneAssunzioneFarmaci gaf;
     private PortaleMedicoController pmc = null;
-    private PortalePazienteController ppc = null;
 
     @FXML
     private HBox mainPage;
@@ -175,7 +174,7 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
 
     public void eliminaAssunzioneFarmaco() {
         int idAssunzione = 0;
-        int idFarmaco = upp.getFarmacoPerNomeFormattato(farmaciAssuntiOggiLV.getSelectionModel().getSelectedItem()).getIdFarmaco();
+        int idFarmaco = up.getFarmacoPerNomeFormattato(farmaciAssuntiOggiLV.getSelectionModel().getSelectedItem()).getIdFarmaco();
         String orarioAssunzioneFormattato = getOraAssunzioneDaNomeAssunzioneFormattato(farmaciAssuntiOggiLV.getSelectionModel().getSelectedItem());
 
         for (AssunzioneFarmaco af : gaf.getListaAssunzioneFarmaci()) {
@@ -217,9 +216,9 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
     }
 
     private void resetListViewFarmaciAssuntiOggi() {
-        UtilityPortali newUpp = new UtilityPortali(paziente);
+        UtilityPortali newUp = new UtilityPortali(paziente);
         ObservableList<String> newFarmaciAssuntiOggi = FXCollections.observableArrayList();
-        newFarmaciAssuntiOggi.addAll(newUpp.getListaFarmaciAssuntiOggi());
+        newFarmaciAssuntiOggi.addAll(newUp.getListaFarmaciAssuntiOggi());
         farmaciAssuntiOggiLV.setItems(newFarmaciAssuntiOggi);
         dataFarmacoPazienteDP.setValue(null);
         oraFarmacoCB.setValue(null);
@@ -233,16 +232,16 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
     }
 
     private void resetListViewFarmaciDaAssumere() {
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUp = new UtilityPortali();
         ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
-        farmaciDaAssumere.addAll(newUpp.getListaFarmaciDaAssumere());
+        farmaciDaAssumere.addAll(newUp.getListaFarmaciDaAssumere());
         listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
     }
 
     private Time getOra() {
         int ora = oraFarmacoCB.getValue().equals("00") ? 0 : Integer.parseInt(oraFarmacoCB.getValue());
         int minuti = minutiFarmacoCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiFarmacoCB.getValue());
-        return upp.convertiOra(ora, minuti);
+        return up.convertiOra(ora, minuti);
     }
 
     private String getOraAssunzioneDaNomeAssunzioneFormattato(String nomeAssunzione) {
@@ -257,16 +256,16 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
 
     public void setInstance(Portale portale, Paziente paziente) {
         this.paziente = paziente;
-        upp = new UtilityPortali(paziente);
+        up = new UtilityPortali(paziente);
         gaf = new GestioneAssunzioneFarmaci(paziente);
 
-        if (portale instanceof PortalePazienteController) {
-            this.ppc = (PortalePazienteController) portale;
-            Platform.runLater(this::caricaListePortalePaziente);
-        } else {
+        if (portale instanceof PortaleMedicoController) {
             this.pmc = (PortaleMedicoController)  portale;
             Platform.runLater(this::caricaListaPortaleMedico);
+        } else {
+            Platform.runLater(this::caricaListePortalePaziente);
         }
+
     }
 
     private void caricaListaPortaleMedico() {
@@ -274,11 +273,11 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
             @Override
             protected Void call() {
                 ObservableList<String> listaFarmaciDiabeteAssuntiDalPaziente = FXCollections.observableArrayList();
-                listaFarmaciDiabeteAssuntiDalPaziente.addAll(upp.getListaCompletaAssunzioneFarmaciDiabete());
+                listaFarmaciDiabeteAssuntiDalPaziente.addAll(up.getListaCompletaAssunzioneFarmaciDiabete());
                 Platform.runLater(() -> farmaciTerapiaDiabeteLV.setItems(listaFarmaciDiabeteAssuntiDalPaziente));
 
                 ObservableList<String> listaFarmaciTerapieConcomitantiAssuntiDalPaziente = FXCollections.observableArrayList();
-                listaFarmaciTerapieConcomitantiAssuntiDalPaziente.addAll(upp.getListaCompletaAssunzioneFarmaciTerapieConcomitanti());
+                listaFarmaciTerapieConcomitantiAssuntiDalPaziente.addAll(up.getListaCompletaAssunzioneFarmaciTerapieConcomitanti());
                 Platform.runLater(() -> farmaciTerapieConcomitantiLV.setItems(listaFarmaciTerapieConcomitantiAssuntiDalPaziente));
 
                 return null;
@@ -320,15 +319,14 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
             protected Void call() {
                 // Caricamento delle due liste (operazioni potenzialmente lente)
                 ObservableList<String> farmaciDaAssumere = FXCollections.observableArrayList();
-                for (String farmaco : upp.getListaFarmaciDaAssumere()) {
+                for (String farmaco : up.getListaFarmaciDaAssumere()) {
                     if (!farmaciDaAssumere.contains(farmaco))
                         farmaciDaAssumere.add(farmaco);
                 }
 
                 ObservableList<String> farmaciAssuntiOggi = FXCollections.observableArrayList();
-                farmaciAssuntiOggi.addAll(upp.getListaFarmaciAssuntiOggi().reversed());
+                farmaciAssuntiOggi.addAll(up.getListaFarmaciAssuntiOggi().reversed());
 
-                // Aggiornamento della UI va fatto sul thread dell'interfaccia
                 Platform.runLater(() -> {
                     listaFarmaciDaAssumereCB.setItems(farmaciDaAssumere);
                     farmaciAssuntiOggiLV.setItems(farmaciAssuntiOggi);

@@ -18,7 +18,6 @@ public class FinestraNoteTerapiaController implements Controller {
     private InserisciNuovaTerapiaController intc = null;
     private FinestraTerapiePazienteController ftpc = null;
     private Terapia terapia = null;
-    private boolean modificabile;
 
     public void setInstance(Controller controller, boolean modificabile) {
         if (controller instanceof InserisciNuovaTerapiaController) {

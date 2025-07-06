@@ -44,7 +44,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO FATTORI DI RISCHIO]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO FATTORI DI RISCHIO]: " + e.getMessage());
         }
 
         return null;
@@ -73,7 +73,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
                 status = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE UPDATE FATTORI DI RISCHIO]: Impossibile aggiornare i fattori di rischio del paziente nel database");
+                System.err.println("[ERRORE UPDATE FATTORI DI RISCHIO]: Impossibile aggiornare i fattori di rischio del paziente nel database");
             }
 
             updateStmt.close();
@@ -81,7 +81,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE UPDATE FATTORI DI RISCHIO]: " + e.getMessage());
+            System.err.println("[ERRORE UPDATE FATTORI DI RISCHIO]: " + e.getMessage());
         }
 
         return status;
@@ -110,7 +110,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
                 status = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE INSERT FATTORI DI RISCHIO]: Impossibile inserire i fattori di rischio del paziente nel database");
+                System.err.println("[ERRORE INSERT FATTORI DI RISCHIO]: Impossibile inserire i fattori di rischio del paziente nel database");
             }
 
             insertStmt.close();
@@ -118,7 +118,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT FATTORI DI RISCHIO]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT FATTORI DI RISCHIO]: " + e.getMessage());
         }
 
         return status;
@@ -140,7 +140,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
                 status = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE DELETE FATTORI DI RISCHIO]: Impossibile eliminare i fattori di rischio del paziente nel database");
+                System.err.println("[ERRORE DELETE FATTORI DI RISCHIO]: Impossibile eliminare i fattori di rischio del paziente nel database");
             }
 
             deleteStmt.close();
@@ -148,7 +148,7 @@ public class AccessoFattoriRischioImpl implements AccessoFattoriRischio {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE FATTORI DI RISCHIO]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE FATTORI DI RISCHIO]: " + e.getMessage());
         }
 
         return status;

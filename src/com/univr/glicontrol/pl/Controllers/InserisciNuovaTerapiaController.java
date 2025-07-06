@@ -21,14 +21,13 @@ import java.util.List;
 
 
 public class InserisciNuovaTerapiaController implements Controller {
-    UtilityPortali upp;
+    UtilityPortali up;
     private Paziente paziente;
     GestioneTerapie gt;
     private FinestraTerapiePazienteController ftpc = new FinestraTerapiePazienteController();
     private int terapiaSelezionata;
     private String ruoloAccesso, noteTerapia = null;
     private Date dataInizio;
-    private Date dataFine;
 
     @FXML
     private ComboBox<String>  patologiaCB;
@@ -48,7 +47,7 @@ public class InserisciNuovaTerapiaController implements Controller {
 
         Platform.runLater(()->{
             List<String> listaPatologieInCorso = new ArrayList<>();
-            for (String patologia : upp.getListaPatologieConcomitantiPaziente()) {
+            for (String patologia : up.getListaPatologieConcomitantiPaziente()) {
                 if (patologia.contains("in corso")) {
                     listaPatologieInCorso.add(patologia);
                 }
@@ -63,7 +62,7 @@ public class InserisciNuovaTerapiaController implements Controller {
         this.ruoloAccesso = ruoloAccesso;
 
         this.paziente = pazienteSelezionato;
-        upp = new UtilityPortali(pazienteSelezionato);
+        up = new UtilityPortali(pazienteSelezionato);
         gt = new GestioneTerapie(pazienteSelezionato);
 
         Platform.runLater(()->{
@@ -95,7 +94,7 @@ public class InserisciNuovaTerapiaController implements Controller {
             return;
         }
 
-        PatologiaConcomitante patologia = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
+        PatologiaConcomitante patologia = up.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
         if (terapiaSelezionata == 1 && dataInizio.before(patologia.getDataInizio())) {
             Alert erroreDiscrepanzaData = new Alert(Alert.AlertType.ERROR);
             erroreDiscrepanzaData.setTitle("System Notification Service");
@@ -118,7 +117,7 @@ public class InserisciNuovaTerapiaController implements Controller {
                 Parent root = loader.load();
 
                 DettaglioNuovoFarmacoController dettaglioNuovoFarmacoController = loader.getController();
-                dettaglioNuovoFarmacoController.setInstance(this, paziente, gt);
+                dettaglioNuovoFarmacoController.setInstance(paziente, gt);
 
                 Stage dettaglio = new Stage();
                 dettaglio.setTitle("Aggiungi farmaco");
@@ -169,7 +168,7 @@ public class InserisciNuovaTerapiaController implements Controller {
     }
 
     public void aggiungiNuovaTerapia() throws MessagingException {
-        Medico medicoUltimaModifica = upp.getMedicoSessione();
+        Medico medicoUltimaModifica = up.getMedicoSessione();
         String nomePatologia = patologiaCB.getSelectionModel().getSelectedItem();
 
         if (nomePatologia == null && terapiaSelezionata == 1) {
@@ -183,7 +182,7 @@ public class InserisciNuovaTerapiaController implements Controller {
         }
 
         dataInizio = ottieniDataInizioTerapia();
-        dataFine = ottieniDataFineTerapia();
+        Date dataFine = ottieniDataFineTerapia();
 
         if (dataInizio == null) {
             Alert dataInizioNonSpecificataAlert = new Alert(Alert.AlertType.ERROR);
@@ -196,7 +195,7 @@ public class InserisciNuovaTerapiaController implements Controller {
         }
 
         if (terapiaSelezionata == 1) {
-            if (!InputChecker.getInstance().verificaDataInizioTerapiaConcomitante(dataInizio, upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getDataInizio())) {
+            if (!InputChecker.getInstance().verificaDataInizioTerapiaConcomitante(dataInizio, up.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getDataInizio())) {
                 Alert dataInizioAntecedenteAllaPatologiaAlert = new Alert(Alert.AlertType.ERROR);
                 dataInizioAntecedenteAllaPatologiaAlert.setTitle("System Notification Service");
                 dataInizioAntecedenteAllaPatologiaAlert.setHeaderText("Data di inizio non valida");
@@ -223,7 +222,7 @@ public class InserisciNuovaTerapiaController implements Controller {
             //status dovrà corrispondere a gt.inserisciTerapiaDiabete
             status = gt.inserisciTerapiaDiabete(medicoUltimaModifica.getIdUtente(), dataInizio, dataFine, noteTerapia, farmaciConIndicazioni);
         } else {
-            int idPatologia = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia();
+            int idPatologia = up.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia();
             status = gt.inserisciTerapiaConcomitante(idPatologia, paziente.getMedicoRiferimento(), dataInizio, dataFine, noteTerapia, farmaciConIndicazioni, nomePatologia);
         }
 
@@ -314,7 +313,7 @@ public class InserisciNuovaTerapiaController implements Controller {
         String nomePatologia = "", corpo = "";
         if (terapiaSelezionata == 1) {
             // Verificare il controllo sulla data di inizio
-            nomePatologia = upp.getPatologiaConcomitantePerNomeFormattata(patologiaCB.getSelectionModel().getSelectedItem()).getNomePatologia();
+            nomePatologia = up.getPatologiaConcomitantePerNomeFormattata(patologiaCB.getSelectionModel().getSelectedItem()).getNomePatologia();
             corpo = "Ti è stata registrata una nuova terapia per la patologia " + nomePatologia + ".\nAccedi all'applicazione per maggiori dettagli.\n\nGlicontrol Medical System";
         } else {
             corpo = "Ti è stata registrata una nuova terapia per il diabete.\nAccedi all'applicazione per maggiori dettagli.\n\nGlicontrol Medical System";

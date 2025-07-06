@@ -43,7 +43,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO RILEVAZIONI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO RILEVAZIONI]: " + e.getMessage());
         }
 
         return rilevazioni;
@@ -65,7 +65,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                 success = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE DELETE RILEVAZIONE]: Impossibile eliminare la rilevazione selezionata dal database");
+                System.err.println("[ERRORE DELETE RILEVAZIONE]: Impossibile eliminare la rilevazione selezionata dal database");
             }
 
             deleteRilevazioneStmt.close();
@@ -73,7 +73,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE RILEVAZIONE]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE RILEVAZIONE]: " + e.getMessage());
         }
 
         return success;
@@ -108,7 +108,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO RILEVAZIONI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO RILEVAZIONI]: " + e.getMessage());
         }
 
         return rilevazioniNonGestite;
@@ -141,7 +141,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                 rilevazioniNonGestite.add(r);
             }
         } catch (SQLException e) {
-            System.out.println("[ERRORE RILEVAZIONI GIORNALIERE]: " + e.getMessage());
+            System.err.println("[ERRORE RILEVAZIONI GIORNALIERE]: " + e.getMessage());
 
         }
 
@@ -170,7 +170,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                 success = true;
             } else {
                 conn.rollback();
-                System.out.println("[ERRORE INSERT RILEVAZIONE]: Impossibile inserire la nuova rilevazione nel database");
+                System.err.println("[ERRORE INSERT RILEVAZIONE]: Impossibile inserire la nuova rilevazione nel database");
             }
 
             insertRilevazioneStmt.close();
@@ -178,7 +178,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT RILEVAZIONE]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT RILEVAZIONE]: " + e.getMessage());
         }
 
         return success;
@@ -201,7 +201,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                 mediaGiornaliera.put(rs.getString("giorno"), rs.getDouble("media"));
             }
         } catch (SQLException e) {
-            System.out.println("[ERRORE MEDIA GIORNALIERA PER SETTIMANA]: " + e.getMessage());
+            System.err.println("[ERRORE MEDIA GIORNALIERA PER SETTIMANA]: " + e.getMessage());
         }
         return mediaGiornaliera;
     }
@@ -228,7 +228,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                 mediaMensile.put(label, rs.getDouble("media"));
             }
         } catch (SQLException e) {
-            System.out.println("[ERRORE MEDIA MENSILE FILTRATA]: " + e.getMessage());
+            System.err.println("[ERRORE MEDIA MENSILE FILTRATA]: " + e.getMessage());
         }
 
         return mediaMensile;
@@ -285,7 +285,7 @@ public class AccessoRilevazioniGlicemiaImpl implements AccessoRilevazioniGlicemi
                 lista.add(r);
             }
         } catch (SQLException e) {
-            System.out.println("[ERRORE RILEVAZIONI GIORNALIERE]: " + e.getMessage());
+            System.err.println("[ERRORE RILEVAZIONI GIORNALIERE]: " + e.getMessage());
 
         }
 

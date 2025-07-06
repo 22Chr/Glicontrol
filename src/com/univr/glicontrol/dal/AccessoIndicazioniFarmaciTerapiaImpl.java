@@ -39,7 +39,7 @@ public class AccessoIndicazioniFarmaciTerapiaImpl implements AccessoIndicazioniF
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO INDICAZIONI FARMACI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO INDICAZIONI FARMACI]: " + e.getMessage());
         }
 
         return indicazioniFarmaciTerapia;
@@ -65,7 +65,7 @@ public class AccessoIndicazioniFarmaciTerapiaImpl implements AccessoIndicazioniF
             insertIndicazioniFarmaciStmt.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT INDICAZIONI FARMACI]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT INDICAZIONI FARMACI]: " + e.getMessage());
             success = false;
         }
 
@@ -88,7 +88,7 @@ public class AccessoIndicazioniFarmaciTerapiaImpl implements AccessoIndicazioniF
             deleteIndicazioniFarmaciStmt.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE INDICAZIONI FARMACI]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE INDICAZIONI FARMACI]: " + e.getMessage());
             success = false;
         }
 

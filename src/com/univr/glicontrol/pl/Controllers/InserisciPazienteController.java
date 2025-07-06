@@ -15,35 +15,25 @@ import java.sql.Date;
 import java.util.List;
 
 public class InserisciPazienteController implements Controller {
-    private Paziente pa;
 
     @FXML
     private TextField CFNuovoPazienteTF;
-
     @FXML
     private TextField nomeNuovoPazienteTF;
-
     @FXML
     private TextField cognomeNuovoPazienteTF;
-
     @FXML
     private TextField emailNuovoPazienteTF;
-
     @FXML
     private TextField passwordNuovoPazienteTF;
-
     @FXML
     private DatePicker dataNascitaNuovoPazienteDP;
-
     @FXML
     private ComboBox<String> sessoNuovoPazienteCB;
-
     @FXML
     private Button saveNuovoPazienteB;
-
     @FXML
     private ComboBox<String> medicoRifNuovoPazCB;
-
     private PortaleAdminController pac;
 
     private int id;

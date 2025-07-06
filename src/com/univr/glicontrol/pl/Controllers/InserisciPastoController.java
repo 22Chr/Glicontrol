@@ -19,8 +19,8 @@ public class InserisciPastoController implements Controller {
     @FXML
     private Button confermaPastoeOrarioB;
 
-    private final UtilityPortali upp = new UtilityPortali();
-    private final Paziente paziente = upp.getPazienteSessione();
+    private final UtilityPortali up = new UtilityPortali();
+    private final Paziente paziente = up.getPazienteSessione();
 
     private BenvenutoPazienteController bpc = null;
     private ModificaInformazioniPazienteController mipc = null;
@@ -53,7 +53,7 @@ public class InserisciPastoController implements Controller {
             pasto = pastoCB.getValue();
             ora = oraCB.getValue().equals("00") ? 0 : Integer.parseInt(oraCB.getValue());
             minuti = minutiCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiCB.getValue());
-            orario = upp.convertiOra(ora, minuti);
+            orario = up.convertiOra(ora, minuti);
 
         }
 

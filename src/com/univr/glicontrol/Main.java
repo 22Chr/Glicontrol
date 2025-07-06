@@ -24,6 +24,7 @@ public class Main extends Application {
 
             stage.setScene(scene);
             stage.setTitle("Glicontrol");
+            stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
             System.out.println(e.getMessage());

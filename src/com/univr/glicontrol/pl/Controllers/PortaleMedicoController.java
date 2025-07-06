@@ -33,8 +33,8 @@ import java.util.Map;
 
 public class PortaleMedicoController implements Portale, Controller {
 
-    private final UtilityPortali upm = new UtilityPortali();
-    private final Medico medico = upm.getMedicoSessione();
+    private final UtilityPortali up = new UtilityPortali();
+    private final Medico medico = up.getMedicoSessione();
     private Paziente pazienteSelezionato;
     private GestioneRilevazioniGlicemia gestione;
     Map<Paziente, List<Notifica>> mappaPazientiAssociatiNotifiche = new HashMap<>();
@@ -60,17 +60,17 @@ public class PortaleMedicoController implements Portale, Controller {
         pazienteSelezionatoTF.setText("Seleziona un paziente per iniziare");
 
         // Inizializza l'avatar con le iniziali del medico
-        badgeC.setFill(new ImagePattern(upm.getBadge()));
+        badgeC.setFill(new ImagePattern(up.getBadge()));
         badgeC.setSmooth(true);
         badgeC.setStyle("-fx-border-color: #ff0404;");
 
         //Inizializzazione delle due listview
         ObservableList<String> pazientiReferenti = FXCollections.observableArrayList();
-        pazientiReferenti.addAll(upm.getPazientiAssociatiAlReferente(medico.getIdUtente()));
+        pazientiReferenti.addAll(up.getPazientiAssociatiAlReferente(medico.getIdUtente()));
         pazientiReferenteLV.setItems(pazientiReferenti);
 
         ObservableList<String> pazientiGenerici = FXCollections.observableArrayList();
-        pazientiGenerici.addAll(upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente()));
+        pazientiGenerici.addAll(up.getPazientiNonAssociatiAlReferente(medico.getIdUtente()));
         pazientiGenericiLV.setItems(pazientiGenerici);
 
 
@@ -87,7 +87,7 @@ public class PortaleMedicoController implements Portale, Controller {
                         setText(item);
 
                         // Ricavo il paziente dal nome formattato
-                        Paziente p = upm.getPazienteAssociatoDaNomeFormattato(item);
+                        Paziente p = up.getPazienteAssociatoDaNomeFormattato(item);
                         List<Notifica> notifiche = mappaPazientiAssociatiNotifiche.get(p);
 
                         if (notifiche != null && !notifiche.isEmpty()) {
@@ -107,7 +107,7 @@ public class PortaleMedicoController implements Portale, Controller {
                         centerVB.setVisible(true);
                         rightVB.setVisible(true);
                         pazienteSelezionatoTF.setText(cell.getItem());
-                        pazienteSelezionato = upm.getPazienteAssociatoDaNomeFormattato(pazientiReferenteLV.getSelectionModel().getSelectedItem());
+                        pazienteSelezionato = up.getPazienteAssociatoDaNomeFormattato(pazientiReferenteLV.getSelectionModel().getSelectedItem());
                         gestione = new GestioneRilevazioniGlicemia(pazienteSelezionato);
                         aggiornaGraficoGlicemiaOdierna();
                         aggiornaGraficoGlicemiaSettimanale();
@@ -132,7 +132,7 @@ public class PortaleMedicoController implements Portale, Controller {
                         setText(item);
 
                         // Ricavo il paziente dal nome formattato
-                        Paziente p = upm.getPazienteNonAssociatoDaNomeFormattato(item);
+                        Paziente p = up.getPazienteNonAssociatoDaNomeFormattato(item);
                         List<Notifica> notifiche = mappaPazientiNonAssociatiNotifiche.get(p);
 
                         if (notifiche != null && !notifiche.isEmpty()) {
@@ -149,7 +149,7 @@ public class PortaleMedicoController implements Portale, Controller {
                     centerVB.setVisible(true);
                     rightVB.setVisible(true);
                     pazienteSelezionatoTF.setText(cell.getItem()); //carica il nome al centro
-                    pazienteSelezionato = upm.getPazienteNonAssociatoDaNomeFormattato(pazientiGenericiLV.getSelectionModel().getSelectedItem());
+                    pazienteSelezionato = up.getPazienteNonAssociatoDaNomeFormattato(pazientiGenericiLV.getSelectionModel().getSelectedItem());
                     gestione = new GestioneRilevazioniGlicemia(pazienteSelezionato);
                     aggiornaGraficoGlicemiaOdierna();
                     aggiornaGraficoGlicemiaSettimanale();
@@ -504,8 +504,8 @@ public class PortaleMedicoController implements Portale, Controller {
             protected Void call() {
                 Map<Paziente, List<Notifica>> nuovaMappa = new HashMap<>();
 
-                for (String nomePaziente : upm.getPazientiAssociatiAlReferente(medico.getIdUtente())) {
-                    Paziente p = upm.getPazienteAssociatoDaNomeFormattato(nomePaziente);
+                for (String nomePaziente : up.getPazientiAssociatiAlReferente(medico.getIdUtente())) {
+                    Paziente p = up.getPazienteAssociatoDaNomeFormattato(nomePaziente);
                     GestioneNotifiche gn = new GestioneNotifiche(p);
                     List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
                     nuovaMappa.put(p, notifiche);
@@ -531,8 +531,8 @@ public class PortaleMedicoController implements Portale, Controller {
             protected Void call() {
                 Map<Paziente, List<Notifica>> nuovaMappa = new HashMap<>();
 
-                for (String nomePaziente : upm.getPazientiNonAssociatiAlReferente(medico.getIdUtente())) {
-                    Paziente p = upm.getPazienteNonAssociatoDaNomeFormattato(nomePaziente);
+                for (String nomePaziente : up.getPazientiNonAssociatiAlReferente(medico.getIdUtente())) {
+                    Paziente p = up.getPazienteNonAssociatoDaNomeFormattato(nomePaziente);
                     GestioneNotifiche gn = new GestioneNotifiche(p);
                     List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
                     nuovaMappa.put(p, notifiche);

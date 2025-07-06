@@ -17,25 +17,17 @@ import java.util.Map;
 
 public class DettaglioNuovoFarmacoController implements Controller {
 
-    private InserisciNuovaTerapiaController antcpc = null;
-    private FinestraTerapiePazienteController ftpc = null;
     private GestioneTerapie gt;
-    private UtilityPortali upp;
+    private UtilityPortali up;
 
     @FXML
     private ComboBox<String> listaFarmaciCompletaCB;
     @FXML
     private TextArea dosaggioTA, frequenzaTA, orariTA;
 
-    public void setInstance(Controller controller, Paziente paziente, GestioneTerapie gt) {
-        this.upp = new UtilityPortali(paziente);
+    public void setInstance(Paziente paziente, GestioneTerapie gt) {
+        this.up = new UtilityPortali(paziente);
         this.gt = gt;
-
-        if (controller instanceof InserisciNuovaTerapiaController) {
-            this.antcpc = (InserisciNuovaTerapiaController) controller;
-        }  else {
-            this.ftpc = (FinestraTerapiePazienteController) controller;
-        }
 
         Platform.runLater(this::caricaListaFarmaci);
     }
@@ -44,7 +36,7 @@ public class DettaglioNuovoFarmacoController implements Controller {
         Task<Void> loadListaFarmaci = new Task<>() {
             @Override
             protected Void call() {
-                ObservableList<String> farmaci = FXCollections.observableArrayList(upp.getListaFarmaciFormattatiCompleta());
+                ObservableList<String> farmaci = FXCollections.observableArrayList(up.getListaFarmaciFormattatiCompleta());
 
                 Map<String, String> nomePrincipioMap = new HashMap<>();
                 for (String nome : farmaci) {
@@ -107,7 +99,7 @@ public class DettaglioNuovoFarmacoController implements Controller {
         } else {
 
             Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(nomeFarmaco);
-            IndicazioniFarmaciTerapia indicazioni = new IndicazioniFarmaciTerapia(0, farmaco.getIdFarmaco(), upp.convertiDosaggio(dosaggioTA.getText()), frequenzaTA.getText(), orariTA.getText());
+            IndicazioniFarmaciTerapia indicazioni = new IndicazioniFarmaciTerapia(0, farmaco.getIdFarmaco(), up.convertiDosaggio(dosaggioTA.getText()), frequenzaTA.getText(), orariTA.getText());
 
             dosaggioTA.setText(dosaggioTA.getText() + " " + farmaco.getUnitaMisura());
 

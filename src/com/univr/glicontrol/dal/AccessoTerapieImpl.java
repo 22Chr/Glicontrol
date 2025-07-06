@@ -44,7 +44,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             }
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO TERAPIA DIABETE]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO TERAPIA DIABETE]: " + e.getMessage());
         }
 
         return terapiaDiabete;
@@ -79,7 +79,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             }
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO TERAPIE CONCOMITANTI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO TERAPIE CONCOMITANTI]: " + e.getMessage());
         }
 
         return terapieConcomitanti;
@@ -193,7 +193,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             }
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE GENERAZIONE ID TERAPIA]: " + e.getMessage());
+            System.err.println("[ERRORE GENERAZIONE ID TERAPIA]: " + e.getMessage());
             return false;
         }
 
@@ -212,20 +212,20 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             insertTerapiaConcomitanteStmt.setString(7, noteTerapia);
 
             if (insertTerapiaConcomitanteStmt.executeUpdate() == 0) {
-                System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire la terapia concomitante nel database");
+                System.err.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire la terapia concomitante nel database");
                 conn.rollback();
                 return false;
             }
 
 
             if (!accessoPonteFarmaciTerapia.insertFarmaciTerapia(conn, idTerapiaConcomitante, farmaciConcomitante)) {
-                System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire i farmaci selezionati per la terapia");
+                System.err.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire i farmaci selezionati per la terapia");
                 conn.rollback();
                 return false;
             }
 
             if (indicazioni.size() != farmaciConcomitante.size()) {
-                System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Dimensione indicazioni e farmaci discordante");
+                System.err.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Dimensione indicazioni e farmaci discordante");
                 conn.rollback();
                 return false;
             }
@@ -238,7 +238,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
                         indicazioni.get(i).getDosaggio(),
                         indicazioni.get(i).getFrequenzaAssunzione(),
                         indicazioni.get(i).getOrariAssunzione())) {
-                    System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire indicazioni farmaco id " + farmaciConcomitante.get(i).getIdFarmaco());
+                    System.err.println("[ERRORE INSERT TERAPIA CONCOMITANTE]: Impossibile inserire indicazioni farmaco id " + farmaciConcomitante.get(i).getIdFarmaco());
                     conn.rollback();
                     return false;
                 }
@@ -248,7 +248,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             return true;
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT TERAPIA CONCOMITANTI]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT TERAPIA CONCOMITANTI]: " + e.getMessage());
         }
 
         return success;
@@ -269,7 +269,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             }
         }
         if (terapiaNonModificata == null) {
-            System.out.println("[ERRORE UPDATE TERAPIA DIABETE]: Terapia non trovata nel DB");
+            System.err.println("[ERRORE UPDATE TERAPIA DIABETE]: Terapia non trovata nel DB");
             return false;
         }
 
@@ -378,7 +378,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             success = true;
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE UPDATE TERAPIA DIABETE]: " + e.getMessage());
+            System.err.println("[ERRORE UPDATE TERAPIA DIABETE]: " + e.getMessage());
         }
 
         return success;
@@ -399,7 +399,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             }
         }
         if (terapiaNonModificata == null) {
-            System.out.println("[ERRORE UPDATE TERAPIA CONCOMITANTE]: Terapia non trovata nel DB");
+            System.err.println("[ERRORE UPDATE TERAPIA CONCOMITANTE]: Terapia non trovata nel DB");
             return false;
         }
 
@@ -511,7 +511,7 @@ public class AccessoTerapieImpl implements AccessoTerapie {
             success = true;
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE UPDATE TERAPIA CONCOMITANTI]: " + e.getMessage());
+            System.err.println("[ERRORE UPDATE TERAPIA CONCOMITANTI]: " + e.getMessage());
         }
 
         return success;

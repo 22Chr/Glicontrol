@@ -24,14 +24,9 @@ import java.time.temporal.WeekFields;
 import java.util.*;
 
 public class PortalePazienteController implements Portale, Controller {
-    //ultimeRilevazioniLW dovrà contenere il sunto delle ultime rilevazioni
-    //andamentoGlicemia dovrà mostrare una rappresentazione grafica -> cercare come fare
-    //l'avatar deve mostrare le iniziali dell'utente
-    //i vari textfield e la text area contengono le info sul medico di riferimento
-    //il profileB deve rimandare a una paginetta con le info del paziente e il bottone di logout
 
-    private final UtilityPortali upp = new UtilityPortali();
-    private final Paziente paziente = upp.getPazienteSessione();
+    private final UtilityPortali up = new UtilityPortali();
+    private final Paziente paziente = up.getPazienteSessione();
     private final Medico medicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(paziente.getMedicoRiferimento());
     private GestioneRilevazioniGlicemia gestione;
     private enum ModalitaVisualizzazione { GIORNALIERA, SETTIMANALE, MENSILE }
@@ -42,19 +37,14 @@ public class PortalePazienteController implements Portale, Controller {
 
     @FXML
     private TextField nomeMedicoRiferimentoTF, cognomeMedicoRiferimentoTF, emailMedicoRiferimentoTF;
-
     @FXML
     private Circle badgeCircle;
-
     @FXML
     private LineChart<String, Number> andamentoGlicemiaLC;
-
     @FXML
     private ToggleButton visualizzazioneT;
-
     @FXML
     private ListView<String> ultimeRilevazioniLV;
-
 
     @FXML
     private void initialize() {
@@ -65,7 +55,7 @@ public class PortalePazienteController implements Portale, Controller {
         emailMedicoRiferimentoTF.setText(medicoRiferimento.getEmail());
 
         // Inizializza l'avatar con le iniziali del paziente
-        badgeCircle.setFill(new ImagePattern(upp.getBadge()));
+        badgeCircle.setFill(new ImagePattern(up.getBadge()));
         badgeCircle.setSmooth(true);
         badgeCircle.setStyle("-fx-border-color: #ff0404;");
 
@@ -80,7 +70,7 @@ public class PortalePazienteController implements Portale, Controller {
 
         //Inizializza la lista delle ultime rilevazioni glicemiche
         ObservableList<String> ultimeRilevazioni = FXCollections.observableArrayList();
-        ultimeRilevazioni.addAll(upp.getListaRilevazioniGlicemicheOdierne());
+        ultimeRilevazioni.addAll(up.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.getItems().setAll(ultimeRilevazioni);
 
         ultimeRilevazioniLV.setCellFactory(lv -> new ListCell<>() {
@@ -343,9 +333,9 @@ public class PortalePazienteController implements Portale, Controller {
     }
 
     public void aggiornaListaRilevazioniGlicemicheOdierne(){
-        UtilityPortali newUpp = new UtilityPortali(paziente);
+        UtilityPortali newUp = new UtilityPortali(paziente);
         ObservableList<String> newRilevazioni = FXCollections.observableArrayList();
-        newRilevazioni.addAll(newUpp.getListaRilevazioniGlicemicheOdierne());
+        newRilevazioni.addAll(newUp.getListaRilevazioniGlicemicheOdierne());
         ultimeRilevazioniLV.getItems().setAll(newRilevazioni);
 
         List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente, true, false);

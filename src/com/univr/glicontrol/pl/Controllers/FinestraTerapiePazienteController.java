@@ -35,10 +35,9 @@ public class FinestraTerapiePazienteController implements Controller {
     @FXML private Button aggiungiTerapiaButton, salvaModificheTerapiaB, terminaTerapiaB;
 
     private PortaleMedicoController pmc = null;
-    private PortalePazienteController ppc = null;
     private Paziente paziente;
     private Medico medicoSessione;
-    UtilityPortali upp;
+    UtilityPortali up;
     private Terapia terapia = null;
     private GestioneTerapie gt = null;
     private boolean aggiornamentoProgrammatico = false;
@@ -57,7 +56,7 @@ public class FinestraTerapiePazienteController implements Controller {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
                     clearScreen();
                     Platform.runLater(() -> {
-                        terapia = upp.getTerapiaPerNomeFormattata(terapiePazienteLV.getSelectionModel().getSelectedItem());
+                        terapia = up.getTerapiaPerNomeFormattata(terapiePazienteLV.getSelectionModel().getSelectedItem());
                         noteTerapia = terapia.getNoteTerapia();
                         mostraFarmaciTerapia();
                     });
@@ -85,6 +84,7 @@ public class FinestraTerapiePazienteController implements Controller {
             if (InputChecker.getInstance().verificaDosaggioFarmaco(newVal, farmaciTerapiaLV.getSelectionModel().getSelectedItem(), false) && dosaggiTerapiaTA != null) {
                 dosaggiTerapiaTA.setStyle("-fx-border-color: #43a047;");
             } else {
+                assert dosaggiTerapiaTA != null;
                 dosaggiTerapiaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
 
@@ -105,6 +105,7 @@ public class FinestraTerapiePazienteController implements Controller {
             if (InputChecker.getInstance().verificaOrariTerapia(newVal) && orariTerapiaTA != null) {
                 orariTerapiaTA.setStyle("-fx-border-color: #43a047;");
             } else {
+                assert orariTerapiaTA != null;
                 orariTerapiaTA.setStyle("-fx-border-color: #ff0000; -fx-border-width: 3px;");
             }
 
@@ -153,8 +154,8 @@ public class FinestraTerapiePazienteController implements Controller {
     private void mostraFarmaciTerapia() {
         Task<Void> task = new Task<>() {
             @Override protected Void call() {
-                upp = new UtilityPortali(paziente);
-                String data = upp.getIndicazioniTemporaliTerapia(terapia);
+                up = new UtilityPortali(paziente);
+                String data = up.getIndicazioniTemporaliTerapia(terapia);
                 ObservableList<String> farmaci = FXCollections.observableArrayList();
                 for (FarmacoTerapia ft : terapia.getListaFarmaciTerapia()) farmaci.add(ft.getFarmaco().getNome());
 
@@ -234,10 +235,6 @@ public class FinestraTerapiePazienteController implements Controller {
             medicoSessione = new UtilityPortali().getMedicoSessione();
             medicoUltimaModificaTF.setText("Modificata l'ultima volta dal medico " + medicoSessione.getCognome() + " " + medicoSessione.getNome() + " (" + medicoSessione.getCodiceFiscale() + ")");
 
-        } else if  (controller instanceof PortalePazienteController) {
-            ppc = (PortalePazienteController) controller;
-        } else {
-            throw new IllegalArgumentException("Nessun controller valido selezionato");
         }
 
         this.paziente = pazienteSelezionato;
@@ -262,8 +259,8 @@ public class FinestraTerapiePazienteController implements Controller {
             ObservableList<String> terapie = FXCollections.observableArrayList();
 
             @Override protected Void call() {
-                upp = new UtilityPortali(paziente);
-                terapie.addAll(upp.getListaTerapiePaziente());
+                up = new UtilityPortali(paziente);
+                terapie.addAll(up.getListaTerapiePaziente());
                 return null;
             }
 
@@ -302,7 +299,7 @@ public class FinestraTerapiePazienteController implements Controller {
             Parent root = aggiungiFarmaciLoader.load();
 
             DettaglioNuovoFarmacoController dnfc = aggiungiFarmaciLoader.getController();
-            dnfc.setInstance(this, paziente, gt);
+            dnfc.setInstance(paziente, gt);
 
             Stage stage = new Stage();
             stage.setTitle("Inserisci Farmaci");
@@ -385,13 +382,13 @@ public class FinestraTerapiePazienteController implements Controller {
             }
 
             IndicazioniFarmaciTerapia ift = terapia.getListaFarmaciTerapia().get(index).getIndicazioni();
-            ift.setDosaggio(upp.convertiDosaggio(dosaggiTerapiaTA.getText()));
+            ift.setDosaggio(up.convertiDosaggio(dosaggiTerapiaTA.getText()));
             ift.setOrariAssunzione(orariTerapiaTA.getText());
             ift.setFrequenzaAssunzione(frequenzaTerapiaTA.getText());
 
             terapia.getListaFarmaciTerapia().get(index).setIndicazioni(ift);
 
-            terapia.setIdMedicoUltimaModifica(upp.getMedicoSessione().getIdUtente());
+            terapia.setIdMedicoUltimaModifica(up.getMedicoSessione().getIdUtente());
         }
 
         terapia.setNoteTerapia(noteTerapia);

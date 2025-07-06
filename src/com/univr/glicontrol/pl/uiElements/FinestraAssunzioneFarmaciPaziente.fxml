@@ -179,7 +179,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="389.0" prefWidth="669.0" spacing="15.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="67.0" prefWidth="649.0" text="STORICO DELLE ASSUNZIONI &#10;DI FARMACI" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="649.0" text="STORICO DELLE ASSUNZIONI &#10;DI FARMACI" textAlignment="CENTER">
                      <font>
                         <Font name="Avenir Next Bold" size="16.0" />
                      </font>
@@ -197,7 +197,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="295.0" prefWidth="300.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="305.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="TERAPIA DIABETE" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="305.0" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="TERAPIA DIABETE" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                                  </VBox.margin></Label>
@@ -210,7 +210,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="295.0" prefWidth="300.0" style="-fx-border-color: #22577a; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="305.0" style="-fx-background-color: #22577a; -fx-background-radius: 7;" text="ALTRE TERAPIE" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="305.0" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="ALTRE TERAPIE" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                                  </VBox.margin></Label>

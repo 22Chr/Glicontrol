@@ -15,11 +15,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class BenvenutoPazienteController implements InserimentoPastiController, Controller {
-    //page0: bottone Avanti
-    //page1: familiarità si/no e bottone avanti
-    //page2: fumo e/o alcool, bottone avanti e indietro
-    //page3: alimentazione scorretta, sedentarietà e/o obesità, bottone avanti e indietro
-    //page 4: bottone per aggiungere pasto e lista che mostra i pasti, bottone salva e indietro
 
     @FXML
     private VBox page0, page1, page2, page3, page4, page5;
@@ -167,9 +162,9 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
     @FXML
     private void initialize() {
         // Popola lista pasti
-        UtilityPortali upp = new UtilityPortali();
+        UtilityPortali up = new UtilityPortali();
         ObservableList<String> pasti = FXCollections.observableArrayList();
-        pasti.addAll(upp.getListaPasti());
+        pasti.addAll(up.getListaPasti());
         listaPasti.setItems(pasti);
 
         salvaB.requestFocus();
@@ -198,9 +193,9 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
     }
 
     public void resetListViewPasti() {
-        UtilityPortali newUpp = new UtilityPortali();
+        UtilityPortali newUp = new UtilityPortali();
         ObservableList<String> newPasti = FXCollections.observableArrayList();
-        newPasti.addAll(newUpp.getListaPasti());
+        newPasti.addAll(newUp.getListaPasti());
         listaPasti.setItems(newPasti);
     }
 
@@ -222,7 +217,7 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
 
         if (GestionePazienti.getInstance().aggiornaPaziente(paziente) && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
             Alert notificaSalvataggioAlert = new Alert(Alert.AlertType.INFORMATION);
-            notificaSalvataggioAlert.setTitle("System Information Service");
+            notificaSalvataggioAlert.setTitle("System Notification Service");
             notificaSalvataggioAlert.setHeaderText("Le tue informazioni sono state salvate con successo");
             notificaSalvataggioAlert.showAndWait();
 
@@ -233,6 +228,7 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
                 Stage stage = new Stage();
                 stage.setTitle("Portale paziente");
                 stage.setScene(new Scene(root, 1200, 700));
+                stage.setResizable(false);
                 Stage currentStage = (Stage) salvaB.getScene().getWindow();
                 currentStage.close();
                 stage.show();
@@ -242,7 +238,7 @@ public class BenvenutoPazienteController implements InserimentoPastiController, 
             }
         } else {
             Alert erroreSalvataggioDatiAlert = new Alert(Alert.AlertType.ERROR);
-            erroreSalvataggioDatiAlert.setTitle("System Information Service");
+            erroreSalvataggioDatiAlert.setTitle("System Notification Service");
             erroreSalvataggioDatiAlert.setHeaderText("Si è verificato un errore durante il salvataggio dei dati. Riprova");
             erroreSalvataggioDatiAlert.showAndWait();
         }

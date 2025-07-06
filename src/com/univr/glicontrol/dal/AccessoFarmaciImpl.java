@@ -41,7 +41,7 @@ public class AccessoFarmaciImpl implements AccessoFarmaci {
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO LISTA FARMACI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO LISTA FARMACI]: " + e.getMessage());
         }
 
         return listaFarmaci;

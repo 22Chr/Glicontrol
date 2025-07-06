@@ -36,7 +36,7 @@ public class AccessoPastiImpl implements AccessoPasti{
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE RECUPERO PASTI]: " + e.getMessage());
+            System.err.println("[ERRORE RECUPERO PASTI]: " + e.getMessage());
         }
 
         return pasti;
@@ -56,14 +56,14 @@ public class AccessoPastiImpl implements AccessoPasti{
             if (insertPastoStmt.executeUpdate() != 0) {
                 return true;
             } else {
-                System.out.println("[ERRORE INSERT PASTO]: Impossibile inserire il pasto nel database");
+                System.err.println("[ERRORE INSERT PASTO]: Impossibile inserire il pasto nel database");
             }
 
             insertPastoStmt.close();
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE INSERT PASTO]: " + e.getMessage());
+            System.err.println("[ERRORE INSERT PASTO]: " + e.getMessage());
         }
 
         return false;
@@ -84,7 +84,7 @@ public class AccessoPastiImpl implements AccessoPasti{
                 conn.commit();
                 success = true;
             } else {
-                System.out.println("[ERRORE DELETE PASTO]: Impossibile eliminare il pasto selezionato nel database");
+                System.err.println("[ERRORE DELETE PASTO]: Impossibile eliminare il pasto selezionato nel database");
             }
 
             conn.setAutoCommit(true);
@@ -92,7 +92,7 @@ public class AccessoPastiImpl implements AccessoPasti{
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE DELETE PASTO]: " + e.getMessage());
+            System.err.println("[ERRORE DELETE PASTO]: " + e.getMessage());
         }
 
         return success;
@@ -115,7 +115,7 @@ public class AccessoPastiImpl implements AccessoPasti{
                 conn.commit();
                 success = true;
             } else {
-                System.out.println("[ERRORE UPDATE PASTO]: Impossibile aggiornare il pasto selezionato nel database");
+                System.err.println("[ERRORE UPDATE PASTO]: Impossibile aggiornare il pasto selezionato nel database");
             }
 
             conn.setAutoCommit(true);
@@ -123,7 +123,7 @@ public class AccessoPastiImpl implements AccessoPasti{
             conn.close();
 
         } catch (SQLException e) {
-            System.out.println("[ERRORE UPDATE PASTO]: " + e.getMessage());
+            System.err.println("[ERRORE UPDATE PASTO]: " + e.getMessage());
         }
 
         return success;

@@ -15,27 +15,20 @@ public class ModificaMedicoController implements Controller {
 
     @FXML
     private TextField CFMedicoTF;
-
     @FXML
     private TextField nomeMedicoTF;
-
     @FXML
     private TextField cognomeMedicoTF;
-
     @FXML
     private TextField emailMedicoTF;
-
     @FXML
     private TextField passwordMedicoTF;
-
     @FXML
     private Button saveButton;
-
     @FXML
     private Button eliminaMedicoB;
 
     private PortaleAdminController pac;
-
     private String defaultPassword;
 
     public void setMedico(Medico medico) {

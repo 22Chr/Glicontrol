@@ -16,8 +16,8 @@ import java.sql.Time;
 
 
 public class ModificaPastoController implements Controller {
-    private final UtilityPortali upp = new UtilityPortali();
-    private final Paziente paziente = upp.getPazienteSessione();
+    private final UtilityPortali up = new UtilityPortali();
+    private final Paziente paziente = up.getPazienteSessione();
     private final GestionePasti gp = new GestionePasti(paziente);
     private ModificaInformazioniPazienteController mipc;
     @FXML
@@ -42,7 +42,7 @@ public class ModificaPastoController implements Controller {
     public void setInstance(ModificaInformazioniPazienteController mipc, String pastoDaModificare) {
         this.mipc = mipc;
         for (Pasto p : gp.getPasti()) {
-            if (p.getNomePasto().equals(upp.getNomePastoPerPastoFormattato(pastoDaModificare))) {
+            if (p.getNomePasto().equals(up.getNomePastoPerPastoFormattato(pastoDaModificare))) {
                 this.pasto = p;
             }
         }
@@ -91,7 +91,7 @@ public class ModificaPastoController implements Controller {
         } else {
             ora = oraCB.getValue().equals("00") ? 0 : Integer.parseInt(oraCB.getValue());
             minuti = minutiCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiCB.getValue());
-            orario = upp.convertiOra(ora, minuti);
+            orario = up.convertiOra(ora, minuti);
             pasto.setOrario(orario);
         }
 
