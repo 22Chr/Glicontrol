@@ -1,5 +1,6 @@
 package com.univr.glicontrol.bll;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
@@ -14,6 +15,7 @@ class GestionePazientiTest {
     private static int idInserito;
 
     @Test
+    @Order(1)
     void testInserimentoPaziente() {
         GestionePazienti gp = GestionePazienti.getInstance();
 
@@ -36,12 +38,14 @@ class GestionePazientiTest {
     }
 
     @Test
+    @Order(2)
     void testPazienteGiaPresente() {
         boolean presente = GestionePazienti.getInstance().pazienteGiaPresente(cf);
         assertTrue(presente);
     }
 
     @Test
+    @Order(3)
     void testAggiornaPaziente() {
         GestionePazienti gp = GestionePazienti.getInstance();
         Paziente p = gp.getPazientePerCodiceFiscale(cf);
@@ -56,6 +60,7 @@ class GestionePazientiTest {
     }
 
     @Test
+    @Order(4)
     void testEliminaPaziente() {
         GestionePazienti gp = GestionePazienti.getInstance();
         Paziente p = gp.getPazientePerCodiceFiscale(cf);
