@@ -75,7 +75,7 @@
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis side="LEFT" autoRanging="false" lowerBound="0" upperBound="400" tickUnit="50"/>
               </yAxis>
             </LineChart>
             <ToggleButton fx:id="visualizzazioneT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aggiornaGrafico" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="visualizzazione" textAlignment="CENTER" textFill="WHITE">

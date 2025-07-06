@@ -231,7 +231,7 @@
                         <CategoryAxis prefHeight="29.0" prefWidth="216.0" side="BOTTOM" />
                      </xAxis>
                      <yAxis>
-                        <NumberAxis side="LEFT" />
+                        <NumberAxis side="LEFT" autoRanging="false" lowerBound="0" upperBound="400" tickUnit="50"/>
                      </yAxis>
                      <VBox.margin>
                         <Insets />
@@ -242,7 +242,7 @@
                         <CategoryAxis prefHeight="28.0" prefWidth="216.0" side="BOTTOM" />
                      </xAxis>
                      <yAxis>
-                        <NumberAxis side="LEFT" />
+                        <NumberAxis side="LEFT" autoRanging="false" lowerBound="0" upperBound="400" tickUnit="50"/>
                      </yAxis>
                   </LineChart>
                   <LineChart fx:id="rilevazioniMensiliLC" VBox.vgrow="ALWAYS">
@@ -250,7 +250,7 @@
                         <CategoryAxis prefHeight="29.0" prefWidth="216.0" side="BOTTOM" />
                      </xAxis>
                      <yAxis>
-                        <NumberAxis side="LEFT" />
+                        <NumberAxis side="LEFT" autoRanging="false" lowerBound="0" upperBound="400" tickUnit="50"/>
                      </yAxis>
                      <VBox.margin>
                         <Insets />
