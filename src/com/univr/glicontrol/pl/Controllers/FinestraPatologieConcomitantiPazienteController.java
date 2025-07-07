@@ -153,6 +153,37 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
             datiMancantiAlert.setHeaderText("Dati mancanti");
             datiMancantiAlert.setContentText("Per poter inserire una patologia devi precisarne il nome, la data di inizio e fornirne una descrizione.\nInserisci tutti i dati e riprova");
             datiMancantiAlert.showAndWait();
+
+            return;
+        }
+
+        if (dataInizio.after(Date.valueOf(LocalDate.now()))) {
+            Alert dataInizioFuturaAlert = new Alert(Alert.AlertType.ERROR);
+            dataInizioFuturaAlert.setTitle("System Notification Service");
+            dataInizioFuturaAlert.setHeaderText("Errore temporale");
+            dataInizioFuturaAlert.setContentText("La data di inizio della patologia non può essere futura alla data attuale.\nInserisci una data consona e riprova");
+            dataInizioFuturaAlert.showAndWait();
+
+            return;
+        }
+
+        if (dataFine != null && dataFine.after(Date.valueOf(LocalDate.now()))) {
+            Alert dataFineFuturaAlert = new Alert(Alert.AlertType.ERROR);
+            dataFineFuturaAlert.setTitle("System Notification Service");
+            dataFineFuturaAlert.setHeaderText("Errore temporale");
+            dataFineFuturaAlert.setContentText("La data di fine della patologia non può essere futura alla data attuale.\nInserisci una data consona e riprova");
+            dataFineFuturaAlert.showAndWait();
+
+            return;
+        }
+
+        if (dataFine != null && dataFine.before(dataInizio)) {
+            Alert dataFineSuccessivaAInizioAlert = new Alert(Alert.AlertType.ERROR);
+            dataFineSuccessivaAInizioAlert.setTitle("System Notification Service");
+            dataFineSuccessivaAInizioAlert.setHeaderText("Errore temporale");
+            dataFineSuccessivaAInizioAlert.setContentText("La data di fine non può precedere la data di inizio.\nInserisci una data consona e riprova");
+            dataFineSuccessivaAInizioAlert.showAndWait();
+
             return;
         }
 

@@ -61,7 +61,7 @@ public class InserisciMedicoController implements Controller {
 
             if (success == 1) {
                 Alert inserimentoMedicoAlert = new Alert(Alert.AlertType.INFORMATION);
-                inserimentoMedicoAlert.setTitle("Successo");
+                inserimentoMedicoAlert.setTitle("System Notification Service");
                 inserimentoMedicoAlert.setHeaderText(null);
                 inserimentoMedicoAlert.setContentText("Inserimento effettuato con successo");
                 inserimentoMedicoAlert.showAndWait();

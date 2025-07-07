@@ -95,6 +95,7 @@ public class LoginController implements Controller {
             pmc.logout(stage);
         }
         stage.setScene(new Scene(root, 1200, 820));
+        stage.setResizable(true);
         stage.centerOnScreen();
         stage.show();
     }
