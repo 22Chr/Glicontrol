@@ -353,7 +353,7 @@ public class GlicontrolCoreSystem {
                 if (!finestraRilevazioniGlicemicheAperta) {
                     if (rilevazioniOdierne.isEmpty()) {
                         Platform.runLater(() -> ServizioNotifiche.getInstance().notificaPromemoriaRegistrazioneGlicemia());
-                    } else if (rilevazioniOdierne.getLast().getOra().toLocalTime().isBefore(orarioTarget)) {
+                    } else if (rilevazioniOdierne.getLast().getOra().toLocalTime().isBefore(orarioTarget) && LocalTime.now().isAfter(orarioTarget)) {
                         Platform.runLater(() -> ServizioNotifiche.getInstance().notificaPromemoriaRegistrazioneGlicemia());
                     }
                 }
