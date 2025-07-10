@@ -130,7 +130,7 @@
                         <Font size="14.0" />
                     </font>
                 </TextField>
-                <ComboBox fx:id="medicoRifNuovoPazCB" onAction="#selezionaMedicoRiferimentoNuovo" prefHeight="28.0" prefWidth="193.0" style="-fx-background-color: #ffffffff; -fx-border-color: #081F5C;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <ComboBox fx:id="medicoRifNuovoPazCB" onAction="#selezionaMedicoRiferimento" prefHeight="28.0" prefWidth="193.0" style="-fx-background-color: #ffffffff; -fx-border-color: #081F5C;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ComboBox fx:id="sessoNuovoPazienteCB" prefHeight="28.0" prefWidth="193.0" style="-fx-background-color: #ffffffff; -fx-border-color: #081F5C;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <DatePicker fx:id="dataNascitaNuovoPazienteDP" prefHeight="28.0" prefWidth="193.0" style="-fx-background-color: #E7F1FF; -fx-border-color: #081F5C;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             </children>

@@ -36,7 +36,7 @@ public class InserisciPazienteController implements Controller {
     private ComboBox<String> medicoRifNuovoPazCB;
     private PortaleAdminController pac;
 
-    private int id;
+    private int idMedico = -1;
 
     //carica la lista di medici nel controller p
     GetListaUtenti glpa = new GetListaUtenti();
@@ -135,17 +135,17 @@ public class InserisciPazienteController implements Controller {
         String sesso = sessoNuovoPazienteCB.getValue();
         String password = passwordNuovoPazienteTF.getText();
 
-        if (dataNascita == null || !InputChecker.getInstance().allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita)) {
+        if (dataNascita == null || !InputChecker.getInstance().allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita) || idMedico == -1) {
             Alert inputPazienteSbagliati = new Alert(Alert.AlertType.ERROR);
             inputPazienteSbagliati.setTitle("System Notification Service");
             inputPazienteSbagliati.setHeaderText("Dati mancanti");
-            inputPazienteSbagliati.setContentText("Per inserire un nuovo paziente è necessario che tutti i campi siano compilati correttamente. Riprova");
+            inputPazienteSbagliati.setContentText("Per inserire un nuovo paziente è necessario selezionare un medico referente e che tutti i campi siano compilati correttamente");
             inputPazienteSbagliati.showAndWait();
         } else {
 
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
-            int success = GestionePazienti.getInstance().inserisciPaziente(CF, nome, cognome, password, id, dataNascita, sesso, email, null);
+            int success = GestionePazienti.getInstance().inserisciPaziente(CF, nome, cognome, password, idMedico, dataNascita, sesso, email, null);
 
             if (success == 1) {
                 Alert inserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -187,7 +187,7 @@ public class InserisciPazienteController implements Controller {
 
                 pause.setOnFinished(event -> {
                     // Avvisa il medico di riferimento circa la presa in carico di un nuovo paziente
-                    String emailMedicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(id).getEmail();
+                    String emailMedicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(idMedico).getEmail();
                     String identificativoPaziente = cognome + " " + nome + " - " + CF;
                     GestionePazienti.getInstance().informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);
                 });
@@ -214,10 +214,10 @@ public class InserisciPazienteController implements Controller {
     }
 
     @FXML
-    private void selezionaMedicoRiferimentoNuovo() {
+    private void selezionaMedicoRiferimento() {
 
         String selezionato = medicoRifNuovoPazCB.getValue();
-        id = glpa.getIdMedico(selezionato);
+        idMedico = glpa.getIdMedico(selezionato);
 
     }
 }

@@ -56,6 +56,7 @@ public class FinestraTerapiePazienteController implements Controller {
                 if (event.getClickCount() == 1 && !cell.isEmpty()) {
                     clearScreen();
                     Platform.runLater(() -> {
+                        salvaModificheTerapiaB.setVisible(false);
                         terapia = up.getTerapiaPerNomeFormattata(terapiePazienteLV.getSelectionModel().getSelectedItem());
                         noteTerapia = terapia.getNoteTerapia();
                         mostraFarmaciTerapia();
@@ -415,6 +416,17 @@ public class FinestraTerapiePazienteController implements Controller {
 
     public void eliminaFarmacoTerapia() {
 
+        Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
+        if (farmaco == null) {
+            Alert nessunFarmacoSelezionatoAlert = new Alert(Alert.AlertType.INFORMATION);
+            nessunFarmacoSelezionatoAlert.setTitle("System Notification Service");
+            nessunFarmacoSelezionatoAlert.setHeaderText("Nessun farmaco selezionato");
+            nessunFarmacoSelezionatoAlert.setContentText("Prima di eliminare un farmaco è necessario selezionarne uno");
+            nessunFarmacoSelezionatoAlert.showAndWait();
+
+            return;
+        }
+
         Alert confermaOperazione = new Alert(Alert.AlertType.CONFIRMATION);
         confermaOperazione.setTitle("System Notification Service");
         confermaOperazione.setHeaderText("Sei sicuro di voler eliminare il farmaco selezionato?");
@@ -423,7 +435,6 @@ public class FinestraTerapiePazienteController implements Controller {
         Optional<ButtonType> result = confermaOperazione.showAndWait();
 
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(farmaciTerapiaLV.getSelectionModel().getSelectedItem());
             int index = -1;
             for (int i = 0; i < terapia.getListaFarmaciTerapia().size(); i++) {
                 if (terapia.getListaFarmaciTerapia().get(i).getFarmaco().equals(farmaco)) {
