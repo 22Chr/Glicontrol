@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class FinestraRilevazioniGlicemichePazienteController implements Controller {
@@ -152,13 +154,23 @@ public class FinestraRilevazioniGlicemichePazienteController implements Controll
         int minuti = minutiGlicemiaCB.getValue().equals("00") ? 0 : Integer.parseInt(minutiGlicemiaCB.getValue());
         Time orario = up.convertiOra(ora, minuti);
 
-        int status = grg.inserisciRilevazione(data, orario, Float.parseFloat(valoreGlicemiaTF.getText()), pastoGlicemiaCB.getValue(), primaODopoCB.getValue());
+        if (data.after(Date.valueOf(LocalDate.now())) || orario.after(Time.valueOf(LocalTime.now()))) {
+            Alert iserimentoFuturoAlert = new Alert(Alert.AlertType.ERROR);
+            iserimentoFuturoAlert.setTitle("System Notification Service");
+            iserimentoFuturoAlert.setHeaderText("Errore data");
+            iserimentoFuturoAlert.setContentText("Hai inserito delle indicazioni temporali future a quelle attuali");
+            iserimentoFuturoAlert.showAndWait();
+
+            return;
+        }
+
+        int status = grg.inserisciRilevazione(data, orario, Integer.parseInt(valoreGlicemiaTF.getText()), pastoGlicemiaCB.getValue(), primaODopoCB.getValue());
 
         if (status == -1 ) {
             Alert duplicazioneRilevazioneGlicemiaAlert = new Alert(Alert.AlertType.ERROR);
             duplicazioneRilevazioneGlicemiaAlert.setTitle("System Notification Service");
             duplicazioneRilevazioneGlicemiaAlert.setHeaderText("Errore durante l'inserimento della rilevazione glicemica");
-            duplicazioneRilevazioneGlicemiaAlert.setContentText("La rilevazione glicemica è già stata inserita con successo.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
+            duplicazioneRilevazioneGlicemiaAlert.setContentText("È già stata inserita una rilevazione per questo orario.\nAssicurati di aver inserito correttamente tutti i dati e riprova");
             duplicazioneRilevazioneGlicemiaAlert.showAndWait();
         } else if (status == 0) {
             Alert erroreInserimentoRilevazioneGlicemicaAlert = new Alert(Alert.AlertType.ERROR);

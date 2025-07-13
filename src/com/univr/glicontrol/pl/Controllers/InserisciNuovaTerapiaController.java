@@ -194,8 +194,10 @@ public class InserisciNuovaTerapiaController implements Controller {
             return;
         }
 
+        PatologiaConcomitante patologia = up.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
+
         if (terapiaSelezionata == 1) {
-            if (!InputChecker.getInstance().verificaDataInizioTerapiaConcomitante(dataInizio, up.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getDataInizio())) {
+            if (!InputChecker.getInstance().verificaDataInizioTerapiaConcomitante(dataInizio, patologia.getDataInizio())) {
                 Alert dataInizioAntecedenteAllaPatologiaAlert = new Alert(Alert.AlertType.ERROR);
                 dataInizioAntecedenteAllaPatologiaAlert.setTitle("System Notification Service");
                 dataInizioAntecedenteAllaPatologiaAlert.setHeaderText("Data di inizio non valida");
@@ -222,8 +224,7 @@ public class InserisciNuovaTerapiaController implements Controller {
             //status dovrà corrispondere a gt.inserisciTerapiaDiabete
             status = gt.inserisciTerapiaDiabete(medicoUltimaModifica.getIdUtente(), dataInizio, dataFine, noteTerapia, farmaciConIndicazioni);
         } else {
-            int idPatologia = up.getPatologiaConcomitantePerNomeFormattata(nomePatologia).getIdPatologia();
-            status = gt.inserisciTerapiaConcomitante(idPatologia, paziente.getMedicoRiferimento(), dataInizio, dataFine, noteTerapia, farmaciConIndicazioni, nomePatologia);
+            status = gt.inserisciTerapiaConcomitante(patologia, paziente.getMedicoRiferimento(), dataInizio, dataFine, noteTerapia, farmaciConIndicazioni);
         }
 
         if (status == 1) {
@@ -307,7 +308,7 @@ public class InserisciNuovaTerapiaController implements Controller {
         terapiaSelezionata = 1;
     }
 
-    private void informaPazienteInserimentoTerapia() throws MessagingException {
+    public void informaPazienteInserimentoTerapia() throws MessagingException {
         String oggetto = "Hai una nuova terapia";
 
         String nomePatologia = "", corpo = "";

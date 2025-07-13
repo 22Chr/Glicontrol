@@ -20,10 +20,6 @@ public class GestioneTerapie {
         this.pazienteSessione = pazienteSessione;
     }
 
-    public GestioneTerapie() {
-        this.pazienteSessione = null;
-    }
-
     public List<Terapia> getTerapiePaziente() {
         aggiornaListaTerapiePaziente();
         return terapiePaziente;
@@ -81,10 +77,13 @@ public class GestioneTerapie {
         return accessoTerapie.insertTerapiaDiabete(pazienteSessione.getIdUtente(), idMedicoUltimaModifica, dataInizio, dataFine, noteTerapia, farmaci) ? 1 : 0;
     }
 
-    public int inserisciTerapiaConcomitante(int idPatologia, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String noteTerapia, List<FarmacoTerapia> farmaci, String nomePatologia) {
+    public int inserisciTerapiaConcomitante(PatologiaConcomitante pat, int idMedicoUltimaModifica, Date dataInizio, Date dataFine, String noteTerapia, List<FarmacoTerapia> farmaci) {
         assert pazienteSessione != null;
         aggiornaListaTerapiePaziente();
-        UtilityPortali upp = new UtilityPortali(pazienteSessione);
+
+        if (pat == null) {
+            return 0;
+        }
 
         for (TerapiaConcomitante terapia : terapiaConcomitante) {
             if (terapia.getDataInizio().equals(dataInizio)
@@ -93,13 +92,12 @@ public class GestioneTerapie {
                 return -1;
             }
 
-            PatologiaConcomitante pat = upp.getPatologiaConcomitantePerNomeFormattata(nomePatologia);
-            if (pat != null && terapia.getIdPatologiaConcomitante() == pat.getIdPatologia()) {
+            if (terapia.getIdPatologiaConcomitante() == pat.getIdPatologia()) {
                 return -1;
             }
         }
 
-        return accessoTerapie.insertTerapiaConcomitante(pazienteSessione.getIdUtente(), idPatologia, idMedicoUltimaModifica, dataInizio, dataFine, noteTerapia, farmaci) ? 1 : 0;
+        return accessoTerapie.insertTerapiaConcomitante(pazienteSessione.getIdUtente(), pat.getIdPatologia(), idMedicoUltimaModifica, dataInizio, dataFine, noteTerapia, farmaci) ? 1 : 0;
     }
 
     private boolean aggiornaTerapiaDiabete(TerapiaDiabete terapia) {

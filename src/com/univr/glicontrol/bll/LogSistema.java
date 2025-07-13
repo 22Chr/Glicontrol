@@ -3,10 +3,10 @@ package com.univr.glicontrol.bll;
 import java.sql.Timestamp;
 
 public class LogSistema {
-    private int idLog;
-    private int idMedico;
-    private String descrizione;
-    private Timestamp timestamp;
+    private final int idLog;
+    private final int idMedico;
+    private final String descrizione;
+    private final Timestamp timestamp;
 
     public LogSistema(int idLog, int idMedico, String descrizione, Timestamp timestamp) {
         this.idLog = idLog;

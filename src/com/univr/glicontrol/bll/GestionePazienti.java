@@ -104,11 +104,8 @@ public class GestionePazienti {
             return -1;
         }
 
-        // Imposta il valore di default a 1 per indicare che il paziente effettuerà il suo primo accesso al portale post inserimento
-        int primoAccesso = 1;
-
         AccessoListaUtenti accessoListaUtenti = new AccessoListaUtentiImpl();
-        status = accessoListaUtenti.insertNuovoPaziente(codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, primoAccesso) ? 1 : 0;
+        status = accessoListaUtenti.insertNuovoPaziente(codiceFiscale, nome, cognome, password, medico, nascita, sesso, email, allergie, 1) ? 1 : 0;
         if (status == 1) {
             boolean success = new GestioneFattoriRischio().inserisciFattoriRischi(codiceFiscale);
 

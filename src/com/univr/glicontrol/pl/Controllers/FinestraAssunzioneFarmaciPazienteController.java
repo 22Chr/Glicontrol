@@ -188,25 +188,26 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
             }
         }
 
-        if (idAssunzione == 0) {
-            throw new RuntimeException("Errore: non è stato possibile trovare l'id dell'assunzione del farmaco");
-        }
-
-        if (gaf.eliminaAssunzioneFarmaco(idAssunzione)) {
+        if (idAssunzione != 0 && gaf.eliminaAssunzioneFarmaco(idAssunzione)) {
             Alert successoEliminazioneFarmacoAlert = new Alert(Alert.AlertType.INFORMATION);
             successoEliminazioneFarmacoAlert.setTitle("System Information Service");
             successoEliminazioneFarmacoAlert.setHeaderText("Registrazione eliminata con successo");
             successoEliminazioneFarmacoAlert.setContentText("L'assunzione del farmaco è stata eliminata correttamente");
             successoEliminazioneFarmacoAlert.showAndWait();
 
-            cambiaPagina();
-            resetListViewFarmaciAssuntiOggi();
+            Platform.runLater(() -> {
+                resetListViewFarmaciAssuntiOggi();
+                resetListViewFarmaciDaAssumere();
+            });
 
-            PauseTransition pausaAggiornamentoListaFarmaciDaAssumere = new PauseTransition(javafx.util.Duration.seconds(0.8));
-            pausaAggiornamentoListaFarmaciDaAssumere.setOnFinished(event -> resetListViewFarmaciDaAssumere());
-            pausaAggiornamentoListaFarmaciDaAssumere.play();
+            cambiaPagina();
 
         } else {
+
+            if (idAssunzione == 0) {
+                System.err.println("Errore: non è stato possibile trovare l'id dell'assunzione del farmaco");
+            }
+
             Alert erroreEliminazioneFarmacoAlert = new Alert(Alert.AlertType.ERROR);
             erroreEliminazioneFarmacoAlert.setTitle("System Information Service");
             erroreEliminazioneFarmacoAlert.setHeaderText("Errore durante l'eliminazione dell'assunzione");

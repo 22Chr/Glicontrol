@@ -242,22 +242,22 @@ public class FinestraPatologieConcomitantiPazienteController implements Controll
         p.setDataFine(Date.valueOf(LocalDate.now()));
 
         if (gpc.aggiornaPatologiaConcomitante(p)) {
-            Alert conclusionePatologia = new Alert(Alert.AlertType.INFORMATION);
-            conclusionePatologia.setTitle("System Notification Service");
-            conclusionePatologia.setHeaderText("Patologia concomitante aggiornata con successo");
-            conclusionePatologia.setContentText("La patologia è stata segnata come conclusa in data odierna.\n\nRicordati di segnare come conclusa anche l'eventuale terapia associata");
-            conclusionePatologia.showAndWait();
+            Alert conclusionePatologiaAlert = new Alert(Alert.AlertType.INFORMATION);
+            conclusionePatologiaAlert.setTitle("System Notification Service");
+            conclusionePatologiaAlert.setHeaderText("Patologia concomitante aggiornata con successo");
+            conclusionePatologiaAlert.setContentText("La patologia è stata segnata come conclusa in data odierna.\n\nRicordati di segnare come conclusa anche l'eventuale terapia associata");
+            conclusionePatologiaAlert.showAndWait();
 
             resetListViewPatologie();
             GlicontrolCoreSystem.getInstance().generaLog(Log.PATOLOGIA_CONCOMITANTE, paziente, medico, false, inseritaDalMedico);
             cambiaPagina();
 
         } else {
-            Alert erroreConclusionePatologia = new Alert(Alert.AlertType.ERROR);
-            erroreConclusionePatologia.setTitle("System Notification Service");
-            erroreConclusionePatologia.setHeaderText("Si è verificato un errore durante l'operazione");
-            erroreConclusionePatologia.setContentText("Non è stato possibile segnare la patologia come terminata");
-            erroreConclusionePatologia.showAndWait();
+            Alert erroreConclusionePatologiaAlert = new Alert(Alert.AlertType.ERROR);
+            erroreConclusionePatologiaAlert.setTitle("System Notification Service");
+            erroreConclusionePatologiaAlert.setHeaderText("Si è verificato un errore durante l'operazione");
+            erroreConclusionePatologiaAlert.setContentText("Non è stato possibile segnare la patologia come terminata");
+            erroreConclusionePatologiaAlert.showAndWait();
         }
     }
 

@@ -27,7 +27,7 @@ public class GestioneRilevazioniGlicemia {
         rilevazioni = accessoRilevazioniGlicemia.recuperaRilevazioniPaziente(paziente.getIdUtente());
     }
 
-    public int inserisciRilevazione(Date data, Time ora, float valore, String pasto, String indicazioniTemporali) {
+    public int inserisciRilevazione(Date data, Time ora, int valore, String pasto, String indicazioniTemporali) {
         aggiornaListaRilevazioni();
         for (RilevazioneGlicemica rilevazione : rilevazioni) {
             if (rilevazione.getData().equals(data) && rilevazione.getOra().equals(ora)) {

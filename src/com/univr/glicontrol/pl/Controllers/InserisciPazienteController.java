@@ -138,78 +138,80 @@ public class InserisciPazienteController implements Controller {
         if (dataNascita == null || !InputChecker.getInstance().allCheckForPaziente(nome, cognome, CF, password, email, sesso, dataNascita) || idMedico == -1) {
             Alert inputPazienteSbagliati = new Alert(Alert.AlertType.ERROR);
             inputPazienteSbagliati.setTitle("System Notification Service");
-            inputPazienteSbagliati.setHeaderText("Dati mancanti");
+            inputPazienteSbagliati.setHeaderText("Dati non validi");
             inputPazienteSbagliati.setContentText("Per inserire un nuovo paziente è necessario selezionare un medico referente e che tutti i campi siano compilati correttamente");
             inputPazienteSbagliati.showAndWait();
+
+            return;
+        }
+
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+
+        int success = GestionePazienti.getInstance().inserisciPaziente(CF, nome, cognome, password, idMedico, dataNascita, sesso, email, null);
+
+        if (success == 1) {
+            Alert inserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
+            inserimentoPazienteAlert.setTitle("System Notification Service");
+            inserimentoPazienteAlert.setHeaderText("Paziente aggiunto");
+            inserimentoPazienteAlert.setContentText("Inserimento effettuato con successo");
+            inserimentoPazienteAlert.showAndWait();
+
+            // Ricarica la lista dei medici nel controller principale
+            pac.resetListViewPazienti();
+            PauseTransition pauseInvioNotificaPaziente = new PauseTransition(Duration.seconds(1));
+
+            pauseInvioNotificaPaziente.setOnFinished(event -> {
+                if (GestionePazienti.getInstance().inviaCredenzialiPaziente(email, password)) {
+
+                    Alert notificaInserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
+                    notificaInserimentoPazienteAlert.setTitle("System Notification Service");
+                    notificaInserimentoPazienteAlert.setHeaderText("Gestore credenziali");
+                    notificaInserimentoPazienteAlert.setContentText("Invio delle credenziali al paziente avvenuto con successo");
+                    notificaInserimentoPazienteAlert.show();
+
+                } else {
+
+                    Alert erroreNotificaInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
+                    erroreNotificaInserimentoPazienteAlert.setTitle("System Notification Service");
+                    erroreNotificaInserimentoPazienteAlert.setHeaderText("Errore invio credenziali");
+                    erroreNotificaInserimentoPazienteAlert.setContentText("Si è verificato un errore durante l'invio delle credenziali al paziente");
+                    erroreNotificaInserimentoPazienteAlert.show();
+
+                }
+            });
+            pauseInvioNotificaPaziente.play();
+
+            // Chiudi la finestra di inserimento
+            Window currentWindow = saveNuovoPazienteB.getScene().getWindow();
+            if (currentWindow instanceof Stage) {
+                ((Stage) currentWindow).close();
+            }
+
+            pause.setOnFinished(event -> {
+                // Avvisa il medico di riferimento circa la presa in carico di un nuovo paziente
+                String emailMedicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(idMedico).getEmail();
+                String identificativoPaziente = cognome + " " + nome + " - " + CF;
+                GestionePazienti.getInstance().informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);
+            });
+            pause.play();
+
+        } else if (success == 0) {
+
+            Alert erroreInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
+            erroreInserimentoPazienteAlert.setTitle("System Notification Service");
+            erroreInserimentoPazienteAlert.setHeaderText("Errore inserimento paziente");
+            erroreInserimentoPazienteAlert.setContentText("Si è verificato un errore durante l'inserimento del nuovo paziente");
+            erroreInserimentoPazienteAlert.showAndWait();
+
         } else {
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            Alert pazienteEsistenteAlert = new Alert(Alert.AlertType.ERROR);
+            pazienteEsistenteAlert.setTitle("System Notification Service");
+            pazienteEsistenteAlert.setHeaderText("Gestore duplicati");
+            pazienteEsistenteAlert.setContentText("Il paziente che stai cercando di inserire è già presente nel sistema");
+            pazienteEsistenteAlert.showAndWait();
 
-            int success = GestionePazienti.getInstance().inserisciPaziente(CF, nome, cognome, password, idMedico, dataNascita, sesso, email, null);
-
-            if (success == 1) {
-                Alert inserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                inserimentoPazienteAlert.setTitle("System Notification Service");
-                inserimentoPazienteAlert.setHeaderText("Paziente aggiunto");
-                inserimentoPazienteAlert.setContentText("Inserimento effettuato con successo");
-                inserimentoPazienteAlert.showAndWait();
-
-                // Ricarica la lista dei medici nel controller principale
-                pac.resetListViewPazienti();
-                PauseTransition pauseInvioNotificaPaziente = new PauseTransition(Duration.seconds(1));
-
-                pauseInvioNotificaPaziente.setOnFinished(event -> {
-                    if (GestionePazienti.getInstance().inviaCredenzialiPaziente(email, password)) {
-
-                        Alert notificaInserimentoPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-                        notificaInserimentoPazienteAlert.setTitle("System Notification Service");
-                        notificaInserimentoPazienteAlert.setHeaderText("Gestore credenziali");
-                        notificaInserimentoPazienteAlert.setContentText("Invio delle credenziali al paziente avvenuto con successo");
-                        notificaInserimentoPazienteAlert.show();
-
-                    } else {
-
-                        Alert erroreNotificaInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
-                        erroreNotificaInserimentoPazienteAlert.setTitle("System Notification Service");
-                        erroreNotificaInserimentoPazienteAlert.setHeaderText("Errore invio credenziali");
-                        erroreNotificaInserimentoPazienteAlert.setContentText("Si è verificato un errore durante l'invio delle credenziali al paziente");
-                        erroreNotificaInserimentoPazienteAlert.show();
-
-                    }
-                });
-                pauseInvioNotificaPaziente.play();
-
-                // Chiudi la finestra di inserimento
-                Window currentWindow = saveNuovoPazienteB.getScene().getWindow();
-                if (currentWindow instanceof Stage) {
-                    ((Stage) currentWindow).close();
-                }
-
-                pause.setOnFinished(event -> {
-                    // Avvisa il medico di riferimento circa la presa in carico di un nuovo paziente
-                    String emailMedicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(idMedico).getEmail();
-                    String identificativoPaziente = cognome + " " + nome + " - " + CF;
-                    GestionePazienti.getInstance().informaMedicoAssociato(identificativoPaziente, emailMedicoRiferimento);
-                });
-                pause.play();
-
-            } else if (success == 0) {
-
-                Alert erroreInserimentoPazienteAlert = new Alert(Alert.AlertType.ERROR);
-                erroreInserimentoPazienteAlert.setTitle("System Notification Service");
-                erroreInserimentoPazienteAlert.setHeaderText("Errore inserimento paziente");
-                erroreInserimentoPazienteAlert.setContentText("Si è verificato un errore durante l'inserimento del nuovo paziente");
-                erroreInserimentoPazienteAlert.showAndWait();
-
-            } else {
-
-                Alert pazienteEsistenteAlert = new Alert(Alert.AlertType.ERROR);
-                pazienteEsistenteAlert.setTitle("System Notification Service");
-                pazienteEsistenteAlert.setHeaderText("Gestore duplicati");
-                pazienteEsistenteAlert.setContentText("Il paziente che stai cercando di inserire è già presente nel sistema");
-                pazienteEsistenteAlert.showAndWait();
-
-            }
         }
     }
 

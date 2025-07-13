@@ -28,7 +28,7 @@ public class PortalePazienteController implements Portale, Controller {
     private final UtilityPortali up = new UtilityPortali();
     private final Paziente paziente = up.getPazienteSessione();
     private final Medico medicoRiferimento = GestioneMedici.getInstance().getMedicoPerId(paziente.getMedicoRiferimento());
-    private GestioneRilevazioniGlicemia gestione;
+    private GestioneRilevazioniGlicemia grg;
     private enum ModalitaVisualizzazione { GIORNALIERA, SETTIMANALE, MENSILE }
     private ModalitaVisualizzazione visualizzazioneAttuale = ModalitaVisualizzazione.GIORNALIERA;
 
@@ -60,10 +60,10 @@ public class PortalePazienteController implements Portale, Controller {
         badgeCircle.setStyle("-fx-border-color: #ff0404;");
 
         //Gestione del bottone visulizzazione per switchare tra i vari grafici
-        visualizzazioneT.setOnAction(e -> cambiaModalitàGrafico());
+        visualizzazioneT.setOnAction(e -> cambiaModalitaGrafico());
 
         // Gestione colorazione livelli glicemici per il paziente su base odierna
-        gestione = new GestioneRilevazioniGlicemia(paziente);
+        grg = new GestioneRilevazioniGlicemia(paziente);
         List<Integer> codiciRilevazioni = GlicontrolCoreSystem.getInstance().verificaLivelliGlicemici(paziente, true, false);
 
         aggiornaGrafico();
@@ -261,7 +261,7 @@ public class PortalePazienteController implements Portale, Controller {
                 int mese = oggi.getMonthValue();
                 serie.setName("Andamento mensile");
 
-                Map<String, Double> mediaSettimanale = gestione.getMediaMensileGlicemiaPerMeseCorrente(anno, mese);
+                Map<String, Double> mediaSettimanale = grg.getMediaMensileGlicemiaPerMeseCorrente(anno, mese);
 
                 for (var entry : mediaSettimanale.entrySet()) {
                     String settimanaLabel = entry.getKey();
@@ -274,7 +274,7 @@ public class PortalePazienteController implements Portale, Controller {
                 int settimana = oggi.get(wf.weekOfWeekBasedYear());
                 serie.setName("Andamento settimanale");
 
-                Map<String, Double> mediaGiornaliera = gestione.getMediaGiornalieraGlicemia(anno, settimana);
+                Map<String, Double> mediaGiornaliera = grg.getMediaGiornalieraGlicemia(anno, settimana);
                 for (var entry : mediaGiornaliera.entrySet()) {
                     LocalDate data = LocalDate.parse(entry.getKey());
                     String dataFormattata = data.format(formatter);
@@ -285,7 +285,7 @@ public class PortalePazienteController implements Portale, Controller {
             case GIORNALIERA -> {
                 serie.setName("Andamento odierno");
 
-                List<RilevazioneGlicemica> rilevazioniOggi = gestione.getRilevazioniPerData(oggi);
+                List<RilevazioneGlicemica> rilevazioniOggi = grg.getRilevazioniPerData(oggi);
 
                 rilevazioniOggi.sort(Comparator.comparing(RilevazioneGlicemica::getOra));
 
@@ -300,7 +300,7 @@ public class PortalePazienteController implements Portale, Controller {
 
     }
 
-    public void cambiaModalitàGrafico(){
+    public void cambiaModalitaGrafico(){
 
         visualizzazioneAttuale = switch (visualizzazioneAttuale) {
             case MENSILE -> ModalitaVisualizzazione.GIORNALIERA;

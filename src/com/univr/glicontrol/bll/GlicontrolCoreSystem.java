@@ -306,23 +306,19 @@ public class GlicontrolCoreSystem {
 
     // Task automatico che verifica se uno dei pazienti presenti nel sistema non sta assumendo i suoi farmaci da più di 3 giorni
     public void monitoraSospensioneFarmaci() {
-        scheduler.scheduleAtFixedRate(() -> {
-            try {
-                for (Paziente paziente : listaPazienti) {
-                    if (verificaSospensioneFarmaci(paziente)) {
-                        Platform.runLater(() -> {
-                            ServizioNotifiche.getInstance().notificaSospensioneFarmacoTerapia(paziente);
+        new Thread(() -> {
+            for (Paziente paziente : listaPazienti) {
+                if (verificaSospensioneFarmaci(paziente)) {
+                    Platform.runLater(() -> {
+                        ServizioNotifiche.getInstance().notificaSospensioneFarmacoTerapia(paziente);
 
-                            for (Farmaco f : farmaciNonAssuntiDa3Giorni.get(paziente)) {
-                                gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaSospensioneFarmaci(paziente, f));
-                            }
-                        });
-                    }
+                        for (Farmaco f : farmaciNonAssuntiDa3Giorni.get(paziente)) {
+                            gestioneNotifiche.inserisciNuovaNotifica(GeneratoreNotifiche.getInstance().generaNotificaSospensioneFarmaci(paziente, f));
+                        }
+                    });
                 }
-            } catch (Exception e) {
-                System.err.println("Errore durante il controllo periodico delle sospensioni dei farmaci: " + e.getMessage());
             }
-        }, 0, 30, TimeUnit.MINUTES);
+        }).start();
     }
 
     // Recupera gli orari dei pasti per il paziente selezionato al fine di inviargli promemoria circa la registrazione dei valori glicemici

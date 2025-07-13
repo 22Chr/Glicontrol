@@ -146,11 +146,11 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
         fattoriRischioAggiornati.setObesita(GlicontrolCoreSystem.getInstance().isObeso(paziente));
 
         if (GestionePazienti.getInstance().aggiornaPaziente(paziente) && gestioneFattoriRischio.aggiornaFattoriRischio(fattoriRischioAggiornati)) {
-            Alert aggiornaPazienteAlert = new Alert(Alert.AlertType.INFORMATION);
-            aggiornaPazienteAlert.setTitle("System Notification Service");
-            aggiornaPazienteAlert.setHeaderText("Salvataggio avvenuto con successo");
-            aggiornaPazienteAlert.setContentText("I tuoi dati sono stati aggiornati correttamente");
-            aggiornaPazienteAlert.showAndWait();
+            Alert infoPazienteModificateAlert = new Alert(Alert.AlertType.INFORMATION);
+            infoPazienteModificateAlert.setTitle("System Notification Service");
+            infoPazienteModificateAlert.setHeaderText("Salvataggio avvenuto con successo");
+            infoPazienteModificateAlert.setContentText("I tuoi dati sono stati aggiornati correttamente");
+            infoPazienteModificateAlert.showAndWait();
 
             GlicontrolCoreSystem.getInstance().generaLog(Log.INFO_PAZIENTE, paziente, medico, false, inseriteDalMedico);
 
@@ -159,11 +159,11 @@ public class ModificaInformazioniPazienteController implements InserimentoPastiC
                 ((Stage) currentWindow).close();
             }
         } else {
-            Alert erroreModificaPazienteAlert = new Alert(Alert.AlertType.ERROR);
-            erroreModificaPazienteAlert.setTitle("System Notification Service");
-            erroreModificaPazienteAlert.setHeaderText("Errore salvataggio");
-            erroreModificaPazienteAlert.setContentText("Si è verificato un errore durante il salvataggio delle nuove informazioni.\nVerifica che tutti i dati siano corretti e riprova");
-            erroreModificaPazienteAlert.showAndWait();
+            Alert erroreModificaInfoPazienteAlert = new Alert(Alert.AlertType.ERROR);
+            erroreModificaInfoPazienteAlert.setTitle("System Notification Service");
+            erroreModificaInfoPazienteAlert.setHeaderText("Errore salvataggio");
+            erroreModificaInfoPazienteAlert.setContentText("Si è verificato un errore durante il salvataggio delle nuove informazioni.\nVerifica che tutti i dati siano corretti e riprova");
+            erroreModificaInfoPazienteAlert.showAndWait();
         }
     }
 
