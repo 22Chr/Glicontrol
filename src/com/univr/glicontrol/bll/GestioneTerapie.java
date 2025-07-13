@@ -13,8 +13,8 @@ public class GestioneTerapie {
     private List<Terapia> terapiePaziente = new ArrayList<>();
     private final AccessoTerapie accessoTerapie = new AccessoTerapieImpl();
 
-    List<TerapiaDiabete> terapiaDiabete = new ArrayList<>();
-    List<TerapiaConcomitante> terapiaConcomitante = new ArrayList<>();
+    private List<TerapiaDiabete> terapiaDiabete = new ArrayList<>();
+    private List<TerapiaConcomitante> terapiaConcomitante = new ArrayList<>();
 
     public GestioneTerapie(Paziente pazienteSessione) {
         this.pazienteSessione = pazienteSessione;

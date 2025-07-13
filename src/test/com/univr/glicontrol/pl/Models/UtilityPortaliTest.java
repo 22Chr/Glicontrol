@@ -112,16 +112,6 @@ class UtilityPortaliTest {
         assertFalse(rilevazioni.isEmpty(), "La lista delle rilevazioni glicemiche non dovrebbe essere vuota");
     }
 
-//    @Test
-//    void testGetRilevazioneGlicemicaPerValoreFormattata() {
-//        List<String> rilevazioni = utility.getListaRilevazioniGlicemichePazienti();
-//        String prima = rilevazioni.getFirst();
-//        RilevazioneGlicemica rilevazione = utility.getRilevazioneGlicemicaPerValoreFormattata(prima);
-//        assertNotNull(rilevazione);
-//        assertEquals(prima, utility.getRilevazioneGlicemicaPerValoreFormattata(rilevazione.toString()));
-//
-//    }
-
     @Test
     void testGetListaTerapiePaziente() {
         List<String> terapie = utility.getListaTerapiePaziente();

@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class FinestraAssunzioneFarmaciPazienteController implements Controller {
     private UtilityPortali up;
@@ -109,7 +110,15 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
             datiMancantiAlert.showAndWait();
             return;
         }
+        if (data.after(Date.valueOf(LocalDate.now()))) {
+            Alert iserimentoFuturoAlert = new Alert(Alert.AlertType.ERROR);
+            iserimentoFuturoAlert.setTitle("System Notification Service");
+            iserimentoFuturoAlert.setHeaderText("Errore data");
+            iserimentoFuturoAlert.setContentText("Hai inserito delle indicazioni temporali future a quelle attuali");
+            iserimentoFuturoAlert.showAndWait();
 
+            return;
+        }
         Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciDaAssumereCB.getValue());
         Time oraAssunzione = getOra();
 

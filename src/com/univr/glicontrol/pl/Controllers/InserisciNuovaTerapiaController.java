@@ -16,6 +16,9 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +94,15 @@ public class InserisciNuovaTerapiaController implements Controller {
             erroreDataMancataAlert.setContentText("Prima di poter selezionare dei farmaci per la tua terapia è necessario precisarne la data di inizio. Riprova");
             erroreDataMancataAlert.showAndWait();
             dataInizioDP.setValue(null);
+            return;
+        }
+        if (dataInizio.after(Date.valueOf(LocalDate.now()))) {
+            Alert iserimentoFuturoAlert = new Alert(Alert.AlertType.ERROR);
+            iserimentoFuturoAlert.setTitle("System Notification Service");
+            iserimentoFuturoAlert.setHeaderText("Errore data");
+            iserimentoFuturoAlert.setContentText("Hai inserito delle indicazioni temporali future a quelle attuali");
+            iserimentoFuturoAlert.showAndWait();
+
             return;
         }
 
