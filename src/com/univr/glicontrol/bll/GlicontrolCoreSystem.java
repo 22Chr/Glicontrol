@@ -254,9 +254,13 @@ public class GlicontrolCoreSystem {
         gestioneAssunzioneFarmaci = new GestioneAssunzioneFarmaci(paziente);
         List<List<FarmacoTerapia>> farmaciTerapie = new ArrayList<>();
         List<Farmaco> farmaciPrescritti = new ArrayList<>();
+        HashMap<Farmaco, Terapia> relazioneTerapiaFarmaco = new HashMap<>();
 
         for (Terapia t : gestioneTerapie.getTerapiePaziente()) {
             farmaciTerapie.add(t.getListaFarmaciTerapia());
+            for (FarmacoTerapia ft : t.getListaFarmaciTerapia()) {
+                relazioneTerapiaFarmaco.put(ft.getFarmaco(), t);
+            }
         }
 
         if (farmaciTerapie.isEmpty()) {
@@ -284,6 +288,17 @@ public class GlicontrolCoreSystem {
             for (AssunzioneFarmaco af : gestioneAssunzioneFarmaci.getListaAssunzioneFarmaci()) {
                 if (af.getIdFarmaco() == farmaco.getIdFarmaco() && af.getIdPaziente() == paziente.getIdUtente()) {
                     assunzioniDiQuestoFarmaco.add(af);
+                }
+            }
+
+            if (assunzioniDiQuestoFarmaco.isEmpty()) {
+                // i farmaci non sono mai stati assunti
+                LocalDate dataInizioTerapia = relazioneTerapiaFarmaco.get(farmaco).getDataInizio().toLocalDate();
+                long giorni = ChronoUnit.DAYS.between(dataInizioTerapia, LocalDate.now());
+
+                if (giorni >= 0) {
+                    farmaciNonAssunti.add(farmaco);
+                    farmaciNonAssuntiCounter++;
                 }
             }
 

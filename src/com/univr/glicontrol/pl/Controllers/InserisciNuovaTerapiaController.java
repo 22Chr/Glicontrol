@@ -16,9 +16,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,15 +92,6 @@ public class InserisciNuovaTerapiaController implements Controller {
             erroreDataMancataAlert.setContentText("Prima di poter selezionare dei farmaci per la tua terapia è necessario precisarne la data di inizio. Riprova");
             erroreDataMancataAlert.showAndWait();
             dataInizioDP.setValue(null);
-            return;
-        }
-        if (dataInizio.after(Date.valueOf(LocalDate.now()))) {
-            Alert iserimentoFuturoAlert = new Alert(Alert.AlertType.ERROR);
-            iserimentoFuturoAlert.setTitle("System Notification Service");
-            iserimentoFuturoAlert.setHeaderText("Errore data");
-            iserimentoFuturoAlert.setContentText("Hai inserito delle indicazioni temporali future a quelle attuali");
-            iserimentoFuturoAlert.showAndWait();
-
             return;
         }
 
@@ -202,6 +191,26 @@ public class InserisciNuovaTerapiaController implements Controller {
             dataInizioNonSpecificataAlert.setHeaderText("Data inizio mancante");
             dataInizioNonSpecificataAlert.setContentText("Per specificare una terapia è necessario impostare una data di inizio");
             dataInizioNonSpecificataAlert.showAndWait();
+
+            return;
+        }
+
+        if (dataInizio.after(dataFine)) {
+            Alert dataInizioDopoDataFineAlert = new Alert(Alert.AlertType.ERROR);
+            dataInizioDopoDataFineAlert.setTitle("System Notification Service");
+            dataInizioDopoDataFineAlert.setHeaderText("Errore Data");
+            dataInizioDopoDataFineAlert.setContentText("La data di inizio non può essere successiva alla data di fine della terapia.\nModifica i dati e riprova");
+            dataInizioDopoDataFineAlert.showAndWait();
+
+            return;
+        }
+
+        if (dataInizio.after(Date.valueOf(LocalDate.now()))) {
+            Alert dataInizioFuturaAlert = new Alert(Alert.AlertType.ERROR);
+            dataInizioFuturaAlert.setTitle("System Notification Service");
+            dataInizioFuturaAlert.setHeaderText("Errore Data");
+            dataInizioFuturaAlert.setContentText("La data di inizio non può essere futura alla data attuale");
+            dataInizioFuturaAlert.showAndWait();
 
             return;
         }

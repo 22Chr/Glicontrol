@@ -46,6 +46,7 @@ public class FinestraNoteTerapiaController implements Controller {
             intc.setNoteTerapia(noteTerapiaTA.getText());
         } else {
             ftpc.setNoteTerapia(noteTerapiaTA.getText());
+            ftpc.mostraBottoneSalvataggio(noteTerapiaTA.getText());
         }
 
         Window currentWindow = noteTerapiaTA.getScene().getWindow();

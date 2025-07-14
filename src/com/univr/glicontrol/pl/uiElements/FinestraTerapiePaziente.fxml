@@ -215,7 +215,7 @@
                                     </TextArea>
                                  </children>
                               </GridPane>
-                              <Button fx:id="salvaModificheTerapiaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salvaModificheTerapia" style="-fx-background-color: #334EAC; -fx-background-radius: 7;" text="Salva " textAlignment="CENTER" textFill="WHITE" visible="false">
+                              <Button fx:id="salvaModificheTerapiaB" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salvaModificheTerapia" prefHeight="37.0" prefWidth="97.0" style="-fx-background-color: #4cd137; -fx-background-radius: 7;" text="Salva " textAlignment="CENTER" textFill="WHITE" visible="false">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -223,7 +223,7 @@
                                     <Insets left="80.0" />
                                  </VBox.margin>
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="System Bold" size="16.0" />
                                  </font>
                               </Button>
                            </children>
