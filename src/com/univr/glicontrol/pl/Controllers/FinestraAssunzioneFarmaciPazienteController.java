@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class FinestraAssunzioneFarmaciPazienteController implements Controller {
     private UtilityPortali up;
@@ -112,6 +113,16 @@ public class FinestraAssunzioneFarmaciPazienteController implements Controller {
 
         Farmaco farmaco = GestioneFarmaci.getInstance().getFarmacoByName(listaFarmaciDaAssumereCB.getValue());
         Time oraAssunzione = getOra();
+
+        if (data.after(Date.valueOf(LocalDate.now())) || oraAssunzione.after(Time.valueOf(LocalTime.now()))) {
+            Alert erroreDataIstanteTemporaleAlert = new Alert(Alert.AlertType.ERROR);
+            erroreDataIstanteTemporaleAlert.setTitle("System Notification Service");
+            erroreDataIstanteTemporaleAlert.setHeaderText("Data e ora non validi");
+            erroreDataIstanteTemporaleAlert.setContentText("Non è possibile registrare un'assunzione per questo farmaco nel futuro.\nVerifica data e ora e riprova");
+            erroreDataIstanteTemporaleAlert.showAndWait();
+
+            return;
+        }
 
         int status = gaf.registraAssunzioneFarmaco(farmaco, data, oraAssunzione, Float.parseFloat(dosaggioTF.getText()));
         if (status != 0) {

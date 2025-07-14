@@ -182,7 +182,6 @@ public class FinestraTerapiePazienteController implements Controller {
     }
 
     private void mostraIndicazioniFarmaciTerapia() {
-        salvaModificheTerapiaB.setVisible(false);
 
         if (pmc != null && terapia.getDataFine() == null) {
             dosaggiTerapiaTA.setEditable(true);
@@ -203,7 +202,6 @@ public class FinestraTerapiePazienteController implements Controller {
                     frequenzaTerapiaTA.setText(frequenza);
                     orariTerapiaTA.setText(orari);
                     aggiornamentoProgrammatico = false;
-                    salvaModificheTerapiaB.setVisible(false);
                 });
                 return null;
             }
@@ -218,7 +216,7 @@ public class FinestraTerapiePazienteController implements Controller {
         new Thread(task).start();
     }
 
-    private void mostraBottoneSalvataggio(String newVal) {
+    public void mostraBottoneSalvataggio(String newVal) {
         if (pmc != null && !newVal.trim().isEmpty() && !salvaModificheTerapiaB.isVisible()) {
             salvaModificheTerapiaB.setVisible(true);
             FadeTransition fade = new FadeTransition(Duration.millis(100), salvaModificheTerapiaB);
