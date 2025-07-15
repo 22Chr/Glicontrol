@@ -144,7 +144,7 @@ public class PortaleAdminController implements Controller {
 
     //LOGOUT
     @FXML
-    public void logout(ActionEvent event) {
+    public void logout() {
         //mostra finestra di conferma
         Stage currentStage = (Stage) logoutB.getScene().getWindow();
         boolean isFullScreen = currentStage.isFullScreen();
@@ -166,13 +166,13 @@ public class PortaleAdminController implements Controller {
 
     //MEDICO MENUITEM
     @FXML
-    public void inserisciNuovoMedico(ActionEvent event) {
+    public void inserisciNuovoMedico() {
         apriFinestraInserisci("../uiElements/InserisciNuovoMedico.fxml", "MEDICO");
     }
 
     //PAZIENTE MENUITEM
     @FXML
-    public void inserisciNuovoPaziente(ActionEvent event) {
+    public void inserisciNuovoPaziente() {
         apriFinestraInserisci("../uiElements/InserisciNuovoPaziente.fxml", "PAZIENTE");
     }
     

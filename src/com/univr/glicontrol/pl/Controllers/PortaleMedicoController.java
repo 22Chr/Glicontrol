@@ -85,16 +85,6 @@ public class PortaleMedicoController implements Portale, Controller {
                         setStyle("");
                     } else {
                         setText(item);
-
-                        // Ricavo il paziente dal nome formattato
-                        Paziente p = up.getPazienteAssociatoDaNomeFormattato(item);
-                        List<Notifica> notifiche = mappaPazientiAssociatiNotifiche.get(p);
-
-                        if (notifiche != null && !notifiche.isEmpty()) {
-                            setStyle("-fx-background-color: #FFBF00; -fx-border-color: whitesmoke;");
-                        } else {
-                            setStyle("");
-                        }
                     }
                 }
             };
@@ -130,16 +120,6 @@ public class PortaleMedicoController implements Portale, Controller {
                         setStyle("");
                     } else {
                         setText(item);
-
-                        // Ricavo il paziente dal nome formattato
-                        Paziente p = up.getPazienteNonAssociatoDaNomeFormattato(item);
-                        List<Notifica> notifiche = mappaPazientiNonAssociatiNotifiche.get(p);
-
-                        if (notifiche != null && !notifiche.isEmpty()) {
-                            setStyle("-fx-background-color: #FFBF00; -fx-border-color: whitesmoke;");
-                        } else {
-                            setStyle("");
-                        }
                     }
                 }
             };
@@ -497,59 +477,4 @@ public class PortaleMedicoController implements Portale, Controller {
 
         GlicontrolCoreSystem.getInstance().centroNotificheIsClosed();
     }
-
-    public void aggiornaListaPazientiReferenteNotifiche() {
-        Task<Void> taskAggiornaNotifiche = new Task<>() {
-            @Override
-            protected Void call() {
-                Map<Paziente, List<Notifica>> nuovaMappa = new HashMap<>();
-
-                for (String nomePaziente : up.getPazientiAssociatiAlReferente(medico.getIdUtente())) {
-                    Paziente p = up.getPazienteAssociatoDaNomeFormattato(nomePaziente);
-                    GestioneNotifiche gn = new GestioneNotifiche(p);
-                    List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
-                    nuovaMappa.put(p, notifiche);
-                }
-
-                // Aggiorna la mappa originale sul thread JavaFX
-                Platform.runLater(() -> {
-                    mappaPazientiAssociatiNotifiche.clear();
-                    mappaPazientiAssociatiNotifiche.putAll(nuovaMappa);
-                    pazientiReferenteLV.refresh();
-                });
-
-                return null;
-            }
-        };
-
-        new Thread(taskAggiornaNotifiche).start();
-    }
-
-    public void aggiornaListaPazientiNonAssociatiNotifiche(){
-        Task<Void> taskAggiornaNotifiche = new Task<>() {
-            @Override
-            protected Void call() {
-                Map<Paziente, List<Notifica>> nuovaMappa = new HashMap<>();
-
-                for (String nomePaziente : up.getPazientiNonAssociatiAlReferente(medico.getIdUtente())) {
-                    Paziente p = up.getPazienteNonAssociatoDaNomeFormattato(nomePaziente);
-                    GestioneNotifiche gn = new GestioneNotifiche(p);
-                    List<Notifica> notifiche = gn.getNotificheNonVisualizzate();
-                    nuovaMappa.put(p, notifiche);
-                }
-
-                // Aggiorna la mappa originale sul thread JavaFX
-                Platform.runLater(() -> {
-                    mappaPazientiNonAssociatiNotifiche.clear();
-                    mappaPazientiNonAssociatiNotifiche.putAll(nuovaMappa);
-                    pazientiGenericiLV.refresh();
-                });
-
-                return null;
-            }
-        };
-
-        new Thread(taskAggiornaNotifiche).start();
-    }
-
 }
