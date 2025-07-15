@@ -31,7 +31,6 @@ public class AccessoLogImpl implements AccessoLog {
                             rs.getInt("id_terapia_modificata"),
                             rs.getInt("id_medico"),
                             rs.getString("descrizione_modifiche"),
-                            rs.getString("note_paziente"),
                             rs.getTimestamp("timestamp")
                     ));
                 }

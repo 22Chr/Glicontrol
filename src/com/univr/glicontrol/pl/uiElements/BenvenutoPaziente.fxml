@@ -209,7 +209,7 @@
         </VBox>
         <VBox fx:id="page4" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" visible="false">
             <children>
-                <Label text="Inserisci il tuo peso corrente">
+                <Label text="Inserisci il tuo peso corrente in kg, specificando l'unità di misura">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -219,7 +219,7 @@
                         <Font size="13.0" />
                     </font>
                 </TextField>
-            <Label text="Inserisci la tua altezza">
+            <Label text="Inserisci la tua altezza in cm, specificando l'unità di misura">
                <font>
                   <Font size="14.0" />
                </font>

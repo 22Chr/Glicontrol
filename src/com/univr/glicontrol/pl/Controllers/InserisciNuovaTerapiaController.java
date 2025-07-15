@@ -195,7 +195,7 @@ public class InserisciNuovaTerapiaController implements Controller {
             return;
         }
 
-        if (dataInizio.after(dataFine)) {
+        if (dataFine != null && dataInizio.after(dataFine)) {
             Alert dataInizioDopoDataFineAlert = new Alert(Alert.AlertType.ERROR);
             dataInizioDopoDataFineAlert.setTitle("System Notification Service");
             dataInizioDopoDataFineAlert.setHeaderText("Errore Data");

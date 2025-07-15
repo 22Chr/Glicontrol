@@ -168,7 +168,7 @@ public class GlicontrolCoreSystem {
 
         // Recupera gli orari di assunzione previsti per il farmaco
         List<LocalTime> orariPrevisti = getOrariPrevisti(paziente, nomeFarmaco);
-        if (orariPrevisti.isEmpty()) return false;
+        if (orariPrevisti.isEmpty()) return true;
 
         // Trova l'orario più vicino rispetto all'orario attuale
         LocalTime oraAttuale = LocalTime.now();
@@ -194,11 +194,10 @@ public class GlicontrolCoreSystem {
         }
 
         // Se non è presente alcuna registrazione odierna per questo farmaco, significa che non è stato assunto
-        if (oraUltimaRegistrazione == null) return false;
+        if (orarioPiuVicino.isBefore(LocalTime.now()) || (oraUltimaRegistrazione == null && orarioPiuVicino.isBefore(LocalTime.now()))) return false;
 
         // Se non è stato assunto, e siamo entro i 15 minuti prima dell’orario o oltre, segnala che deve essere assunto
         return oraAttuale.isBefore(inizioFinestra); // Deve essere assunto (o è in ritardo)
-
     }
 
 
@@ -221,7 +220,6 @@ public class GlicontrolCoreSystem {
         for (Farmaco f : farmaciPaziente) {
             if (!verificaAssunzioneRispettoAllOrario(paziente, f.getNome())) {
                 resultAssunzioni = 0;
-                break;
             }
         }
 
@@ -578,7 +576,6 @@ public class GlicontrolCoreSystem {
                     if (!gestioneNotificheMonitor.getNotificheNonVisualizzate().isEmpty()) {
                         Platform.runLater(()->{
                             ServizioNotifiche.getInstance().notificaPresenzaNotificheNonVisualizzate();
-                            pmc.aggiornaListaPazientiReferenteNotifiche();
                         });
                     }
                 }
